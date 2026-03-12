@@ -1,0 +1,27 @@
+# 🐍 Pro Python Mastery: 100-Day Engineering Challenge
+
+[![Python CI](https://github.com/YOUR_USERNAME/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/YOUR_USERNAME/pro-python-mastery/actions)
+![Python Version](https://img.shields.io/badge/python-3.14-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+## 🎯 Overview
+This repository is a comprehensive 100-day professional development journey focused on advanced Python engineering. As a developer with 4+ years of experience, I am using this challenge to demonstrate high-level architectural patterns, rigorous unit testing, and production-ready code standards.
+
+### Key Focus Areas:
+* **Strict Typing:** Using Python's type-hinting system for robust code.
+* **TDD (Test Driven Development):** 80%+ coverage using `pytest`.
+* **CI/CD:** Automated testing pipelines via GitHub Actions.
+* **Modern Python:** Leveraging the latest features from Python 3.12 through 3.14.
+
+---
+
+## 🏗️ Project Structure
+The repository follows a modular package structure to ensure scalability and maintainability.
+
+```text
+pro-python-mastery/
+├── src/                 # Source code organized by daily modules
+│   └── day_01_variables/
+├── tests/               # Unit and Integration test suites
+├── docs/                # Architecture and System Design diagrams
+└── .github/workflows/   # Automated CI/CD pipelines
