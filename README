@@ -1,6 +1,6 @@
 # 🐍 Pro Python Mastery: 100-Day Engineering Challenge
 
-[![Python CI](https://github.com/YOUR_USERNAME/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/YOUR_USERNAME/pro-python-mastery/actions)
+[![Python CI](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/OdeToTheWind/pro-python-mastery/actions)
 ![Python Version](https://img.shields.io/badge/python-3.14-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
@@ -25,3 +25,19 @@ pro-python-mastery/
 ├── tests/               # Unit and Integration test suites
 ├── docs/                # Architecture and System Design diagrams
 └── .github/workflows/   # Automated CI/CD pipelines
+
+This repository showcases my daily progress in mastering Python with a focus on **Production-Ready code**, **Unit Testing**, and **Clean Architecture**. 
+
+> **Note:** This is part of a 10-repo challenge to demonstrate technical competence and system design skills.
+
+## 🚀 Daily Progress Tracker
+
+| Day | Topic | Status | Key Concept |
+| :--- | :--- | :--- | :--- |
+| 01 | Variables & Type Hinting | ✅ Completed | Used f-strings and PEP 484 type hints. |
+| 02 | Data Types & Structures | ⏳ Next Up | - |
+
+## 🧪 How to Run
+1. Clone the repo: `git clone https://github.com/Garima/pro-python-mastery.git`
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run tests: `pytest`
