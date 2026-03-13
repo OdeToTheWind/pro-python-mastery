@@ -55,7 +55,7 @@ pro-python-mastery/
 | 03  | Input and Print Functions          | ⏳ Planning  |-------------------------------------------------------------------|
 | ... | ...                                | ...          | ...                                                               |
 
-Daily reflections, code explanations, and design decisions will be documented as the challenge progresses (planned in `docs/progress/`).
+Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
 
 ## Getting Started
 
