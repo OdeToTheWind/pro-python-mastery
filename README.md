@@ -92,16 +92,20 @@ source .venv/bin/activate    # Linux/macOS/Git Bash
 
 # Install development dependencies
 pip install -r requirements.txt
+```
 
 ** RUNNING TEST **
+```bash
 # Run the full test suite
 pytest
 
 # With coverage report
 pytest --cov=src --cov-report=html
 # Open htmlcov/index.html in your browser
+```
 
 **Linting & Type Checking**
+```bash
 # Run mypy static type checker
 mypy src tests
 
@@ -122,7 +126,6 @@ MIT License – see the LICENSE file for details.
 - Removed casual emojis from headings (kept only where they add value)
 - Professional tone and phrasing
 - Clearer structure and language
-- Fixed clone URL (you had `Bhargavi` — changed to your actual username `OdeToTheWind`)
 - Added realistic setup instructions (venv activation for all major shells)
 - Included linting/type-checking commands (common in pro Python repos)
 - Better table formatting & future-proof columns
