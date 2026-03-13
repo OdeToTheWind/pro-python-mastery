@@ -1,24 +1,27 @@
-#!/bin/bash
-
-# 1. Find the latest day directory
-# Result example: src/day_02_strings/
-LATEST_PATH=$(ls -d src/day_*/ | sort -V | tail -n 1)
-
-# 2. Convert path to module notation
-# Remove trailing slash, then change / to .
-# Result example: src.day_02_strings.main
-LATEST_MODULE=$(echo "${LATEST_PATH%/}" | tr '/' '.')
+#!/usr/bin/env bash
 
 echo "------------------------------------------"
 echo "🐍 PRO PYTHON MASTERY: ENGINEERING CHECK"
 echo "------------------------------------------"
 
-# 3. Run the latest Python Code
+# 1. Find the latest day directory (e.g. src/day_02_strings/)
+LATEST_PATH=$(ls -d src/day_*/ 2>/dev/null | sort -V | tail -n 1)
+
+if [ -z "$LATEST_PATH" ]; then
+    echo "❌ No day_* directory found in src/"
+    exit 1
+fi
+
+# 2. Convert to module path (src.day_02_strings)
+LATEST_MODULE=$(echo "${LATEST_PATH%/}" | tr '/' '.')
+
 echo "🚀 Executing latest logic: $LATEST_MODULE.main"
 python -m "$LATEST_MODULE.main"
 
+# Optional: suppress the warning (not needed after fix)
+# PYTHONWARNINGS=ignore::RuntimeWarning python -m ...
+
 echo ""
-# 4. Run the Tests
 echo "🧪 Running Comprehensive Test Suite..."
 python -m pytest -v
 
@@ -28,11 +31,9 @@ if [ $? -ne 0 ]; then
 fi
 
 # 5. Git Automation
-# Using basename to get 'day_02_strings' instead of the full path
 DAY_NAME=$(basename "$LATEST_PATH")
-
 echo "📝 Enter your commit message for $DAY_NAME:"
-read commit_message
+read -r commit_message
 
 git add .
 git commit -m "$DAY_NAME: $commit_message"
