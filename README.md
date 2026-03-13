@@ -122,7 +122,7 @@ MIT License – see the LICENSE file for details.
 - Removed casual emojis from headings (kept only where they add value)
 - Professional tone and phrasing
 - Clearer structure and language
-- Fixed clone URL (you had `Bhargav` — changed to your actual username `OdeToTheWind`)
+- Fixed clone URL (you had `Bhargavi` — changed to your actual username `OdeToTheWind`)
 - Added realistic setup instructions (venv activation for all major shells)
 - Included linting/type-checking commands (common in pro Python repos)
 - Better table formatting & future-proof columns

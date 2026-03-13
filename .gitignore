@@ -7,3 +7,5 @@ __pycache__/
 .mypy_cache/
 htmlcov/
 .venv/
+.vscode/settings.json
+.vscode/cspell.json
