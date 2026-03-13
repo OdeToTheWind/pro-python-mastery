@@ -25,17 +25,32 @@ pro-python-mastery/
 │   └── workflows/
 │       ├── python-tests.yml
 ├── src/                    # Production code – modular by day/topic
-│   └── day_01_variables/
-│       ├── __init__.py
+│   ├── day_01_variables/
 │       └── main.py
+│   └── day_02_strings/
+│       └── main.py           
 ├── tests/                  # Comprehensive test suite (unit + integration)
+│   ├── test_day_01.py
+│   └── test_day_02.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
 └── LICENSE
 ```
-
+pro-python-mastery/
+├── src/
+│   ├── day_01_variables/
+│   │   └── main.py           # no __init__.py
+│   ├── day_02_strings/
+│   │   └── main.py           # no __init__.py
+│   └── ... (future days)
+├── tests/
+│   ├── test_day_01.py
+│   └── test_day_02.py
+├── .gitignore                # with __pycache__/ etc.
+├── propython.sh
+└── README.md
 ## Key Engineering Practices
 
 - **Type Safety** — Full use of `typing` module, `TypedDict`, generics, protocols, and PEP 695/696 features where applicable  
