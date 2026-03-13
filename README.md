@@ -38,35 +38,24 @@ pro-python-mastery/
 ├── README.md
 └── LICENSE
 ```
-pro-python-mastery/
-├── src/
-│   ├── day_01_variables/
-│   │   └── main.py           # no __init__.py
-│   ├── day_02_strings/
-│   │   └── main.py           # no __init__.py
-│   └── ... (future days)
-├── tests/
-│   ├── test_day_01.py
-│   └── test_day_02.py
-├── .gitignore                # with __pycache__/ etc.
-├── propython.sh
-└── README.md
+
 ## Key Engineering Practices
 
-- **Type Safety** — Full use of `typing` module, `TypedDict`, generics, protocols, and PEP 695/696 features where applicable  
-- **Testing** — Rigorous TDD/BDD workflow using `pytest` with high coverage targets  
-- **CI/CD** — Automated linting, type checking (mypy), testing, and badge reporting on every push  
-- **Modern Python** — Leveraging new syntax, performance improvements, and best practices from Python 3.12–3.14
+- **Type Safety** — Full use of the `typing` module, type hints in function signatures, and exploration of modern features (PEP 484, 563, 695)  
+- **Testing** — Rigorous TDD workflow using `pytest`, with unit tests for each daily challenge  
+- **CI/CD** — Automated testing via GitHub Actions (linting, type checking with mypy, and test runs planned on every push)  
+- **Modern Python** — Leveraging syntax, formatting, and best practices from Python 3.12–3.14 (f-strings, type hints, structural pattern matching where applicable)
 
 ## Daily Progress
 
-| Day | Topic                              | Status      | Key Learnings / Deliverables                          |
-|-----|------------------------------------|-------------|-------------------------------------------------------|
-| 01  | Variables, Type Hinting & Scoping  | ✅ Completed | PEP 484/563/695 type hints, f-strings, strict typing |
-| 02  | Advanced Data Types & Structures   | ⏳ In Progress | dataclasses, NamedTuple, TypedDict, collections.abc  |
-| ... | ...                                | ...         | ...                                                   |
+| Day | Topic                              | Status       | Key Learnings / Deliverables                                      |
+|-----|------------------------------------|--------------|-------------------------------------------------------------------|
+| 01  | Variables, Type Hinting & Scoping  | ✅ Completed | Strict typing with PEP 484/695, f-strings, variable scoping rules |
+| 02  | String Manipulation                | ✅ Completed | Advanced string methods (strip, title, upper), f-string formatting & alignment, basic input cleaning |
+| 03  | Input and Print Functions          | ⏳ Planning  |-------------------------------------------------------------------|
+| ... | ...                                | ...          | ...                                                               |
 
-> Full progress log and daily reflections are maintained in the [docs/progress](./docs/progress/) directory.
+Daily reflections, code explanations, and design decisions will be documented as the challenge progresses (planned in `docs/progress/`).
 
 ## Getting Started
 
@@ -94,7 +83,7 @@ source .venv/bin/activate    # Linux/macOS/Git Bash
 pip install -r requirements.txt
 ```
 
-** RUNNING TEST **
+### RUNNING TEST 
 ```bash
 # Run the full test suite
 pytest
@@ -104,7 +93,7 @@ pytest --cov=src --cov-report=html
 # Open htmlcov/index.html in your browser
 ```
 
-**Linting & Type Checking**
+### Linting & Type Checking
 ```bash
 # Run mypy static type checker
 mypy src tests
