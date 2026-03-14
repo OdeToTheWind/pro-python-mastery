@@ -28,11 +28,18 @@ pro-python-mastery/
 │   ├── day_01_variables/
 │       └── main.py
 │   └── day_02_strings/
-│       └── main.py           
+│       └── main.py  
+│   └── day_03_input_output/
+│       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
-│   └── test_day_02.py
+│   ├── test_day_02.py  
+│   └── test_day_03.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
+│   └── progress/
+│       ├── day-01-reflection.md      
+│       ├── day-02-reflection.md
+│       └── day-03-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
@@ -52,7 +59,8 @@ pro-python-mastery/
 |-----|------------------------------------|--------------|-------------------------------------------------------------------|
 | 01  | Variables, Type Hinting & Scoping  | ✅ Completed | Strict typing with PEP 484/695, f-strings, variable scoping rules |
 | 02  | String Manipulation                | ✅ Completed | Advanced string methods (strip, title, upper), f-string formatting & alignment, basic input cleaning |
-| 03  | Input and Print Functions          | ⏳ Planning  |-------------------------------------------------------------------|
+| 03  | Input & Print Functions            | ✅ In Progress | User input validation, type conversion, advanced print formatting (alignment, precision), interactive console apps |
+| 04  | Variable Naming Rules             | ⏳ Planning  |-------------------------------------------------------------------|
 | ... | ...                                | ...          | ...                                                               |
 
 Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
