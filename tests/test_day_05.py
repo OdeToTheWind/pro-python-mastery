@@ -1,6 +1,6 @@
 # tests/test_day_05.py
 import pytest
-from src.day_05_math_operations.main import perform_operation, safe_float_input
+from src.day_05_math_operations.main import perform_operation   # ← removed safe_float_input
 
 
 @pytest.mark.parametrize(
