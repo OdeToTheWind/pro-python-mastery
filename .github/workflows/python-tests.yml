@@ -7,13 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Updated to v5 (latest)
         with:
-          python-version: '3.12' # Matches your laptop's Python
+          python-version: '3.12'
+
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
       - name: Run Tests
+        # Adding PYTHONPATH=. ensures 'src' is importable by the tests
+        env:
+          PYTHONPATH: .
         run: pytest
