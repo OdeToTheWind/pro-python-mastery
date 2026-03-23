@@ -23,23 +23,27 @@ The repository is organized as a Python package with clear separation of concern
 pro-python-mastery/
 ├── .github/                # GitHub Actions CI/CD pipelines
 │   └── workflows/
-│       ├── python-tests.yml
+│       └── python-tests.yml
 ├── src/                    # Production code – modular by day/topic
 │   ├── day_01_variables/
-│       └── main.py
-│   └── day_02_strings/
-│       └── main.py  
-│   └── day_03_input_output/
+│   │   └── main.py
+│   ├── day_02_strings/
+│   │   └── main.py  
+│   ├── day_03_input_output/
+│   │   └── main.py  
+│   └── day_04_variable_name_rules/
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
 │   ├── test_day_02.py  
-│   └── test_day_03.py
+│   ├── test_day_03.py 
+│   └── test_day_04.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
-│       ├── day-02-reflection.md
-│       └── day-03-reflection.md
+│       ├── day-02-reflection.md    
+│       ├── day-03-reflection.md
+│       └── day-04-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
@@ -118,7 +122,7 @@ This is a personal challenge repository, but issues, suggestions, and thoughtful
 ## License
 
 MIT License – see the LICENSE file for details.
-```
+
 ### Main Improvements Made
 - Removed casual emojis from headings (kept only where they add value)
 - Professional tone and phrasing
@@ -130,6 +134,4 @@ MIT License – see the LICENSE file for details.
 
 Feel free to copy-paste this directly into your `README.md`.  
 
-If you'd like to add badges for coverage, mypy, ruff, or a progress percentage,  
-let me know — I can help generate those too. Good luck with the rest of the 100 days! 🚀
-```
+If you'd like to add badges for coverage, mypy, ruff, or a progress percentage,let me know — I can help generate those too. Good luck with the rest of the 100 days! 🚀 
