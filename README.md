@@ -39,7 +39,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_07_converting_types/
 │   │   └── main.py 
-│   └── day_08_if_else_conditionals/    
+│   ├── day_08_if_else_conditionals/
+│   │   └── main.py 
+│   └── day_09_logical_operations/    
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -49,7 +51,8 @@ pro-python-mastery/
 │   ├── test_day_05.py 
 │   ├── test_day_06.py 
 │   ├── test_day_07.py 
-│   └── test_day_08.py
+│   ├── test_day_08.py 
+│   └── test_day_09.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -59,7 +62,8 @@ pro-python-mastery/
 │       ├── day-05-reflection.md
 │       ├── day-06-reflection.md
 │       ├── day-07-reflection.md
-│       └── day-08-reflection.md
+│       ├── day-08-reflection.md
+│       └── day-09-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
