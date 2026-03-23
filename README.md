@@ -41,7 +41,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_08_if_else_conditionals/
 │   │   └── main.py 
-│   └── day_09_logical_operations/    
+│   ├── day_09_logical_operations/
+│   │   └── main.py 
+│   └── day_10_randomisation/    
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -52,7 +54,8 @@ pro-python-mastery/
 │   ├── test_day_06.py 
 │   ├── test_day_07.py 
 │   ├── test_day_08.py 
-│   └── test_day_09.py
+│   ├── test_day_09.py 
+│   └── test_day_10.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -63,7 +66,8 @@ pro-python-mastery/
 │       ├── day-06-reflection.md
 │       ├── day-07-reflection.md
 │       ├── day-08-reflection.md
-│       └── day-09-reflection.md
+│       ├── day-09-reflection.md
+│       └── day-10-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
@@ -79,13 +83,36 @@ pro-python-mastery/
 
 ## Daily Progress
 
-| Day | Topic                              | Status       | Key Learnings / Deliverables                                      |
-|-----|------------------------------------|--------------|-------------------------------------------------------------------|
-| 01  | Variables, Type Hinting & Scoping  | ✅ Completed | Strict typing with PEP 484/695, f-strings, variable scoping rules |
-| 02  | String Manipulation                | ✅ Completed | Advanced string methods (strip, title, upper), f-string formatting & alignment, basic input cleaning |
-| 03  | Input & Print Functions            | ✅ In Progress | User input validation, type conversion, advanced print formatting (alignment, precision), interactive console apps |
-| 04  | Variable Naming Rules             | ⏳ Planning  |-------------------------------------------------------------------|
-| ... | ...                                | ...          | ...                                                               |
+| Day | Topic                                      | Status          | Key Learnings / Deliverables                                                                                          |
+|-----|--------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
+| 01  | Variables, Type Hinting & Scoping          | ✅ Completed    | Strict typing with PEP 484/695, f-strings, variable scoping rules (LEGB), local vs global vs nonlocal                  |
+| 02  | String Manipulation                        | ✅ Completed    | Advanced string methods (`strip`, `title`, `upper`, `lower`, `split`, `join`, `replace`), f-string formatting & alignment, basic input cleaning |
+| 03  | Input & Print Functions                    | ✅ Completed    | User input validation loops, type conversion (`int`, `float`, `str`), advanced `print` formatting (alignment, precision, `sep`, `end`), interactive console apps |
+| 04  | Variable Naming Rules                      | ✅ Completed    | PEP 8 naming conventions (snake_case, CONSTANTS, private `_var`), reserved keywords, shadowing built-ins, descriptive names |
+| 05  | Mathematical Operations                    | ✅ Completed    | Arithmetic operators (`+ - * / // % **`), operator precedence, floor division, modulus use cases, safe division handling |
+| 06  | Built-in Data Types                        | ✅ Completed    | `int`, `float`, `bool`, `str`, `list`, `tuple`, `range`, `dict`, `set`, `frozenset`, `NoneType`, mutability vs immutability, hashability, `type()` vs `isinstance()`, `id()` |
+| 07  | Converting Types (Casting)                 | ✅ Completed    | `int()`, `float()`, `str()`, `bool()`, `list()`, `tuple()`, `set()`, `dict()`, ValueError vs TypeError, safe conversion patterns |
+| 08  | If / Elif / Else Conditionals              | ✅ Completed    | Comparison operators, truthy/falsy values, nested conditionals, chained `elif`, real-world decision logic               |
+| 09  | Logical Operations                         | ✅ Completed    | `and`, `or`, `not`, short-circuit evaluation, combining with comparisons, truth tables, realistic combined conditions (access control, login checks) |
+| 10  | Randomisation                              | ⏳ Planned      | `import random`, `random.random()`, `random.randint()`, `random.choice()`, `random.shuffle()`, seeding with `random.seed()` |
+| 11  | Error Handling                             | ⏳ Planned      | `try`/`except`/`else`/`finally`, common exceptions (`ValueError`, `TypeError`, `ZeroDivisionError`, `IndexError`), custom exceptions, raising errors |
+| 12  | Functions                                  | ⏳ Planned      | Defining functions, parameters vs arguments, default values, `*args`, `**kwargs`, function scope, docstrings          |
+| 13  | For Loops                                  | ⏳ Planned      | Iterating over sequences (`list`, `tuple`, `str`, `range`), `for ... in ...`, `enumerate()`, `zip()`, nested loops     |
+| 14  | Code Blocks and Indentation                | ⏳ Planned      | Python's indentation rules (4 spaces convention), blocks in loops/conditionals/functions, common indentation errors   |
+| 15  | While Loops                                | ⏳ Planned      | `while` condition, infinite loops & break, continue, while-else clause, input validation loops                        |
+| 16  | Flowchart Programming                      | ⏳ Planned      | Reading & drawing flowcharts, translating flowcharts → Python code, decision diamonds, process boxes, loops in flowcharts |
+| 17  | Positional and Keyword Arguments           | ⏳ Planned      | Positional vs keyword args, required vs optional, order rules, mixing positional & keyword calls                       |
+| 18  | Python Dictionaries and Lists              | ⏳ Planned      | List methods (`append`, `pop`, `remove`, `extend`, slicing), dict creation, access, update, `.get()`, `.keys()`, `.values()`, `.items()` |
+| 19  | Nested Collections                         | ⏳ Planned      | Lists of lists, dicts of lists, lists of dicts, nested dicts, accessing & modifying nested structures, pretty printing |
+| 20  | Returning from Functions                   | ⏳ Planned      | `return` statement, returning multiple values (tuples), early returns, implicit `None` return                         |
+| 21  | Return vs. Print                           | ⏳ Planned      | Difference between printing & returning values, when to `print` vs `return`, function purity, testing returned values  |
+| 22  | Docstrings vs. Comments                    | ⏳ Planned      | Writing proper docstrings (Google/Numpy style), PEP 257, difference from `#` comments, tools (help(), `__doc__`)       |
+| 23  | Scope and Local/Global Variables           | ⏳ Planned      | LEGB rule, `global` keyword, `nonlocal`, avoiding global variables, closure basics                                     |
+| 24  | Debugging Techniques                       | ⏳ Planned      | `print()` debugging, `pdb` / `breakpoint()`, reading tracebacks, rubber duck debugging, common bugs & patterns       |
+
+**Beginner Projects end on Day 24**  
+**Intermediate Projects start on Day 25**
+
 
 Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
 
