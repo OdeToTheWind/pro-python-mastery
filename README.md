@@ -31,19 +31,23 @@ pro-python-mastery/
 │   │   └── main.py  
 │   ├── day_03_input_output/
 │   │   └── main.py  
-│   └── day_04_variable_name_rules/
+│   ├── day_04_variable_name_rules/
+│   │   └── main.py  
+│   └── day_04_maths_operations/  
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
 │   ├── test_day_02.py  
-│   ├── test_day_03.py 
-│   └── test_day_04.py
+│   ├── test_day_03.py  
+│   ├── test_day_04.py 
+│   └── test_day_05.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
 │       ├── day-02-reflection.md    
-│       ├── day-03-reflection.md
-│       └── day-04-reflection.md
+│       ├── day-03-reflection.md  
+│       ├── day-04-reflection.md
+│       └── day-05-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
