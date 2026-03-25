@@ -20,9 +20,14 @@ def test_roll_dice():
 def test_generate_password():
     pwd = generate_password(8)
     assert len(pwd) == 8
-    assert any(c.isupper() for c in pwd)
-    assert any(c.islower() for c in pwd)
-    assert any(c.isdigit() for c in pwd)
+    assert any(c.isupper() for c in pwd), "Password should contain at least one uppercase letter"
+    assert any(c.islower() for c in pwd), "Password should contain at least one lowercase letter"
+    assert any(c.isdigit() for c in pwd), "Password should contain at least one digit"
+
+
+def test_generate_password_longer():
+    pwd = generate_password(16)
+    assert len(pwd) == 16
 
 
 def test_reproducibility_with_seed():

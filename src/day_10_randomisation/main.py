@@ -51,8 +51,26 @@ def rock_paper_scissors(player_choice: str) -> str:
 
 
 def generate_password(length: int = 12) -> str:
-    chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()"
-    return ''.join(random.choices(chars, k=length))
+    """Generate a strong random password that always contains uppercase, lowercase, and digit."""
+    if length < 8:
+        length = 8  # enforce minimum reasonable length
+
+    # Guaranteed characters
+    uppercase = random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    lowercase = random.choice("abcdefghijklmnopqrstuvwxyz")
+    digit = random.choice("0123456789")
+    
+    # Remaining characters from a broad pool
+    remaining_length = length - 3
+    pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-="
+    remaining = ''.join(random.choices(pool, k=remaining_length))
+    
+    # Combine and shuffle to avoid predictable pattern
+    password = uppercase + lowercase + digit + remaining
+    password_list = list(password)
+    random.shuffle(password_list)
+    
+    return ''.join(password_list)
 
 
 def main():
