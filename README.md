@@ -49,7 +49,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_12_functions/
 │   │   └── main.py 
-│   └── day_13_for_loops/    
+│   ├── day_13_for_loops/
+│   │   └── main.py 
+│   └── day_14_code_block_indentation/   
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -64,7 +66,8 @@ pro-python-mastery/
 │   ├── test_day_10.py 
 │   ├── test_day_11.py 
 │   ├── test_day_12.py 
-│   └── test_day_13.py
+│   ├── test_day_13.py 
+│   └── test_day_14.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -79,7 +82,8 @@ pro-python-mastery/
 │       ├── day-10-reflection.md
 │       ├── day-11-reflection.md
 │       ├── day-12-reflection.md
-│       └── day-13-reflection.md
+│       ├── day-13-reflection.md
+│       └── day-14-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
