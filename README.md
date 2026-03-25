@@ -45,7 +45,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_10_randomisation/
 │   │   └── main.py 
-│   └── day_11_error_handling/    
+│   ├── day_11_error_handling/
+│   │   └── main.py 
+│   └── day_12_functions/    
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -58,7 +60,8 @@ pro-python-mastery/
 │   ├── test_day_08.py 
 │   ├── test_day_09.py 
 │   ├── test_day_10.py 
-│   └── test_day_11.py
+│   ├── test_day_11.py 
+│   └── test_day_12.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -71,7 +74,8 @@ pro-python-mastery/
 │       ├── day-08-reflection.md
 │       ├── day-09-reflection.md
 │       ├── day-10-reflection.md
-│       └── day-11-reflection.md
+│       ├── day-11-reflection.md
+│       └── day-12-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
