@@ -138,18 +138,18 @@ pro-python-mastery/
 | 07  | Converting Types (Casting)                 | ✅ Completed    | `int()`, `float()`, `str()`, `bool()`, `list()`, `tuple()`, `set()`, `dict()`, ValueError vs TypeError, safe conversion patterns |
 | 08  | If / Elif / Else Conditionals              | ✅ Completed    | Comparison operators, truthy/falsy values, nested conditionals, chained `elif`, real-world decision logic               |
 | 09  | Logical Operations                         | ✅ Completed    | `and`, `or`, `not`, short-circuit evaluation, combining with comparisons, truth tables, realistic combined conditions (access control, login checks) |
-| 10  | Randomisation                              | ⏳ Planned      | `import random`, `random.random()`, `random.randint()`, `random.choice()`, `random.shuffle()`, seeding with `random.seed()` |
-| 11  | Error Handling                             | ⏳ Planned      | `try`/`except`/`else`/`finally`, common exceptions (`ValueError`, `TypeError`, `ZeroDivisionError`, `IndexError`), custom exceptions, raising errors |
-| 12  | Functions                                  | ⏳ Planned      | Defining functions, parameters vs arguments, default values, `*args`, `**kwargs`, function scope, docstrings          |
-| 13  | For Loops                                  | ⏳ Planned      | Iterating over sequences (`list`, `tuple`, `str`, `range`), `for ... in ...`, `enumerate()`, `zip()`, nested loops     |
-| 14  | Code Blocks and Indentation                | ⏳ Planned      | Python's indentation rules (4 spaces convention), blocks in loops/conditionals/functions, common indentation errors   |
-| 15  | While Loops                                | ⏳ Planned      | `while` condition, infinite loops & break, continue, while-else clause, input validation loops                        |
-| 16  | Flowchart Programming                      | ⏳ Planned      | Reading & drawing flowcharts, translating flowcharts → Python code, decision diamonds, process boxes, loops in flowcharts |
-| 17  | Positional and Keyword Arguments           | ⏳ Planned      | Positional vs keyword args, required vs optional, order rules, mixing positional & keyword calls                       |
-| 18  | Python Dictionaries and Lists              | ⏳ Planned      | List methods (`append`, `pop`, `remove`, `extend`, slicing), dict creation, access, update, `.get()`, `.keys()`, `.values()`, `.items()` |
-| 19  | Nested Collections                         | ⏳ Planned      | Lists of lists, dicts of lists, lists of dicts, nested dicts, accessing & modifying nested structures, pretty printing |
-| 20  | Returning from Functions                   | ⏳ Planned      | `return` statement, returning multiple values (tuples), early returns, implicit `None` return                         |
-| 21  | Return vs. Print                           | ⏳ Planned      | Difference between printing & returning values, when to `print` vs `return`, function purity, testing returned values  |
+| 10  | Randomisation                              | ✅ Completed    | `import random`, `random.random()`, `random.randint()`, `random.choice()`, `random.shuffle()`, seeding with `random.seed()` |
+| 11  | Error Handling                             | ✅ Completed    | `try`/`except`/`else`/`finally`, common exceptions (`ValueError`, `TypeError`, `ZeroDivisionError`, `IndexError`), custom exceptions, raising errors |
+| 12  | Functions                                  | ✅ Completed    | Defining functions, parameters vs arguments, default values, `*args`, `**kwargs`, function scope, docstrings          |
+| 13  | For Loops                                  | ✅ Completed    | Iterating over sequences (`list`, `tuple`, `str`, `range`), `for ... in ...`, `enumerate()`, `zip()`, nested loops     |
+| 14  | Code Blocks and Indentation                | ✅ Completed    | Python's indentation rules (4 spaces convention), blocks in loops/conditionals/functions, common indentation errors   |
+| 15  | While Loops                                | ✅ Completed    | `while` condition, infinite loops & break, continue, while-else clause, input validation loops                        |
+| 16  | Flowchart Programming                      | ✅ Completed    | Reading & drawing flowcharts, translating flowcharts → Python code, decision diamonds, process boxes, loops in flowcharts |
+| 17  | Positional and Keyword Arguments           | ✅ Completed    | Positional vs keyword args, required vs optional, order rules, mixing positional & keyword calls                       |
+| 18  | Python Dictionaries and Lists              | ✅ Completed    | List methods (`append`, `pop`, `remove`, `extend`, slicing), dict creation, access, update, `.get()`, `.keys()`, `.values()`, `.items()` |
+| 19  | Nested Collections                         | ✅ Completed    | Lists of lists, dicts of lists, lists of dicts, nested dicts, accessing & modifying nested structures, pretty printing |
+| 20  | Returning from Functions                   | ✅ Completed    | `return` statement, returning multiple values (tuples), early returns, implicit `None` return                         |
+| 21  | Return vs. Print                           | ✅ Completed    | Difference between printing & returning values, when to `print` vs `return`, function purity, testing returned values  |
 | 22  | Docstrings vs. Comments                    | ⏳ Planned      | Writing proper docstrings (Google/Numpy style), PEP 257, difference from `#` comments, tools (help(), `__doc__`)       |
 | 23  | Scope and Local/Global Variables           | ⏳ Planned      | LEGB rule, `global` keyword, `nonlocal`, avoiding global variables, closure basics                                     |
 | 24  | Debugging Techniques                       | ⏳ Planned      | `print()` debugging, `pdb` / `breakpoint()`, reading tracebacks, rubber duck debugging, common bugs & patterns       |
