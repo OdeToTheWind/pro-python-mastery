@@ -55,7 +55,11 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_15_while_loops/
 │   │   └── main.py 
-│   └── day_16_flowchart_programming/   
+│   ├── day_16_flowchart_programming/
+│   │   └── main.py 
+│   ├── day_17_positional_keyword_arguments/
+│   │   └── main.py 
+│   └── day_18_dictionaries_lists/     Python Dictionaries and Lists
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -73,7 +77,9 @@ pro-python-mastery/
 │   ├── test_day_13.py 
 │   ├── test_day_14.py 
 │   ├── test_day_15.py 
-│   └── test_day_16.py
+│   ├── test_day_16.py 
+│   ├── test_day_17.py 
+│   └── test_day_18.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -91,7 +97,9 @@ pro-python-mastery/
 │       ├── day-13-reflection.md
 │       ├── day-14-reflection.md
 │       ├── day-15-reflection.md
-│       └── day-16-reflection.md
+│       ├── day-16-reflection.md
+│       ├── day-17-reflection.md
+│       └── day-18-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
