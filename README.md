@@ -59,7 +59,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_17_positional_keyword_arguments/
 │   │   └── main.py 
-│   └── day_18_dictionaries_lists/     Python Dictionaries and Lists
+│   ├── day_18_dictionaries_lists/
+│   │   └── main.py 
+│   └── day_19_nested_collections/     
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -79,7 +81,8 @@ pro-python-mastery/
 │   ├── test_day_15.py 
 │   ├── test_day_16.py 
 │   ├── test_day_17.py 
-│   └── test_day_18.py
+│   ├── test_day_18.py 
+│   └── test_day_19.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -99,7 +102,8 @@ pro-python-mastery/
 │       ├── day-15-reflection.md
 │       ├── day-16-reflection.md
 │       ├── day-17-reflection.md
-│       └── day-18-reflection.md
+│       ├── day-18-reflection.md
+│       └── day-19-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
