@@ -65,7 +65,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_20_returning_functions/
 │   │   └── main.py 
-│   └── day_21_return_vs_print/      
+│   ├── day_21_return_vs_print/
+│   │   └── main.py 
+│   └── day_22_doc_string_vs_comments/     
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -88,7 +90,8 @@ pro-python-mastery/
 │   ├── test_day_18.py 
 │   ├── test_day_19.py 
 │   ├── test_day_20.py 
-│   └── test_day_21.py
+│   ├── test_day_21.py 
+│   └── test_day_22.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -111,7 +114,8 @@ pro-python-mastery/
 │       ├── day-18-reflection.md
 │       ├── day-19-reflection.md
 │       ├── day-20-reflection.md
-│       └── day-21-reflection.md  
+│       ├── day-21-reflection.md
+│       └── day-22-reflection.md  
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
