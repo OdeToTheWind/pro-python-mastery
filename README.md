@@ -69,7 +69,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_22_doc_string_vs_comments/
 │   │   └── main.py 
-│   └── day_23_scope_local_global_variables/     
+│   ├── day_23_scope_local_global_variables/
+│   │   └── main.py 
+│   └── day_24_debugging_techniques/     Debugging Techniques
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -93,7 +95,9 @@ pro-python-mastery/
 │   ├── test_day_19.py 
 │   ├── test_day_20.py 
 │   ├── test_day_21.py 
-│   └── test_day_22.py
+│   ├── test_day_22.py 
+│   ├── test_day_23.py 
+│   └── test_day_24.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -117,7 +121,9 @@ pro-python-mastery/
 │       ├── day-19-reflection.md
 │       ├── day-20-reflection.md
 │       ├── day-21-reflection.md
-│       └── day-22-reflection.md  
+│       ├── day-22-reflection.md
+│       ├── day-23-reflection.md
+│       └── day-24-reflection.md  
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
@@ -158,10 +164,10 @@ pro-python-mastery/
 | 21  | Return vs. Print                           | ✅ Completed    | Difference between printing & returning values, when to `print` vs `return`, function purity, testing returned values  |
 | 22  | Docstrings vs. Comments                    | ✅ Completed    | Writing proper docstrings (Google/Numpy style), PEP 257, difference from `#` comments, tools (help(), `__doc__`)       |
 | 23  | Scope and Local/Global Variables           | ✅ Completed    | LEGB rule, `global` keyword, `nonlocal`, avoiding global variables, closure basics                                     |
-| 24  | Debugging Techniques                       | ⏳ Planned      | `print()` debugging, `pdb` / `breakpoint()`, reading tracebacks, rubber duck debugging, common bugs & patterns       |
+| 24  | Debugging Techniques                       | ✅ Completed    | `print()` debugging, `pdb` / `breakpoint()`, reading tracebacks, rubber duck debugging, common bugs & patterns       |
 
-**Beginner Projects end on Day 24**  
-**Intermediate Projects start on Day 25**
+**Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**  
+**Phase 2: Intermediate Challenges (Days 25–50) — In Progress**
 
 
 Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
