@@ -139,36 +139,76 @@ pro-python-mastery/
 
 ## Daily Progress
 
-| Day | Topic                                      | Status          | Key Learnings / Deliverables                                                                                          |
-|-----|--------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
-| 01  | Variables, Type Hinting & Scoping          | ✅ Completed    | Strict typing with PEP 484/695, f-strings, variable scoping rules (LEGB), local vs global vs nonlocal                  |
-| 02  | String Manipulation                        | ✅ Completed    | Advanced string methods (`strip`, `title`, `upper`, `lower`, `split`, `join`, `replace`), f-string formatting & alignment, basic input cleaning |
-| 03  | Input & Print Functions                    | ✅ Completed    | User input validation loops, type conversion (`int`, `float`, `str`), advanced `print` formatting (alignment, precision, `sep`, `end`), interactive console apps |
-| 04  | Variable Naming Rules                      | ✅ Completed    | PEP 8 naming conventions (snake_case, CONSTANTS, private `_var`), reserved keywords, shadowing built-ins, descriptive names |
-| 05  | Mathematical Operations                    | ✅ Completed    | Arithmetic operators (`+ - * / // % **`), operator precedence, floor division, modulus use cases, safe division handling |
-| 06  | Built-in Data Types                        | ✅ Completed    | `int`, `float`, `bool`, `str`, `list`, `tuple`, `range`, `dict`, `set`, `frozenset`, `NoneType`, mutability vs immutability, hashability, `type()` vs `isinstance()`, `id()` |
-| 07  | Converting Types (Casting)                 | ✅ Completed    | `int()`, `float()`, `str()`, `bool()`, `list()`, `tuple()`, `set()`, `dict()`, ValueError vs TypeError, safe conversion patterns |
-| 08  | If / Elif / Else Conditionals              | ✅ Completed    | Comparison operators, truthy/falsy values, nested conditionals, chained `elif`, real-world decision logic               |
-| 09  | Logical Operations                         | ✅ Completed    | `and`, `or`, `not`, short-circuit evaluation, combining with comparisons, truth tables, realistic combined conditions (access control, login checks) |
-| 10  | Randomisation                              | ✅ Completed    | `import random`, `random.random()`, `random.randint()`, `random.choice()`, `random.shuffle()`, seeding with `random.seed()` |
-| 11  | Error Handling                             | ✅ Completed    | `try`/`except`/`else`/`finally`, common exceptions (`ValueError`, `TypeError`, `ZeroDivisionError`, `IndexError`), custom exceptions, raising errors |
-| 12  | Functions                                  | ✅ Completed    | Defining functions, parameters vs arguments, default values, `*args`, `**kwargs`, function scope, docstrings          |
-| 13  | For Loops                                  | ✅ Completed    | Iterating over sequences (`list`, `tuple`, `str`, `range`), `for ... in ...`, `enumerate()`, `zip()`, nested loops     |
-| 14  | Code Blocks and Indentation                | ✅ Completed    | Python's indentation rules (4 spaces convention), blocks in loops/conditionals/functions, common indentation errors   |
-| 15  | While Loops                                | ✅ Completed    | `while` condition, infinite loops & break, continue, while-else clause, input validation loops                        |
-| 16  | Flowchart Programming                      | ✅ Completed    | Reading & drawing flowcharts, translating flowcharts → Python code, decision diamonds, process boxes, loops in flowcharts |
-| 17  | Positional and Keyword Arguments           | ✅ Completed    | Positional vs keyword args, required vs optional, order rules, mixing positional & keyword calls                       |
-| 18  | Python Dictionaries and Lists              | ✅ Completed    | List methods (`append`, `pop`, `remove`, `extend`, slicing), dict creation, access, update, `.get()`, `.keys()`, `.values()`, `.items()` |
-| 19  | Nested Collections                         | ✅ Completed    | Lists of lists, dicts of lists, lists of dicts, nested dicts, accessing & modifying nested structures, pretty printing |
-| 20  | Returning from Functions                   | ✅ Completed    | `return` statement, returning multiple values (tuples), early returns, implicit `None` return                         |
-| 21  | Return vs. Print                           | ✅ Completed    | Difference between printing & returning values, when to `print` vs `return`, function purity, testing returned values  |
-| 22  | Docstrings vs. Comments                    | ✅ Completed    | Writing proper docstrings (Google/Numpy style), PEP 257, difference from `#` comments, tools (help(), `__doc__`)       |
-| 23  | Scope and Local/Global Variables           | ✅ Completed    | LEGB rule, `global` keyword, `nonlocal`, avoiding global variables, closure basics                                     |
-| 24  | Debugging Techniques                       | ✅ Completed    | `print()` debugging, `pdb` / `breakpoint()`, reading tracebacks, rubber duck debugging, common bugs & patterns       |
+## Daily Progress
+
+| Day | Topic                                              | Status             | Key Learnings / Deliverables                                                                                          |
+|-----|----------------------------------------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------|
+| 01  | Variables, Type Hinting & Scoping                  | ✅ Completed       | Strict typing with PEP 484/695, f-strings, variable scoping rules (LEGB), local vs global vs nonlocal                  |
+| 02  | String Manipulation                                | ✅ Completed       | Advanced string methods (`strip`, `title`, `upper`, `lower`, `split`, `join`, `replace`), f-string formatting & alignment, basic input cleaning |
+| 03  | Input & Print Functions                            | ✅ Completed       | User input validation loops, type conversion (`int`, `float`, `str`), advanced `print` formatting, interactive console apps |
+| 04  | Variable Naming Rules                              | ✅ Completed       | PEP 8 naming conventions (snake_case, CONSTANTS, private `_var`), reserved keywords, descriptive names                 |
+| 05  | Mathematical Operations                            | ✅ Completed       | Arithmetic operators (`+ - * / // % **`), operator precedence, floor division, safe division handling                 |
+| 06  | Built-in Data Types                                | ✅ Completed       | `int`, `float`, `bool`, `str`, `list`, `tuple`, `dict`, `set`, mutability vs immutability, hashability, `type()` vs `isinstance()` |
+| 07  | Converting Types (Casting)                         | ✅ Completed       | `int()`, `float()`, `str()`, `bool()`, `list()`, `tuple()`, `set()`, `dict()`, ValueError vs TypeError                |
+| 08  | If / Elif / Else Conditionals                      | ✅ Completed       | Comparison operators, truthy/falsy values, nested conditionals, chained `elif`                                        |
+| 09  | Logical Operations                                 | ✅ Completed       | `and`, `or`, `not`, short-circuit evaluation, combining with comparisons, truth tables, access control examples       |
+| 10  | Randomisation                                      | ✅ Completed       | `random` module, `randint()`, `choice()`, `shuffle()`, `seed()`, password generator, games                           |
+| 11  | Error Handling                                     | ✅ Completed       | `try`/`except`/`else`/`finally`, common exceptions (`ValueError`, `TypeError`, `ZeroDivisionError`, `KeyError`)     |
+| 12  | Functions                                          | ✅ Completed       | Parameters, default arguments, `*args`, `**kwargs`, docstrings, type hints                                            |
+| 13  | For Loops                                          | ✅ Completed       | `for` loops, `range()`, `enumerate()`, `zip()`, nested loops, multiplication tables                                   |
+| 14  | Code Blocks and Indentation                        | ✅ Completed       | Python's indentation rules (4 spaces), blocks in loops/conditionals/functions, common IndentationError                 |
+| 15  | While Loops                                        | ✅ Completed       | `while` loops, `break`, `continue`, `while-else`, input validation, guessing games                                    |
+| 16  | Flowchart Programming                              | ✅ Completed       | Reading flowcharts, converting decision diamonds to `if-elif-else`, loops in flowcharts                               |
+| 17  | Positional and Keyword Arguments                   | ✅ Completed       | Positional vs keyword args, default values, `*args`, `**kwargs`, function flexibility                                |
+| 18  | Python Dictionaries and Lists                      | ✅ Completed       | List methods (`append`, `pop`, `sort`), dict methods (`.get()`, `.update()`, `.items()`), shopping cart & inventory  |
+| 19  | Nested Collections                                 | ✅ Completed       | List of dicts, dict of lists, list of lists, dict of dicts, classroom management system                              |
+| 20  | Returning Functions                                | ✅ Completed       | `return` statement, returning multiple values, early returns, return vs print                                        |
+| 21  | Return vs. Print                                   | ✅ Completed       | Difference between printing and returning data, reusability, function composition                                    |
+| 22  | Docstrings vs. Comments                            | ✅ Completed       | `#` comments vs `"""` docstrings, Google-style docstrings, `__doc__` attribute                                       |
+| 23  | Scope and Local/Global Variables                   | ✅ Completed       | LEGB rule, `global` keyword, `nonlocal`, why globals are dangerous                                                    |
+| 24  | Debugging Techniques                               | ✅ Completed       | Print debugging, reading tracebacks, common bugs, `breakpoint()`, rubber duck debugging                              |
+
+### Intermediate Python (Day 25 onwards)
+
+| Day | Topic                                              | Status             | Key Learnings / Deliverables                                                                                          |
+|-----|----------------------------------------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------|
+| 25  | Local Development Environment Setup | ⏳ Planned        | Setting up virtual environments, project structure, best practices for local development                             |
+| 26  | PyCharm Tips and Tricks                            | ⏳ Planned        | Advanced IDE features, debugging in PyCharm, refactoring tools, live templates                                        |
+| 27  | Python Object Oriented Programming                 | ⏳ Planned        | OOP concepts: classes, objects, encapsulation, abstraction                                                            |
+| 28  | Creating Classes in Python                         | ⏳ Planned        | Defining classes, `__init__`, attributes, methods                                                                     |
+| 29  | Using External Python Modules / Import             | ⏳ Planned        | `import`, `from ... import`, installing packages with pip, virtual environments                                      |
+| 30  | Getting / Setting Attributes                       | ⏳ Planned        | `@property`, getters and setters, attribute access control                                                            |
+| 31  | Python Methods                                     | ⏳ Planned        | Instance methods, class methods (`@classmethod`), static methods (`@staticmethod`)                                   |
+| 32  | Class Initialisers                                 | ⏳ Planned        | `__init__` constructor, default values, validation in constructors                                                    |
+| 33  | Module Aliasing                                    | ⏳ Planned        | `import module as alias`, organizing large codebases                                                                  |
+| 34  | Optional, Required and Default Parameters          | ⏳ Planned        | Advanced function parameters, `*args`, `**kwargs`, parameter ordering rules                                           |
+| 35  | Event Listeners                                    | ⏳ Planned        | Event-driven programming concepts, callbacks                                                                          |
+| 36  | Python Instances and State                         | ⏳ Planned        | Instance variables, maintaining state in objects                                                                      |
+| 37  | Python Turtle                                      | ⏳ Planned        | Graphics with Turtle module, drawing shapes and animations                                                            |
+| 38  | Game Development with Python and OOP               | ⏳ Planned        | Building simple games using OOP principles                                                                            |
+| 39  | Python Inheritance                                 | ⏳ Planned        | Single and multiple inheritance, `super()`, method overriding                                                         |
+| 40  | Python Slice Function                              | ⏳ Planned        | Advanced slicing techniques for lists and strings                                                                     |
+| 41  | File I/O - Reading and Writing to Local Files      | ⏳ Planned        | `open()`, context managers (`with`), reading/writing text files                                                       |
+| 42  | File Directories                                   | ⏳ Planned        | `os` and `pathlib` modules, working with folders and paths                                                            |
+| 43  | Reading and Writing to CSV                         | ⏳ Planned        | CSV module, reading/writing tabular data                                                                              |
+| 44  | Introduction to the Pandas Framework               | ⏳ Planned        | DataFrames, basic data analysis with pandas                                                                           |
+| 45  | List Comprehensions                                | ⏳ Planned        | Concise list creation, filtering, and transformation                                                                  |
+| 46  | Dictionary Comprehensions                          | ⏳ Planned        | Creating dictionaries using comprehension syntax                                                                      |
+| 47  | Packing and Unpacking Functions in Python          | ⏳ Planned        | Advanced argument unpacking with `*` and `**`                                                                         |
+| 48  | Creating Desktop GUI Apps with Tkinter             | ⏳ Planned        | Building graphical user interfaces with Tkinter                                                                       |
+| 49  | Strongly Dynamic Typing                            | ⏳ Planned        | Python's dynamic typing behavior and implications                                                                     |
+| 50  | Error Handling and Exceptions                      | ⏳ Planned        | Advanced exception handling patterns                                                                                  |
+| 51  | Try / Except / Raise                               | ⏳ Planned        | Raising custom exceptions, exception hierarchies                                                                      |
+| 52  | Working with JSONs                                 | ⏳ Planned        | `json` module, serialization and deserialization                                                                      |
+| 53  | Local Persistence                                  | ⏳ Planned        | Saving and loading application state                                                                                  |
+| 54  | Sending Email with Python and SMTP                 | ⏳ Planned        | Automating emails using `smtplib`                                                                                     |
+| 55  | Working with Date and Time                         | ⏳ Planned        | `datetime` module, date calculations and formatting                                                                   |
+| 56  | Hosting Python Code Online with PythonAnywhere     | ⏳ Planned        | Deploying Python applications to the cloud                                                                            |
 
 **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**  
-**Phase 2: Intermediate Challenges (Days 25–50) — In Progress**
+**Phase 2: Intermediate Projects start from Day 25**
 
+---
 
 Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
 
