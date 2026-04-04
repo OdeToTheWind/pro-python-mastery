@@ -67,7 +67,9 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_21_return_vs_print/
 │   │   └── main.py 
-│   └── day_22_doc_string_vs_comments/     
+│   ├── day_22_doc_string_vs_comments/
+│   │   └── main.py 
+│   └── day_23_scope_local_global_variables/     
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -154,8 +156,8 @@ pro-python-mastery/
 | 19  | Nested Collections                         | ✅ Completed    | Lists of lists, dicts of lists, lists of dicts, nested dicts, accessing & modifying nested structures, pretty printing |
 | 20  | Returning from Functions                   | ✅ Completed    | `return` statement, returning multiple values (tuples), early returns, implicit `None` return                         |
 | 21  | Return vs. Print                           | ✅ Completed    | Difference between printing & returning values, when to `print` vs `return`, function purity, testing returned values  |
-| 22  | Docstrings vs. Comments                    | ⏳ Planned      | Writing proper docstrings (Google/Numpy style), PEP 257, difference from `#` comments, tools (help(), `__doc__`)       |
-| 23  | Scope and Local/Global Variables           | ⏳ Planned      | LEGB rule, `global` keyword, `nonlocal`, avoiding global variables, closure basics                                     |
+| 22  | Docstrings vs. Comments                    | ✅ Completed    | Writing proper docstrings (Google/Numpy style), PEP 257, difference from `#` comments, tools (help(), `__doc__`)       |
+| 23  | Scope and Local/Global Variables           | ✅ Completed    | LEGB rule, `global` keyword, `nonlocal`, avoiding global variables, closure basics                                     |
 | 24  | Debugging Techniques                       | ⏳ Planned      | `print()` debugging, `pdb` / `breakpoint()`, reading tracebacks, rubber duck debugging, common bugs & patterns       |
 
 **Beginner Projects end on Day 24**  
