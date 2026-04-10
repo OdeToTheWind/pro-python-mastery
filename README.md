@@ -71,7 +71,19 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_23_scope_local_global_variables/
 │   │   └── main.py 
-│   └── day_24_debugging_techniques/     Debugging Techniques
+│   ├── day_24_debugging_techniques/
+│   │   └── main.py 
+│   ├── day_25_dev_env_setup_local/
+│   │   └── main.py 
+│   ├── day_26_pycharm_tips_tricks/
+│   │   └── main.py 
+│   ├── day_27_oop_basics/
+│   │   └── main.py 
+│   ├── day_28_classes/
+│   │   └── main.py 
+│   ├── day_29_external_modules/
+│   │   └── main.py 
+│   └── day_30_getting_setting_attributes/
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -97,7 +109,13 @@ pro-python-mastery/
 │   ├── test_day_21.py 
 │   ├── test_day_22.py 
 │   ├── test_day_23.py 
-│   └── test_day_24.py
+│   ├── test_day_24.py 
+│   ├── test_day_25.py 
+│   ├── test_day_26.py 
+│   ├── test_day_27.py 
+│   ├── test_day_28.py 
+│   ├── test_day_29.py 
+│   └── test_day_30.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -123,12 +141,19 @@ pro-python-mastery/
 │       ├── day-21-reflection.md
 │       ├── day-22-reflection.md
 │       ├── day-23-reflection.md
-│       └── day-24-reflection.md  
+│       ├── day-24-reflection.md
+│       ├── day-25-reflection.md
+│       ├── day-26-reflection.md
+│       ├── day-27-reflection.md
+│       ├── day-28-reflection.md
+│       ├── day-29-reflection.md
+│       └── day-30-reflection.md  
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
 └── LICENSE
 ```
+
 
 ## Key Engineering Practices
 
