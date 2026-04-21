@@ -83,7 +83,17 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_29_external_modules/
 │   │   └── main.py 
-│   └── day_30_getting_setting_attributes/
+│   ├── day_30_getting_setting_attributes/
+│   │   └── main.py 
+│   ├── day_31_python_methods/   
+│   │   └── main.py 
+│   ├── day_32_class_initialisers/ 
+│   │   └── main.py 
+│   ├── day_33_module_aliasing/ 
+│   │   └── main.py 
+│   ├── day_34_optional_required_default_parameters/ 
+│   │   └── main.py 
+│   └── day_35_event_listeners/ 
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -115,7 +125,12 @@ pro-python-mastery/
 │   ├── test_day_27.py 
 │   ├── test_day_28.py 
 │   ├── test_day_29.py 
-│   └── test_day_30.py
+│   ├── test_day_30.py 
+│   ├── test_day_31.py 
+│   ├── test_day_32.py 
+│   ├── test_day_33.py 
+│   ├── test_day_34.py 
+│   └── test_day_35.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -147,7 +162,12 @@ pro-python-mastery/
 │       ├── day-27-reflection.md
 │       ├── day-28-reflection.md
 │       ├── day-29-reflection.md
-│       └── day-30-reflection.md  
+│       ├── day-30-reflection.md
+│       ├── day-31-reflection.md
+│       ├── day-32-reflection.md
+│       ├── day-33-reflection.md
+│       ├── day-34-reflection.md
+│       └── day-35-reflection.md  
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
@@ -197,17 +217,17 @@ pro-python-mastery/
 
 | Day | Topic                                              | Status             | Key Learnings / Deliverables                                                                                          |
 |-----|----------------------------------------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------|
-| 25  | Local Development Environment Setup | ⏳ Planned        | Setting up virtual environments, project structure, best practices for local development                             |
-| 26  | PyCharm Tips and Tricks                            | ⏳ Planned        | Advanced IDE features, debugging in PyCharm, refactoring tools, live templates                                        |
-| 27  | Python Object Oriented Programming                 | ⏳ Planned        | OOP concepts: classes, objects, encapsulation, abstraction                                                            |
-| 28  | Creating Classes in Python                         | ⏳ Planned        | Defining classes, `__init__`, attributes, methods                                                                     |
-| 29  | Using External Python Modules / Import             | ⏳ Planned        | `import`, `from ... import`, installing packages with pip, virtual environments                                      |
-| 30  | Getting / Setting Attributes                       | ⏳ Planned        | `@property`, getters and setters, attribute access control                                                            |
-| 31  | Python Methods                                     | ⏳ Planned        | Instance methods, class methods (`@classmethod`), static methods (`@staticmethod`)                                   |
-| 32  | Class Initialisers                                 | ⏳ Planned        | `__init__` constructor, default values, validation in constructors                                                    |
-| 33  | Module Aliasing                                    | ⏳ Planned        | `import module as alias`, organizing large codebases                                                                  |
-| 34  | Optional, Required and Default Parameters          | ⏳ Planned        | Advanced function parameters, `*args`, `**kwargs`, parameter ordering rules                                           |
-| 35  | Event Listeners                                    | ⏳ Planned        | Event-driven programming concepts, callbacks                                                                          |
+| 25  | Local Development Environment Setup | ✅ Completed       | Setting up virtual environments, project structure, best practices for local development                             |
+| 26  | PyCharm Tips and Tricks                            | ✅ Completed       | Advanced IDE features, debugging in PyCharm, refactoring tools, live templates                                        |
+| 27  | Python Object Oriented Programming                 | ✅ Completed       | OOP concepts: classes, objects, encapsulation, abstraction                                                            |
+| 28  | Creating Classes in Python                         | ✅ Completed       | Defining classes, `__init__`, attributes, methods                                                                     |
+| 29  | Using External Python Modules / Import             | ✅ Completed       | `import`, `from ... import`, installing packages with pip, virtual environments                                      |
+| 30  | Getting / Setting Attributes                       | ✅ Completed       | `@property`, getters and setters, attribute access control                                                            |
+| 31  | Python Methods                                     | ✅ Completed       | Instance methods, class methods (`@classmethod`), static methods (`@staticmethod`)                                   |
+| 32  | Class Initialisers                                 | ✅ Completed       | `__init__` constructor, default values, validation in constructors                                                    |
+| 33  | Module Aliasing                                    | ✅ Completed       | `import module as alias`, organizing large codebases                                                                  |
+| 34  | Optional, Required and Default Parameters          | ✅ Completed       | Advanced function parameters, `*args`, `**kwargs`, parameter ordering rules                                           |
+| 35  | Event Listeners                                    | ✅ Completed       | Event-driven programming concepts, callbacks                                                                          |
 | 36  | Python Instances and State                         | ⏳ Planned        | Instance variables, maintaining state in objects                                                                      |
 | 37  | Python Turtle                                      | ⏳ Planned        | Graphics with Turtle module, drawing shapes and animations                                                            |
 | 38  | Game Development with Python and OOP               | ⏳ Planned        | Building simple games using OOP principles                                                                            |
