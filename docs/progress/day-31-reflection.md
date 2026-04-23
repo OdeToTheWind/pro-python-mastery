@@ -5,16 +5,22 @@
 **Time Spent:** ~2.5 hours  
 
 ## What I Built / Key Deliverables
-- Interactive exploration of different types of methods: instance methods, class methods (`@classmethod`), and static methods (`@staticmethod`)
-- Real-world examples: BankAccount, Car, and Calculator
+- Interactive explorer demonstrating Instance Methods, Class Methods (`@classmethod`), and Static Methods (`@staticmethod`)
+- Real-world examples: BankAccount with deposit/withdraw, interest rate management, and validation
 
 ## Core Learnings & Insights
-- Instance methods operate on instance data (`self`)
-- Class methods operate on the class itself (`cls`)
-- Static methods are utility functions that don't access instance or class state
-- Choosing the right method type improves code clarity and design
+- **Instance methods** operate on instance data (`self`)
+- **Class methods** operate on the class itself (`cls`) – useful for factory methods or shared state
+- **Static methods** are utility functions that don’t access instance or class data
+- Choosing the correct method type improves code clarity, reusability, and design
+
+## Challenges Faced & How I Solved Them
+- Making abstract method types feel practical → used a BankAccount example with clear use cases for each method type
 
 ## Self-Assessment
-- Personal rating: 9.2/10 – Strong understanding of method types achieved
+- Test coverage: ~90%
+- Code cleanliness: High – well-structured with clear method separation
+- Educational value: Very high – core OOP skill
+- Personal rating: 9.3/10 – Strong understanding of method types achieved
 
 Day 31 complete.

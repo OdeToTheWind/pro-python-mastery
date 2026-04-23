@@ -93,7 +93,17 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_34_optional_required_default_parameters/ 
 │   │   └── main.py 
-│   └── day_35_event_listeners/ 
+│   ├── day_35_event_listeners/
+│   │   └── main.py 
+│   ├── day_36_python_instances_and_state/   
+│   │   └── main.py 
+│   ├── day_37_python_turtle/ 
+│   │   └── main.py 
+│   ├── day_38_game_development_with_python_and_oop/ 
+│   │   └── main.py 
+│   ├── day_39_python_inheritance/ 
+│   │   └── main.py 
+│   └── day_40_python_slice_function/ 
 │       └── main.py       
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
@@ -130,7 +140,12 @@ pro-python-mastery/
 │   ├── test_day_32.py 
 │   ├── test_day_33.py 
 │   ├── test_day_34.py 
-│   └── test_day_35.py
+│   ├── test_day_35.py 
+│   ├── test_day_36.py 
+│   ├── test_day_37.py 
+│   ├── test_day_38.py 
+│   ├── test_day_39.py 
+│   └── test_day_40.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -167,7 +182,12 @@ pro-python-mastery/
 │       ├── day-32-reflection.md
 │       ├── day-33-reflection.md
 │       ├── day-34-reflection.md
-│       └── day-35-reflection.md  
+│       ├── day-35-reflection.md
+│       ├── day-36-reflection.md
+│       ├── day-37-reflection.md
+│       ├── day-38-reflection.md
+│       ├── day-39-reflection.md
+│       └── day-40-reflection.md  
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
@@ -228,11 +248,11 @@ pro-python-mastery/
 | 33  | Module Aliasing                                    | ✅ Completed       | `import module as alias`, organizing large codebases                                                                  |
 | 34  | Optional, Required and Default Parameters          | ✅ Completed       | Advanced function parameters, `*args`, `**kwargs`, parameter ordering rules                                           |
 | 35  | Event Listeners                                    | ✅ Completed       | Event-driven programming concepts, callbacks                                                                          |
-| 36  | Python Instances and State                         | ⏳ Planned        | Instance variables, maintaining state in objects                                                                      |
-| 37  | Python Turtle                                      | ⏳ Planned        | Graphics with Turtle module, drawing shapes and animations                                                            |
-| 38  | Game Development with Python and OOP               | ⏳ Planned        | Building simple games using OOP principles                                                                            |
-| 39  | Python Inheritance                                 | ⏳ Planned        | Single and multiple inheritance, `super()`, method overriding                                                         |
-| 40  | Python Slice Function                              | ⏳ Planned        | Advanced slicing techniques for lists and strings                                                                     |
+| 36  | Python Instances and State                         | ✅ Completed       | Instance variables, maintaining state in objects                                                                      |
+| 37  | Python Turtle                                      | ✅ Completed       | Graphics with Turtle module, drawing shapes and animations                                                            |
+| 38  | Game Development with Python and OOP               | ✅ Completed       | Building simple games using OOP principles                                                                            |
+| 39  | Python Inheritance                                 | ✅ Completed       | Single and multiple inheritance, `super()`, method overriding                                                         |
+| 40  | Python Slice Function                              | ✅ Completed       | Advanced slicing techniques for lists and strings                                                                     |
 | 41  | File I/O - Reading and Writing to Local Files      | ⏳ Planned        | `open()`, context managers (`with`), reading/writing text files                                                       |
 | 42  | File Directories                                   | ⏳ Planned        | `os` and `pathlib` modules, working with folders and paths                                                            |
 | 43  | Reading and Writing to CSV                         | ⏳ Planned        | CSV module, reading/writing tabular data                                                                              |

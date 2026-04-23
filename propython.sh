@@ -9,15 +9,19 @@ VENV_PATH=".venv"
 
 if [ -d "$VENV_PATH" ]; then
     echo "🔧 Activating virtual environment..."
-    source "$VENV_PATH/bin/activate" 2>/dev/null || {
-        echo "⚠️  Could not activate virtual environment."
-        echo "   Try: source $VENV_PATH/bin/activate"
-    }
+
+    # Windows Git Bash / MSYS2
+    if [ -f "$VENV_PATH/Scripts/activate" ]; then
+        source "$VENV_PATH/Scripts/activate"
+    # Linux / macOS
+    elif [ -f "$VENV_PATH/bin/activate" ]; then
+        source "$VENV_PATH/bin/activate"
+    else
+        echo "⚠️  Virtual environment found but activation script missing."
+    fi
 else
     echo "⚠️  Virtual environment not found at $VENV_PATH"
-    echo "   Run once: python -m venv .venv"
-    echo "   Then activate: source .venv/bin/activate"
-    echo "Continuing without virtual environment..."
+    echo "   Create it with: python -m venv .venv"
 fi
 
 # ====================== FIND LATEST DAY ======================
@@ -39,7 +43,6 @@ python -m pytest -v
 
 if [ $? -ne 0 ]; then
     echo "❌ Tests failed! Fix your code before pushing."
-    # Deactivate if activated
     deactivate 2>/dev/null || true
     exit 1
 fi
