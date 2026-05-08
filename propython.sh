@@ -16,15 +16,15 @@ if [ -d "$VENV_PATH" ]; then
     fi
 fi
 
-# ====================== RUN DAYS 36 TO 45 ======================
-echo "🚀 Running Days 36 to 45 (Main Modules)..."
+# ====================== RUN DAYS 46 TO 56 ======================
+echo "🚀 Running Days 46 to 56 (Main Modules)..."
 
-for day in {36..45}; do
+for day in {46..56}; do
     # More precise and robust directory matching
     dir=$(find src -maxdepth 1 -type d -name "day_${day}_*" | head -n 1)
     
     if [ -n "$dir" ]; then
-        # Convert path to module (e.g. src/day_36_advanced -> src.day_36_advanced)
+        # Convert path to module (e.g. src/day_46_advanced -> src.day_46_advanced)
         module=$(echo "$dir" | sed 's/\//./g')
         
         echo "──────────────────────────────────────────"
@@ -60,11 +60,11 @@ fi
 echo "✅ All tests passed!"
 
 # ====================== GIT COMMIT & PUSH ======================
-echo "📝 Enter commit message for Days 36-45:"
+echo "📝 Enter commit message for Days 46-56:"
 read -r commit_message
 
 git add .
-git commit -m "Days 36-45: $commit_message"
+git commit -m "Days 46-56: $commit_message"
 git push origin master
 
 echo "✅ Successfully tested, committed and pushed!"
