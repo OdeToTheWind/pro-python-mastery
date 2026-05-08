@@ -1,46 +1,65 @@
 #!/usr/bin/env bash
-
 echo "------------------------------------------"
 echo "🐍 PRO PYTHON MASTERY: ENGINEERING CHECK"
 echo "------------------------------------------"
 
 # ====================== VIRTUAL ENVIRONMENT ======================
 VENV_PATH=".venv"
-
 if [ -d "$VENV_PATH" ]; then
     echo "🔧 Activating virtual environment..."
     if [ -f "$VENV_PATH/Scripts/activate" ]; then
         source "$VENV_PATH/Scripts/activate"
     elif [ -f "$VENV_PATH/bin/activate" ]; then
         source "$VENV_PATH/bin/activate"
+    else
+        echo "⚠️  Virtual environment found but activate script missing."
     fi
 fi
 
 # ====================== RUN DAYS 36 TO 45 ======================
-echo "🚀 Running Days 36 to 45 (Intermediate Section)..."
+echo "🚀 Running Days 36 to 45 (Main Modules)..."
 
 for day in {36..45}; do
-    dir="src/day_${day}_"*
-    if [ -d "$dir" ]; then
-        module=$(echo "${dir%/}" | tr '/' '.')
+    # More precise and robust directory matching
+    dir=$(find src -maxdepth 1 -type d -name "day_${day}_*" | head -n 1)
+    
+    if [ -n "$dir" ]; then
+        # Convert path to module (e.g. src/day_36_advanced -> src.day_36_advanced)
+        module=$(echo "$dir" | sed 's/\//./g')
+        
         echo "──────────────────────────────────────────"
-        echo "Running Day $day: $module"
+        echo "Running Day $day → $module.main"
         echo "──────────────────────────────────────────"
-        python -m "$module.main"
+        
+        # Run the main entry point
+        python -m "${module}.main"
+        
+        if [ $? -ne 0 ]; then
+            echo "❌ Day $day failed!"
+            deactivate 2>/dev/null || true
+            exit 1
+        fi
+        
+        echo "✅ Day $day completed successfully"
         echo ""
+    else
+        echo "⚠️  Directory for Day $day not found (skipped)"
     fi
 done
 
+# ====================== TEST SUITE ======================
 echo "🧪 Running Comprehensive Test Suite..."
-python -m pytest -v
+python -m pytest -v --tb=short
 
 if [ $? -ne 0 ]; then
-    echo "❌ Tests failed! Fix your code before pushing."
+    echo "❌ Some tests failed! Fix them before pushing."
     deactivate 2>/dev/null || true
     exit 1
 fi
 
-# ====================== GIT ======================
+echo "✅ All tests passed!"
+
+# ====================== GIT COMMIT & PUSH ======================
 echo "📝 Enter commit message for Days 36-45:"
 read -r commit_message
 
@@ -48,8 +67,8 @@ git add .
 git commit -m "Days 36-45: $commit_message"
 git push origin master
 
-echo "✅ Successfully tested and pushed!"
+echo "✅ Successfully tested, committed and pushed!"
 
-# Deactivate venv
+# Cleanup
 deactivate 2>/dev/null || true
-echo "Done."
+echo "🎉 Done."
