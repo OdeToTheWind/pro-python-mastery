@@ -340,71 +340,71 @@ pro-python-mastery/
 | 55  | Working with Date and Time                         | ✅ Completed       | `datetime` module, date calculations and formatting                                                                   |
 | 56  | Hosting Python Code Online with PythonAnywhere     | ✅ Completed       | Deploying Python applications to the cloud                                                                            |
 
-### Intermediate Projects (Days 57–63)
+### Intermediate Projects (Days 57–63): API Clients, Automation & Data Acquisition (Client-side Only)
 
-| Day | Topic                                              | Status        | Key Learnings / Deliverables                                                                 |
-|-----|----------------------------------------------------|---------------|---------------------------------------------------------------------------------------------|
-| 57  | APIs                                               | ⏳ Planned    | Understanding REST APIs, JSON handling, API endpoints, HTTP methods                        |
-| 58  | Making HTTP Requests with the Requests module      | ⏳ Planned    | Using `requests` library, GET/POST requests, handling responses and status codes           |
-| 59  | Sending Parameters with the Request                | ⏳ Planned    | Query parameters, path parameters, request headers, form data, JSON payloads               |
-| 60  | APIs with Authentication                           | ⏳ Planned    | API keys, Bearer tokens, OAuth2, Basic Authentication, secure credential handling          |
-| 61  | Sending SMS with Python                            | ⏳ Planned    | Integrating Twilio or other SMS gateways, environment variables for secrets               |
-| 62  | Web Scraping with Beautiful Soup                   | ⏳ Planned    | Parsing HTML, navigating DOM, extracting data, handling dynamic content                    |
-| 63  | Browser Automation with Selenium Web Driver        | ⏳ Planned    | Automating web browsers, element locators, handling waits, form interactions              |
+| Day | Topic                                              | Status       | Key Learnings / Deliverables                                                                  |
+|-----|----------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
+| 57  | REST APIs & JSON                                   | 📋 Planned   | HTTP methods and status codes; JSON serialization and deserialization with the `json` module |
+| 58  | HTTP Requests with `requests`                     | 📋 Planned   | GET/POST requests, response handling, status codes, timeouts, and sessions                   |
+| 59  | Query Parameters, Headers & Payloads             | 📋 Planned   | Query/path parameters, custom headers, form data, and JSON request bodies                    |
+| 60  | API Authentication (Client-side)                  | 📋 Planned   | API keys, Bearer tokens, Basic Auth, environment variables, and `python-dotenv`              |
+| 61  | SMS / Notification Automation                     | 📋 Planned   | Twilio or similar clients and secure secrets management                                     |
+| 62  | Web Scraping with Beautiful Soup                  | 📋 Planned   | HTML parsing, CSS/XPath selectors, data extraction, and polite scraping                      |
+| 63  | Browser Automation with Selenium                  | 📋 Planned   | Element locators, waits, form filling, headless mode, and dynamic-page scraping              |
 
-### Advanced Projects (Days 64–75)
+### Advanced Python Language & Tooling (Days 64–82)
 
-| Day | Topic                                              | Status       | Key Learnings / Deliverables                 |
-|-----|----------------------------------------------------|--------------|----------------------------------------------|
-| 64  | Demo 64: OAuth2 Social Login (Google/GitHub)       | 📋 Planned   | Social authentication                        |
-| 65  | Demo 65: Advanced Django Capstone                  | 📋 Planned   | Full Django production setup                 |
-| 66  | Demo 66: OAuth2 + Social Login Flow                | 📋 Planned   | Complete auth ecosystem                      |
-| 67  | Demo 67: Large File Processing Queue               | 📋 Planned   | Background workers                           |
-| 68  | Demo 68: API Gateway Implementation                | 📋 Planned   | Routing & auth centralization                |
-| 69  | Demo 69: Database Read Replicas & Sharding Intro   | 📋 Planned   | Scaling strategies                           |
-| 70  | Demo 70: Multi-level Caching (Redis)                | 📋 Planned   | Performance optimization                     |
-| 71  | Demo 71: 95%+ Test Coverage & CI                    | 📋 Planned   | Quality assurance                            |
-| 72  | Demo 72: Blue-Green Deployment Strategy            | 📋 Planned   | Zero-downtime deployment                     |
-| 73  | Demo 73: Zero-Downtime Database Migrations         | 📋 Planned   | Safe schema changes                          |
-| 74  | Demo 74: Security Audit (bandit + safety)          | 📋 Planned   | Vulnerability scanning                       |
-| 75  | Demo 75: Capstone Microservice SaaS Starter        | 📋 Planned   | Fully orchestrated system                    |
+| Day | Topic                                              | Status       | Key Learnings / Deliverables                                                                  |
+|-----|----------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
+| 64  | Iterators & the Iterator Protocol                 | 📋 Planned   | `__iter__`, `__next__`, and custom iterators                                                  |
+| 65  | Generators & `yield`                              | 📋 Planned   | Generator functions and expressions, lazy evaluation, and memory benefits                   |
+| 66  | Advanced Generators                               | 📋 Planned   | `yield from`, generator pipelines, and sending values                                        |
+| 67  | Decorators Deep Dive                              | 📋 Planned   | Function decorators, `@wraps`, parameterized decorators, and class-based decorators           |
+| 68  | Context Managers                                  | 📋 Planned   | The `with` statement, `__enter__`, `__exit__`, and `contextlib`                              |
+| 69  | Descriptors                                       | 📋 Planned   | Data and non-data descriptors; how `@property` works under the hood                          |
+| 70  | Metaclasses (Introduction)                        | 📋 Planned   | `type`, custom metaclasses, and when (or when not) to use them                                |
+| 71  | Functional Tools                                  | 📋 Planned   | `itertools`, `functools`, `partial`, `lru_cache`, and `reduce`                               |
+| 72  | Advanced Typing                                   | 📋 Planned   | `Protocol`, `TypeVar`, `Generic`, `TypedDict`, `Literal`, and checking with mypy/pyright      |
+| 73  | Concurrency: Threading                            | 📋 Planned   | `threading`, locks, queues, and GIL implications                                              |
+| 74  | Concurrency: Multiprocessing                     | 📋 Planned   | Process pools, shared memory, and choosing processes vs. threads                              |
+| 75  | Asyncio Fundamentals                             | 📋 Planned   | Event loop, coroutines, `async`/`await`, `gather`, and `create_task`                          |
+| 76  | Advanced Asyncio                                  | 📋 Planned   | Async context managers, async iterators, and concurrent HTTP with `aiohttp`                   |
+| 77  | Logging & Configuration                          | 📋 Planned   | Logging handlers, formatters, and levels; `configparser`, YAML, and TOML                      |
+| 78  | Testing with `pytest`                             | 📋 Planned   | Fixtures, parametrization, mocking, and coverage                                             |
+| 79  | Packaging & Distribution                          | 📋 Planned   | `pyproject.toml`, setuptools/hatch/poetry, wheels, and test publishing to PyPI                |
+| 80  | Profiling & Performance                           | 📋 Planned   | `cProfile`, `timeit`, `memory_profiler`, and common optimization patterns                     |
+| 81  | Advanced Regular Expressions                     | 📋 Planned   | Complex patterns, groups, lookarounds, and the `re` module                                   |
+| 82  | SQLite & Pure Database Work                      | 📋 Planned   | `sqlite3`, transactions, context managers, and basic schema design without an ORM            |
 
-### Real-World Projects (Days 76–100)
+### Capstone-Style Pure-Python Projects (Days 83–100)
 
-| Day | Topic                                              | Status       | Key Learnings / Deliverables                 |
-|-----|----------------------------------------------------|--------------|----------------------------------------------|
-| 76  | Demo 76: E-commerce Platform with Stripe Payments | 📋 Planned   | Cart, orders, payments (production-ready)    |
-| 77  | Demo 77: Twitter/X Clone (Real-time Feed)           | 📋 Planned   | Likes, follows, WebSockets                   |
-| 78  | Demo 78: Job Board SaaS (Multi-tenant)              | 📋 Planned   | Resume upload, email alerts                  |
-| 79  | Demo 79: Real-time Collaboration Tool (Notion-lite) | 📋 Planned  | CRDT basics, WebSockets                      |
-| 80  | Demo 80: Online Learning LMS                       | 📋 Planned   | Courses, video, progress tracking             |
-| 81  | Demo 81: Inventory & Warehouse Management          | 📋 Planned   | Reports, barcode simulation                  |
-| 82  | Demo 82: Fitness Tracker with Analytics Charts     | 📋 Planned   | Data visualization                           |
-| 83  | Demo 83: Expense Splitter (Splitwise Clone)        | 📋 Planned   | Group expenses, settlements                  |
-| 84  | Demo 84: AI Chatbot Backend (LangChain + RAG)      | 📋 Planned   | LLM integration                              |
-| 85  | Demo 85: Booking System (Airbnb/Hotel Clone)       | 📋 Planned   | Calendar, availability                       |
-| 86  | Demo 86: Social Media Analytics Dashboard          | 📋 Planned   | Scheduled posts                              |
-| 87  | Demo 87: Multi-tenant Blog CMS                     | 📋 Planned   | Custom domains                               |
-| 88  | Demo 88: Crypto Portfolio Tracker                  | 📋 Planned   | Real-time prices                             |
-| 89  | Demo 89: HR Management System                      | 📋 Planned   | Employees, leaves, payroll                   |
-| 90  | Demo 90: Event Ticketing Platform                  | 📋 Planned   | QR codes, payments                           |
-| 91  | Demo 91: Marketplace (Etsy-like)                   | 📋 Planned   | Seller dashboard, reviews                    |
-| 92  | Demo 92: Internal Dev Tools Portal                | 📋 Planned   | API key management                           |
-| 93  | Demo 93: Telemedicine Booking System               | 📋 Planned   | Patient records                              |
-| 94  | Demo 94: Freelance Marketplace                     | 📋 Planned   | Proposals, escrow simulation                 |
-| 95  | Demo 95: AI-Powered News Aggregator                | 📋 Planned   | Summarization                                |
-| 96  | Demo 96: Real Estate Platform with Maps            | 📋 Planned   | Filters, virtual tours                       |
-| 97  | Demo 97: Subscription SaaS Boilerplate             | 📋 Planned   | Stripe recurring + tenant isolation          |
-| 98  | Demo 98: Collaborative Whiteboard                  | 📋 Planned   | Canvas + WebSockets                          |
-| 99  | Demo 99: Personal Finance Dashboard                | 📋 Planned   | Bank-like UI + analytics                     |
-| 100 | Demo 100: Ultimate Fullstack Portfolio SaaS         | 📋 Planned   | Auth, payments, analytics, CI/CD, monitoring, multi-cloud ready |
+| Day | Topic                                              | Status       | Key Learnings / Deliverables                                                                  |
+|-----|----------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
+| 83  | Robust CLI Application                            | 📋 Planned   | `argparse` or `click`/`typer`, subcommands, configuration, and logging                        |
+| 84  | Data Pipeline / ETL Script                        | 📋 Planned   | Generators, `pathlib`, CSV/JSON, error handling, and logging                                  |
+| 85  | Concurrent File / Network Processor               | 📋 Planned   | Thread/process pools or asyncio for I/O-bound work                                           |
+| 86  | Custom Logging & Monitoring Tool                  | 📋 Planned   | Structured logging, log rotation, and basic metrics                                          |
+| 87  | Plugin-style Architecture                         | 📋 Planned   | Entry points, dynamic loading, and decorator-based registration                              |
+| 88  | Automated Report Generator                        | 📋 Planned   | Data aggregation, `string.Template` or Jinja2, and PDF/CSV output                             |
+| 89  | Background Task Runner                            | 📋 Planned   | Scheduling with `schedule` or APScheduler and process management                             |
+| 90  | Memory-efficient Large File Processor             | 📋 Planned   | Generators, streaming, and chunking                                                         |
+| 91  | Type-safe Configuration System                    | 📋 Planned   | Pydantic or dataclasses, validation, and environment variables                               |
+| 92  | Test Suite for a Multi-module Package             | 📋 Planned   | High coverage, fixtures, mocks, and CI-friendly structure                                    |
+| 93  | Simple Async Network Service                      | 📋 Planned   | An asyncio TCP/HTTP server with the standard library or `aiohttp`, without a full framework  |
+| 94  | Data Validation & Cleaning Library                | 📋 Planned   | Reusable validators, custom exceptions, and type hints                                       |
+| 95  | Performance-critical Module                       | 📋 Planned   | Profiling, optimization, and optional Cython/Numba                                           |
+| 96  | Packaging a Real Tool                             | 📋 Planned   | Complete `pyproject.toml`, CLI entry point, documentation, tests, and TestPyPI publishing    |
+| 97  | Automation Bot Suite                              | 📋 Planned   | Combining scraping, APIs, scheduling, and notifications                                      |
+| 98  | Scientific / Simulation Mini-project              | 📋 Planned   | NumPy and a pure-Python simulation or Monte Carlo project                                   |
+| 99  | Observability & Debugging Toolkit                 | 📋 Planned   | Advanced traceback handling, custom debuggers, and structured logs                          |
+| 100 | Portfolio Capstone: Production-ready Python Tool  | 📋 Planned   | A useful multi-module tool with CLI, tests (>90% coverage), logging, config, packaging, and docs |
 
-**Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**  
-**Phase 2: Intermediate Python  (Days 25–56) — Completed! 🎓**  
-**Phase 2: Intermediate Projects (Days 57–63) — Started!**  
-**Phase 3: Advanced Projects (Days 64–75) — Planned**  
-**Phase 4: Real-World Projects (Days 76–100) — Planned**  
- 
+- **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
+- **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
+- **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Planned**
+- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — Planned**
+- **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Planned**
+
 ---
 
 Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
