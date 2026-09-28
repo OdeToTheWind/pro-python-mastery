@@ -135,8 +135,22 @@ pro-python-mastery/
 │   │   └── main.py 
 │   ├── day_55_date_and_time/
 │   │   └── main.py 
-│   └── day_56_pythonanywhere_hosting/ 
-│       └── main.py       
+│   ├── day_56_pythonanywhere_hosting/
+│   │   └── main.py
+│   ├── day_57_rest_apis_json/
+│   │   └── main.py
+│   ├── day_58_http_requests/
+│   │   └── main.py
+│   ├── day_59_request_parameters_headers_payloads/
+│   │   └── main.py
+│   ├── day_60_api_authentication/
+│   │   └── main.py
+│   ├── day_61_sms_notification_automation/
+│   │   └── main.py
+│   ├── day_62_web_scraping/
+│   │   └── main.py
+│   └── day_63_browser_automation_selenium/
+│       └── main.py
 ├── tests/                  # Comprehensive test suite (unit + integration)
 │   ├── test_day_01.py
 │   ├── test_day_02.py  
@@ -193,11 +207,14 @@ pro-python-mastery/
 │   ├── test_day_53.py 
 │   ├── test_day_54.py 
 │   ├── test_day_55.py 
-│   ├── test_day_56.py 
+│   ├── test_day_56.py
 │   ├── test_day_57.py 
 │   ├── test_day_58.py 
 │   ├── test_day_59.py 
-│   └── test_day_60.py
+│   ├── test_day_60.py
+│   ├── test_day_61.py
+│   ├── test_day_62.py
+│   └── test_day_63.py
 ├── docs/                   # Architecture diagrams, design decisions, notes
 │   └── progress/
 │       ├── day-01-reflection.md      
@@ -257,7 +274,12 @@ pro-python-mastery/
 │       ├── day-55-reflection.md
 │       ├── day-56-reflection.md
 │       ├── day-57-reflection.md
-│       └── day-58-reflection.md  
+│       ├── day-58-reflection.md
+│       ├── day-59-reflection.md
+│       ├── day-60-reflection.md
+│       ├── day-61-reflection.md
+│       ├── day-62-reflection.md
+│       └── day-63-reflection.md
 ├── propython.sh            # Executable file for the Repo
 ├── requirements.txt        # Development and testing dependencies
 ├── README.md
