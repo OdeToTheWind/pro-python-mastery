@@ -8,5 +8,5 @@
   "pitfalls": [
     "Mixing CLI parsing with business logic makes both hard to test – keep the logic in pure functions."
   ],
-  "next": "Course complete – continue with the roadmap in learning_develop.md."
+  "next": "Revisit any day with `./propython.sh <day> --quiz`, then extend budgetly with one of its bonus tasks."
 }

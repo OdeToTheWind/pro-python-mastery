@@ -36,4 +36,4 @@ pytest tests/test_day_100.py -v
 ```
 
 ## Next step
-- Course complete – continue with the roadmap in learning_develop.md.
+- Revisit any day with `./propython.sh <day> --quiz`, then extend budgetly with one of its bonus tasks.

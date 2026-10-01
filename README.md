@@ -13,14 +13,20 @@
   <a href="LICENSE-CONTENT"><img src="https://img.shields.io/badge/content-CC%20BY%204.0-1a1a1a?style=flat-square" alt="Content: CC BY 4.0"></a>
 </p>
 
-**Pro Python Mastery** is a free, open course that takes you from your first variable to
-production-ready Python in 100 days. Each day is a small, realistic project. Day 1 is a
-learning-streak tracker, Day 47 is a GPS route planner and Day 100 is an expense tracker
-you could put on your CV. Every day ships three pieces that CI keeps in agreement: typed,
-documented **code** with a runnable demo, a **test suite** that doubles as worked examples,
-and a **reflection** that records what was learned and which mistakes to avoid. Nothing
-in the progress table below is self-reported. If a day's code, tests or reflection go
-missing or out of date, the build fails.
+**Pro Python Mastery** covers Python in 100 topics, one per day, from variables and strings
+to asyncio, packaging and a multi-module command-line tool. Each topic is a small, realistic
+program you can run and read: a learning-streak tracker on Day 1, a GPS route planner on
+Day 47, an expense tracker on Day 100.
+
+Every day contains:
+
+* **Code:** typed, documented functions with a runnable demo.
+* **Tests:** a pytest suite that shows the behaviour and the edge cases.
+* **A reflection:** the key points of the topic and the mistakes to avoid.
+* **A quiz:** two multiple-choice questions and two open bonus questions.
+
+Run `./propython.sh 18` to see Day 18 explained from its own code, run its tests and answer
+its questions. CI checks that all of this stays consistent.
 
 ```bash
 git clone https://github.com/OdeToTheWind/pro-python-mastery.git && cd pro-python-mastery
@@ -33,16 +39,13 @@ python -m src.day_01_variables.main                    # run your first day
 
 ## Project Goals
 
-The course is built around five objectives. Each one is backed by something in the
-repository that can be checked, so none of them is only a promise.
-
 | # | Objective | How the repository delivers it |
 |:-:|---|---|
-| 1 | **Teach Python the way it is written professionally.** | Every module is type-hinted, documented, linted with ruff and type-checked with mypy, from Day 1 onwards. |
-| 2 | **Learn by building, not by reading.** | 100 distinct scenarios, one per day. No two days share a project, and CI enforces that. |
-| 3 | **Make testing a habit, not a chapter.** | Every day has its own pytest suite, at least 5 tests each, with no network access and no placeholder assertions. |
-| 4 | **Keep the course honest and current.** | `tests/test_syllabus_sync.py` ties the syllabus, code, tests, reflections and this README together. |
-| 5 | **Finish with portfolio-grade work.** | Phase 5 (Days 83–100) builds complete tools: CLIs, services, pipelines, packaging and a multi-module capstone. |
+| 1 | **Python written the professional way.** | Every module is type-hinted, documented, linted with ruff and type-checked with mypy, from Day 1 onwards. |
+| 2 | **Every topic is something you run.** | 100 distinct scenarios, one per day, each with a demo. No two days share a project, and CI enforces that. |
+| 3 | **Behaviour is shown by tests.** | Every day has its own pytest suite, at least 5 tests each, with no network access and no placeholder assertions. |
+| 4 | **Content stays consistent.** | `tests/test_syllabus_sync.py` ties the syllabus, code, tests, reflections and this README together. |
+| 5 | **Complete tools by the end.** | Days 83–100 build complete tools: CLIs, services, pipelines, packaging and a multi-module capstone. |
 
 ### How to use each day
 
@@ -103,7 +106,7 @@ a short self-check:
 
 ## Dataset Description
 
-This course does not depend on one large dataset. Instead, each day brings the small,
+This project does not depend on one large dataset. Instead, each day brings the small,
 purpose-built data its scenario needs. The data falls into four groups, and none of it
 contains personal information.
 
@@ -125,7 +128,7 @@ them for real.
 
 ```text
 pro-python-mastery/
-├── src/                              # one package per day: the lessons
+├── src/                              # one package per day
 │   ├── day_01_variables/
 │   │   ├── __init__.py
 │   │   └── main.py                   # "Scenario:" docstring · DELIVERABLES · functions · main()
@@ -147,12 +150,11 @@ pro-python-mastery/
 │   └── learn.py                      # the per-day study mode behind ./propython.sh <day>
 ├── .github/                          # CI workflow, issue and pull request templates
 ├── syllabus.md                       # the 100-day curriculum, grouped into five phases
-├── learning_develop.md               # the plan for the course after Day 100
 ├── propython.sh                      # study a day (./propython.sh 18) or run the full check (--check)
 ├── pyproject.toml                    # pytest, coverage, ruff and mypy configuration
 ├── requirements.txt / requirements-dev.txt
 ├── CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md · CITATION.cff
-└── LICENSE.md (MIT, code) · LICENSE-CONTENT (CC BY 4.0, course text)
+└── LICENSE.md (MIT, code) · LICENSE-CONTENT (CC BY 4.0, written content)
 ```
 
 ---
@@ -214,20 +216,20 @@ fails if they are out of date.
 
 ---
 
-## Project Report & Progress Tracker
+## Topic Map
 
-<!-- phase-status:start -->
-| Phase | Days | Status |
+<!-- topic-map:start -->
+| Phase | Days | What it covers |
 |---|:-:|---|
-| 1 · Beginner Fundamentals | 1–24 | ✅ Complete (24/24) |
-| 2 · Intermediate Python | 25–56 | ✅ Complete (32/32) |
-| 3 · API Clients, Automation & Data Acquisition | 57–63 | ✅ Complete (7/7) |
-| 4 · Advanced Python Language & Tooling | 64–82 | ✅ Complete (19/19) |
-| 5 · Capstone-Style Pure-Python Projects | 83–100 | ✅ Complete (18/18) |
-<!-- phase-status:end -->
+| [1 · Beginner Fundamentals](syllabus.md#phase-1--beginner-fundamentals-days-124) | 1–24 | Write small, correct programs: variables, strings, numbers, conditionals, loops, functions, collections and error handling. |
+| [2 · Intermediate Python](syllabus.md#phase-2--intermediate-python-days-2556) | 25–56 | Organise real programs: environments, OOP, files and data formats, comprehensions, closures, GUIs, persistence and deployment. |
+| [3 · API Clients, Automation & Data Acquisition](syllabus.md#phase-3--api-clients-automation--data-acquisition-days-5763) | 57–63 | Talk to the outside world: REST and JSON, HTTP clients, authentication, notifications, scraping and browser automation. |
+| [4 · Advanced Python Language & Tooling](syllabus.md#phase-4--advanced-python-language--tooling-days-6482) | 64–82 | Use the language at full strength: iterators, generators, decorators, context managers, descriptors, typing, concurrency, asyncio, packaging, profiling, regex and SQL. |
+| [5 · Capstone-Style Pure-Python Projects](syllabus.md#phase-5--capstone-style-pure-python-projects-days-83100) | 83–100 | Ship complete tools: CLIs, pipelines, services, plugins, validation, performance work, packaging and a portfolio capstone. |
+<!-- topic-map:end -->
 
 <details>
-<summary><b>Full 100-day course index</b> (scenario and links for every day)</summary>
+<summary><b>All 100 days</b> (scenario, code, tests and notes for every day)</summary>
 
 Level: 🟢 Beginner · 🟡 Intermediate · 🟠 Advanced · 🔴 Capstone
 
@@ -346,43 +348,30 @@ The detailed curriculum, with the deliverables for every day, is in [`syllabus.m
 
 | Decision | Why |
 |---|---|
-| **One self-contained package per day** | Learners can open any day without reading the others, and a broken day cannot break the rest. |
+| **One self-contained package per day** | Any day can be opened and run on its own, and a broken day cannot break the rest. |
 | **pytest over unittest** | Plain `assert`, fixtures and parametrisation keep tests short enough to read as examples. |
-| **ruff + mypy on lesson code** | Learners copy what they see. Lesson code that passes a strict linter and a type checker teaches professional habits by example. |
+| **ruff + mypy on every day's code** | Code that passes a strict linter and a type checker shows professional habits by example. |
 | **A `DELIVERABLES` map in every module** | Each syllabus promise points to real code, and CI checks that the target exists. |
-| **Generated reflections and README tables** | Writing facts by hand invites drift. Generating them from code and notes, then verifying them in CI, keeps the course truthful. |
+| **Generated reflections and README tables** | Writing facts by hand invites drift. Generating them from code and notes, then verifying them in CI, keeps the documentation truthful. |
 | **No network in tests** | Tests must pass offline, on every OS and every time. Network code is tested against local servers on `127.0.0.1`. |
 | **`sqlite3` without an ORM (Days 82, 100)** | Writing parameterised SQL by hand shows what an ORM does for you, and why string-formatted SQL is dangerous. |
 | **`requests` for synchronous HTTP and `aiohttp` for async** | `requests` is the most widely used client to learn first. `aiohttp` provides both an async client and a test server in one dependency. |
 | **`schedule` rather than APScheduler (Days 89, 97)** | Its readable API (`every(15).minutes`) keeps attention on process management, not on configuring a scheduler. |
 | **`Decimal` for money** | Binary floats cannot represent cents exactly. Every financial example rounds deliberately with `Decimal`. |
 | **hatchling for packaging examples** | A modern, standards-based build backend with minimal configuration. Day 79 compares it with setuptools and Poetry. |
-| **CI on three Python versions and three operating systems** | Learners use Windows, macOS and Linux. Path, signal and MIME-type differences are caught in CI, not on a learner's machine. |
+| **CI on three Python versions and three operating systems** | The code runs on Windows, macOS and Linux. Path, signal and MIME-type differences are caught in CI, not on a reader's machine. |
 
 ---
 
 ## Project Timeline & Deadlines
 
-### Completed
-
 | Milestone | Status |
 |---|---|
-| Phases 1–3 · Days 1–63 (fundamentals, intermediate Python, APIs and automation) | ✅ Done |
-| Phases 4–5 · Days 64–100 (advanced language features, capstone projects) | ✅ Done |
-| Licences, community files, README and syllabus restructure | ✅ Done |
-| Study mode: `./propython.sh <day>` explains and tests any day | ✅ Done |
+| Days 1–63: fundamentals, intermediate Python, APIs and automation | ✅ Done |
+| Days 64–100: advanced language features and complete tools | ✅ Done |
+| Study mode with quizzes: `./propython.sh <day>` | ✅ Done |
 | CI on Linux, Windows and macOS | ✅ Done |
-
-### Upcoming
-
-| Milestone | Target | Status |
-|---|---|---|
-| `v1.0.0` release tag and protected default branch | Oct 2026 | ⏳ Next |
-| Exercises with failing-first tests, Days 1–3 (pilot) | Nov 2026 | ⬜ Planned |
-| Documentation site and Codespaces setup | Dec 2026 | ⬜ Planned |
-
-The full twelve-month plan, covering the contributor programme, learner experience,
-sponsorship and governance, is in [`learning_develop.md`](learning_develop.md).
+| `v1.0.0` release on the `main` branch | ⏳ Next |
 
 ---
 
@@ -398,11 +387,11 @@ sponsorship and governance, is in [`learning_develop.md`](learning_develop.md).
 * **Found a mistake or have an idea?** [Open an issue](https://github.com/OdeToTheWind/pro-python-mastery/issues/new/choose). Templates are provided for content errors, bugs and ideas.
 * **Want to contribute?** Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 * **Found a security issue?** Report it privately, as described in [SECURITY.md](SECURITY.md).
-* **Using the course in teaching?** Please cite it using [CITATION.cff](CITATION.cff).
+* **Referencing this project?** Please cite it using [CITATION.cff](CITATION.cff).
 
 ### Licence
 
 The **code** (`src/`, `tests/`, `scripts/`) is released under the [MIT License](LICENSE.md). The
-**course text and images** (`README.md`, `syllabus.md`, `docs/` and the other Markdown files)
-are released under [CC BY 4.0](LICENSE-CONTENT). You may reuse and adapt both, including in
-paid courses, as long as you credit **"Pro Python Mastery" by [Bhargavi Badal](https://github.com/OdeToTheWind)**.
+**written content and images** (`README.md`, `syllabus.md`, `docs/` and the other Markdown files)
+are released under [CC BY 4.0](LICENSE-CONTENT). You may reuse and adapt both, including
+commercially, as long as you credit **"Pro Python Mastery" by [Bhargavi Badal](https://github.com/OdeToTheWind)**.

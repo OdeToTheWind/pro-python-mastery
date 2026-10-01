@@ -129,14 +129,20 @@ def phases() -> list[tuple[int, str, int, int]]:
     return found
 
 
-def phase_status(rows: dict[int, dict[str, str]]) -> str:
-    """Three-column progress table: one line per phase."""
-    lines = ["| Phase | Days | Status |", "|---|:-:|---|"]
+FOCUS = re.compile(r"^\| (\d+) · .+? \| \d+–\d+ \| (.+) \|$")
+
+
+def topic_map(rows: dict[int, dict[str, str]]) -> str:
+    """Three-column map of the content: phase, its days, and what those days cover."""
+    focus = {}
+    for line in (ROOT / "syllabus.md").read_text(encoding="utf-8").splitlines():
+        if match := FOCUS.match(line):
+            focus[int(match.group(1))] = match.group(2)
+    lines = ["| Phase | Days | What it covers |", "|---|:-:|---|"]
     for number, name, first, last in phases():
-        total = last - first + 1
-        done = sum(rows[d]["status"] == "Covered" for d in range(first, last + 1) if d in rows)
-        state = "✅ Complete" if done == total else ("🟡 In progress" if done else "⬜ Planned")
-        lines.append(f"| {number} · {name} | {first}–{last} | {state} ({done}/{total}) |")
+        anchor = f"phase-{number}--{name}-days-{first}{last}".lower()
+        anchor = re.sub(r"[^a-z0-9 -]", "", anchor.replace(" ", "-"))
+        lines.append(f"| [{number} · {name}](syllabus.md#{anchor}) | {first}–{last} | {focus.get(number, '')} |")
     return "\n".join(lines)
 
 
@@ -178,7 +184,7 @@ OS_NAMES = {"ubuntu": "Linux", "windows": "Windows", "macos": "macOS"}
 
 README_BLOCKS = {
     "course-index": course_index,
-    "phase-status": phase_status,
+    "topic-map": topic_map,
     "kpis": kpis,
 }
 
@@ -211,7 +217,7 @@ def main() -> None:
         target.write_text(render(day, row, notes, notes["date"]), encoding="utf-8", newline="\n")
         written += 1
     update_readme(rows)
-    print(f"wrote {written} reflections and refreshed the README course index")
+    print(f"wrote {written} reflections and refreshed the README's generated sections")
 
 
 if __name__ == "__main__":
