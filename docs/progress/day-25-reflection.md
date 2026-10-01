@@ -1,38 +1,35 @@
-# Day 25 - Local Development Environment Setup Reflection
+# Day 25 – Local Development Environment Setup Reflection
 
-**Date:** 2026-04-06  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-06 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_25_dev_env_setup_local/main.py`](../../src/day_25_dev_env_setup_local/main.py) · **Tests:** [`tests/test_day_25.py`](../../tests/test_day_25.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive setup guide and checker for local Python development environment
-- Virtual environment creation and activation demo
-- `requirements.txt` management
-- Project structure best practices
-- Tooling checklist (git, pip, venv, editor config)
+## Scenario
+A *project doctor* that inspects a checkout (this repository by default) and reports whether the local environment follows best practice.
 
-## Core Learnings & Insights
-- Virtual environments (`venv`) isolate project dependencies
-- `requirements.txt` + `pip freeze` for reproducible setups
-- Proper project folder structure prevents chaos in larger projects
-- Using `.gitignore`, `README.md`, and consistent naming conventions
-- Setting up a professional local development workflow is the foundation for all future projects
+## Syllabus deliverables
+> Virtual environments, project structure, and local development best practices
 
-## Challenges Faced & How I Solved Them
-- Making environment setup interactive → created a checklist-style interactive verifier
-- Explaining virtual environments clearly → live activation/deactivation simulation
-- Handling different OS behaviors → focused on cross-platform best practices
+| Deliverable | Implemented in |
+|---|---|
+| ✅ virtual environment detection | `in_virtualenv` |
+| ✅ interpreter version check | `python_version_ok` |
+| ✅ project structure check | `check_structure` |
+| ✅ dependency hygiene | `audit_requirements` |
+| ✅ .gitignore best practices | `missing_ignore_rules` |
 
-## Improvements for Next Time / Future Ideas
-- Automated environment setup script
-- Docker introduction preview
-- Multiple Python versions with pyenv
+## Key learnings
+- `sys.prefix != sys.base_prefix` detects a venv even when `activate` was never run.
+- Duplicate or unpinned requirements make installs non-reproducible.
+- `.gitignore` must cover `.venv/`, `__pycache__/` and `.env` from day one.
 
-## Self-Assessment
-- Test coverage: N/A (setup focused)
-- Code cleanliness: High – clear instructions and structure
-- Interactivity: Good – users verify their own setup
-- Educational value: Critical foundational skill
-- Personal rating: 9.0/10 – Strong start to Intermediate Projects
+## Pitfalls I hit (and how I fixed them)
+- This repository itself had duplicate `pytest` lines and an ignored-but-missing `.env` rule – the doctor caught both.
 
-Day 25 complete — local development environment is now properly set up.
+## Run it
+```bash
+python -m src.day_25_dev_env_setup_local.main
+pytest tests/test_day_25.py -v
+```
+
+## Next step
+- Move to `pyproject.toml` dependency groups when packaging on Day 79.

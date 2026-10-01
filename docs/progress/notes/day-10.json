@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-22",
+  "learnings": [
+    "Inject `random.Random(seed)` so randomness is reproducible in tests without touching global state.",
+    "`secrets` (a CSPRNG) is required for passwords; `random` is predictable.",
+    "`shuffle` works in place and returns `None`."
+  ],
+  "pitfalls": [
+    "`randint(1, 0)` raises `ValueError` – dice now validate their sides."
+  ],
+  "next": "Use seeded RNGs for the Monte Carlo capstone on Day 98."
+}

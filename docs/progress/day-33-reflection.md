@@ -1,21 +1,35 @@
-# Day 33 - Module Aliasing Reflection
+# Day 33 – Module Aliasing Reflection
 
-**Date:** 2026-04-14  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-14 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_33_module_aliasing/main.py`](../../src/day_33_module_aliasing/main.py) · **Tests:** [`tests/test_day_33.py`](../../tests/test_day_33.py) (7 tests)
 
-## What I Built / Key Deliverables
-- Interactive demonstration of module aliasing using `random as rnd`, `datetime as dt`, and `math as m`
+## Scenario
+A *fitness-tracker weekly summary* that needs two different ``loads`` functions and some long module names – aliasing keeps it readable.
 
-## Core Learnings & Insights
-- `import module as alias` helps avoid name conflicts and shortens long module names
-- Common aliases like `pd` for pandas, `np` for numpy are industry standard
-- Aliasing improves code readability when working with multiple modules
+## Syllabus deliverables
+> import module as alias, code organization and readability
 
-## Challenges Faced & How I Solved Them
-- Showing practical benefit → demonstrated real usage with common modules
+| Deliverable | Implemented in |
+|---|---|
+| ✅ import module as alias | `weekly_summary` |
+| ✅ from module import name as alias | `load_settings` |
+| ✅ resolving name clashes | `load_settings` |
+| ✅ readability guidelines | `ALIAS_GUIDE` |
+| ✅ inspecting what an alias refers to | `resolve_aliases` |
 
-## Self-Assessment
-- Personal rating: 8.9/10 – Useful skill for cleaner imports
+## Key learnings
+- Conventional aliases (`np`, `pd`, `dt`) aid readability; single-letter custom aliases hurt it.
+- `from x import loads as json_loads` resolves real name clashes.
+- An alias is just another name bound to the same module object.
 
-Day 33 complete.
+## Pitfalls I hit (and how I fixed them)
+- `tomllib.loads` actually lives in a private submodule – inspect `__module__` rather than assuming.
+
+## Run it
+```bash
+python -m src.day_33_module_aliasing.main
+pytest tests/test_day_33.py -v
+```
+
+## Next step
+- Keep imports sorted and aliased consistently with ruff's `I` rules.

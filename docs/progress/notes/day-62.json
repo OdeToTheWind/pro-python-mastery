@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "CSS selectors (`select`, `select_one`) keep extraction readable and robust.",
+    "Respect robots.txt, identify yourself with a User-Agent and rate-limit requests.",
+    "Parse each page once and follow pagination with `urljoin`."
+  ],
+  "pitfalls": [
+    "Each page used to be parsed twice, and `lxml` was installed but never used."
+  ],
+  "next": "Schedule polite scraping jobs in the background task runner (Day 89)."
+}

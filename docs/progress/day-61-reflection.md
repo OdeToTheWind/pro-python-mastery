@@ -1,38 +1,37 @@
-# Day 61 - Sending SMS with Python Reflection
+# Day 61 – SMS / Notification Automation Reflection
 
-**Date:** 2026-09-29  
-**Python Version Used:** 3.12+  
-**Time Spent:** 1.5 hours  
-**Git Commit Hash (optional):** 
+**Date:** 2026-09-29 · **Level:** Advanced · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_61_sms_notification_automation/main.py`](../../src/day_61_sms_notification_automation/main.py) · **Tests:** [`tests/test_day_61.py`](../../tests/test_day_61.py) (12 tests)
 
-## What I Built / Key Deliverables
-- `SMSMessage` dataclass modelling the outgoing message
-- Dry-run sender that never hits the network (safe for CI)
-- Real Twilio sender behind a feature flag / credential check
-- Simple notification template helper
+## Scenario
+A *server-monitoring alerter* that texts the on-call engineer when a health check fails. It integrates with Twilio when credentials and the ``twilio`` package are present, and otherwise falls back to a safe dry run.
 
-## Core Learnings & Insights
-- Always provide a dry-run / mock path for external paid services
-- Twilio credentials belong exclusively in environment variables
-- The client pattern (instantiate once, reuse) is the same as for HTTP APIs
-- Trial accounts have sending restrictions – document them
-- Separating “message construction” from “transport” keeps the code testable
+## Syllabus deliverables
+> Twilio integration and secure secrets management
 
-## Challenges Faced & How I Solved Them
-- Avoiding ImportError when `twilio` is not installed → lazy import inside the real-send function
-- Making the script useful even without real credentials → force_dry_run flag + clear messaging
+| Deliverable | Implemented in |
+|---|---|
+| ✅ Twilio client integration | `TwilioSender` |
+| ✅ dry-run fallback | `DryRunSender` |
+| ✅ choosing a transport safely | `make_sender` |
+| ✅ secrets from environment | `TwilioConfig.from_env` |
+| ✅ secret masking | `mask_sid` |
+| ✅ phone number validation (E.164) | `validate_e164` |
+| ✅ message composition and segment counting | `compose_alert` |
 
-## Improvements for Next Time / Future Ideas
-- Add support for other providers (MessageBird, AWS SNS) behind a common interface
-- Queue messages and retry on transient failures
-- Store delivery status callbacks if the provider supports webhooks
+## Key learnings
+- E.164 (`+14155550123`) is the only safe phone format for SMS APIs.
+- Inject the Twilio client factory so the integration can be tested without the network.
+- Choose a dry-run transport unless credentials *and* the library are present.
 
-## References / Resources Used
-- https://www.twilio.com/docs/sms/quickstart/python
-- https://github.com/theskumar/python-dotenv
+## Pitfalls I hit (and how I fixed them)
+- Configured credentials without `twilio` installed used to crash with `ImportError`.
 
-## Self-Assessment
-- Coverage goal met? Dry-run path fully tested; real path guarded
-- Typing strictness: fully typed
-- Code cleanliness: no secrets in source, clear separation of concerns
-- Personal rating: 8.5/10 – practical and safe for learning environments
+## Run it
+```bash
+python -m src.day_61_sms_notification_automation.main
+pytest tests/test_day_61.py -v
+```
+
+## Next step
+- Combine scraping, scheduling and notifications in the bot suite (Day 97).

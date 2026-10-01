@@ -1,499 +1,189 @@
-# Pro Python Mastery: 100-Day Engineering Challenge
+# Pro Python Mastery – 100 Days of Professional Python
 
-[![Python CI](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/OdeToTheWind/pro-python-mastery/actions)
-![Python Version](https://img.shields.io/badge/python-3.12–3.14-blue)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+[![Python CI](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml)
+![Python](https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-blue)
+![Progress](https://img.shields.io/badge/progress-63%20%2F%20100%20days-brightgreen)
+![Coverage gate](https://img.shields.io/badge/coverage%20gate-85%25-success)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Overview
+A free, open course that takes you from your first variable to production-ready
+Python in 100 small, focused days. Every day is a **self-contained, realistic
+mini-project**: a badge printer, a bill splitter, a smart-home event bus, a
+REST API, a polite web scraper, and more.
 
-This repository documents a structured 100-day professional development challenge focused on advanced Python software engineering practices. With over four years of development experience, the goal is to demonstrate production-grade code quality through:
+Each day ships three things that are kept in sync by CI:
 
-- Strict static typing with modern type hints  
-- Test-Driven Development (TDD) with ≥80% test coverage  
-- Clean, modular architecture and design patterns  
-- Automated testing and continuous integration via GitHub Actions  
-- Adoption of the latest Python language features (3.12–3.14)
+| Piece | Where | What you get |
+|---|---|---|
+| **Code** | `src/day_XX_<topic>/main.py` | Typed, documented functions + a runnable demo (`python -m src.day_XX_<topic>.main`). A `DELIVERABLES` map points every syllabus item to the code that teaches it. |
+| **Tests** | `tests/test_day_XX.py` | pytest suite that imports the day's code and covers edge cases – read it as worked examples. |
+| **Reflection** | `docs/progress/day-XX-reflection.md` | The scenario, a deliverables checklist, key learnings, real pitfalls and the next step. |
 
-This project is part of a broader 10-repository portfolio showcasing technical depth, system design thinking, and disciplined engineering habits.
+> `tests/test_syllabus_sync.py` fails the build if a day marked **Covered** in
+> [`syllabus.md`](syllabus.md) is missing code, tests or an up-to-date
+> reflection – so the progress you see is the progress that exists.
 
-## Project Structure
-
-The repository is organized as a Python package with clear separation of concerns:
-```text
-pro-python-mastery/
-├── .github/                # GitHub Actions CI/CD pipelines
-│   └── workflows/
-│       └── python-tests.yml
-├── src/                    # Production code – modular by day/topic
-│   ├── day_01_variables/
-│   │   └── main.py
-│   ├── day_02_strings/
-│   │   └── main.py  
-│   ├── day_03_input_output/
-│   │   └── main.py  
-│   ├── day_04_variable_name_rules/
-│   │   └── main.py  
-│   ├── day_05_maths_operations/
-│   │   └── main.py 
-│   ├── day_06_data_types/
-│   │   └── main.py 
-│   ├── day_07_converting_types/
-│   │   └── main.py 
-│   ├── day_08_if_else_conditionals/
-│   │   └── main.py 
-│   ├── day_09_logical_operations/
-│   │   └── main.py 
-│   ├── day_10_randomisation/
-│   │   └── main.py 
-│   ├── day_11_error_handling/
-│   │   └── main.py 
-│   ├── day_12_functions/
-│   │   └── main.py 
-│   ├── day_13_for_loops/
-│   │   └── main.py 
-│   ├── day_14_code_block_indentation/
-│   │   └── main.py 
-│   ├── day_15_while_loops/
-│   │   └── main.py 
-│   ├── day_16_flowchart_programming/
-│   │   └── main.py 
-│   ├── day_17_positional_keyword_arguments/
-│   │   └── main.py 
-│   ├── day_18_dictionaries_lists/
-│   │   └── main.py 
-│   ├── day_19_nested_collections/
-│   │   └── main.py 
-│   ├── day_20_returning_functions/
-│   │   └── main.py 
-│   ├── day_21_return_vs_print/
-│   │   └── main.py 
-│   ├── day_22_doc_string_vs_comments/
-│   │   └── main.py 
-│   ├── day_23_scope_local_global_variables/
-│   │   └── main.py 
-│   ├── day_24_debugging_techniques/
-│   │   └── main.py 
-│   ├── day_25_dev_env_setup_local/
-│   │   └── main.py 
-│   ├── day_26_pycharm_tips_tricks/
-│   │   └── main.py 
-│   ├── day_27_oop_basics/
-│   │   └── main.py 
-│   ├── day_28_classes/
-│   │   └── main.py 
-│   ├── day_29_external_modules/
-│   │   └── main.py 
-│   ├── day_30_getting_setting_attributes/
-│   │   └── main.py 
-│   ├── day_31_python_methods/   
-│   │   └── main.py 
-│   ├── day_32_class_initialisers/ 
-│   │   └── main.py 
-│   ├── day_33_module_aliasing/ 
-│   │   └── main.py 
-│   ├── day_34_optional_required_default_parameters/ 
-│   │   └── main.py 
-│   ├── day_35_event_listeners/
-│   │   └── main.py 
-│   ├── day_36_python_instances_and_state/   
-│   │   └── main.py 
-│   ├── day_37_python_turtle/ 
-│   │   └── main.py 
-│   ├── day_38_game_development_with_python_and_oop/ 
-│   │   └── main.py 
-│   ├── day_39_python_inheritance/ 
-│   │   └── main.py 
-│   ├── day_40_python_slice_function/
-│   │   └── main.py 
-│   ├── day_41_file_io/   
-│   │   └── main.py 
-│   ├── day_42_file_directories/ 
-│   │   └── main.py 
-│   ├── day_43_reading_writing_csv/ 
-│   │   └── main.py 
-│   ├── day_44_pandas_framework/ 
-│   │   └── main.py 
-│   ├── day_45_list_comprehensions/
-│   │   └── main.py 
-│   ├── day_46_dictionary_comprehensions/   
-│   │   └── main.py 
-│   ├── day_47_packing_unpacking/ 
-│   │   └── main.py 
-│   ├── day_48_tkinter_gui/ 
-│   │   └── main.py 
-│   ├── day_49_strongly_dynamic_typing/ 
-│   │   └── main.py 
-│   ├── day_50_error_handling_exceptions/
-│   │   └── main.py 
-│   ├── day_51_try_except_raise/   
-│   │   └── main.py 
-│   ├── day_52_working_with_jsons/ 
-│   │   └── main.py 
-│   ├── day_53_local_persistence/ 
-│   │   └── main.py 
-│   ├── day_54_sending_email/ 
-│   │   └── main.py 
-│   ├── day_55_date_and_time/
-│   │   └── main.py 
-│   ├── day_56_pythonanywhere_hosting/
-│   │   └── main.py
-│   ├── day_57_rest_apis_json/
-│   │   └── main.py
-│   ├── day_58_http_requests/
-│   │   └── main.py
-│   ├── day_59_request_parameters_headers_payloads/
-│   │   └── main.py
-│   ├── day_60_api_authentication/
-│   │   └── main.py
-│   ├── day_61_sms_notification_automation/
-│   │   └── main.py
-│   ├── day_62_web_scraping/
-│   │   └── main.py
-│   └── day_63_browser_automation_selenium/
-│       └── main.py
-├── tests/                  # Comprehensive test suite (unit + integration)
-│   ├── test_day_01.py
-│   ├── test_day_02.py  
-│   ├── test_day_03.py  
-│   ├── test_day_04.py 
-│   ├── test_day_05.py 
-│   ├── test_day_06.py 
-│   ├── test_day_07.py 
-│   ├── test_day_08.py 
-│   ├── test_day_09.py 
-│   ├── test_day_10.py 
-│   ├── test_day_11.py 
-│   ├── test_day_12.py 
-│   ├── test_day_13.py 
-│   ├── test_day_14.py 
-│   ├── test_day_15.py 
-│   ├── test_day_16.py 
-│   ├── test_day_17.py 
-│   ├── test_day_18.py 
-│   ├── test_day_19.py 
-│   ├── test_day_20.py 
-│   ├── test_day_21.py 
-│   ├── test_day_22.py 
-│   ├── test_day_23.py 
-│   ├── test_day_24.py 
-│   ├── test_day_25.py 
-│   ├── test_day_26.py 
-│   ├── test_day_27.py 
-│   ├── test_day_28.py 
-│   ├── test_day_29.py 
-│   ├── test_day_30.py 
-│   ├── test_day_31.py 
-│   ├── test_day_32.py 
-│   ├── test_day_33.py 
-│   ├── test_day_34.py 
-│   ├── test_day_35.py 
-│   ├── test_day_36.py 
-│   ├── test_day_37.py 
-│   ├── test_day_38.py 
-│   ├── test_day_39.py 
-│   ├── test_day_40.py 
-│   ├── test_day_41.py 
-│   ├── test_day_42.py 
-│   ├── test_day_43.py 
-│   ├── test_day_44.py 
-│   ├── test_day_45.py 
-│   ├── test_day_46.py 
-│   ├── test_day_47.py 
-│   ├── test_day_48.py 
-│   ├── test_day_49.py 
-│   ├── test_day_50.py 
-│   ├── test_day_51.py 
-│   ├── test_day_52.py 
-│   ├── test_day_53.py 
-│   ├── test_day_54.py 
-│   ├── test_day_55.py 
-│   ├── test_day_56.py
-│   ├── test_day_57.py 
-│   ├── test_day_58.py 
-│   ├── test_day_59.py 
-│   ├── test_day_60.py
-│   ├── test_day_61.py
-│   ├── test_day_62.py
-│   └── test_day_63.py
-├── docs/                   # Architecture diagrams, design decisions, notes
-│   └── progress/
-│       ├── day-01-reflection.md      
-│       ├── day-02-reflection.md    
-│       ├── day-03-reflection.md  
-│       ├── day-04-reflection.md 
-│       ├── day-05-reflection.md
-│       ├── day-06-reflection.md
-│       ├── day-07-reflection.md
-│       ├── day-08-reflection.md
-│       ├── day-09-reflection.md
-│       ├── day-10-reflection.md
-│       ├── day-11-reflection.md
-│       ├── day-12-reflection.md
-│       ├── day-13-reflection.md
-│       ├── day-14-reflection.md
-│       ├── day-15-reflection.md
-│       ├── day-16-reflection.md
-│       ├── day-17-reflection.md
-│       ├── day-18-reflection.md
-│       ├── day-19-reflection.md
-│       ├── day-20-reflection.md
-│       ├── day-21-reflection.md
-│       ├── day-22-reflection.md
-│       ├── day-23-reflection.md
-│       ├── day-24-reflection.md
-│       ├── day-25-reflection.md
-│       ├── day-26-reflection.md
-│       ├── day-27-reflection.md
-│       ├── day-28-reflection.md
-│       ├── day-29-reflection.md
-│       ├── day-30-reflection.md
-│       ├── day-31-reflection.md
-│       ├── day-32-reflection.md
-│       ├── day-33-reflection.md
-│       ├── day-34-reflection.md
-│       ├── day-35-reflection.md
-│       ├── day-36-reflection.md
-│       ├── day-37-reflection.md
-│       ├── day-38-reflection.md
-│       ├── day-39-reflection.md
-│       ├── day-40-reflection.md
-│       ├── day-41-reflection.md
-│       ├── day-42-reflection.md
-│       ├── day-43-reflection.md
-│       ├── day-44-reflection.md
-│       ├── day-45-reflection.md
-│       ├── day-46-reflection.md
-│       ├── day-47-reflection.md
-│       ├── day-48-reflection.md
-│       ├── day-49-reflection.md
-│       ├── day-50-reflection.md
-│       ├── day-51-reflection.md
-│       ├── day-52-reflection.md
-│       ├── day-53-reflection.md
-│       ├── day-54-reflection.md
-│       ├── day-55-reflection.md
-│       ├── day-56-reflection.md
-│       ├── day-57-reflection.md
-│       ├── day-58-reflection.md
-│       ├── day-59-reflection.md
-│       ├── day-60-reflection.md
-│       ├── day-61-reflection.md
-│       ├── day-62-reflection.md
-│       └── day-63-reflection.md
-├── propython.sh            # Executable file for the Repo
-├── requirements.txt        # Development and testing dependencies
-├── README.md
-└── LICENSE
-```
-
-
-## Key Engineering Practices
-
-- **Type Safety** — Full use of the `typing` module, type hints in function signatures, and exploration of modern features (PEP 484, 563, 695)  
-- **Testing** — Rigorous TDD workflow using `pytest`, with unit tests for each daily challenge  
-- **CI/CD** — Automated testing via GitHub Actions (linting, type checking with mypy, and test runs planned on every push)  
-- **Modern Python** — Leveraging syntax, formatting, and best practices from Python 3.12–3.14 (f-strings, type hints, structural pattern matching where applicable)
-
-## Daily Progress
-
-## Daily Progress
-
-| Day | Topic                                              | Status             | Key Learnings / Deliverables                                                                                          |
-|-----|----------------------------------------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------|
-| 01  | Variables, Type Hinting & Scoping                  | ✅ Completed       | Strict typing with PEP 484/695, f-strings, variable scoping rules (LEGB), local vs global vs nonlocal                  |
-| 02  | String Manipulation                                | ✅ Completed       | Advanced string methods (`strip`, `title`, `upper`, `lower`, `split`, `join`, `replace`), f-string formatting & alignment, basic input cleaning |
-| 03  | Input & Print Functions                            | ✅ Completed       | User input validation loops, type conversion (`int`, `float`, `str`), advanced `print` formatting, interactive console apps |
-| 04  | Variable Naming Rules                              | ✅ Completed       | PEP 8 naming conventions (snake_case, CONSTANTS, private `_var`), reserved keywords, descriptive names                 |
-| 05  | Mathematical Operations                            | ✅ Completed       | Arithmetic operators (`+ - * / // % **`), operator precedence, floor division, safe division handling                 |
-| 06  | Built-in Data Types                                | ✅ Completed       | `int`, `float`, `bool`, `str`, `list`, `tuple`, `dict`, `set`, mutability vs immutability, hashability, `type()` vs `isinstance()` |
-| 07  | Converting Types (Casting)                         | ✅ Completed       | `int()`, `float()`, `str()`, `bool()`, `list()`, `tuple()`, `set()`, `dict()`, ValueError vs TypeError                |
-| 08  | If / Elif / Else Conditionals                      | ✅ Completed       | Comparison operators, truthy/falsy values, nested conditionals, chained `elif`                                        |
-| 09  | Logical Operations                                 | ✅ Completed       | `and`, `or`, `not`, short-circuit evaluation, combining with comparisons, truth tables, access control examples       |
-| 10  | Randomisation                                      | ✅ Completed       | `random` module, `randint()`, `choice()`, `shuffle()`, `seed()`, password generator, games                           |
-| 11  | Error Handling                                     | ✅ Completed       | `try`/`except`/`else`/`finally`, common exceptions (`ValueError`, `TypeError`, `ZeroDivisionError`, `KeyError`)     |
-| 12  | Functions                                          | ✅ Completed       | Parameters, default arguments, `*args`, `**kwargs`, docstrings, type hints                                            |
-| 13  | For Loops                                          | ✅ Completed       | `for` loops, `range()`, `enumerate()`, `zip()`, nested loops, multiplication tables                                   |
-| 14  | Code Blocks and Indentation                        | ✅ Completed       | Python's indentation rules (4 spaces), blocks in loops/conditionals/functions, common IndentationError                 |
-| 15  | While Loops                                        | ✅ Completed       | `while` loops, `break`, `continue`, `while-else`, input validation, guessing games                                    |
-| 16  | Flowchart Programming                              | ✅ Completed       | Reading flowcharts, converting decision diamonds to `if-elif-else`, loops in flowcharts                               |
-| 17  | Positional and Keyword Arguments                   | ✅ Completed       | Positional vs keyword args, default values, `*args`, `**kwargs`, function flexibility                                |
-| 18  | Python Dictionaries and Lists                      | ✅ Completed       | List methods (`append`, `pop`, `sort`), dict methods (`.get()`, `.update()`, `.items()`), shopping cart & inventory  |
-| 19  | Nested Collections                                 | ✅ Completed       | List of dicts, dict of lists, list of lists, dict of dicts, classroom management system                              |
-| 20  | Returning Functions                                | ✅ Completed       | `return` statement, returning multiple values, early returns, return vs print                                        |
-| 21  | Return vs. Print                                   | ✅ Completed       | Difference between printing and returning data, reusability, function composition                                    |
-| 22  | Docstrings vs. Comments                            | ✅ Completed       | `#` comments vs `"""` docstrings, Google-style docstrings, `__doc__` attribute                                       |
-| 23  | Scope and Local/Global Variables                   | ✅ Completed       | LEGB rule, `global` keyword, `nonlocal`, why globals are dangerous                                                    |
-| 24  | Debugging Techniques                               | ✅ Completed       | Print debugging, reading tracebacks, common bugs, `breakpoint()`, rubber duck debugging                              |
-
-### Intermediate Python (Day 25 - 56)
-
-| Day | Topic                                              | Status             | Key Learnings / Deliverables                                                                                          |
-|-----|----------------------------------------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------|
-| 25  | Local Development Environment Setup | ✅ Completed       | Setting up virtual environments, project structure, best practices for local development                             |
-| 26  | PyCharm Tips and Tricks                            | ✅ Completed       | Advanced IDE features, debugging in PyCharm, refactoring tools, live templates                                        |
-| 27  | Python Object Oriented Programming                 | ✅ Completed       | OOP concepts: classes, objects, encapsulation, abstraction                                                            |
-| 28  | Creating Classes in Python                         | ✅ Completed       | Defining classes, `__init__`, attributes, methods                                                                     |
-| 29  | Using External Python Modules / Import             | ✅ Completed       | `import`, `from ... import`, installing packages with pip, virtual environments                                      |
-| 30  | Getting / Setting Attributes                       | ✅ Completed       | `@property`, getters and setters, attribute access control                                                            |
-| 31  | Python Methods                                     | ✅ Completed       | Instance methods, class methods (`@classmethod`), static methods (`@staticmethod`)                                   |
-| 32  | Class Initialisers                                 | ✅ Completed       | `__init__` constructor, default values, validation in constructors                                                    |
-| 33  | Module Aliasing                                    | ✅ Completed       | `import module as alias`, organizing large codebases                                                                  |
-| 34  | Optional, Required and Default Parameters          | ✅ Completed       | Advanced function parameters, `*args`, `**kwargs`, parameter ordering rules                                           |
-| 35  | Event Listeners                                    | ✅ Completed       | Event-driven programming concepts, callbacks                                                                          |
-| 36  | Python Instances and State                         | ✅ Completed       | Instance variables, maintaining state in objects                                                                      |
-| 37  | Python Turtle                                      | ✅ Completed       | Graphics with Turtle module, drawing shapes and animations                                                            |
-| 38  | Game Development with Python and OOP               | ✅ Completed       | Building simple games using OOP principles                                                                            |
-| 39  | Python Inheritance                                 | ✅ Completed       | Single and multiple inheritance, `super()`, method overriding                                                         |
-| 40  | Python Slice Function                              | ✅ Completed       | Advanced slicing techniques for lists and strings                                                                     |
-| 41  | File I/O - Reading and Writing to Local Files      | ✅ Completed       | `open()`, context managers (`with`), reading/writing text files                                                       |
-| 42  | File Directories                                   | ✅ Completed       | `os` and `pathlib` modules, working with folders and paths                                                            |
-| 43  | Reading and Writing to CSV                         | ✅ Completed       | CSV module, reading/writing tabular data                                                                              |
-| 44  | Introduction to the Pandas Framework               | ✅ Completed       | DataFrames, basic data analysis with pandas                                                                           |
-| 45  | List Comprehensions                                | ✅ Completed       | Concise list creation, filtering, and transformation                                                                  |
-| 46  | Dictionary Comprehensions                          | ✅ Completed       | Creating dictionaries using comprehension syntax                                                                      |
-| 47  | Packing and Unpacking Functions in Python          | ✅ Completed       | Advanced argument unpacking with `*` and `**`                                                                         |
-| 48  | Creating Desktop GUI Apps with Tkinter             | ✅ Completed       | Building graphical user interfaces with Tkinter                                                                       |
-| 49  | Strongly Dynamic Typing                            | ✅ Completed       | Python's dynamic typing behavior and implications                                                                     |
-| 50  | Error Handling and Exceptions                      | ✅ Completed       | Advanced exception handling patterns                                                                                  |
-| 51  | Try / Except / Raise                               | ✅ Completed       | Raising custom exceptions, exception hierarchies                                                                      |
-| 52  | Working with JSONs                                 | ✅ Completed       | `json` module, serialization and deserialization                                                                      |
-| 53  | Local Persistence                                  | ✅ Completed       | Saving and loading application state                                                                                  |
-| 54  | Sending Email with Python and SMTP                 | ✅ Completed       | Automating emails using `smtplib`                                                                                     |
-| 55  | Working with Date and Time                         | ✅ Completed       | `datetime` module, date calculations and formatting                                                                   |
-| 56  | Hosting Python Code Online with PythonAnywhere     | ✅ Completed       | Deploying Python applications to the cloud                                                                            |
-
-### Intermediate Projects (Days 57–63): API Clients, Automation & Data Acquisition (Client-side Only)
-
-| Day | Topic                                              | Status       | Key Learnings / Deliverables                                                                  |
-|-----|----------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
-| 57  | REST APIs & JSON                                   | 📋 Planned   | HTTP methods and status codes; JSON serialization and deserialization with the `json` module |
-| 58  | HTTP Requests with `requests`                     | 📋 Planned   | GET/POST requests, response handling, status codes, timeouts, and sessions                   |
-| 59  | Query Parameters, Headers & Payloads             | 📋 Planned   | Query/path parameters, custom headers, form data, and JSON request bodies                    |
-| 60  | API Authentication (Client-side)                  | 📋 Planned   | API keys, Bearer tokens, Basic Auth, environment variables, and `python-dotenv`              |
-| 61  | SMS / Notification Automation                     | 📋 Planned   | Twilio or similar clients and secure secrets management                                     |
-| 62  | Web Scraping with Beautiful Soup                  | 📋 Planned   | HTML parsing, CSS/XPath selectors, data extraction, and polite scraping                      |
-| 63  | Browser Automation with Selenium                  | 📋 Planned   | Element locators, waits, form filling, headless mode, and dynamic-page scraping              |
-
-### Advanced Python Language & Tooling (Days 64–82)
-
-| Day | Topic                                              | Status       | Key Learnings / Deliverables                                                                  |
-|-----|----------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
-| 64  | Iterators & the Iterator Protocol                 | 📋 Planned   | `__iter__`, `__next__`, and custom iterators                                                  |
-| 65  | Generators & `yield`                              | 📋 Planned   | Generator functions and expressions, lazy evaluation, and memory benefits                   |
-| 66  | Advanced Generators                               | 📋 Planned   | `yield from`, generator pipelines, and sending values                                        |
-| 67  | Decorators Deep Dive                              | 📋 Planned   | Function decorators, `@wraps`, parameterized decorators, and class-based decorators           |
-| 68  | Context Managers                                  | 📋 Planned   | The `with` statement, `__enter__`, `__exit__`, and `contextlib`                              |
-| 69  | Descriptors                                       | 📋 Planned   | Data and non-data descriptors; how `@property` works under the hood                          |
-| 70  | Metaclasses (Introduction)                        | 📋 Planned   | `type`, custom metaclasses, and when (or when not) to use them                                |
-| 71  | Functional Tools                                  | 📋 Planned   | `itertools`, `functools`, `partial`, `lru_cache`, and `reduce`                               |
-| 72  | Advanced Typing                                   | 📋 Planned   | `Protocol`, `TypeVar`, `Generic`, `TypedDict`, `Literal`, and checking with mypy/pyright      |
-| 73  | Concurrency: Threading                            | 📋 Planned   | `threading`, locks, queues, and GIL implications                                              |
-| 74  | Concurrency: Multiprocessing                     | 📋 Planned   | Process pools, shared memory, and choosing processes vs. threads                              |
-| 75  | Asyncio Fundamentals                             | 📋 Planned   | Event loop, coroutines, `async`/`await`, `gather`, and `create_task`                          |
-| 76  | Advanced Asyncio                                  | 📋 Planned   | Async context managers, async iterators, and concurrent HTTP with `aiohttp`                   |
-| 77  | Logging & Configuration                          | 📋 Planned   | Logging handlers, formatters, and levels; `configparser`, YAML, and TOML                      |
-| 78  | Testing with `pytest`                             | 📋 Planned   | Fixtures, parametrization, mocking, and coverage                                             |
-| 79  | Packaging & Distribution                          | 📋 Planned   | `pyproject.toml`, setuptools/hatch/poetry, wheels, and test publishing to PyPI                |
-| 80  | Profiling & Performance                           | 📋 Planned   | `cProfile`, `timeit`, `memory_profiler`, and common optimization patterns                     |
-| 81  | Advanced Regular Expressions                     | 📋 Planned   | Complex patterns, groups, lookarounds, and the `re` module                                   |
-| 82  | SQLite & Pure Database Work                      | 📋 Planned   | `sqlite3`, transactions, context managers, and basic schema design without an ORM            |
-
-### Capstone-Style Pure-Python Projects (Days 83–100)
-
-| Day | Topic                                              | Status       | Key Learnings / Deliverables                                                                  |
-|-----|----------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
-| 83  | Robust CLI Application                            | 📋 Planned   | `argparse` or `click`/`typer`, subcommands, configuration, and logging                        |
-| 84  | Data Pipeline / ETL Script                        | 📋 Planned   | Generators, `pathlib`, CSV/JSON, error handling, and logging                                  |
-| 85  | Concurrent File / Network Processor               | 📋 Planned   | Thread/process pools or asyncio for I/O-bound work                                           |
-| 86  | Custom Logging & Monitoring Tool                  | 📋 Planned   | Structured logging, log rotation, and basic metrics                                          |
-| 87  | Plugin-style Architecture                         | 📋 Planned   | Entry points, dynamic loading, and decorator-based registration                              |
-| 88  | Automated Report Generator                        | 📋 Planned   | Data aggregation, `string.Template` or Jinja2, and PDF/CSV output                             |
-| 89  | Background Task Runner                            | 📋 Planned   | Scheduling with `schedule` or APScheduler and process management                             |
-| 90  | Memory-efficient Large File Processor             | 📋 Planned   | Generators, streaming, and chunking                                                         |
-| 91  | Type-safe Configuration System                    | 📋 Planned   | Pydantic or dataclasses, validation, and environment variables                               |
-| 92  | Test Suite for a Multi-module Package             | 📋 Planned   | High coverage, fixtures, mocks, and CI-friendly structure                                    |
-| 93  | Simple Async Network Service                      | 📋 Planned   | An asyncio TCP/HTTP server with the standard library or `aiohttp`, without a full framework  |
-| 94  | Data Validation & Cleaning Library                | 📋 Planned   | Reusable validators, custom exceptions, and type hints                                       |
-| 95  | Performance-critical Module                       | 📋 Planned   | Profiling, optimization, and optional Cython/Numba                                           |
-| 96  | Packaging a Real Tool                             | 📋 Planned   | Complete `pyproject.toml`, CLI entry point, documentation, tests, and TestPyPI publishing    |
-| 97  | Automation Bot Suite                              | 📋 Planned   | Combining scraping, APIs, scheduling, and notifications                                      |
-| 98  | Scientific / Simulation Mini-project              | 📋 Planned   | NumPy and a pure-Python simulation or Monte Carlo project                                   |
-| 99  | Observability & Debugging Toolkit                 | 📋 Planned   | Advanced traceback handling, custom debuggers, and structured logs                          |
-| 100 | Portfolio Capstone: Production-ready Python Tool  | 📋 Planned   | A useful multi-module tool with CLI, tests (>90% coverage), logging, config, packaging, and docs |
-
-- **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
-- **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
-- **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Planned**
-- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — Planned**
-- **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Planned**
-
----
-
-Daily reflections, code explanations, and design decisions are available in [docs/progress/](./docs/progress/)
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.12 or newer (recommended: 3.14 for latest features)
-- Git
-
-### Installation
+## Quick start
 
 ```bash
-# Clone the repository
 git clone https://github.com/OdeToTheWind/pro-python-mastery.git
 cd pro-python-mastery
-
-# (Recommended) Create and activate a virtual environment
 python -m venv .venv
-source .venv/bin/activate    # Linux/macOS/Git Bash
-# or
-.venv\Scripts\activate       # Windows Command Prompt
-# or
-.venv\Scripts\Activate.ps1   # Windows PowerShell
+source .venv/bin/activate            # Windows: .venv\Scripts\activate
+pip install -r requirements-dev.txt
 
-# Install development dependencies
-pip install -r requirements.txt
+python -m src.day_05_math_operations.main   # run any day
+pytest tests/test_day_05.py -v              # read its tests
+./propython.sh                              # lint + types + tests + coverage, like CI
 ```
 
-### RUNNING TEST 
-```bash
-# Run the full test suite
-pytest
+Days 37 (Turtle) and 48 (Tkinter) need Tk (`sudo apt install python3-tk` on
+Debian/Ubuntu). Days 58, 62 and 63 talk to public practice sites when run
+directly; their tests never use the network. Secrets for Days 54, 60 and 61
+go in a git-ignored `.env` – copy [`.env.example`](.env.example).
 
-# With coverage report
-pytest --cov=src --cov-report=html
-# Open htmlcov/index.html in your browser
+## How a day is organised
+
+```text
+src/day_47_packing_unpacking/
+├── __init__.py
+└── main.py          # docstring → "Scenario: …", DELIVERABLES, functions, main()
+tests/test_day_47.py # imports src.day_47_packing_unpacking.main
+docs/progress/
+├── notes/day-47.json        # hand-written learnings, pitfalls, next step
+└── day-47-reflection.md     # generated by scripts/build_reflections.py
 ```
 
-### Linting & Type Checking
-```bash
-# Run mypy static type checker
-mypy src tests
+## Course index
 
-# Run ruff (linting + formatting check)
-ruff check .
-ruff format --check .
-```
+🟢 Beginner · 🟡 Intermediate · 🟠 Advanced · 🔴 Capstone
+
+<!-- course-index:start -->
+| Day | Topic | Level | Scenario you build | Links |
+|---:|---|:-:|---|---|
+| 1 | Variables, Type Hinting & Scoping | 🟢 | A *learning-streak tracker* that records study sessions. | [code](src/day_01_variables/main.py) · [tests](tests/test_day_01.py) · [notes](docs/progress/day-01-reflection.md) |
+| 2 | String Manipulation | 🟢 | A *conference badge printer* that turns messy sign-up data into clean, aligned badges. | [code](src/day_02_strings/main.py) · [tests](tests/test_day_02.py) · [notes](docs/progress/day-02-reflection.md) |
+| 3 | Input & Print Functions | 🟢 | A *workshop registration desk* that asks attendees questions in the console, validates every answer and prints a receipt. | [code](src/day_03_input_output/main.py) · [tests](tests/test_day_03.py) · [notes](docs/progress/day-03-reflection.md) |
+| 4 | Variable Naming Rules | 🟢 | A *code-review bot* that inspects proposed variable names and gives the author syntax errors (must fix) and PEP 8 style warnings (should fix). | [code](src/day_04_variable_name_rules/main.py) · [tests](tests/test_day_04.py) · [notes](docs/progress/day-04-reflection.md) |
+| 5 | Mathematical Operations | 🟢 | A *restaurant bill splitter* – arithmetic with money, where rounding, floor division and division by zero all matter. | [code](src/day_05_math_operations/main.py) · [tests](tests/test_day_05.py) · [notes](docs/progress/day-05-reflection.md) |
+| 6 | Built-in Data Types | 🟢 | A *value inspector* – paste any Python literal and get a report on its type, category, mutability, hashability and size. | [code](src/day_06_data_types/main.py) · [tests](tests/test_day_06.py) · [notes](docs/progress/day-06-reflection.md) |
+| 7 | Converting Types (Casting) | 🟢 | A *spreadsheet import cleaner* – every cell arrives as text and must be cast to the right Python type, with precise error reporting. | [code](src/day_07_converting_types/main.py) · [tests](tests/test_day_07.py) · [notes](docs/progress/day-07-reflection.md) |
+| 8 | If / Elif / Else Conditionals | 🟢 | A *hiking-trip weather advisor* that decides what to pack and whether the hike is safe. | [code](src/day_08_if_else_conditionals/main.py) · [tests](tests/test_day_08.py) · [notes](docs/progress/day-08-reflection.md) |
+| 9 | Logical Operations | 🟢 | An *office building access controller* deciding who may open which door, and a tracer that proves when Python stops evaluating. | [code](src/day_09_logical_operations/main.py) · [tests](tests/test_day_09.py) · [notes](docs/progress/day-09-reflection.md) |
+| 10 | Randomisation | 🟢 | A *board-game night toolkit* – dice, a card deck, a raffle and a password generator for the Wi-Fi. | [code](src/day_10_randomisation/main.py) · [tests](tests/test_day_10.py) · [notes](docs/progress/day-10-reflection.md) |
+| 11 | Error Handling | 🟢 | A *greenhouse sensor log reader* – log files are messy, devices disappear and humans type bad values. The program must keep going. | [code](src/day_11_error_handling/main.py) · [tests](tests/test_day_11.py) · [notes](docs/progress/day-11-reflection.md) |
+| 12 | Functions | 🟢 | A *coffee-shop ordering system* built from small, documented, type-hinted functions. | [code](src/day_12_functions/main.py) · [tests](tests/test_day_12.py) · [notes](docs/progress/day-12-reflection.md) |
+| 13 | For Loops | 🟢 | A *school sports-day results board* – iterate over athletes, lanes and heats to build tables and rankings. | [code](src/day_13_for_loops/main.py) · [tests](tests/test_day_13.py) · [notes](docs/progress/day-13-reflection.md) |
+| 14 | Code Blocks and Indentation | 🟢 | A *snippet linter for a coding bootcamp* – students paste code and the tool compiles it, explains indentation errors and offers an automatic fix. | [code](src/day_14_code_block_indentation/main.py) · [tests](tests/test_day_14.py) · [notes](docs/progress/day-14-reflection.md) |
+| 15 | While Loops | 🟢 | An *arcade cabinet* – a number-guessing game, a PIN lock and a coin-counting machine, each driven by ``while`` loops. | [code](src/day_15_while_loops/main.py) · [tests](tests/test_day_15.py) · [notes](docs/progress/day-15-reflection.md) |
+| 16 | Flowchart Programming | 🟢 | A *public library desk* – loan approvals, overdue fines and a returns-sorting conveyor, each first drawn as a flowchart and then translated into Python. | [code](src/day_16_flowchart_programming/main.py) · [tests](tests/test_day_16.py) · [notes](docs/progress/day-16-reflection.md) |
+| 17 | Positional and Keyword Arguments | 🟢 | An *airline booking API* where some arguments must be positional (route), some must be named (cabin, flexibility) and some are optional. | [code](src/day_17_positional_keyword_arguments/main.py) · [tests](tests/test_day_17.py) · [notes](docs/progress/day-17-reflection.md) |
+| 18 | Python Dictionaries and Lists | 🟢 | A *neighbourhood grocery store* – a dict-based inventory behind the counter and a list-based shopping cart in front of it. | [code](src/day_18_dictionaries_lists/main.py) · [tests](tests/test_day_18.py) · [notes](docs/progress/day-18-reflection.md) |
+| 19 | Nested Collections | 🟢 | A *school gradebook* – classes contain students, students contain subjects, subjects contain lists of scores. | [code](src/day_19_nested_collections/main.py) · [tests](tests/test_day_19.py) · [notes](docs/progress/day-19-reflection.md) |
+| 20 | Returning Functions | 🟢 | A *blog post analyser* – functions that return values, multiple values, exit early on bad input, return other functions and compose into a text-processing pipeline. | [code](src/day_20_returning_functions/main.py) · [tests](tests/test_day_20.py) · [notes](docs/progress/day-20-reflection.md) |
+| 21 | Return vs. Print | 🟢 | A *freelancer invoicing tool* – the same calculations written two ways (print-only vs return) to show why returning data is the reusable design. | [code](src/day_21_return_vs_print/main.py) · [tests](tests/test_day_21.py) · [notes](docs/progress/day-21-reflection.md) |
+| 22 | Docstrings vs. Comments | 🟢 | A *kitchen unit-conversion library* that is documented properly and a documentation auditor that inspects it. | [code](src/day_22_doc_string_vs_comments/main.py) · [tests](tests/test_day_22.py) · [notes](docs/progress/day-22-reflection.md) |
+| 23 | Scope and Local/Global Variables | 🟢 | A *web-app feature-flag service*. Configuration lives at module level, request handlers have their own locals and rate limiters are closures. | [code](src/day_23_scope_local_global_variables/main.py) · [tests](tests/test_day_23.py) · [notes](docs/progress/day-23-reflection.md) |
+| 24 | Debugging Techniques | 🟢 | A *payroll script* that ships with a real bug. We find it with print debugging, read its traceback, set a (switchable) breakpoint, and locate the first failing input systematically. | [code](src/day_24_debugging_techniques/main.py) · [tests](tests/test_day_24.py) · [notes](docs/progress/day-24-reflection.md) |
+| 25 | Local Development Environment Setup | 🟡 | A *project doctor* that inspects a checkout (this repository by default) and reports whether the local environment follows best practice. | [code](src/day_25_dev_env_setup_local/main.py) · [tests](tests/test_day_25.py) · [notes](docs/progress/day-25-reflection.md) |
+| 26 | PyCharm Tips and Tricks | 🟡 | A *pocket IDE coach* – a searchable shortcut cheat-sheet per OS, a live-template expander and a safe "Rename" refactoring that works the way the IDE's does (on tokens, not on raw text). | [code](src/day_26_pycharm_tips_tricks/main.py) · [tests](tests/test_day_26.py) · [notes](docs/progress/day-26-reflection.md) |
+| 27 | Python Object Oriented Programming | 🟡 | A *payment gateway* that accepts several payment methods through one abstract interface while hiding sensitive card data. | [code](src/day_27_oop_basics/main.py) · [tests](tests/test_day_27.py) · [notes](docs/progress/day-27-reflection.md) |
+| 28 | Creating Classes in Python | 🟡 | A *community library catalogue* – a ``Book`` class with an initialiser, instance attributes, behaviour methods and friendly dunders. | [code](src/day_28_classes/main.py) · [tests](tests/test_day_28.py) · [notes](docs/progress/day-28-reflection.md) |
+| 29 | Using External Python Modules / Import | 🟡 | A *dependency inspector* for this course – it checks which third-party packages are installed, reads their versions, uses one of them (``requests``) offline, and organises its own helpers as a local package. | [code](src/day_29_external_modules/main.py) · [tests](tests/test_day_29.py) · [notes](docs/progress/day-29-reflection.md) |
+| 30 | Getting / Setting Attributes | 🟡 | A *smart thermostat* whose temperature can be read and written in Celsius or Fahrenheit, but never set to an unsafe value. | [code](src/day_30_getting_setting_attributes/main.py) · [tests](tests/test_day_30.py) · [notes](docs/progress/day-30-reflection.md) |
+| 31 | Python Methods | 🟡 | A *pizzeria ordering system* where each kind of method has a clear job: instance methods change one pizza, class methods build pizzas or change shop-wide settings, static methods are utilities that need neither. | [code](src/day_31_python_methods/main.py) · [tests](tests/test_day_31.py) · [notes](docs/progress/day-31-reflection.md) |
+| 32 | Class Initialisers | 🟡 | *opening bank accounts* – the constructor is the gatekeeper that guarantees every account object is valid from the first moment it exists. | [code](src/day_32_class_initialisers/main.py) · [tests](tests/test_day_32.py) · [notes](docs/progress/day-32-reflection.md) |
+| 33 | Module Aliasing | 🟡 | A *fitness-tracker weekly summary* that needs two different ``loads`` functions and some long module names – aliasing keeps it readable. | [code](src/day_33_module_aliasing/main.py) · [tests](tests/test_day_33.py) · [notes](docs/progress/day-33-reflection.md) |
+| 34 | Optional, Required and Default Parameters | 🟡 | A *CI job scheduler* whose ``schedule_job`` signature uses every parameter kind Python offers, in the only order Python allows. | [code](src/day_34_optional_required_default_parameters/main.py) · [tests](tests/test_day_34.py) · [notes](docs/progress/day-34-reflection.md) |
+| 35 | Event Listeners | 🟡 | A *smart-home hub*. Devices emit events (doorbell rang, motion detected); any number of independent listeners react without the devices knowing who is listening. | [code](src/day_35_event_listeners/main.py) · [tests](tests/test_day_35.py) · [notes](docs/progress/day-35-reflection.md) |
+| 36 | Python Instances and State | 🟡 | *food-delivery orders*. Every order object tracks its own state as it moves through a lifecycle (placed → cooking → out for delivery → delivered, or cancelled), records history, and releases resources when it closes. | [code](src/day_36_python_instances_and_state/main.py) · [tests](tests/test_day_36.py) · [notes](docs/progress/day-36-reflection.md) |
+| 37 | Python Turtle | 🟡 | A *greeting-card artist* – draws shapes, a star burst, a spiral and an animated orbit with ``turtle``. | [code](src/day_37_python_turtle/main.py) · [tests](tests/test_day_37.py) · [notes](docs/progress/day-37-reflection.md) |
+| 38 | Game Development with Python and OOP | 🟡 | *Dungeon Duel* – a turn-based battle between a hero and monsters. Both sides attack, the hero can heal with limited potions, and the battle can be won **or lost**. Randomness is injected so games are reproducible in tests. | [code](src/day_38_game_development_with_python_and_oop/main.py) · [tests](tests/test_day_38.py) · [notes](docs/progress/day-38-reflection.md) |
+| 39 | Python Inheritance | 🟡 | A *smart-device product line*. A base ``Device`` is specialised by single inheritance (``Camera``) and combined with capability mixins through multiple inheritance (``SmartDoorbell``) using cooperative ``super()``. | [code](src/day_39_python_inheritance/main.py) · [tests](tests/test_day_39.py) · [notes](docs/progress/day-39-reflection.md) |
+| 40 | Python Slice Function | 🟡 | A *bank-statement parser* for fixed-width text records, plus a playlist editor – both lean on slicing. | [code](src/day_40_python_slice_function/main.py) · [tests](tests/test_day_40.py) · [notes](docs/progress/day-40-reflection.md) |
+| 41 | File I/O - Reading and Writing to Local Files | 🟡 | A *daily journal* stored as a UTF-8 text file – one entry per line. | [code](src/day_41_file_io/main.py) · [tests](tests/test_day_41.py) · [notes](docs/progress/day-41-reflection.md) |
+| 42 | File Directories | 🟡 | A *downloads-folder organiser* – it scaffolds folders, prints a tree, finds files by pattern, sorts files into folders by extension and cleans up, all confined to one sandbox root so a typo can never touch the rest of the disk. | [code](src/day_42_file_directories/main.py) · [tests](tests/test_day_42.py) · [notes](docs/progress/day-42-reflection.md) |
+| 43 | Reading and Writing to CSV | 🟡 | A *household expense tracker* that imports a bank CSV export, validates each row, reports bad rows instead of crashing, and exports a category summary. | [code](src/day_43_reading_writing_csv/main.py) · [tests](tests/test_day_43.py) · [notes](docs/progress/day-43-reflection.md) |
+| 44 | Introduction to the Pandas Framework | 🟡 | A *coffee-chain sales analysis* – load a CSV into a DataFrame, clean it, add derived columns and answer business questions. | [code](src/day_44_pandas_framework/main.py) · [tests](tests/test_day_44.py) · [notes](docs/progress/day-44-reflection.md) |
+| 45 | List Comprehensions | 🟡 | A *web-server log analyser* – raw access-log lines become clean, filtered, transformed lists in one readable expression each. | [code](src/day_45_list_comprehensions/main.py) · [tests](tests/test_day_45.py) · [notes](docs/progress/day-45-reflection.md) |
+| 46 | Dictionary Comprehensions | 🟡 | An *online bookshop catalogue* – index products, reprice them, invert lookups and count words in reviews, each with a dict comprehension. | [code](src/day_46_dictionary_comprehensions/main.py) · [tests](tests/test_day_46.py) · [notes](docs/progress/day-46-reflection.md) |
+| 47 | Packing and Unpacking Functions in Python | 🟡 | A *GPS route planner* – coordinates, waypoints and connection settings are passed around as tuples and dicts, then unpacked straight into function calls. | [code](src/day_47_packing_unpacking/main.py) · [tests](tests/test_day_47.py) · [notes](docs/progress/day-47-reflection.md) |
+| 48 | Creating Desktop GUI Apps with Tkinter | 🟡 | A *restaurant tip splitter* desktop app. The calculation is a pure function (unit-tested everywhere); the GUI is a thin layer of widgets laid out with ``grid`` that reads user input and shows results or errors. | [code](src/day_48_tkinter_gui/main.py) · [tests](tests/test_day_48.py) · [notes](docs/progress/day-48-reflection.md) |
+| 49 | Strongly Dynamic Typing | 🟡 | A *product-import pipeline* receiving loosely typed data from spreadsheets and APIs. Python is **dynamic** (names can be rebound to any type at runtime) but **strong** (it refuses to silently mix incompatible types). | [code](src/day_49_strongly_dynamic_typing/main.py) · [tests](tests/test_day_49.py) · [notes](docs/progress/day-49-reflection.md) |
+| 50 | Error Handling and Exceptions | 🟡 | A *configuration loader for a microservice* that reads JSON from disk, validates many fields at once, retries flaky reads and logs failures with full context. | [code](src/day_50_error_handling_exceptions/main.py) · [tests](tests/test_day_50.py) · [notes](docs/progress/day-50-reflection.md) |
+| 51 | Try / Except / Raise | 🟡 | A *concert ticket booking service* with its own exception hierarchy, so callers can catch errors as broadly or as precisely as they need. | [code](src/day_51_try_except_raise/main.py) · [tests](tests/test_day_51.py) · [notes](docs/progress/day-51-reflection.md) |
+| 52 | Working with JSONs | 🟡 | A *weather-station API client* that receives JSON payloads, validates them into typed objects, and serialises its own reports – including types JSON doesn't support natively (datetime, Decimal, dataclasses). | [code](src/day_52_working_with_jsons/main.py) · [tests](tests/test_day_52.py) · [notes](docs/progress/day-52-reflection.md) |
+| 53 | Local Persistence | 🟡 | A *language-learning app* that remembers each learner's XP, streak and settings between runs – safely. | [code](src/day_53_local_persistence/main.py) · [tests](tests/test_day_53.py) · [notes](docs/progress/day-53-reflection.md) |
+| 54 | Sending Email with Python and SMTP | 🟡 | A *weekly study-report mailer*. It builds a proper MIME message (plain text + HTML + attachment), validates addresses, reads SMTP credentials from the environment and sends with ``smtplib`` over TLS – or does a dry run. | [code](src/day_54_sending_email/main.py) · [tests](tests/test_day_54.py) · [notes](docs/progress/day-54-reflection.md) |
+| 55 | Working with Date and Time | 🟡 | A *global team meeting planner* – ages, deadlines, business days and one meeting shown in every teammate's local time. | [code](src/day_55_date_and_time/main.py) · [tests](tests/test_day_55.py) · [notes](docs/progress/day-55-reflection.md) |
+| 56 | Hosting Python Code Online with PythonAnywhere | 🟡 | Deploy a tiny *"Quote of the Day" web app* – a standard-library WSGI application that runs locally with ``wsgiref`` and on PythonAnywhere unchanged. | [code](src/day_56_pythonanywhere_hosting/main.py) · [tests](tests/test_day_56.py) · [notes](docs/progress/day-56-reflection.md) |
+| 57 | REST APIs & JSON | 🟠 | A *to-do list REST API* simulated in memory. No network: the goal is to understand what HTTP methods mean, which status code each outcome deserves, and how JSON request/response bodies are produced and consumed. | [code](src/day_57_rest_apis_json/main.py) · [tests](tests/test_day_57.py) · [notes](docs/progress/day-57-reflection.md) |
+| 58 | HTTP Requests with requests | 🟠 | A *public-holiday dashboard client* that talks to a JSON API (JSONPlaceholder / httpbin for the demo) robustly. | [code](src/day_58_http_requests/main.py) · [tests](tests/test_day_58.py) · [notes](docs/progress/day-58-reflection.md) |
+| 59 | Query Parameters, Headers & Payloads | 🟠 | A *job-board search client*. The interesting part is what goes on the wire, so every request is first built offline with ``requests.Request(...).prepare()`` – we can inspect the exact URL, headers and body – and only then sent through a session. | [code](src/day_59_request_parameters_headers_payloads/main.py) · [tests](tests/test_day_59.py) · [notes](docs/progress/day-59-reflection.md) |
+| 60 | API Authentication (Client-side) | 🟠 | A *weather-data aggregator* that talks to three providers, each with a different authentication scheme. Secrets come from the environment (optionally a git-ignored ``.env``), are never hard-coded and never printed. | [code](src/day_60_api_authentication/main.py) · [tests](tests/test_day_60.py) · [notes](docs/progress/day-60-reflection.md) |
+| 61 | SMS / Notification Automation | 🟠 | A *server-monitoring alerter* that texts the on-call engineer when a health check fails. It integrates with Twilio when credentials and the ``twilio`` package are present, and otherwise falls back to a safe dry run. | [code](src/day_61_sms_notification_automation/main.py) · [tests](tests/test_day_61.py) · [notes](docs/progress/day-61-reflection.md) |
+| 62 | Web Scraping with Beautiful Soup | 🟠 | A *quotes research assistant* that collects quotes and authors from quotes.toscrape.com – a site built for scraping practice – *politely*. | [code](src/day_62_web_scraping/main.py) · [tests](tests/test_day_62.py) · [notes](docs/progress/day-62-reflection.md) |
+| 63 | Browser Automation with Selenium | 🟠 | A *QA smoke test* for quotes.toscrape.com (a practice site): log in through the form, read quotes from the JavaScript-rendered page that appears only after a delay, and page through results – using Page Objects. | [code](src/day_63_browser_automation_selenium/main.py) · [tests](tests/test_day_63.py) · [notes](docs/progress/day-63-reflection.md) |
+| 64 | Iterators & the Iterator Protocol | 🟠 | _planned_ | – |
+| 65 | Generators & yield | 🟠 | _planned_ | – |
+| 66 | Advanced Generators | 🟠 | _planned_ | – |
+| 67 | Decorators Deep Dive | 🟠 | _planned_ | – |
+| 68 | Context Managers | 🟠 | _planned_ | – |
+| 69 | Descriptors | 🟠 | _planned_ | – |
+| 70 | Metaclasses (Introduction) | 🟠 | _planned_ | – |
+| 71 | Functional Tools | 🟠 | _planned_ | – |
+| 72 | Advanced Typing | 🟠 | _planned_ | – |
+| 73 | Concurrency: Threading | 🟠 | _planned_ | – |
+| 74 | Concurrency: Multiprocessing | 🟠 | _planned_ | – |
+| 75 | Asyncio Fundamentals | 🟠 | _planned_ | – |
+| 76 | Advanced Asyncio | 🟠 | _planned_ | – |
+| 77 | Logging & Configuration | 🟠 | _planned_ | – |
+| 78 | Testing with pytest | 🟠 | _planned_ | – |
+| 79 | Packaging & Distribution | 🟠 | _planned_ | – |
+| 80 | Profiling & Performance | 🟠 | _planned_ | – |
+| 81 | Advanced Regular Expressions | 🟠 | _planned_ | – |
+| 82 | SQLite & Pure Database Work | 🟠 | _planned_ | – |
+| 83 | Robust CLI Application | 🔴 | _planned_ | – |
+| 84 | Data Pipeline / ETL Script | 🔴 | _planned_ | – |
+| 85 | Concurrent File / Network Processor | 🔴 | _planned_ | – |
+| 86 | Custom Logging & Monitoring Tool | 🔴 | _planned_ | – |
+| 87 | Plugin-style Architecture | 🔴 | _planned_ | – |
+| 88 | Automated Report Generator | 🔴 | _planned_ | – |
+| 89 | Background Task Runner | 🔴 | _planned_ | – |
+| 90 | Memory-efficient Large File Processor | 🔴 | _planned_ | – |
+| 91 | Type-safe Configuration System | 🔴 | _planned_ | – |
+| 92 | Test Suite for a Multi-module Package | 🔴 | _planned_ | – |
+| 93 | Simple Async Network Service | 🔴 | _planned_ | – |
+| 94 | Data Validation & Cleaning Library | 🔴 | _planned_ | – |
+| 95 | Performance-critical Module | 🔴 | _planned_ | – |
+| 96 | Packaging a Real Tool | 🔴 | _planned_ | – |
+| 97 | Automation Bot Suite | 🔴 | _planned_ | – |
+| 98 | Scientific / Simulation Mini-project | 🔴 | _planned_ | – |
+| 99 | Observability & Debugging Toolkit | 🔴 | _planned_ | – |
+| 100 | Portfolio Capstone: Production-ready Python Tool | 🔴 | _planned_ | – |
+<!-- course-index:end -->
+
+## Quality bar
+
+* **Lint:** `ruff check src tests scripts`
+* **Types:** `mypy src` (no errors)
+* **Tests:** `pytest --cov=src --cov-fail-under=85` on Python 3.12, 3.13 and 3.14
+* **Security:** no `eval` on input, secrets only from the environment, `secrets` for passwords,
+  sandboxed file operations, atomic writes for user data, tests confined to `tmp_path`
+
+## Roadmap
+
+Days 64–100 (Advanced Python and the capstone projects) are planned in
+[`syllabus.md`](syllabus.md). The plan for turning the finished course into a
+high-impact learning resource – contributor programme, learner experience,
+sponsorship and governance – is in [`learning_develop.md`](learning_develop.md).
 
 ## Contributing
 
-This is a personal challenge repository, but issues, suggestions, and thoughtful discussions are welcome.
+Issues and pull requests are welcome – a typo fix, a clearer explanation, an
+extra edge-case test or a new exercise all help. Please run `./propython.sh`
+before opening a PR.
 
 ## License
 
-MIT License – see the LICENSE file for details.
-
-### Main Improvements Made
-- Removed casual emojis from headings (kept only where they add value)
-- Professional tone and phrasing
-- Clearer structure and language
-- Added realistic setup instructions (venv activation for all major shells)
-- Included linting/type-checking commands (common in pro Python repos)
-- Better table formatting & future-proof columns
-- Removed redundant repetition in the overview
-
-Feel free to copy-paste this directly into your `README.md`.  
-
-If you'd like to add badges for coverage, mypy, ruff, or a progress percentage,let me know — I can help generate those too. Good luck with the rest of the 100 days! 🚀 
+MIT – see [LICENSE](LICENSE).

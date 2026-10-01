@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-24",
+  "learnings": [
+    "Defaults are evaluated once; immutable defaults are safe, mutable ones are not.",
+    "`*drinks` collects positional arguments into a tuple; `**extras` collects keywords into a dict.",
+    "Google-style docstrings with Args/Returns/Raises make `help()` genuinely useful."
+  ],
+  "pitfalls": [
+    "Unknown keyword extras were silently accepted – they are now rejected with a clear message."
+  ],
+  "next": "Study every parameter kind and ordering rule on Day 34."
+}

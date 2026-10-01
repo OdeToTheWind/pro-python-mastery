@@ -1,24 +1,35 @@
-# Day 38 - Game Development with Python and OOP Reflection
+# Day 38 – Game Development with Python and OOP Reflection
 
-**Date:** 2026-04-19  
-**Python Version Used:** 3.14  
-**Time Spent:** ~3 hours  
+**Date:** 2026-04-19 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_38_game_development_with_python_and_oop/main.py`](../../src/day_38_game_development_with_python_and_oop/main.py) · **Tests:** [`tests/test_day_38.py`](../../tests/test_day_38.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Simple text-based combat game using OOP (Player vs Enemy)
-- Demonstrated health management, attacks, and healing using classes
+## Scenario
+*Dungeon Duel* – a turn-based battle between a hero and monsters. Both sides attack, the hero can heal with limited potions, and the battle can be won **or lost**. Randomness is injected so games are reproducible in tests.
 
-## Core Learnings & Insights
-- OOP is very effective for game development (entities with state and behavior)
-- Player and Enemy as separate classes with their own attributes and methods
-- Game loops naturally combine with object interactions
-- This is the foundation for more complex games
+## Syllabus deliverables
+> Simple game-building using classes, state and user interaction
 
-## Challenges Faced & How I Solved Them
-- Making a fun mini-game → created a simple combat loop with clear win/lose conditions
+| Deliverable | Implemented in |
+|---|---|
+| ✅ game classes | `Character` |
+| ✅ player-specific behaviour | `Hero` |
+| ✅ game state and turn logic | `Battle` |
+| ✅ enemy AI (counter-attacks) | `Battle.enemy_turn` |
+| ✅ user interaction loop | `play` |
 
-## Self-Assessment
-- Educational value: Very high – practical application of OOP
-- Personal rating: 9.4/10 – Excellent bridge between OOP theory and game development
+## Key learnings
+- Game state (HP, potions, turn log, winner) belongs in objects, not loose variables.
+- Injected randomness makes a whole battle reproducible in a test.
+- A game the player can't lose is not a game – the enemy now strikes back.
 
-Day 38 complete.
+## Pitfalls I hit (and how I fixed them)
+- Clamping damage at zero HP prevents negative health and weird win states.
+
+## Run it
+```bash
+python -m src.day_38_game_development_with_python_and_oop.main
+pytest tests/test_day_38.py -v
+```
+
+## Next step
+- Add save/load of a battle with Day 53's persistence.

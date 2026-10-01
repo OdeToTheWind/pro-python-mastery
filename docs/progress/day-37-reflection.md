@@ -1,25 +1,37 @@
-# Day 37 - Python Turtle Reflection
+# Day 37 – Python Turtle Reflection
 
-**Date:** 2026-04-18  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-18 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_37_python_turtle/main.py`](../../src/day_37_python_turtle/main.py) · **Tests:** [`tests/test_day_37.py`](../../tests/test_day_37.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive Turtle Graphics explorer
-- Multiple shape drawing options (Square, Circle, Star, Spiral)
-- Real-time user-controlled drawing
+## Scenario
+A *greeting-card artist* – draws shapes, a star burst, a spiral and an animated orbit with ``turtle``.
 
-## Core Learnings & Insights
-- The `turtle` module provides simple graphics programming
-- Turtle is excellent for learning loops, coordinates, and visual feedback
-- Graphics programming combines logic with visual output
-- Good for teaching concepts like loops and functions in an engaging way
+## Syllabus deliverables
+> Graphics, shapes, drawing logic and animations using Turtle
 
-## Challenges Faced & How I Solved Them
-- Making graphics interactive → built a menu-driven shape drawer
+| Deliverable | Implemented in |
+|---|---|
+| ✅ graphics setup | `main` |
+| ✅ shapes: regular polygons | `draw_polygon` |
+| ✅ shapes: stars | `draw_star` |
+| ✅ drawing logic: angles | `exterior_angle` |
+| ✅ drawing logic: spiral | `draw_spiral` |
+| ✅ animation frames | `orbit_positions` |
+| ✅ animation loop with ontimer | `animate_orbit` |
 
-## Self-Assessment
-- Educational value: High – fun way to practice programming concepts
-- Personal rating: 9.0/10 – Enjoyable visual programming day
+## Key learnings
+- A regular polygon turns by `360 / sides`; a single-stroke star by `180 - 180 / points`.
+- Passing the pen in as a protocol makes drawing logic testable without a window.
+- `tracer(0)` plus `ontimer` gives smooth, non-blocking animation.
 
-Day 37 complete.
+## Pitfalls I hit (and how I fixed them)
+- Leaving the window open after an exception was fixed with `finally: turtle.bye()`.
+
+## Run it
+```bash
+python -m src.day_37_python_turtle.main
+pytest tests/test_day_37.py -v
+```
+
+## Next step
+- Use the same pre-computed-frame approach for simulations on Day 98.

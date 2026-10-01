@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "`params=` encodes query strings (lists repeat the key, `None` is dropped).",
+    "`data=` sends form-encoded bodies, `files=` multipart, `json=` JSON – each sets its own Content-Type.",
+    "Preparing requests offline lets tests assert the exact bytes that would be sent."
+  ],
+  "pitfalls": [
+    "The old tests only checked that mocked keys existed, never what was actually sent."
+  ],
+  "next": "Reuse prepared-request testing when building the automation bot suite (Day 97)."
+}

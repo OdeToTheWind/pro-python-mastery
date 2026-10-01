@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-31",
+  "learnings": [
+    "`setdefault` chains build nested dicts without `if key not in ...` ladders.",
+    "Flipping nesting (class → student → subject into subject → scores) is a common reporting task.",
+    "A `deep_get` helper keeps lookups into optional nested data safe."
+  ],
+  "pitfalls": [
+    "Copying the record lists is essential; shared inner lists leak changes between objects."
+  ],
+  "next": "Analyse the same data with pandas on Day 44."
+}

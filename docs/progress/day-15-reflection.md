@@ -1,46 +1,37 @@
-# Day 15 - While Loops Reflection
+# Day 15 – While Loops Reflection
 
-**Date:** 2026-03-27  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-03-27 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_15_while_loops/main.py`](../../src/day_15_while_loops/main.py) · **Tests:** [`tests/test_day_15.py`](../../tests/test_day_15.py) (13 tests)
 
-## What I Built / Key Deliverables
-- Interactive While Loops Explorer with 6 practical demos
-- Number Guessing Game, Password Retry System, Interactive Calculator
-- Input validation, countdown, and while-else demonstration
-- Clear cheat sheet explaining while loop mechanics
-- Unit tests covering core loop logic
+## Scenario
+An *arcade cabinet* – a number-guessing game, a PIN lock and a coin-counting machine, each driven by ``while`` loops.
 
-## Core Learnings & Insights
-- `while` loops repeat as long as a condition is `True`
-- `break` exits the loop immediately
-- `continue` skips to the next iteration
-- `while-else` runs only if the loop finished normally (no break)
-- Perfect for situations where you don’t know the number of iterations in advance
-- Very useful for input validation, games, retry logic, and waiting for conditions
+## Syllabus deliverables
+> while loops, break, continue, while-else, input validation and games
 
-## Challenges Faced & How I Solved Them
-- Making while loops engaging → created real games and validation scenarios
-- Showing while-else clearly → dedicated demo with search example
-- Preventing infinite loops → added quit options and attempt limits
-- Testing while loop behavior → created small pure functions for pytest
+| Deliverable | Implemented in |
+|---|---|
+| ✅ while loop | `collatz_steps` |
+| ✅ break | `guessing_game` |
+| ✅ continue | `count_coins` |
+| ✅ while ... else | `unlock` |
+| ✅ input validation loop | `ask_int` |
+| ✅ game | `guessing_game` |
+| ✅ safe calculator (replaces eval) | `safe_eval` |
 
-## Improvements for Next Time / Future Ideas
-- Combine with random (guess number with random secret)
-- Simple text adventure game using while loop
-- Progress bar simulation with while
-- Retry decorator pattern (preview for intermediate level)
+## Key learnings
+- `while` fits loops whose iteration count is unknown in advance (Collatz, retries, games).
+- `continue` skips the rest of one iteration; `break` leaves the loop; `while ... else` detects 'no break'.
+- An AST walker with an operator whitelist is a safe calculator; `eval` with empty builtins is not.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/reference/compound_stmts.html#while
-- Real Python: Python while Loops Guide
+## Pitfalls I hit (and how I fixed them)
+- The original calculator could be escaped with `().__class__.__base__.__subclasses__()` – it was replaced.
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – consistent indentation and structure
-- Interactivity: Excellent – users play games and validate input live
-- Educational value: Strong – covers all major while loop patterns
-- Personal rating: 9.3/10 – Important control flow concept completed
+## Run it
+```bash
+python -m src.day_15_while_loops.main
+pytest tests/test_day_15.py -v
+```
 
-Day 15 complete — you now master both `for` and `while` loops.  
-Next: Flowchart Programming (Day 16).
+## Next step
+- Revisit AST processing when building the data-validation library on Day 94.

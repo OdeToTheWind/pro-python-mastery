@@ -1,29 +1,38 @@
-# Day 47 - Packing and Unpacking Functions in Python Reflection
+# Day 47 – Packing and Unpacking Functions in Python Reflection
 
-**Date:** 2026-04-28  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-28 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_47_packing_unpacking/main.py`](../../src/day_47_packing_unpacking/main.py) · **Tests:** [`tests/test_day_47.py`](../../tests/test_day_47.py) (10 tests)
 
-## What I Built / Key Deliverables
-- Interactive demonstration of `*args`, `**kwargs`, tuple unpacking, and function packing
+## Scenario
+A *GPS route planner* – coordinates, waypoints and connection settings are passed around as tuples and dicts, then unpacked straight into function calls.
 
-## Core Learnings & Insights
-- `*args` collects extra positional arguments as tuple
-- `**kwargs` collects extra keyword arguments as dictionary
-- Unpacking (`a, b = coords`) makes code cleaner
-- Powerful for building flexible APIs and utility functions
+## Syllabus deliverables
+> Advanced argument unpacking with \* and \*\*
 
-## Challenges Faced & How I Solved Them
-- Explaining complex argument passing → used clear real examples with user input
+| Deliverable | Implemented in |
+|---|---|
+| ✅ \* unpacking at the call site | `leg_distance` |
+| ✅ \*\* unpacking at the call site | `connect` |
+| ✅ packing with \*args | `route_length` |
+| ✅ packing with \*\*kwargs | `connect` |
+| ✅ extended unpacking (first, \*middle, last) | `split_route` |
+| ✅ merging with [\*a, \*b] and {\*\*a, \*\*b} | `merge_settings` |
+| ✅ unzipping with zip(\*pairs) | `unzip` |
+| ✅ swap via tuple packing/unpacking | `swap_ends` |
 
-## Improvements for Next Time / Future Ideas
-- Decorators using `*args` / `**kwargs`
+## Key learnings
+- `f(*seq)` spreads a sequence into positional arguments; `f(**mapping)` spreads keys into keyword arguments.
+- `first, *middle, last = seq` unpacks any length of sequence.
+- `zip(*pairs)` transposes a list of pairs.
 
-## References / Resources Used
-- Python docs: Function Definitions
-- Real Python: *args and **kwargs Guide
+## Pitfalls I hit (and how I fixed them)
+- `**` unpacking still enforces the signature – a missing required key raises `TypeError`.
 
-## Self-Assessment
-- Personal rating: 9.3/10 – Advanced function flexibility understood
+## Run it
+```bash
+python -m src.day_47_packing_unpacking.main
+pytest tests/test_day_47.py -v
+```
 
-Day 47 complete.
+## Next step
+- Use argument forwarding inside decorators (Day 67).

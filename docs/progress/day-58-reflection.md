@@ -1,39 +1,36 @@
-# Day 58 - Making HTTP Requests with the Requests module Reflection
+# Day 58 – HTTP Requests with requests Reflection
 
-**Date:** 2026-09-29  
-**Python Version Used:** 3.12+  
-**Time Spent:** 2 hours  
-**Git Commit Hash (optional):** 
+**Date:** 2026-09-29 · **Level:** Advanced · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_58_http_requests/main.py`](../../src/day_58_http_requests/main.py) · **Tests:** [`tests/test_day_58.py`](../../tests/test_day_58.py) (9 tests)
 
-## What I Built / Key Deliverables
-- GET helper that fetches and slices posts from JSONPlaceholder
-- POST helper that creates a resource and returns the simulated response
-- Session demo showing cookie persistence and default headers
-- Robust error-handling wrapper for Timeout / HTTPError / RequestException
+## Scenario
+A *public-holiday dashboard client* that talks to a JSON API (JSONPlaceholder / httpbin for the demo) robustly.
 
-## Core Learnings & Insights
-- `requests` is still the de-facto standard for synchronous HTTP in Python
-- Always pass a `timeout=` – never leave it at the default (None)
-- `raise_for_status()` turns 4xx/5xx into exceptions you can catch cleanly
-- `Session` objects give connection pooling and automatic cookie handling
-- Inspecting `resp.elapsed`, `resp.headers` and `resp.url` is invaluable for debugging
+## Syllabus deliverables
+> GET/POST requests, response handling, sessions and timeouts
 
-## Challenges Faced & How I Solved Them
-- JSONPlaceholder returns 201 for POST but still echoes the body – had to check the docs
-- Distinguishing network failures from HTTP error statuses → nested except clauses
+| Deliverable | Implemented in |
+|---|---|
+| ✅ GET request | `get_posts` |
+| ✅ POST request with JSON body | `create_post` |
+| ✅ response handling | `describe_response` |
+| ✅ sessions with retries | `build_session` |
+| ✅ timeouts | `TIMEOUT` |
+| ✅ error handling | `safe_get` |
 
-## Improvements for Next Time / Future Ideas
-- Add retry logic with `urllib3.util.retry.Retry` + `HTTPAdapter`
-- Support streaming large responses with `stream=True` and `iter_content`
-- Abstract the base URL into a small client class for reuse
+## Key learnings
+- Always pass a timeout; `(connect, read)` tuples control both phases.
+- A `Session` reuses connections and can retry 429/5xx responses with backoff.
+- Map every failure mode (timeout, connection, HTTP, bad JSON) to a clear outcome.
 
-## References / Resources Used
-- https://requests.readthedocs.io/
-- https://jsonplaceholder.typicode.com/
-- https://httpbin.org/
+## Pitfalls I hit (and how I fixed them)
+- `HTTPError.response` can be `None`; reading `.status_code` blindly raised `AttributeError`.
 
-## Self-Assessment
-- Coverage goal met? Core happy-path and error paths are tested
-- Typing strictness: fully typed
-- Code cleanliness: readable, good separation of concerns
-- Personal rating: 8.5/10 – comfortable with the library, want more advanced retry patterns later
+## Run it
+```bash
+python -m src.day_58_http_requests.main
+pytest tests/test_day_58.py -v
+```
+
+## Next step
+- Make concurrent requests with asyncio/aiohttp on Day 76.

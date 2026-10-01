@@ -1,5 +1,11 @@
 # Python Project Syllabus
 
+> **How status is verified.** A day is marked **Covered** only when it has
+> `src/day_XX_<topic>/main.py` with a `DELIVERABLES` map, `tests/test_day_XX.py`
+> that imports and exercises that code, and `docs/progress/day-XX-reflection.md`
+> that lists the same deliverables. `tests/test_syllabus_sync.py` enforces this
+> in CI, so the table below cannot drift from the code.
+
 | Day | Topic | Key Learnings/Deliverables | Topic Level | Status of covered |
 |-----|-------|---------------------------|-------------|------------------|
 | 01 | Variables, Type Hinting & Scoping | Strict typing with PEP 484/695, f-strings, scope rules, local vs global vs nonlocal | Beginner | Covered |
@@ -58,13 +64,13 @@
 | 54 | Sending Email with Python and SMTP | Automating email delivery with smtplib | Intermediate | Covered |
 | 55 | Working with Date and Time | datetime usage, calculations, formatting and timezone awareness | Intermediate | Covered |
 | 56 | Hosting Python Code Online with PythonAnywhere | Cloud deployment basics and live app hosting | Intermediate | Covered |
-| 57 | REST APIs & JSON | HTTP methods, status codes, serialization and API payload processing | Advanced | Planned |
-| 58 | HTTP Requests with requests | GET/POST requests, response handling, sessions and timeouts | Advanced | Planned |
-| 59 | Query Parameters, Headers & Payloads | Query strings, custom headers, forms and JSON request bodies | Advanced | Planned |
-| 60 | API Authentication (Client-side) | API keys, Bearer tokens, Basic Auth and environment variables | Advanced | Planned |
-| 61 | SMS / Notification Automation | Twilio integration and secure secrets management | Advanced | Planned |
-| 62 | Web Scraping with Beautiful Soup | HTML parsing, selectors and ethical data extraction | Advanced | Planned |
-| 63 | Browser Automation with Selenium | Locator strategies, waits, form filling and dynamic page interactions | Advanced | Planned |
+| 57 | REST APIs & JSON | HTTP methods, status codes, serialization and API payload processing | Advanced | Covered |
+| 58 | HTTP Requests with requests | GET/POST requests, response handling, sessions and timeouts | Advanced | Covered |
+| 59 | Query Parameters, Headers & Payloads | Query strings, custom headers, forms and JSON request bodies | Advanced | Covered |
+| 60 | API Authentication (Client-side) | API keys, Bearer tokens, Basic Auth and environment variables | Advanced | Covered |
+| 61 | SMS / Notification Automation | Twilio integration and secure secrets management | Advanced | Covered |
+| 62 | Web Scraping with Beautiful Soup | HTML parsing, selectors and ethical data extraction | Advanced | Covered |
+| 63 | Browser Automation with Selenium | Locator strategies, waits, form filling and dynamic page interactions | Advanced | Covered |
 | 64 | Iterators & the Iterator Protocol | __iter__, __next__, and custom iterators | Advanced | Planned |
 | 65 | Generators & yield | Generator functions, lazy evaluation, and memory benefits | Advanced | Planned |
 | 66 | Advanced Generators | yield from, generator pipelines, and sending values | Advanced | Planned |
@@ -105,7 +111,7 @@
 
 - **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
 - **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
-- **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Planned**
+- **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Completed! 🎓**
 - **Phase 4: Advanced Python Language & Tooling (Days 64–82) — Planned**
 - **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Planned**
 

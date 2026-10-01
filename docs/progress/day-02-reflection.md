@@ -1,39 +1,35 @@
-# Day 02 - String Manipulation Reflection
+# Day 02 – String Manipulation Reflection
 
-**Date:** 2026-03-14  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-03-14 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_02_strings/main.py`](../../src/day_02_strings/main.py) · **Tests:** [`tests/test_day_02.py`](../../tests/test_day_02.py) (8 tests)
 
-## What I Built / Key Deliverables
-- Professional profile generator function with input cleaning and formatted output
-- Used f-strings with alignment, padding, and centering
-- Unit tests covering messy input, edge cases (empty name, zero years)
-- Runnable demonstration in main.py
+## Scenario
+A *conference badge printer* that turns messy sign-up data into clean, aligned badges.
 
-## Core Learnings & Insights
-- `str.strip().title()` combo is perfect for name normalization
-- f-string specifiers like `:<20`, `:^30`, `:02` make alignment trivial and readable
-- Slicing + formatting = quick & safe way to build handles/usernames
-- `upper()` vs `title()` — important distinction for roles vs names
-- Keeping functions pure (no print inside) makes them testable/reusable
+## Syllabus deliverables
+> Advanced string methods, cleaning input, string formatting and alignment
 
-## Challenges Faced & How I Solved Them
-- Alignment looked off with long names → switched to fixed-width + truncation if needed (future improvement)
-- Wanted to avoid hard-coded widths → considered dynamic calculation but kept simple for Day 2
+| Deliverable | Implemented in |
+|---|---|
+| ✅ advanced string methods | `make_handle` |
+| ✅ cleaning input | `clean_name` |
+| ✅ slug / normalisation | `slugify` |
+| ✅ formatting and alignment | `render_badge` |
+| ✅ tabular alignment | `align_columns` |
 
-## Improvements for Next Time / Future Ideas
-- Add truncation or ellipsis for very long names
-- Support multi-line output or rich console (rich library?)
-- Validate years (positive int) with better error messages
-- Extend to generate Markdown/JSON versions of the profile
+## Key learnings
+- `str.title()` capitalises after apostrophes (`John'S`); `string.capwords` plus a hyphen rule handles real names.
+- `casefold()` is the right tool for case-insensitive work, not `lower()`.
+- Alignment (`^`, `<`, `>`) and fill characters (`:.^32`) produce fixed-width output with no manual maths.
 
-## References / Resources Used
-- Python docs: str methods (strip, title, upper, format specifiers)
-- Real Python: "f-strings in Python"
-- PEP 498 – Literal String Interpolation
+## Pitfalls I hit (and how I fixed them)
+- Building a handle from a name with no letters produced `@05` – now it is rejected with `ValueError`.
 
-## Self-Assessment
-- Test coverage: High for core logic (~95%)
-- Typing: Good – inputs/outputs annotated
-- Code cleanliness: Very readable, single responsibility
-- Personal rating: 9/10 – enjoyable day, output looks professional
+## Run it
+```bash
+python -m src.day_02_strings.main
+pytest tests/test_day_02.py -v
+```
+
+## Next step
+- Use the slug and alignment helpers again when formatting reports on Day 21.

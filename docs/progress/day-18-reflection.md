@@ -1,46 +1,34 @@
-# Day 18 - Python Dictionaries and Lists Reflection
+# Day 18 – Python Dictionaries and Lists Reflection
 
-**Date:** 2026-03-30      
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5–3 hours  
+**Date:** 2026-03-30 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_18_dictionaries_lists/main.py`](../../src/day_18_dictionaries_lists/main.py) · **Tests:** [`tests/test_day_18.py`](../../tests/test_day_18.py) (11 tests)
 
-## What I Built / Key Deliverables
-- Interactive Lists & Dictionaries Explorer with 6 practical scenarios
-- Shopping Cart (List), Student Record (Dict), Inventory System
-- Student Management combining both structures
-- Clear cheat sheet comparing lists vs dictionaries
-- Comprehensive unit tests
+## Scenario
+A *neighbourhood grocery store* – a dict-based inventory behind the counter and a list-based shopping cart in front of it.
 
-## Core Learnings & Insights
-- **Lists**: Ordered, mutable, allow duplicates, accessed by index
-- **Dictionaries**: Key-value pairs, unique keys, fast lookup by key
-- Common list methods: `append()`, `pop()`, `remove()`, `sort()`, `extend()`
-- Common dict methods: `.get()`, `.update()`, `.pop()`, `.keys()`, `.values()`, `.items()`
-- Lists are great for sequences, dictionaries for mapping/lookup
-- Combining both structures is extremely common in real applications
+## Syllabus deliverables
+> List and dict methods, inventory management, shopping cart logic
 
-## Challenges Faced & How I Solved Them
-- Making abstract data structures engaging → created real mini-apps (cart, inventory, student system)
-- Showing both structures together → Student Management System demo
-- Teaching safe access → emphasized `.get()` vs direct key access
-- Testing complex operations → created small pure helper functions
+| Deliverable | Implemented in |
+|---|---|
+| ✅ list methods | `list_method_tour` |
+| ✅ dict methods | `Inventory` |
+| ✅ inventory management | `Inventory` |
+| ✅ shopping cart logic | `Cart` |
 
-## Improvements for Next Time / Future Ideas
-- List comprehensions and dict comprehensions
-- JSON-like data processing
-- CRUD operations on both structures
-- Performance comparison (list vs dict lookup)
+## Key learnings
+- `dict.get(key, default)` and `setdefault` avoid `KeyError` boilerplate.
+- A checkout should be all-or-nothing: validate every line first, then mutate.
+- List methods mutate in place and return `None` (`sort`, `append`, `remove`).
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/tutorial/datastructures.html
-- Real Python: Lists and Dictionaries Guide
+## Pitfalls I hit (and how I fixed them)
+- The previous day's file re-used Day 17 functions, so the real inventory logic was untested.
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – clear, consistent, well-commented
-- Interactivity: Excellent – users actively manipulate data
-- Educational value: Very strong – core data structures mastered
-- Personal rating: 9.4/10 – Fundamental day completed well
+## Run it
+```bash
+python -m src.day_18_dictionaries_lists.main
+pytest tests/test_day_18.py -v
+```
 
-Day 18 complete — you now have strong command over Python's most used data structures.  
-Next: Nested Collections (Day 19).
+## Next step
+- Persist the inventory to JSON on Day 52.

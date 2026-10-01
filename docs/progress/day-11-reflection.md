@@ -1,49 +1,34 @@
-# Day 11 - Error Handling Reflection
+# Day 11 – Error Handling Reflection
 
-**Date:** 2026-03-23  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5–3 hours  
+**Date:** 2026-03-23 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_11_error_handling/main.py`](../../src/day_11_error_handling/main.py) · **Tests:** [`tests/test_day_11.py`](../../tests/test_day_11.py) (10 tests)
 
-## What I Built / Key Deliverables
-- Interactive error handling playground where user deliberately triggers common exceptions
-- Demonstrations for `ValueError`, `ZeroDivisionError`, `IndexError`, `KeyError`, `FileNotFoundError`
-- Use of `try` / `except` / `else` / `finally` in real scenarios
-- Safe input helper and graceful error messages with explanations
-- Unit tests using `pytest.raises()` for expected exceptions
+## Scenario
+A *greenhouse sensor log reader* – log files are messy, devices disappear and humans type bad values. The program must keep going.
 
-## Core Learnings & Insights
-- Errors are not enemies — they are valuable information
-- `try/except` lets us recover gracefully instead of crashing
-- `else` runs only if no exception occurred
-- `finally` always runs (perfect for cleanup: closing files, releasing resources)
-- Specific exceptions > bare `except Exception`
-- Raising your own `ValueError` with helpful messages improves UX
-- Defensive programming: validate inputs early
+## Syllabus deliverables
+> try/except/else/finally, common exceptions and robust user input handling
 
-## Challenges Faced & How I Solved Them
-- Making error handling interactive instead of theoretical → created menu that intentionally triggers errors
-- Explaining why each exception happens → added clear messages after each catch block
-- Avoiding silent failures → used `finally` and informative output
-- Testing exceptions → used `pytest.raises()` with match parameter
+| Deliverable | Implemented in |
+|---|---|
+| ✅ try/except/else/finally | `load_readings` |
+| ✅ common exceptions | `provoke` |
+| ✅ robust user input | `ask_float` |
+| ✅ graceful recovery from bad data | `parse_line` |
 
-## Improvements for Next Time / Future Ideas
-- Custom exception classes
-- Context managers (`with` statement) for file handling
-- Logging errors instead of just printing
-- Retry logic with exponential backoff
-- Error handling in a small CLI app (combine with previous days)
+## Key learnings
+- `else` runs only when the `try` succeeded; `finally` always runs – ideal for closing resources.
+- Catch the narrowest exception that you can actually handle.
+- Bad lines in a data file should be reported and skipped, not crash the whole import.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/tutorial/errors.html
-- Real Python: Python Exceptions Guide
-- PEP 8 – Error handling style recommendations
+## Pitfalls I hit (and how I fixed them)
+- A `KeyError` message already contains quotes, so wrapping it in more quotes printed `''zzz''`.
 
-## Self-Assessment
-- Test coverage: ~85% (exception paths well tested)
-- Code cleanliness: Clear separation of concerns, excellent user feedback
-- Interactivity: Very engaging — users learn by causing and handling errors
-- Educational value: High — transforms abstract concept into practical skill
-- Personal rating: 9.3/10 – One of the most important days for writing robust code
+## Run it
+```bash
+python -m src.day_11_error_handling.main
+pytest tests/test_day_11.py -v
+```
 
-Day 11 complete — you can now write much more resilient Python programs.  
-Next: Functions (Day 12).
+## Next step
+- Build an exception hierarchy of my own on Day 51.

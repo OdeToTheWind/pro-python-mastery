@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-20",
+  "learnings": [
+    "Cooperative `super()` with `**kwargs` lets every class in the MRO initialise exactly once.",
+    "Mixins add capabilities; put them before the concrete base class.",
+    "Overrides can extend the parent result by calling `super().method()`."
+  ],
+  "pitfalls": [
+    "Forgetting `super().__init__(**kwargs)` in one class silently breaks the chain for everything after it."
+  ],
+  "next": "Compare inheritance with composition and protocols on Day 72."
+}

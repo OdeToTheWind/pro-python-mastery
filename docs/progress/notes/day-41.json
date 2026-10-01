@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-22",
+  "learnings": [
+    "Always pass `encoding='utf-8'` and use `with` so files are closed even on errors.",
+    "Write every line with a trailing newline so appends never glue lines together.",
+    "Atomic writes (temp file + `os.replace`) protect data against crashes."
+  ],
+  "pitfalls": [
+    "Writing without a newline and then appending produced `firstsecond` – a real data bug."
+  ],
+  "next": "Stream huge files line by line on Day 90."
+}

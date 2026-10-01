@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-07",
+  "learnings": [
+    "WSGI (`application(environ, start_response)`) is the contract every Python host speaks.",
+    "A `/health` endpoint lets uptime monitors check the deployment.",
+    "Configuration comes from environment variables, so the same code runs locally and in the cloud."
+  ],
+  "pitfalls": [
+    "Paths in the PythonAnywhere WSGI file must be absolute; usernames are validated before generating it."
+  ],
+  "next": "Build an async HTTP service without a framework on Day 93."
+}

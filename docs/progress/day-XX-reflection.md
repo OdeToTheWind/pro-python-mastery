@@ -1,33 +1,45 @@
-# Day XX - [Topic Name] Reflection
+# Day XX – [Topic from syllabus.md] Reflection
 
-**Date:** YYYY-MM-DD  
-**Python Version Used:** 3.14 (or whatever you're on)  
-**Time Spent:** X hours  
-**Git Commit Hash (optional):** abc1234...
+> Template for new days. You don't edit the finished reflection by hand:
+> 1. add `src/day_XX_<topic>/main.py` with a module docstring containing
+>    `Scenario: ...` and a `DELIVERABLES = {"deliverable": "function_or_class"}` map
+>    that covers every item in the syllabus row,
+> 2. add `tests/test_day_XX.py` that imports and exercises that module,
+> 3. add `docs/progress/notes/day-XX.json`:
+>    ```json
+>    {"date": "YYYY-MM-DD",
+>     "learnings": ["…", "…", "…"],
+>     "pitfalls": ["…"],
+>     "next": "…"}
+>    ```
+> 4. mark the day **Covered** in `syllabus.md` and run `python scripts/build_reflections.py`.
+>
+> `tests/test_syllabus_sync.py` fails CI if any of these pieces is missing or out of sync.
 
-## What I Built / Key Deliverables
-- Brief 2–4 bullet summary of the code/features implemented
-- Main functions or concepts demonstrated
+**Date:** YYYY-MM-DD · **Level:** Beginner/Intermediate/Advanced/Capstone · **Python:** 3.12+ · **Status:** Covered
+**Code:** `src/day_XX_<topic>/main.py` · **Tests:** `tests/test_day_XX.py` (N tests)
 
-## Core Learnings & Insights
-- 3–6 bullet points of technical takeaways
-- New syntax, best practices, gotchas discovered
-- How it connects to production code / real-world use
+## Scenario
+One sentence: the realistic situation this day's code models.
 
-## Challenges Faced & How I Solved Them
-- Specific pain points (bugs, confusion, design decisions)
-- What debugging steps or fixes worked
+## Syllabus deliverables
+> Copied verbatim from the syllabus row.
 
-## Improvements for Next Time / Future Ideas
-- What could be better (refactor ideas, tests missing, edge cases)
-- Ideas to extend this day’s topic later
+| Deliverable | Implemented in |
+|---|---|
+| ✅ … | `function_or_class` |
 
-## References / Resources Used
-- Links to docs, articles, PEPs, Stack Overflow threads, etc.
-- Any videos, books, or talks that helped
+## Key learnings
+- …
 
-## Self-Assessment
-- Coverage goal met? (e.g., "Unit tests cover 90%+ of main logic")
-- Typing strictness: fully typed / partial / none
-- Code cleanliness: readable? DRY? Follows PEP 8?
-- Personal rating: 8/10 – felt confident but want more tests next time
+## Pitfalls I hit (and how I fixed them)
+- …
+
+## Run it
+```bash
+python -m src.day_XX_<topic>.main
+pytest tests/test_day_XX.py -v
+```
+
+## Next step
+- …

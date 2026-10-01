@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-20",
+  "learnings": [
+    "Chained comparisons (`0 <= c < 10`) read like maths and evaluate the middle value once.",
+    "NaN compares False with everything, so it silently falls through an `elif` ladder unless guarded.",
+    "Empty containers, `0`, `''` and `None` are falsy – `notes or '(no notes)'` is idiomatic."
+  ],
+  "pitfalls": [
+    "Keeping the hike rules inside `main()` made them untestable; now each decision is a pure function."
+  ],
+  "next": "Translate the hike decision into a flowchart on Day 16."
+}

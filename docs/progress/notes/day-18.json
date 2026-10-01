@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-30",
+  "learnings": [
+    "`dict.get(key, default)` and `setdefault` avoid `KeyError` boilerplate.",
+    "A checkout should be all-or-nothing: validate every line first, then mutate.",
+    "List methods mutate in place and return `None` (`sort`, `append`, `remove`)."
+  ],
+  "pitfalls": [
+    "The previous day's file re-used Day 17 functions, so the real inventory logic was untested."
+  ],
+  "next": "Persist the inventory to JSON on Day 52."
+}

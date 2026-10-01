@@ -1,44 +1,34 @@
-# Day 16 - Flowchart Programming Reflection
+# Day 16 – Flowchart Programming Reflection
 
-**Date:** 2026-03-28  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-03-28 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_16_flowchart_programming/main.py`](../../src/day_16_flowchart_programming/main.py) · **Tests:** [`tests/test_day_16.py`](../../tests/test_day_16.py) (7 tests)
 
-## What I Built / Key Deliverables
-- Interactive Flowchart Translator with 6 real-world flowchart examples
-- Grade Calculator, Discount System, Login with retry limit, Number Guessing Game
-- Clear visual guide explaining flowchart symbols and their Python equivalents
-- Practice converting decision diamonds into if-elif-else and loops
+## Scenario
+A *public library desk* – loan approvals, overdue fines and a returns-sorting conveyor, each first drawn as a flowchart and then translated into Python.
 
-## Core Learnings & Insights
-- Flowcharts are excellent for planning logic before writing code
-- Diamond shapes → decision points (`if`, `elif`, `else`)
-- Rectangle shapes → actions and calculations
-- Arrows with loops → `while` or `for` loops
-- Translating flowcharts helps prevent logic errors
-- Good flowcharts make complex decision trees much easier to implement
+## Syllabus deliverables
+> Translating logic flowcharts into if-elif-else and loop structures
 
-## Challenges Faced & How I Solved Them
-- Making flowcharts interactive → turned each flowchart into a runnable mini-program
-- Explaining symbols clearly → added a clean reference table
-- Showing real translation → included guessing game and login system (common flowchart examples)
-- Testing flowchart logic → created pure functions that mirror the decision trees
+| Deliverable | Implemented in |
+|---|---|
+| ✅ decision diamonds → if/elif/else | `loan_decision` |
+| ✅ process boxes and thresholds | `overdue_fine` |
+| ✅ loop arrows → while | `sort_returns` |
+| ✅ flowchart as data | `run_flowchart` |
 
-## Improvements for Next Time / Future Ideas
-- Add ASCII art flowchart visualizer
-- Let user draw simple flowcharts via text and auto-generate code
-- More complex examples (ATM simulation, order processing)
+## Key learnings
+- Each decision diamond maps to one condition in the same order as the drawing.
+- Loop arrows become `while queue:`; process boxes become plain statements.
+- Storing a flowchart as data lets one interpreter run many charts, and it can detect cycles.
 
-## References / Resources Used
-- Standard flowchart symbols (ISO 5807)
-- Real Python & GeeksforGeeks articles on flowchart to code translation
+## Pitfalls I hit (and how I fixed them)
+- A flowchart test is strongest when it checks that the coded version and the data version agree for every input combination.
 
-## Self-Assessment
-- Test coverage: ~80%
-- Code cleanliness: High – clear structure and consistent style
-- Interactivity: Excellent – users actively translate and run flowcharts
-- Educational value: Very high – bridges visual thinking and coding
-- Personal rating: 9.1/10 – Important planning skill reinforced
+## Run it
+```bash
+python -m src.day_16_flowchart_programming.main
+pytest tests/test_day_16.py -v
+```
 
-Day 16 complete — you can now read and implement flowcharts effectively.  
-Next: Positional and Keyword Arguments (Day 17).
+## Next step
+- Grow the data-driven idea into the plugin registry on Day 87.

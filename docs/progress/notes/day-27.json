@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-08",
+  "learnings": [
+    "Abstract base classes define a contract; Python refuses to instantiate an incomplete subclass.",
+    "Encapsulation in Python is convention (`_x`) plus name mangling (`__x`) plus read-only properties.",
+    "Polymorphism lets `checkout()` work with any payment method without type checks."
+  ],
+  "pitfalls": [
+    "`__repr__` must never reveal card numbers – it shows a masked version instead."
+  ],
+  "next": "Explore `typing.Protocol` (structural typing) on Day 72."
+}

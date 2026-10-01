@@ -1,54 +1,36 @@
-# Day 06 - Data Types Reflection
+# Day 06 – Built-in Data Types Reflection
 
-**Date:** 2026-03-18  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2–3 hours  
+**Date:** 2026-03-18 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_06_data_types/main.py`](../../src/day_06_data_types/main.py) · **Tests:** [`tests/test_day_06.py`](../../tests/test_day_06.py) (8 tests)
 
-## What I Built / Key Deliverables
-- Interactive data type explorer: user enters values → shows type, mutability, hashability, ID, length, type-specific previews
-- Safe literal evaluation with `ast.literal_eval()` (handles int/float/bool/list/tuple/dict/set/None safely)
-- Fallback to `str` for non-literal input
-- Printed overview table: categories, mutability, ordering, hashability
-- Quit support at any time (consistent with previous days)
-- Basic type-specific demonstrations (upper for str, keys for dict, etc.)
+## Scenario
+A *value inspector* – paste any Python literal and get a report on its type, category, mutability, hashability and size.
 
-## Core Learnings & Insights
-- Python is **dynamically typed** — types determined at runtime, no declaration needed
-- **Immutable** types (int, float, bool, str, tuple, frozenset, bytes): cannot change → safe for keys/sets
-- **Mutable** types (list, dict, set, bytearray): can be modified in-place → careful with shared references
-- `type()` gives exact class; `isinstance()` better for checking (supports inheritance)
-- `ast.literal_eval()` = safe way to parse user input into Python literals (no code execution risk)
-- `id()` shows object identity — same value immutable objects often share ID, mutable usually don't
-- Collections have different ordering guarantees: dicts insertion-ordered since 3.7, sets unordered
-- `None` is singleton — always same object (`is None` is preferred over `== None`)
+## Syllabus deliverables
+> int, float, bool, str, list, tuple, dict, set, mutability and type checks
 
-## Challenges Faced & How I Solved Them
-- Safe parsing of user input → used `ast.literal_eval()` instead of `eval()` (security!)
-- Handling quit consistently → return `None` from input helper + check after each call
-- Displaying useful type-specific info without too much complexity → simple `isinstance()` branches
-- Making table readable in console → used fixed-width separators and alignment
-- Wanted to support complex literals but keep safety → `literal_eval` covers most beginner cases
+| Deliverable | Implemented in |
+|---|---|
+| ✅ core built-in types | `describe` |
+| ✅ mutability | `describe` |
+| ✅ aliasing consequences of mutability | `aliasing_demo` |
+| ✅ type() vs isinstance() | `type_check_demo` |
+| ✅ safe parsing of literals | `parse_literal` |
 
-## Improvements for Next Time / Future Ideas
-- Add type conversion playground: "convert this to list / int / str"
-- Show memory usage (`sys.getsizeof()`) for different types
-- Mini quiz: "what type is this?", "is this mutable?", etc.
-- Support more advanced literals (complex numbers: 3+4j)
-- Color output with `rich` or ANSI for better visual distinction
-- Add `repr()` vs `str()` demonstration
+## Key learnings
+- `bool` is a subclass of `int`, so `type(x) is int` and `isinstance(x, int)` disagree for `True`.
+- Hashability is about the *contents*: `([1],)` is a tuple but `hash()` fails.
+- Assignment never copies – two names can mutate the same list.
 
-## References / Resources Used
-- Official docs: https://docs.python.org/3/library/stdtypes.html
-- PEP 8 & Python typing best practices
-- Real Python: Python Data Types articles
-- ast.literal_eval docs (safety emphasis)
+## Pitfalls I hit (and how I fixed them)
+- Typing `None` in the explorer quit the program because `None` was also the quit signal.
+- `sorted({1, 'a'})` raises `TypeError` – mixed sets need a key function.
 
-## Self-Assessment
-- Test coverage: ~70–80% (literal_eval behavior covered; I/O harder to test without mocks)
-- Code cleanliness: Modular, safe, readable, good comments
-- Interactivity: Very engaging — users experiment freely with different inputs
-- Educational value: Strong overview + hands-on discovery
-- Personal rating: 9/10 – Excellent bridge from basics to collections & mutability
+## Run it
+```bash
+python -m src.day_06_data_types.main
+pytest tests/test_day_06.py -v
+```
 
-Day 6 done — data types feel much more concrete now.  
-Next: probably lists & tuples in depth, or booleans + comparisons + if-statements.
+## Next step
+- Apply the hashability rule when choosing dict keys on Day 46.

@@ -1,0 +1,13 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "API keys belong in headers; query-string keys end up in logs and browser history.",
+    "Basic Auth is base64 *encoding*, not encryption – HTTPS is mandatory.",
+    "Custom `AuthBase` classes keep auth logic out of request code."
+  ],
+  "pitfalls": [
+    "The old mask showed 8 of 9 characters of a short secret; at most a quarter is shown now.",
+    "Hard-coded fallback 'secrets' were removed – missing credentials are an error."
+  ],
+  "next": "Centralise secrets in the type-safe config system (Day 91)."
+}

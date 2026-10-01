@@ -1,47 +1,35 @@
-# Day 24 - Debugging Techniques Reflection
+# Day 24 – Debugging Techniques Reflection
 
-**Date:** 2026-04-05  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-05 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_24_debugging_techniques/main.py`](../../src/day_24_debugging_techniques/main.py) · **Tests:** [`tests/test_day_24.py`](../../tests/test_day_24.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive Debugging Techniques Explorer (final Beginner Project)
-- Real-world bug demonstrations: IndexError, NoneType, silent logic bugs
-- Print debugging, traceback reading, and breakpoint simulation
-- "Bug Hunt" game and common mistake scenarios
-- Clear guide on systematic debugging approach
+## Scenario
+A *payroll script* that ships with a real bug. We find it with print debugging, read its traceback, set a (switchable) breakpoint, and locate the first failing input systematically.
 
-## Core Learnings & Insights
-- Debugging is a core skill — even experienced developers spend significant time on it
-- Always start by reading the traceback carefully
-- Print debugging is simple but powerful when used strategically
-- `breakpoint()` (Python 3.7+) provides an interactive debugging experience
-- Rubber duck debugging and reproducing bugs reliably are highly effective
-- Writing testable, small functions makes debugging much easier
+## Syllabus deliverables
+> Print debugging, tracebacks, breakpoints, and systematic bug fixing
 
-## Challenges Faced & How I Solved Them
-- Making debugging engaging → turned it into an interactive "bug hunt" experience
-- Showing common real bugs → included IndexError, NoneType, off-by-one, and silent logic errors
-- Teaching systematic approach → provided a clear debugging workflow
-- Ending the Beginner section strongly → created a celebratory final demo
+| Deliverable | Implemented in |
+|---|---|
+| ✅ print debugging (switchable trace) | `trace_calls` |
+| ✅ reading tracebacks | `summarize_traceback` |
+| ✅ breakpoints | `maybe_breakpoint` |
+| ✅ systematic isolation of failing input | `first_failing_input` |
+| ✅ bug and its fix side by side | `net_pay_fixed` |
 
-## Improvements for Next Time / Future Ideas
-- Integrate with `pdb` commands simulation
-- Add logging instead of print for production debugging
-- Common debugging patterns for larger projects
+## Key learnings
+- Read a traceback bottom-up: the last line names the exception, the frame above it shows where.
+- Debug output goes to stderr behind a switch, never mixed into real output.
+- `breakpoint()` respects `PYTHONBREAKPOINT=0`, so breakpoints can stay in code safely.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/library/pdb.html
-- Real Python: Python Debugging Guide
+## Pitfalls I hit (and how I fixed them)
+- Isolating the *first* failing input (an empty week) found the bug faster than reading code.
 
-## Self-Assessment
-- Test coverage: ~80%
-- Code cleanliness: High – clear examples and good structure
-- Interactivity: Excellent – users actively hunt and understand bugs
-- Educational value: Very high – essential skill for any developer
-- Personal rating: 9.5/10 – Strong conclusion to Beginner Projects
+## Run it
+```bash
+python -m src.day_24_debugging_techniques.main
+pytest tests/test_day_24.py -v
+```
 
-**🎉 Beginner Projects Complete (Days 1–24)!**  
-You have built a solid foundation in Python. Well done!
-
-Next stage: **Intermediate Projects** starting from Day 25.
+## Next step
+- Build a full observability toolkit on Day 99.

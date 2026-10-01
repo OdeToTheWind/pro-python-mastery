@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-15",
+  "learnings": [
+    "Parameter order is fixed: positional-only, `/`, standard, `*args`, keyword-only, `**kwargs`.",
+    "A keyword-only parameter after `*args` can be required (no default).",
+    "Wrappers forward `*args, **kwargs` to stay signature-agnostic."
+  ],
+  "pitfalls": [
+    "Illegal signatures are `SyntaxError`s at compile time – compiling them in a test proves the rules."
+  ],
+  "next": "Use `functools.wraps` with forwarding wrappers when writing decorators (Day 67)."
+}

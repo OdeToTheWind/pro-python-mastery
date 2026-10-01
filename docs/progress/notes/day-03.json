@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-15",
+  "learnings": [
+    "Inject `ask`/`print` callables so an interactive program can be tested without a keyboard.",
+    "`EOFError` is how Ctrl-D or a closed pipe looks to `input()` – it must end the conversation, not be retried.",
+    "Convert and validate in one small function per field; the prompt loop stays generic."
+  ],
+  "pitfalls": [
+    "A broad `except Exception` retried forever on EOF – catching only `ValueError` fixed it."
+  ],
+  "next": "Reuse the `ask()` pattern for every console menu in later days."
+}

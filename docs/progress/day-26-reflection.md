@@ -1,31 +1,35 @@
-# Day 26 - PyCharm Tips and Tricks Reflection
+# Day 26 – PyCharm Tips and Tricks Reflection
 
-**Date:** 2026-04-07  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-07 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_26_pycharm_tips_tricks/main.py`](../../src/day_26_pycharm_tips_tricks/main.py) · **Tests:** [`tests/test_day_26.py`](../../tests/test_day_26.py) (8 tests)
 
-## What I Built / Key Deliverables
-- Interactive PyCharm Tips and Tricks guide
-- Covered essential shortcuts, refactoring tools, debugging, live templates, and Git integration
-- Practical examples of how these features speed up development
+## Scenario
+A *pocket IDE coach* – a searchable shortcut cheat-sheet per OS, a live-template expander and a safe "Rename" refactoring that works the way the IDE's does (on tokens, not on raw text).
 
-## Core Learnings & Insights
-- PyCharm is a powerful IDE that can significantly boost productivity
-- Key shortcuts (Shift+F6 for rename, Ctrl+Alt+M for extract method, Ctrl+Shift+F10 to run)
-- Live Templates save repetitive typing
-- Built-in debugger and Git integration reduce context switching
-- Learning the IDE is as important as learning the language
+## Syllabus deliverables
+> IDE productivity, debugging, refactoring tools, templates and shortcuts
 
-## Challenges Faced & How I Solved Them
-- Making an IDE-focused day interactive → created a guided tour with actionable tips
-- Covering many features without overwhelming → organized into clear numbered list with explanations
+| Deliverable | Implemented in |
+|---|---|
+| ✅ IDE productivity / shortcuts | `find_shortcuts` |
+| ✅ debugging tools | `SHORTCUTS` |
+| ✅ refactoring tools (Rename) | `safe_rename` |
+| ✅ live templates | `expand_template` |
+| ✅ cheat sheet | `cheat_sheet` |
 
-## Improvements for Next Time / Future Ideas
-- Add video/demo links
-- Compare with VS Code shortcuts
+## Key learnings
+- Rename refactoring must work on tokens; text replace also changes strings, comments and longer names.
+- Live templates are parameterised snippets – the same idea as `string.Template`.
+- Learning a few navigation and debugger shortcuts saves more time than any plugin.
 
-## Self-Assessment
-- Educational value: High – essential for efficient coding
-- Personal rating: 8.8/10 – Good productivity booster
+## Pitfalls I hit (and how I fixed them)
+- Numbering items by hand *and* with `enumerate` printed `1. 1.` – number in one place only.
 
-Day 26 complete.
+## Run it
+```bash
+python -m src.day_26_pycharm_tips_tricks.main
+pytest tests/test_day_26.py -v
+```
+
+## Next step
+- Practise the debugger shortcuts on Day 24's buggy payroll script.

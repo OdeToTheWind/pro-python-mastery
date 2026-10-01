@@ -1,39 +1,38 @@
-# Day 60 - APIs with Authentication Reflection
+# Day 60 – API Authentication (Client-side) Reflection
 
-**Date:** 2026-09-29  
-**Python Version Used:** 3.12+  
-**Time Spent:** 2 hours  
-**Git Commit Hash (optional):** 
+**Date:** 2026-09-29 · **Level:** Advanced · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_60_api_authentication/main.py`](../../src/day_60_api_authentication/main.py) · **Tests:** [`tests/test_day_60.py`](../../tests/test_day_60.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Basic Auth helper using `requests`’ built-in `auth=` tuple
-- Bearer token helper (Authorization header)
-- API-key-in-header and API-key-in-query demos
-- Credential loading via `python-dotenv` + environment variables
+## Scenario
+A *weather-data aggregator* that talks to three providers, each with a different authentication scheme. Secrets come from the environment (optionally a git-ignored ``.env``), are never hard-coded and never printed.
 
-## Core Learnings & Insights
-- Never hard-code secrets – always load from environment or a secret manager
-- `requests` makes Basic Auth trivial with `auth=(user, pass)`
-- Bearer tokens are just a header: `Authorization: Bearer <token>`
-- Header-based API keys are preferred over query-string keys (logs, caching, security)
-- Masking secrets when printing is a good habit even in demo code
+## Syllabus deliverables
+> API keys, Bearer tokens, Basic Auth and environment variables
 
-## Challenges Faced & How I Solved Them
-- httpbin’s `/basic-auth` endpoint requires the credentials in the URL path as well – documented it clearly
-- Deciding default fallback values for missing env vars so the script still runs in CI
+| Deliverable | Implemented in |
+|---|---|
+| ✅ API key in a header | `ApiKeyAuth` |
+| ✅ API key in the query string | `ApiKeyAuth` |
+| ✅ Bearer token | `BearerAuth` |
+| ✅ Basic Auth | `basic_auth_header` |
+| ✅ credentials from environment variables | `Credentials.from_env` |
+| ✅ loading a .env file explicitly | `load_env_file` |
+| ✅ safe secret masking | `mask_secret` |
 
-## Improvements for Next Time / Future Ideas
-- Add OAuth2 client-credentials flow (if a free provider is available)
-- Show how to rotate / refresh tokens
-- Integrate with `keyring` for local secret storage
+## Key learnings
+- API keys belong in headers; query-string keys end up in logs and browser history.
+- Basic Auth is base64 *encoding*, not encryption – HTTPS is mandatory.
+- Custom `AuthBase` classes keep auth logic out of request code.
 
-## References / Resources Used
-- https://requests.readthedocs.io/en/latest/user/authentication/
-- https://httpbin.org/
-- https://github.com/theskumar/python-dotenv
+## Pitfalls I hit (and how I fixed them)
+- The old mask showed 8 of 9 characters of a short secret; at most a quarter is shown now.
+- Hard-coded fallback 'secrets' were removed – missing credentials are an error.
 
-## Self-Assessment
-- Coverage goal met? All four auth styles are covered; dry-run friendly
-- Typing strictness: fully typed
-- Code cleanliness: secrets never appear in source
-- Personal rating: 9/10 – security mindset reinforced
+## Run it
+```bash
+python -m src.day_60_api_authentication.main
+pytest tests/test_day_60.py -v
+```
+
+## Next step
+- Centralise secrets in the type-safe config system (Day 91).

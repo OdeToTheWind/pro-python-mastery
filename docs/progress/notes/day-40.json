@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-21",
+  "learnings": [
+    "Named `slice` objects make fixed-width parsing self-documenting.",
+    "Slice assignment can grow or shrink a list in place; `del lst[::2]` deletes by pattern.",
+    "`slice.indices(len)` reveals how `None`/negative bounds resolve."
+  ],
+  "pitfalls": [
+    "A zero step raises `ValueError` – validate before slicing user input."
+  ],
+  "next": "Use chunking for the large-file processor on Day 90."
+}

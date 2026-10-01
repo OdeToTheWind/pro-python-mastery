@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-26",
+  "learnings": [
+    "A comprehension has three parts: output expression, `for` clause(s), optional `if` filter.",
+    "A conditional *expression* in the output is different from a filter.",
+    "The walrus operator avoids computing the same value twice."
+  ],
+  "pitfalls": [
+    "Large intermediate lists waste memory; a generator expression is tiny by comparison."
+  ],
+  "next": "Move to full generators and pipelines on Days 65–66."
+}

@@ -1,27 +1,34 @@
-# Day 27 - Python Object Oriented Programming Reflection
+# Day 27 – Python Object Oriented Programming Reflection
 
-**Date:** 2026-04-08  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-08 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_27_oop_basics/main.py`](../../src/day_27_oop_basics/main.py) · **Tests:** [`tests/test_day_27.py`](../../tests/test_day_27.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive OOP basics explorer
-- Covered classes, objects, attributes, methods, and the `__init__` constructor
-- Real-world examples like Student, Car, and Bank Account
+## Scenario
+A *payment gateway* that accepts several payment methods through one abstract interface while hiding sensitive card data.
 
-## Core Learnings & Insights
-- OOP helps organize code by modeling real-world entities
-- Classes are blueprints, objects are instances
-- `__init__` is the constructor that runs when an object is created
-- Attributes store state, methods define behavior
-- Encapsulation is the first pillar of OOP
+## Syllabus deliverables
+> OOP fundamentals, classes, objects, encapsulation and abstraction
 
-## Challenges Faced & How I Solved Them
-- Making abstract OOP concepts interactive → built live object creation and interaction
-- Avoiding dry theory → used relatable examples (students, cars, bank accounts)
+| Deliverable | Implemented in |
+|---|---|
+| ✅ classes and objects | `Wallet` |
+| ✅ encapsulation | `CreditCard` |
+| ✅ abstraction | `PaymentMethod` |
+| ✅ polymorphism | `checkout` |
 
-## Self-Assessment
-- Educational value: Very high – foundational for Intermediate level
-- Personal rating: 9.2/10 – Strong OOP introduction
+## Key learnings
+- Abstract base classes define a contract; Python refuses to instantiate an incomplete subclass.
+- Encapsulation in Python is convention (`_x`) plus name mangling (`__x`) plus read-only properties.
+- Polymorphism lets `checkout()` work with any payment method without type checks.
 
-Day 27 complete.
+## Pitfalls I hit (and how I fixed them)
+- `__repr__` must never reveal card numbers – it shows a masked version instead.
+
+## Run it
+```bash
+python -m src.day_27_oop_basics.main
+pytest tests/test_day_27.py -v
+```
+
+## Next step
+- Explore `typing.Protocol` (structural typing) on Day 72.

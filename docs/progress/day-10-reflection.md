@@ -1,55 +1,36 @@
-# Day 10 - Randomisation Reflection
+# Day 10 – Randomisation Reflection
 
-**Date:** 2026-03-22  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2–2.5 hours  
+**Date:** 2026-03-22 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_10_randomisation/main.py`](../../src/day_10_randomisation/main.py) · **Tests:** [`tests/test_day_10.py`](../../tests/test_day_10.py) (14 tests)
 
-## What I Built / Key Deliverables
-- Interactive randomisation playground with multiple mini-tools/games:
-  - Coin flip
-  - Custom dice roller
-  - Rock-Paper-Scissors vs computer
-  - Random password generator
-  - Random choice from user list
-  - Seed reproducibility demo
-- Clear cheat sheet / reference table for `random` module functions
-- Safe, user-driven inputs (no hard-coded values)
-- Basic unit tests for core random functions
+## Scenario
+A *board-game night toolkit* – dice, a card deck, a raffle and a password generator for the Wi-Fi.
 
-## Core Learnings & Insights
-- `random` module provides pseudo-random numbers (not cryptographically secure)
-- `random.seed()` makes results reproducible → great for testing / demos
-- `random.random()` → float [0.0, 1.0)
-- `random.randint(a,b)` → inclusive range
-- `random.choice()` → one item, `random.choices()` → multiple with replacement
-- `random.shuffle()` modifies list in-place
-- Most games, simulations, sampling, and testing rely heavily on randomness
-- Never use `random` for passwords, tokens, nonces → use `secrets` module
+## Syllabus deliverables
+> random module, randint(), choice(), shuffle(), password generation, games
 
-## Challenges Faced & How I Solved Them
-- Making randomness feel interactive → created multiple small games/tools
-- Explaining seed behavior → added live reproducibility demo
-- Avoiding repetitive code → used helper functions for each activity
-- Keeping UX friendly → menu-driven with quit support
+| Deliverable | Implemented in |
+|---|---|
+| ✅ randint() | `roll_dice` |
+| ✅ shuffle() | `deal_cards` |
+| ✅ choice() | `pick_raffle_winner` |
+| ✅ seeding for reproducibility | `roll_dice` |
+| ✅ secure password generation | `generate_password` |
+| ✅ game | `rock_paper_scissors` |
 
-## Improvements for Next Time / Future Ideas
-- Add weighted random choice (`random.choices` with weights)
-- Number guessing game (higher/lower hints)
-- Random quote / joke generator (small list)
-- Monte Carlo simulation example (e.g. pi approximation)
-- Use `secrets` module demo for contrast (secure random)
+## Key learnings
+- Inject `random.Random(seed)` so randomness is reproducible in tests without touching global state.
+- `secrets` (a CSPRNG) is required for passwords; `random` is predictable.
+- `shuffle` works in place and returns `None`.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/library/random.html
-- Real Python: Python random module guide
-- GeeksforGeeks / W3Schools random articles
+## Pitfalls I hit (and how I fixed them)
+- `randint(1, 0)` raises `ValueError` – dice now validate their sides.
 
-## Self-Assessment
-- Test coverage: ~80% (core functions tested)
-- Code cleanliness: Modular, readable, consistent UX
-- Interactivity: High — many ways to play/experiment
-- Educational value: Strong – covers most common use cases
-- Personal rating: 9.0/10 – Fun day, very practical topic
+## Run it
+```bash
+python -m src.day_10_randomisation.main
+pytest tests/test_day_10.py -v
+```
 
-Day 10 complete — randomness is now under control.  
-Next: Error Handling (try/except, raising exceptions, etc.).
+## Next step
+- Use seeded RNGs for the Monte Carlo capstone on Day 98.

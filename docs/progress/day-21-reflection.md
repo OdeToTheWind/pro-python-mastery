@@ -1,45 +1,35 @@
-# Day 21 - Return vs Print Reflection
+# Day 21 – Return vs. Print Reflection
 
-**Date:** 2026-04-02 
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-02 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_21_return_vs_print/main.py`](../../src/day_21_return_vs_print/main.py) · **Tests:** [`tests/test_day_21.py`](../../tests/test_day_21.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive Return vs Print Explorer with 6 focused demos
-- Side-by-side comparison of functions using print vs return
-- Real-world examples: price calculator with tax, reusable math functions
-- Function composition demonstration (chaining returned values)
-- Clear explanation of when to use each
+## Scenario
+A *freelancer invoicing tool* – the same calculations written two ways (print-only vs return) to show why returning data is the reusable design.
 
-## Core Learnings & Insights
-- `print()` is for displaying information to the user (side effect)
-- `return` is for passing data to be used by other parts of the program
-- Functions that only print are hard to reuse and test
-- Good functions usually return values and let the caller decide what to do with them
-- Returning multiple values and early returns are powerful patterns
-- Understanding this distinction dramatically improves code quality
+## Syllabus deliverables
+> Differentiating output vs return values, reusability and function design
 
-## Challenges Faced & How I Solved Them
-- Making the difference tangible → created direct before/after comparisons
-- Showing real value of returning → built reusable calculator and price functions
-- Avoiding confusion → dedicated demo showing how returned values can be reused
-- Testing return behavior → wrote clear assertions on function outputs
+| Deliverable | Implemented in |
+|---|---|
+| ✅ print-only function (anti-pattern) | `print_line_total` |
+| ✅ returning function (reusable) | `line_total` |
+| ✅ return value of a print-only function is None | `compare_designs` |
+| ✅ reusability: composing returned values | `invoice_totals` |
+| ✅ function design: pure core + I/O shell | `render_invoice` |
 
-## Improvements for Next Time / Future Ideas
-- Building small utility libraries using returning functions
-- Comparing with other languages' return mechanisms
-- Advanced patterns: returning functions (closures)
+## Key learnings
+- A function that only prints gives its caller `None`, so nothing can build on it.
+- Keep a pure core (returns data) and a thin shell (prints, writes files, sends email).
+- Returned values are trivially testable; printed text needs capturing.
 
-## References / Resources Used
-- Python docs: Return statement
-- Real Python: Python Return Statement Deep Dive
+## Pitfalls I hit (and how I fixed them)
+- Discounts above 100 % produced negative invoices until the input was validated.
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – clear separation of concerns
-- Interactivity: Excellent – users see immediate difference in behavior
-- Educational value: Extremely high – resolves a major beginner misconception
-- Personal rating: 9.5/10 – One of the most important conceptual days
+## Run it
+```bash
+python -m src.day_21_return_vs_print.main
+pytest tests/test_day_21.py -v
+```
 
-Day 21 complete — you now clearly understand Return vs Print.  
-Next: Docstrings vs Comments (Day 22).
+## Next step
+- Apply the pure-core/thin-shell split to the CLI capstone on Day 83.

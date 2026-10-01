@@ -1,0 +1,13 @@
+{
+  "date": "2026-03-18",
+  "learnings": [
+    "`bool` is a subclass of `int`, so `type(x) is int` and `isinstance(x, int)` disagree for `True`.",
+    "Hashability is about the *contents*: `([1],)` is a tuple but `hash()` fails.",
+    "Assignment never copies – two names can mutate the same list."
+  ],
+  "pitfalls": [
+    "Typing `None` in the explorer quit the program because `None` was also the quit signal.",
+    "`sorted({1, 'a'})` raises `TypeError` – mixed sets need a key function."
+  ],
+  "next": "Apply the hashability rule when choosing dict keys on Day 46."
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-19",
+  "learnings": [
+    "Game state (HP, potions, turn log, winner) belongs in objects, not loose variables.",
+    "Injected randomness makes a whole battle reproducible in a test.",
+    "A game the player can't lose is not a game – the enemy now strikes back."
+  ],
+  "pitfalls": [
+    "Clamping damage at zero HP prevents negative health and weird win states."
+  ],
+  "next": "Add save/load of a battle with Day 53's persistence."
+}

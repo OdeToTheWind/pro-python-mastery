@@ -1,45 +1,37 @@
-# Day 17 - Positional and Keyword Arguments Reflection
+# Day 17 – Positional and Keyword Arguments Reflection
 
-**Date:** 2026-03-29  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-03-29 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_17_positional_keyword_arguments/main.py`](../../src/day_17_positional_keyword_arguments/main.py) · **Tests:** [`tests/test_day_17.py`](../../tests/test_day_17.py) (12 tests)
 
-## What I Built / Key Deliverables
-- Interactive explorer demonstrating positional, keyword, default, `*args`, and `**kwargs`
-- Real-world examples: student registration, order creation, flexible greeting
-- Clear reference guide explaining argument rules and best practices
-- Comprehensive unit tests covering all argument types
+## Scenario
+An *airline booking API* where some arguments must be positional (route), some must be named (cabin, flexibility) and some are optional.
 
-## Core Learnings & Insights
-- Positional arguments are matched by order
-- Keyword arguments improve readability and allow skipping order
-- Default parameters must come after non-default ones
-- `*args` allows functions to accept any number of positional arguments
-- `**kwargs` allows any number of keyword arguments
-- Mixing all types requires careful ordering: positional → keyword → *args → **kwargs
+## Syllabus deliverables
+> Positional vs keyword arguments, defaults and argument flexibility
 
-## Challenges Faced & How I Solved Them
-- Making argument concepts interactive → built multiple practical demos
-- Showing the power of flexibility → created `flexible_greeting` combining everything
-- Teaching rules clearly → added a detailed cheat sheet
-- Testing complex argument patterns → wrote targeted test cases for each type
+| Deliverable | Implemented in |
+|---|---|
+| ✅ positional arguments | `book_flight` |
+| ✅ keyword arguments | `book_flight` |
+| ✅ positional-only parameters (/) | `book_flight` |
+| ✅ keyword-only parameters (\*) | `book_flight` |
+| ✅ default values | `book_flight` |
+| ✅ argument flexibility (\*names, \*\*titles) | `boarding_announcement` |
+| ✅ inspecting how arguments bind | `how_arguments_bind` |
 
-## Improvements for Next Time / Future Ideas
-- Function overloading simulation using different argument patterns
-- Real API-style function design
-- Decorators that use *args and **kwargs (preview)
+## Key learnings
+- `/` makes parameters positional-only so they can be renamed later; `*` makes the rest keyword-only so they can't be mixed up.
+- A default placed *before* `*args` can never be used together with extra positionals.
+- `inspect.signature(...).bind()` shows exactly how a call maps onto parameters.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/tutorial/controlflow.html#defining-functions
-- PEP 3102 – Keyword-Only Arguments
-- Real Python: *args and **kwargs Guide
+## Pitfalls I hit (and how I fixed them)
+- The old `flexible_greeting('Alice', 'Bob')` treated Alice as the greeting and printed double spaces.
 
-## Self-Assessment
-- Test coverage: ~90%
-- Code cleanliness: Excellent – well-documented and properly typed
-- Interactivity: High – users experiment with different calling styles
-- Educational value: Very strong – core function design skill
-- Personal rating: 9.4/10 – Important professional Python concept mastered
+## Run it
+```bash
+python -m src.day_17_positional_keyword_arguments.main
+pytest tests/test_day_17.py -v
+```
 
-Day 17 complete — you can now write flexible and professional functions.  
-Next: Python Dictionaries and Lists (Day 18).
+## Next step
+- Use keyword-only flags for every boolean option from now on.

@@ -1,0 +1,13 @@
+{
+  "date": "2026-03-17",
+  "learnings": [
+    "`//` floors towards negative infinity, so `-7 // 2 == -4` while `int(-7 / 2) == -3`.",
+    "`divmod` keeps `a == b * q + r` true for every sign combination.",
+    "Money belongs in `Decimal` with integer cents; floats cannot split €100 three ways exactly."
+  ],
+  "pitfalls": [
+    "Returning the string `\"Error\"` from a numeric function mixed types – the function now raises.",
+    "`10.0 ** 1000` raises `OverflowError`, which the calculator now reports instead of crashing."
+  ],
+  "next": "Profile `Decimal` vs `float` on Day 80 to see the performance trade-off."
+}

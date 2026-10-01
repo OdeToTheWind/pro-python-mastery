@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-03",
+  "learnings": [
+    "A custom `JSONEncoder` handles datetime, Decimal, dataclasses and sets explicitly.",
+    "`parse_float=Decimal` keeps money exact; `object_hook` revives timestamps.",
+    "Validate payloads into typed objects at the boundary, then trust them inside."
+  ],
+  "pitfalls": [
+    "`default=str` silently turned unknown objects into strings – unknown types must raise."
+  ],
+  "next": "Validate with dataclasses/pydantic in the config system (Day 91)."
+}

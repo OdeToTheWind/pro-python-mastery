@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-10",
+  "learnings": [
+    "`importlib.util.find_spec` checks for a module without importing it; `importlib.metadata.version` reads installed versions.",
+    "A package's `__init__.py` and `__all__` define its public API.",
+    "Optional imports keep features working when an extra dependency is absent."
+  ],
+  "pitfalls": [
+    "Third-party dependencies must be listed in `requirements.txt` – `packaging` was implicit before."
+  ],
+  "next": "Turn the toolkit into an installable package on Day 79."
+}

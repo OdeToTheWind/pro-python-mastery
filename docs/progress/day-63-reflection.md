@@ -1,41 +1,37 @@
-# Day 63 - Browser Automation with Selenium WebDriver Reflection
+# Day 63 – Browser Automation with Selenium Reflection
 
-**Date:** 2026-09-29  
-**Python Version Used:** 3.12+  
-**Time Spent:** 2.5 hours  
-**Git Commit Hash (optional):** 
+**Date:** 2026-09-29 · **Level:** Advanced · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_63_browser_automation_selenium/main.py`](../../src/day_63_browser_automation_selenium/main.py) · **Tests:** [`tests/test_day_63.py`](../../tests/test_day_63.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Robust Chrome driver factory (headless, sensible defaults, Selenium Manager)
-- Explicit-wait based navigation and element extraction on quotes.toscrape.com
-- Form interaction demo (search box + submit) with WebDriverWait
-- Graceful dry-run path when Selenium or a browser is unavailable
+## Scenario
+A *QA smoke test* for quotes.toscrape.com (a practice site): log in through the form, read quotes from the JavaScript-rendered page that appears only after a delay, and page through results – using Page Objects.
 
-## Core Learnings & Insights
-- Prefer explicit waits (`WebDriverWait` + `expected_conditions`) over `time.sleep`
-- CSS selectors and `By.NAME` / `By.ID` are the most stable locators
-- Always call `driver.quit()` in a `finally` block
-- Headless mode is mandatory for CI and servers
-- Selenium 4.6+ ships with Selenium Manager – driver download is usually automatic
+## Syllabus deliverables
+> Locator strategies, waits, form filling and dynamic page interactions
 
-## Challenges Faced & How I Solved Them
-- Environment without Chrome → provided a clear dry-run explanation so the day still teaches the concepts
-- Flaky timing → switched entirely to explicit waits
-- Making the demo work both interactively and in CI → headless flag
+| Deliverable | Implemented in |
+|---|---|
+| ✅ locator strategies | `LOCATORS` |
+| ✅ explicit waits | `LoginPage.login` |
+| ✅ form filling | `LoginPage.login` |
+| ✅ dynamic (JS-rendered, delayed) content | `QuotesPage.read_quotes` |
+| ✅ pagination clicks | `QuotesPage.next_page` |
+| ✅ driver factory (headless) | `create_driver` |
+| ✅ graceful fallback | `run` |
 
-## Improvements for Next Time / Future Ideas
-- Add Page Object Model structure for larger suites
-- Capture screenshots on failure
-- Explore Playwright as a modern alternative
-- Parallel browser sessions with a grid (advanced)
+## Key learnings
+- Prefer explicit waits (`WebDriverWait` + expected conditions) to `time.sleep`.
+- Page Objects keep selectors in one place and tests readable.
+- Wait for the old element to go stale to know a click really loaded a new page.
 
-## References / Resources Used
-- https://www.selenium.dev/documentation/
-- https://www.selenium.dev/documentation/webdriver/waits/
-- https://quotes.toscrape.com/
+## Pitfalls I hit (and how I fixed them)
+- A missing browser crashed the old demo even though it promised a dry run.
 
-## Self-Assessment
-- Coverage goal met? Logic is testable via dry-run; live path documented
-- Typing strictness: fully typed where possible
-- Code cleanliness: clear separation between driver creation, page actions and main
-- Personal rating: 8.5/10 – powerful tool, environment setup is the hardest part
+## Run it
+```bash
+python -m src.day_63_browser_automation_selenium.main
+pytest tests/test_day_63.py -v
+```
+
+## Next step
+- Run the smoke test on a schedule with screenshots on failure (Day 97).

@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-02",
+  "learnings": [
+    "A function that only prints gives its caller `None`, so nothing can build on it.",
+    "Keep a pure core (returns data) and a thin shell (prints, writes files, sends email).",
+    "Returned values are trivially testable; printed text needs capturing."
+  ],
+  "pitfalls": [
+    "Discounts above 100 % produced negative invoices until the input was validated."
+  ],
+  "next": "Apply the pure-core/thin-shell split to the CLI capstone on Day 83."
+}

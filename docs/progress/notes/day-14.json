@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-26",
+  "learnings": [
+    "`compile()` checks code without running it – perfect for linting snippets.",
+    "`TabError` is a subclass of `IndentationError`, which is a subclass of `SyntaxError`, so order the `except` clauses from specific to general.",
+    "Different blocks may use different (consistent) indentation; only lines in the same block must match."
+  ],
+  "pitfalls": [
+    "Expanding tabs to 4 spaces created a new indentation error – the tokenizer measures tabs to multiples of 8."
+  ],
+  "next": "Let `ruff format` own indentation in every future file."
+}

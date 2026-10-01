@@ -1,27 +1,37 @@
-# Day 36 - Python Instances and State Reflection
+# Day 36 – Python Instances and State Reflection
 
-**Date:** 2026-04-17  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-17 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_36_python_instances_and_state/main.py`](../../src/day_36_python_instances_and_state/main.py) · **Tests:** [`tests/test_day_36.py`](../../tests/test_day_36.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive Player class demonstrating independent object state
-- Multiple player instances with separate health, inventory, and level
-- Real-time status updates and actions (damage, item pickup, level up)
+## Scenario
+*food-delivery orders*. Every order object tracks its own state as it moves through a lifecycle (placed → cooking → out for delivery → delivered, or cancelled), records history, and releases resources when it closes.
 
-## Core Learnings & Insights
-- Each object (instance) maintains its own independent state
-- Changes to one object do not affect other objects of the same class
-- Instance variables (`self.health`, `self.inventory`) store per-object data
-- This is the foundation of object-oriented programming — objects are self-contained
+## Syllabus deliverables
+> Instance variables, state tracking and object lifecycle patterns
 
-## Challenges Faced & How I Solved Them
-- Making state independence visible → created multiple players and showed separate health/inventory
+| Deliverable | Implemented in |
+|---|---|
+| ✅ instance variables | `Order.__init__` |
+| ✅ class variables | `Order.open_orders` |
+| ✅ state tracking with allowed transitions | `Order.advance` |
+| ✅ history of state changes | `Order.advance` |
+| ✅ snapshot / restore | `Order.snapshot` |
+| ✅ lifecycle: context manager and close | `Order.__exit__` |
+| ✅ lifecycle: finalizer on garbage collection | `Order.__init__` |
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – clear instance variable usage
-- Educational value: Very high – core OOP concept
-- Personal rating: 9.3/10 – Strong understanding of object state achieved
+## Key learnings
+- Every instance owns its state; class variables track facts about all instances.
+- A transition table makes illegal state changes impossible to perform by accident.
+- Context managers and `weakref.finalize` give objects a predictable end of life.
 
-Day 36 complete.
+## Pitfalls I hit (and how I fixed them)
+- Negative damage used to heal a player above max HP; state changes now go through validated methods.
+
+## Run it
+```bash
+python -m src.day_36_python_instances_and_state.main
+pytest tests/test_day_36.py -v
+```
+
+## Next step
+- Formalise `__enter__`/`__exit__` on Day 68.

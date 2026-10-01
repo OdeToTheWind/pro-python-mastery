@@ -1,23 +1,37 @@
-# Day 34 - Optional, Required and Default Parameters Reflection
+# Day 34 – Optional, Required and Default Parameters Reflection
 
-**Date:** 2026-04-15
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-15 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_34_optional_required_default_parameters/main.py`](../../src/day_34_optional_required_default_parameters/main.py) · **Tests:** [`tests/test_day_34.py`](../../tests/test_day_34.py) (11 tests)
 
-## What I Built / Key Deliverables
-- Interactive functions showing required, optional, and default parameters
-- Real examples: `create_user()` and `calculate_price()`
+## Scenario
+A *CI job scheduler* whose ``schedule_job`` signature uses every parameter kind Python offers, in the only order Python allows.
 
-## Core Learnings & Insights
-- Required parameters must be provided
-- Default parameters make functions more flexible
-- Parameter ordering rule: required → optional with defaults
-- `*args` and `**kwargs` allow truly flexible function signatures
+## Syllabus deliverables
+> Advanced parameter handling, \*args, \*\*kwargs and ordering rules
 
-## Challenges Faced & How I Solved Them
-- Making parameter rules interactive → built live price calculator and user creator
+| Deliverable | Implemented in |
+|---|---|
+| ✅ required vs optional parameters | `describe_parameters` |
+| ✅ parameter ordering rules | `schedule_job` |
+| ✅ \*args | `schedule_job` |
+| ✅ \*\*kwargs | `schedule_job` |
+| ✅ required keyword-only parameter | `schedule_job` |
+| ✅ None sentinel vs mutable default | `add_label` |
+| ✅ forwarding \*args/\*\*kwargs | `with_defaults` |
 
-## Self-Assessment
-- Personal rating: 9.2/10 – Good understanding of function design achieved
+## Key learnings
+- Parameter order is fixed: positional-only, `/`, standard, `*args`, keyword-only, `**kwargs`.
+- A keyword-only parameter after `*args` can be required (no default).
+- Wrappers forward `*args, **kwargs` to stay signature-agnostic.
 
-Day 34 complete.
+## Pitfalls I hit (and how I fixed them)
+- Illegal signatures are `SyntaxError`s at compile time – compiling them in a test proves the rules.
+
+## Run it
+```bash
+python -m src.day_34_optional_required_default_parameters.main
+pytest tests/test_day_34.py -v
+```
+
+## Next step
+- Use `functools.wraps` with forwarding wrappers when writing decorators (Day 67).

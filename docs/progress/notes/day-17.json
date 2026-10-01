@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-29",
+  "learnings": [
+    "`/` makes parameters positional-only so they can be renamed later; `*` makes the rest keyword-only so they can't be mixed up.",
+    "A default placed *before* `*args` can never be used together with extra positionals.",
+    "`inspect.signature(...).bind()` shows exactly how a call maps onto parameters."
+  ],
+  "pitfalls": [
+    "The old `flexible_greeting('Alice', 'Bob')` treated Alice as the greeting and printed double spaces."
+  ],
+  "next": "Use keyword-only flags for every boolean option from now on."
+}

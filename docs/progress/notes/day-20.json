@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-01",
+  "learnings": [
+    "Returning a tuple and unpacking it is Python's way to return multiple values.",
+    "Guard clauses keep functions flat: handle the bad cases first, then the main path.",
+    "Functions are values – `make_truncator` returns one and `compose` chains many."
+  ],
+  "pitfalls": [
+    "Returning `(0, 0, 0, 0)` for empty input was ambiguous; empty input is now handled explicitly."
+  ],
+  "next": "Write decorators – functions that take and return functions – on Day 67."
+}

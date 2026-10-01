@@ -24,7 +24,7 @@ DELIVERABLES: dict[str, str] = {
     "instance variables": "Order.__init__",
     "class variables": "Order.open_orders",
     "state tracking with allowed transitions": "Order.advance",
-    "history of state changes": "Order.history",
+    "history of state changes": "Order.advance",
     "snapshot / restore": "Order.snapshot",
     "lifecycle: context manager and close": "Order.__exit__",
     "lifecycle: finalizer on garbage collection": "Order.__init__",

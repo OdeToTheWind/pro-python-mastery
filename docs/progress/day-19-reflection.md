@@ -1,46 +1,35 @@
-# Day 19 - Nested Collections Reflection
+# Day 19 – Nested Collections Reflection
 
-**Date:** 2026-03-31  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5–3 hours  
+**Date:** 2026-03-31 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_19_nested_collections/main.py`](../../src/day_19_nested_collections/main.py) · **Tests:** [`tests/test_day_19.py`](../../tests/test_day_19.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive Nested Collections Explorer with 6 practical scenarios
-- List of Dicts (students), Dict of Lists (subject scores), List of Lists (grid)
-- Dictionary of Dictionaries (user profiles), Full Classroom Management System
-- Clear cheat sheet explaining common nested patterns
-- Solid unit tests for nested data access and calculations
+## Scenario
+A *school gradebook* – classes contain students, students contain subjects, subjects contain lists of scores.
 
-## Core Learnings & Insights
-- Nested collections are everywhere in real applications (JSON, databases, configs)
-- List of Dicts → most common for tabular/row-based data
-- Dict of Lists → great for grouping data by category
-- Accessing nested data requires careful indexing: `data[0]['key'][2]`
-- Always prefer `.get()` when accessing nested dictionaries to avoid KeyError
-- Combining lists and dictionaries gives enormous expressive power
+## Syllabus deliverables
+> List of dicts, dict of lists, nested structures and classroom systems
 
-## Challenges Faced & How I Solved Them
-- Making nested structures interactive → built a realistic classroom system
-- Preventing KeyError/IndexError → used safe access patterns in demos
-- Visualizing complex data → added multiple real-world examples
-- Testing nested logic → created small pure functions for pytest
+| Deliverable | Implemented in |
+|---|---|
+| ✅ list of dicts (flat records) | `build_gradebook` |
+| ✅ dict of lists (scores per subject) | `subject_scores` |
+| ✅ nested structure access | `deep_get` |
+| ✅ classroom system operations | `add_score` |
+| ✅ reporting over nested data | `class_report` |
 
-## Improvements for Next Time / Future Ideas
-- JSON import/export simulation
-- Recursive traversal of deeply nested structures
-- Pretty printing nested data (`pprint` module)
-- Data validation for nested structures
+## Key learnings
+- `setdefault` chains build nested dicts without `if key not in ...` ladders.
+- Flipping nesting (class → student → subject into subject → scores) is a common reporting task.
+- A `deep_get` helper keeps lookups into optional nested data safe.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/tutorial/datastructures.html
-- Real Python: Working with Nested Data Structures
+## Pitfalls I hit (and how I fixed them)
+- Copying the record lists is essential; shared inner lists leak changes between objects.
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – consistent style and clear variable names
-- Interactivity: Excellent – users manipulate complex nested data
-- Educational value: Very high – prepares for real-world data handling
-- Personal rating: 9.3/10 – Advanced beginner topic completed well
+## Run it
+```bash
+python -m src.day_19_nested_collections.main
+pytest tests/test_day_19.py -v
+```
 
-Day 19 complete — you can now confidently work with nested collections.  
-Next: Returning Functions (Day 20).
+## Next step
+- Analyse the same data with pandas on Day 44.

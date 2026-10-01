@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-14",
+  "learnings": [
+    "Conventional aliases (`np`, `pd`, `dt`) aid readability; single-letter custom aliases hurt it.",
+    "`from x import loads as json_loads` resolves real name clashes.",
+    "An alias is just another name bound to the same module object."
+  ],
+  "pitfalls": [
+    "`tomllib.loads` actually lives in a private submodule – inspect `__module__` rather than assuming."
+  ],
+  "next": "Keep imports sorted and aliased consistently with ruff's `I` rules."
+}

@@ -1,32 +1,37 @@
-# Day 46 - Dictionary Comprehensions Reflection
+# Day 46 – Dictionary Comprehensions Reflection
 
-**Date:** 2026-04-27  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-27 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_46_dictionary_comprehensions/main.py`](../../src/day_46_dictionary_comprehensions/main.py) · **Tests:** [`tests/test_day_46.py`](../../tests/test_day_46.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive dictionary comprehension explorer
-- Examples: squares mapping, filtering even numbers, word length mapping, custom classification
+## Scenario
+An *online bookshop catalogue* – index products, reprice them, invert lookups and count words in reviews, each with a dict comprehension.
 
-## Core Learnings & Insights
-- Dictionary comprehensions provide a Pythonic, concise way to create dicts
-- Similar syntax to list comprehensions but with key-value pairs
-- Can include conditions for filtering
-- Extremely useful for data transformation and mapping tasks
+## Syllabus deliverables
+> Efficient dictionary creation and transformation
 
-## Challenges Faced & How I Solved Them
-- Making comprehensions interactive → built multiple real examples with user input
+| Deliverable | Implemented in |
+|---|---|
+| ✅ creation from a list of records | `index_by` |
+| ✅ creation from two sequences (zip) | `price_list` |
+| ✅ transformation of values | `apply_discount` |
+| ✅ filtering by value | `filter_items` |
+| ✅ inverting a mapping safely | `invert` |
+| ✅ nested dict comprehension | `stock_matrix` |
+| ✅ counting with a comprehension | `word_frequencies` |
 
-## Improvements for Next Time / Future Ideas
-- Combine with pandas for data cleaning
-- Nested dictionary comprehensions
+## Key learnings
+- Index records by key with `{r[key]: r for r in records}` for O(1) lookups.
+- Inverting a mapping must handle duplicate values (map to lists).
+- Set comprehensions (`{...}` without `:`) deduplicate inline.
 
-## References / Resources Used
-- Python docs: Data Structures (Comprehensions)
-- Real Python: Dictionary Comprehensions Guide
+## Pitfalls I hit (and how I fixed them)
+- `apply_discount` must return a new dict; mutating the caller's prices was a hidden side effect.
 
-## Self-Assessment
-- Code cleanliness: High – concise and readable
-- Personal rating: 9.2/10 – Very useful and Pythonic feature mastered
+## Run it
+```bash
+python -m src.day_46_dictionary_comprehensions.main
+pytest tests/test_day_46.py -v
+```
 
-Day 46 complete.
+## Next step
+- Combine with `Counter` and `defaultdict` on Day 71.

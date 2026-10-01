@@ -1,26 +1,34 @@
-# Day 31 - Python Methods Reflection
+# Day 31 – Python Methods Reflection
 
-**Date:** 2026-04-12  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-12 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_31_python_methods/main.py`](../../src/day_31_python_methods/main.py) · **Tests:** [`tests/test_day_31.py`](../../tests/test_day_31.py) (8 tests)
 
-## What I Built / Key Deliverables
-- Interactive explorer demonstrating Instance Methods, Class Methods (`@classmethod`), and Static Methods (`@staticmethod`)
-- Real-world examples: BankAccount with deposit/withdraw, interest rate management, and validation
+## Scenario
+A *pizzeria ordering system* where each kind of method has a clear job: instance methods change one pizza, class methods build pizzas or change shop-wide settings, static methods are utilities that need neither.
 
-## Core Learnings & Insights
-- **Instance methods** operate on instance data (`self`)
-- **Class methods** operate on the class itself (`cls`) – useful for factory methods or shared state
-- **Static methods** are utility functions that don’t access instance or class data
-- Choosing the correct method type improves code clarity, reusability, and design
+## Syllabus deliverables
+> Instance methods, class methods and static methods
 
-## Challenges Faced & How I Solved Them
-- Making abstract method types feel practical → used a BankAccount example with clear use cases for each method type
+| Deliverable | Implemented in |
+|---|---|
+| ✅ instance methods | `Pizza.add_topping` |
+| ✅ class methods: alternative constructors | `Pizza.margherita` |
+| ✅ class methods: shared class state | `Pizza.set_base_price` |
+| ✅ static methods | `Pizza.valid_size` |
 
-## Self-Assessment
-- Test coverage: ~90%
-- Code cleanliness: High – well-structured with clear method separation
-- Educational value: Very high – core OOP skill
-- Personal rating: 9.3/10 – Strong understanding of method types achieved
+## Key learnings
+- Instance methods change one object, class methods work with the class (alternative constructors), static methods are plain utilities.
+- `cls(...)` in a classmethod returns the right subclass automatically.
+- Class-level state changes should be scoped and restored (a context manager helps).
 
-Day 31 complete.
+## Pitfalls I hit (and how I fixed them)
+- A negative withdrawal used to *add* money – the new domain validates inputs inside the methods.
+
+## Run it
+```bash
+python -m src.day_31_python_methods.main
+pytest tests/test_day_31.py -v
+```
+
+## Next step
+- Use classmethod constructors for config objects on Day 91.

@@ -1,41 +1,34 @@
-# Day 03 - Input and Print Functions Reflection
+# Day 03 – Input & Print Functions Reflection
 
-**Date:** 2026-03-15  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2–3 hours  
+**Date:** 2026-03-15 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_03_input_output/main.py`](../../src/day_03_input_output/main.py) · **Tests:** [`tests/test_day_03.py`](../../tests/test_day_03.py) (11 tests)
 
-## What I Built / Key Deliverables
-- Interactive profile builder using `input()` with validation loop
-- Reusable `get_validated_input()` helper with type conversion & min-value check
-- Formatted profile output using f-strings (alignment, precision, expressions)
-- Unit tests mocking input for reliable testing
+## Scenario
+A *workshop registration desk* that asks attendees questions in the console, validates every answer and prints a receipt.
 
-## Core Learnings & Insights
-- `input()` always returns `str` → mandatory type conversion (`int()`, `float()`) + error handling
-- Validation loops prevent crashes from bad input (ValueError, empty, below min)
-- `print()` advanced features: `sep`, `end`, f-string format specifiers (`:<`, `:>`, `:.1f`, `:+d`)
-- Mocking `input()` with `unittest.mock.patch` makes console code testable
-- Separation of concerns: input collection vs formatting/display
+## Syllabus deliverables
+> User input validation, type conversion, interactive console applications
 
-## Challenges Faced & How I Solved Them
-- Handling invalid inputs without infinite loops → used `while True` + `try/except`
-- Testing interactive functions → `patch` + `side_effect` for multi-input simulation
-- Making output look professional → experimented with widths, centering, dynamic messages
+| Deliverable | Implemented in |
+|---|---|
+| ✅ input validation | `ask` |
+| ✅ type conversion | `to_int_in_range` |
+| ✅ interactive console application | `register` |
+| ✅ formatted print output | `format_receipt` |
 
-## Improvements for Next Time / Future Ideas
-- Add more validation (email regex, choice from list)
-- Use `rich` or `typer` for prettier console UI
-- Save profile to JSON file
-- Handle KeyboardInterrupt (Ctrl+C) gracefully
+## Key learnings
+- Inject `ask`/`print` callables so an interactive program can be tested without a keyboard.
+- `EOFError` is how Ctrl-D or a closed pipe looks to `input()` – it must end the conversation, not be retried.
+- Convert and validate in one small function per field; the prompt loop stays generic.
 
-## References / Resources Used
-- Python docs: input(), print(), f-strings (PEP 498)
-- Real Python: Python print() Guide
-- GeeksforGeeks: Input and Output in Python
-- unittest.mock documentation
+## Pitfalls I hit (and how I fixed them)
+- A broad `except Exception` retried forever on EOF – catching only `ValueError` fixed it.
 
-## Self-Assessment
-- Test coverage: ~80–90% (focused on logic, not full UI)
-- Typing: Good – helpers fully annotated
-- Code cleanliness: Modular and readable
-- Personal rating: 8.5/10 – Solid interactive foundation
+## Run it
+```bash
+python -m src.day_03_input_output.main
+pytest tests/test_day_03.py -v
+```
+
+## Next step
+- Reuse the `ask()` pattern for every console menu in later days.

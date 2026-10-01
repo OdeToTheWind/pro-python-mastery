@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-05",
+  "learnings": [
+    "`EmailMessage` builds correct multipart messages (text, HTML, attachments).",
+    "STARTTLS on port 587 or implicit SSL on 465, always with `ssl.create_default_context()`.",
+    "Credentials come from the environment; `field(repr=False)` keeps them out of logs."
+  ],
+  "pitfalls": [
+    "Rejecting newlines in addresses prevents header injection (`\\nBcc:`)."
+  ],
+  "next": "Schedule weekly reports with the task runner (Day 89)."
+}

@@ -1,45 +1,36 @@
-# Day 23 - Scope and Local/Global Variables Reflection
+# Day 23 – Scope and Local/Global Variables Reflection
 
-**Date:** 2026-04-04   
-**Python Version Used:** 3.14  
-**Time Spent:** ~2.5 hours  
+**Date:** 2026-04-04 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_23_scope_local_global_variables/main.py`](../../src/day_23_scope_local_global_variables/main.py) · **Tests:** [`tests/test_day_23.py`](../../tests/test_day_23.py) (7 tests)
 
-## What I Built / Key Deliverables
-- Interactive Scope Explorer demonstrating LEGB rule
-- Examples of local, enclosing, global, and built-in scopes
-- Practical use of `global` and `nonlocal` keywords
-- Demonstration of why global variables are dangerous
-- Clear LEGB rule visualization
+## Scenario
+A *web-app feature-flag service*. Configuration lives at module level, request handlers have their own locals and rate limiters are closures.
 
-## Core Learnings & Insights
-- Python follows the **LEGB** rule when looking for variables
-- Local variables are created inside functions and destroyed when function ends
-- `global` keyword allows modification of module-level variables
-- `nonlocal` keyword allows modification of variables in enclosing (nested) functions
-- Overusing global variables leads to hard-to-debug code and poor design
-- Best practice: Pass data as parameters and return results instead of using globals
+## Syllabus deliverables
+> LEGB rule, global and nonlocal usage, and good scoping practices
 
-## Challenges Faced & How I Solved Them
-- Making scope visible → created live demos showing variable values in different scopes
-- Explaining `nonlocal` clearly → used nested counter example
-- Showing dangers of globals → dedicated "why global variables are dangerous" demo
-- Testing scope behavior → used small pure functions for pytest
+| Deliverable | Implemented in |
+|---|---|
+| ✅ LEGB lookup order | `legb_trace` |
+| ✅ global keyword | `set_environment` |
+| ✅ nonlocal keyword | `make_rate_limiter` |
+| ✅ UnboundLocalError pitfall | `unbound_local_demo` |
+| ✅ closures and captured cells | `closure_cells` |
+| ✅ good practice: explicit state instead of globals | `FeatureFlags` |
 
-## Improvements for Next Time / Future Ideas
-- Closure examples (functions returning functions with nonlocal)
-- Global variable refactoring exercise
-- Scope in classes (instance vs class variables preview)
+## Key learnings
+- LEGB: Local → Enclosing → Global → Built-in, and the first match wins.
+- Assigning anywhere in a function makes the name local everywhere in it (`UnboundLocalError`).
+- Closures store captured variables in cells you can inspect via `__closure__`.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/reference/executionmodel.html
-- Real Python: Python Scope & LEGB Rule Guide
+## Pitfalls I hit (and how I fixed them)
+- The original demo labelled a local of `main()` as 'global' – a real module global is now used.
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – clear demonstrations of scope rules
-- Interactivity: Excellent – users experiment with different scopes live
-- Educational value: Very high – critical concept for avoiding bugs
-- Personal rating: 9.3/10 – Important foundational topic completed
+## Run it
+```bash
+python -m src.day_23_scope_local_global_variables.main
+pytest tests/test_day_23.py -v
+```
 
-Day 23 complete — you now understand variable scope deeply.  
-Next: Debugging Techniques (Day 24) - final day of Beginner Projects!
+## Next step
+- Prefer explicit objects (`FeatureFlags`) over module globals in larger programs.

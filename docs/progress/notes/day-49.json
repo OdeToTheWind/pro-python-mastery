@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-30",
+  "learnings": [
+    "Dynamic: a name can hold any type over time. Strong: Python won't implicitly mix incompatible types.",
+    "Duck typing asks 'can it do this?' rather than 'what class is it?'.",
+    "Type hints are checked by tools such as mypy, not by the interpreter."
+  ],
+  "pitfalls": [
+    "`True + 1 == 2` because `bool` subclasses `int` – an edge case of strong typing."
+  ],
+  "next": "Go further with `Protocol`, generics and mypy on Day 72."
+}

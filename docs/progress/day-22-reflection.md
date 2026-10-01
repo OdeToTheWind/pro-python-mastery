@@ -1,44 +1,34 @@
-# Day 22 - Docstrings vs Comments Reflection
+# Day 22 – Docstrings vs. Comments Reflection
 
-**Date:** 2026-04-03  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-04-03 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_22_doc_string_vs_comments/main.py`](../../src/day_22_doc_string_vs_comments/main.py) · **Tests:** [`tests/test_day_22.py`](../../tests/test_day_22.py) (8 tests)
 
-## What I Built / Key Deliverables
-- Interactive Docstrings vs Comments Explorer
-- Functions with proper Google-style docstrings
-- Live demonstration of `__doc__` attribute and help() simulation
-- Clear comparison between comments (#) and docstrings (""")
-- Unit tests that verify docstring presence and content
+## Scenario
+A *kitchen unit-conversion library* that is documented properly and a documentation auditor that inspects it.
 
-## Core Learnings & Insights
-- Comments (`#`) are for developers and are ignored by Python
-- Docstrings (`"""`) are documentation that becomes part of the object (`__doc__`)
-- Docstrings are used by `help()`, IDEs, Sphinx, and other documentation tools
-- Good docstrings describe what a function does, its parameters, and return value
-- Writing proper docstrings is a hallmark of professional Python code
+## Syllabus deliverables
+> # comments vs """ docstrings, documentation standards and metadata
 
-## Challenges Faced & How I Solved Them
-- Making documentation engaging → turned it into an interactive explorer with live help simulation
-- Showing real difference → demonstrated `__doc__` access and function behavior
-- Teaching best practices → included Google-style docstring examples
-- Testing docstrings → wrote tests that check for meaningful content
+| Deliverable | Implemented in |
+|---|---|
+| ✅ docstrings (PEP 257, Google style) | `grams_to_cups` |
+| ✅ comments vs docstrings at runtime | `split_comments_and_docstrings` |
+| ✅ documentation standards check | `audit_docstring` |
+| ✅ function metadata | `function_metadata` |
 
-## Improvements for Next Time / Future Ideas
-- Generate documentation automatically with Sphinx
-- Compare different docstring styles (Google, NumPy, reST)
-- Auto-generate docstring templates
+## Key learnings
+- Comments are dropped by the compiler; docstrings live on as `__doc__` and power `help()` and IDEs.
+- `inspect.getdoc` dedents docstrings; `inspect.signature` and `get_annotations` expose metadata.
+- Docstring examples can run as doctests, so documentation can't silently rot.
 
-## References / Resources Used
-- PEP 257 – Docstring Conventions
-- Google Python Style Guide (Docstrings section)
+## Pitfalls I hit (and how I fixed them)
+- The tokenizer is the reliable way to separate comments from string literals – regex gets fooled.
 
-## Self-Assessment
-- Test coverage: ~85%
-- Code cleanliness: High – proper docstrings used throughout
-- Interactivity: Good – users see live docstring output
-- Educational value: Very high – important professional skill
-- Personal rating: 9.2/10 – Documentation fundamentals reinforced
+## Run it
+```bash
+python -m src.day_22_doc_string_vs_comments.main
+pytest tests/test_day_22.py -v
+```
 
-Day 22 complete — you now write well-documented, professional Python code.  
-Next: Scope and Local/Global Variables (Day 23).
+## Next step
+- Generate API docs from these docstrings when packaging on Day 96.

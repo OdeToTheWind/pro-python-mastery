@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-16",
+  "learnings": [
+    "Publish/subscribe decouples the event source from the reactions.",
+    "One failing listener must not stop the others – isolate and record errors.",
+    "`once`, `off` and priorities cover most real event-bus needs."
+  ],
+  "pitfalls": [
+    "An unsubscribe lambda returned a bool; a named inner function made the contract clear."
+  ],
+  "next": "Make the event bus asynchronous on Day 75."
+}

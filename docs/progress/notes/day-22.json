@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-03",
+  "learnings": [
+    "Comments are dropped by the compiler; docstrings live on as `__doc__` and power `help()` and IDEs.",
+    "`inspect.getdoc` dedents docstrings; `inspect.signature` and `get_annotations` expose metadata.",
+    "Docstring examples can run as doctests, so documentation can't silently rot."
+  ],
+  "pitfalls": [
+    "The tokenizer is the reliable way to separate comments from string literals – regex gets fooled."
+  ],
+  "next": "Generate API docs from these docstrings when packaging on Day 96."
+}

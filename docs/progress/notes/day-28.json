@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-09",
+  "learnings": [
+    "`__init__` should leave the object in a valid state or raise.",
+    "Class attributes are shared; instance attributes belong to one object.",
+    "`__eq__` and `__hash__` must agree when objects go into sets or dict keys."
+  ],
+  "pitfalls": [
+    "Updating a class counter through `self.counter += 1` would create an instance attribute – use the class name."
+  ],
+  "next": "Replace boilerplate with `@dataclass` where behaviour is simple (Day 32)."
+}

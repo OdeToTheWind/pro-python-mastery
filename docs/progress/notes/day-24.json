@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-05",
+  "learnings": [
+    "Read a traceback bottom-up: the last line names the exception, the frame above it shows where.",
+    "Debug output goes to stderr behind a switch, never mixed into real output.",
+    "`breakpoint()` respects `PYTHONBREAKPOINT=0`, so breakpoints can stay in code safely."
+  ],
+  "pitfalls": [
+    "Isolating the *first* failing input (an empty week) found the bug faster than reading code."
+  ],
+  "next": "Build a full observability toolkit on Day 99."
+}

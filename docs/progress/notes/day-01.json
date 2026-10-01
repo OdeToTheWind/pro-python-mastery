@@ -1,0 +1,13 @@
+{
+  "date": "2026-03-13",
+  "learnings": [
+    "PEP 695 `type` aliases and `def f[T]` make generic intent readable without importing `TypeVar`.",
+    "Reading a global needs no keyword; *rebinding* it needs `global`, and rebinding an enclosing variable needs `nonlocal`.",
+    "Format specs (`:<12`, `:03d`, `:,`, `!r`) belong inside the f-string, not in manual padding code."
+  ],
+  "pitfalls": [
+    "Forgetting `global` turns `total += x` into an `UnboundLocalError` because assignment makes the name local for the whole function.",
+    "Module-level state leaks between tests – an autouse fixture now resets it."
+  ],
+  "next": "Revisit scope on Day 23 with the full LEGB walk-through and closures' `__closure__` cells."
+}

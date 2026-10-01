@@ -1,49 +1,35 @@
-# Day 09 - Logical Operations (and / or / not) Reflection
+# Day 09 – Logical Operations Reflection
 
-**Date:** 2026-03-21  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2–2.5 hours  
+**Date:** 2026-03-21 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_09_logical_operations/main.py`](../../src/day_09_logical_operations/main.py) · **Tests:** [`tests/test_day_09.py`](../../tests/test_day_09.py) (9 tests)
 
-## What I Built / Key Deliverables
-- Interactive eligibility/access checker using combined logical conditions
-- Truth table printout + short-circuit behavior demo
-- Safe input helpers (int/float/yes-no) with quit support
-- Bonus: limited "try your own expression" playground (safe eval with restricted globals)
-- Unit tests on the core decision function (eligibility_check)
+## Scenario
+An *office building access controller* deciding who may open which door, and a tracer that proves when Python stops evaluating.
 
-## Core Learnings & Insights
-- `and` returns the last evaluated argument (short-circuits on falsy left)
-- `or` returns the first truthy argument (short-circuits on truthy left)
-- `not` simply inverts — not falsy = truthy
-- Truthy/falsy applies to all objects, not just booleans
-- Logical ops have lower precedence than comparisons → use parentheses for clarity
-- Short-circuiting is useful for guard clauses (e.g. `user and user.is_active`)
-- Combining with `if` creates powerful decision trees without deep nesting
+## Syllabus deliverables
+> and, or, not, short-circuit evaluation, combining comparisons and access control
 
-## Challenges Faced & How I Solved Them
-- Explaining short-circuit without confusion → live print examples
-- Safe "eval" for user expressions → restricted globals + builtins empty
-- Making inputs robust → generic safe_input with type_cast
-- Keeping program engaging → real-world eligibility scenario + instant feedback
+| Deliverable | Implemented in |
+|---|---|
+| ✅ and / or / not truth table | `truth_table` |
+| ✅ short-circuit evaluation | `ShortCircuitTracer` |
+| ✅ or/and return operands (not just bools) | `display_name` |
+| ✅ combining comparisons | `within_hours` |
+| ✅ access control | `can_open` |
 
-## Improvements for Next Time / Future Ideas
-- Add more scenarios (login validator, discount calculator, password strength)
-- Quiz mode: predict outcome of expression → check answer
-- Visualize truth table interactively (user inputs A/B)
-- Use `rich` for colored truth table + results
-- Expand tests: short-circuit side-effect checks (mock print)
+## Key learnings
+- `and`/`or` return one of their *operands*, not necessarily `True`/`False`.
+- Short-circuiting is observable: a tracer shows the right operand never runs.
+- Name sub-conditions (`is_staff`) before combining them so access rules stay readable.
 
-## References / Resources Used
-- Python docs: https://docs.python.org/3/reference/expressions.html#boolean-operations
-- Real Python / GeeksforGeeks / W3Schools logical operators articles
-- freeCodeCamp: Truthy and Falsy Values in Python
+## Pitfalls I hit (and how I fixed them)
+- Using `print()` as an operand always yields `None`, so the original demo printed the wrong branch.
 
-## Self-Assessment
-- Test coverage: ~85% on decision logic
-- Code cleanliness: Modular, safe, readable, consistent UX
-- Interactivity: Good mix of guided + free experimentation
-- Educational value: Clear progression from basics to combined conditions
-- Personal rating: 9.1/10 – Solid bridge from conditionals to more complex logic
+## Run it
+```bash
+python -m src.day_09_logical_operations.main
+pytest tests/test_day_09.py -v
+```
 
-Day 9 done — logical combinations feel natural now.  
-Next: likely while loops, for loops, or range().
+## Next step
+- Model the door rules as data (a permission table) when building plugins on Day 87.

@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "Safe methods (GET) don't change state; idempotent ones (PUT, DELETE) can be repeated safely.",
+    "Choose precise status codes: 201 Created, 204 No Content, 404, 405, 415, 422.",
+    "Error responses deserve a consistent JSON body too."
+  ],
+  "pitfalls": [
+    "A JSON body may legally be a number or `null`; the old client rejected those."
+  ],
+  "next": "Talk to real APIs with `requests` on Day 58."
+}

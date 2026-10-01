@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "Always pass a timeout; `(connect, read)` tuples control both phases.",
+    "A `Session` reuses connections and can retry 429/5xx responses with backoff.",
+    "Map every failure mode (timeout, connection, HTTP, bad JSON) to a clear outcome."
+  ],
+  "pitfalls": [
+    "`HTTPError.response` can be `None`; reading `.status_code` blindly raised `AttributeError`."
+  ],
+  "next": "Make concurrent requests with asyncio/aiohttp on Day 76."
+}

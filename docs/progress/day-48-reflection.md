@@ -1,30 +1,35 @@
-# Day 48 - Creating Desktop GUI Apps with Tkinter Reflection
+# Day 48 – Creating Desktop GUI Apps with Tkinter Reflection
 
-**Date:** 2026-04-29  
-**Python Version Used:** 3.14  
-**Time Spent:** ~3 hours  
+**Date:** 2026-04-29 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_48_tkinter_gui/main.py`](../../src/day_48_tkinter_gui/main.py) · **Tests:** [`tests/test_day_48.py`](../../tests/test_day_48.py) (5 tests)
 
-## What I Built / Key Deliverables
-- Interactive Tkinter GUI application with buttons, labels, and message boxes
-- Graceful fallback when Tkinter is not available
+## Scenario
+A *restaurant tip splitter* desktop app. The calculation is a pure function (unit-tested everywhere); the GUI is a thin layer of widgets laid out with ``grid`` that reads user input and shows results or errors.
 
-## Core Learnings & Insights
-- Tkinter is Python’s standard GUI library
-- Event-driven programming with callbacks
-- `pack()`, `grid()`, and widget hierarchy
-- GUI development requires understanding of event loops
+## Syllabus deliverables
+> GUI building with widgets, layouts and user input
 
-## Challenges Faced & How I Solved Them
-- Handling environments without Tkinter → added graceful error handling
+| Deliverable | Implemented in |
+|---|---|
+| ✅ widgets | `TipApp.build` |
+| ✅ grid layout | `TipApp.build` |
+| ✅ user input handling | `TipApp.calculate` |
+| ✅ input validation (pure, testable) | `calculate_tip` |
+| ✅ event binding | `TipApp.build` |
 
-## Improvements for Next Time / Future Ideas
-- More complex GUI with multiple windows and menus
+## Key learnings
+- Keep the calculation pure and the widgets thin – the logic is testable without a display.
+- `grid` with `sticky` and `columnconfigure` makes layouts resize well.
+- Tk variables (`StringVar`, `IntVar`) connect widgets to Python state.
 
-## References / Resources Used
-- Python docs: Tkinter
-- Real Python: Python GUI Programming
+## Pitfalls I hit (and how I fixed them)
+- Importing `tkinter` at module level made the app crash before its fallback could run.
 
-## Self-Assessment
-- Personal rating: 8.9/10 – Good introduction to desktop GUI development
+## Run it
+```bash
+python -m src.day_48_tkinter_gui.main
+pytest tests/test_day_48.py -v
+```
 
-Day 48 complete.
+## Next step
+- Explore a modern UI alternative (Textual or a web front end) after the capstone.

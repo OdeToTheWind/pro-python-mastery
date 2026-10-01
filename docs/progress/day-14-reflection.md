@@ -1,46 +1,34 @@
-# Day 14 - Code Blocks and Indentation Reflection
+# Day 14 – Code Blocks and Indentation Reflection
 
-**Date:** 2026-03-26  
-**Python Version Used:** 3.14  
-**Time Spent:** ~2 hours  
+**Date:** 2026-03-26 · **Level:** Beginner · **Python:** 3.12+ · **Status:** Covered
+**Code:** [`src/day_14_code_block_indentation/main.py`](../../src/day_14_code_block_indentation/main.py) · **Tests:** [`tests/test_day_14.py`](../../tests/test_day_14.py) (7 tests)
 
-## What I Built / Key Deliverables
-- Interactive Indentation Explorer showing correct vs broken blocks
-- Multiple demos: menu with proper if-elif, nested loops, pyramid patterns
-- Clear cheat sheet explaining Python's indentation rules
-- Practical exercises to spot and fix common IndentationError cases
-- Unit tests validating block logic (if, for, nested structures)
+## Scenario
+A *snippet linter for a coding bootcamp* – students paste code and the tool compiles it, explains indentation errors and offers an automatic fix.
 
-## Core Learnings & Insights
-- Python uses **indentation** (not curly braces) to define code blocks
-- 4 spaces is the official standard (PEP 8)
-- Never mix tabs and spaces — this is the #1 cause of IndentationError
-- Every colon `:` starts a new block that must be indented
-- Blocks can be nested (if inside for, for inside while, etc.)
-- Consistent indentation makes code readable and prevents bugs
+## Syllabus deliverables
+> Python indentation rules, loop and function blocks, common IndentationError fixes
 
-## Challenges Faced & How I Solved Them
-- Making a "boring" topic engaging → turned it into interactive fixes and mini challenges
-- Showing real errors without breaking the program → used try/except around user input
-- Teaching nested blocks visually → star pyramid and nested if examples
-- Testing indentation logic → created small pure functions that mimic block behavior
+| Deliverable | Implemented in |
+|---|---|
+| ✅ indentation rules (compile check) | `check_snippet` |
+| ✅ loop and function blocks | `block_outline` |
+| ✅ IndentationError / TabError fixes | `fix_tabs` |
+| ✅ catalogue of common errors | `BROKEN_SNIPPETS` |
 
-## Improvements for Next Time / Future Ideas
-- Visual indentation highlighter (if using rich library)
-- "Spot the bug" game with deliberately broken code snippets
-- Compare with other languages (Python vs JavaScript/C++ braces)
+## Key learnings
+- `compile()` checks code without running it – perfect for linting snippets.
+- `TabError` is a subclass of `IndentationError`, which is a subclass of `SyntaxError`, so order the `except` clauses from specific to general.
+- Different blocks may use different (consistent) indentation; only lines in the same block must match.
 
-## References / Resources Used
-- PEP 8 – Style Guide for Python Code (Indentation section)
-- Python docs: https://docs.python.org/3/reference/compound_stmts.html
-- Real Python: Python Indentation Guide
+## Pitfalls I hit (and how I fixed them)
+- Expanding tabs to 4 spaces created a new indentation error – the tokenizer measures tabs to multiples of 8.
 
-## Self-Assessment
-- Test coverage: ~80%
-- Code cleanliness: Very high – strict 4-space indentation throughout
-- Interactivity: Good – users actively practice and fix indentation
-- Educational value: Critical foundational skill reinforced
-- Personal rating: 9.0/10 – Essential day done properly
+## Run it
+```bash
+python -m src.day_14_code_block_indentation.main
+pytest tests/test_day_14.py -v
+```
 
-Day 14 complete — you now respect and master Python's indentation rules.  
-Next: While Loops (Day 15).
+## Next step
+- Let `ruff format` own indentation in every future file.
