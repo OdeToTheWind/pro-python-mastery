@@ -90,16 +90,28 @@ class HabitStore:
         log.debug("saved %d habits to %s", len(self.habits), self.path)
 
 
-def parse_day(text: str) -> date:
-    """argparse ``type=``: raise ArgumentTypeError for a clean usage message."""
-    if text == "today":
-        return date.today()
-    if text == "yesterday":
-        return date.today() - timedelta(days=1)
+RELATIVE_DAYS = {"today": 0, "yesterday": 1}
+
+
+def parse_day(text: str) -> date | str:
+    """argparse ``type=``: raise ArgumentTypeError for a clean usage message.
+
+    ``today``/``yesterday`` are kept as words and resolved later by :func:`resolve_day`
+    against the *same* "today" the command uses – reading the clock here would make the
+    result depend on the machine's time zone and on midnight passing mid-run.
+    """
+    if text in RELATIVE_DAYS:
+        return text
     try:
         return date.fromisoformat(text)
     except ValueError:
         raise argparse.ArgumentTypeError(f"invalid date {text!r} (use YYYY-MM-DD, today or yesterday)") from None
+
+
+def resolve_day(value: date | str, today: date) -> date:
+    if isinstance(value, str):
+        return today - timedelta(days=RELATIVE_DAYS[value])
+    return value
 
 
 def habit_name(text: str) -> str:
@@ -168,11 +180,12 @@ def execute(args: argparse.Namespace, config: Config, today: date) -> Any:
     if args.command in {"done", "streak"} and args.name not in store.habits:
         raise CLIError(f"no habit called {args.name!r} (try: habits add)", EXIT_CODES["not_found"])
     if args.command == "done":
-        if args.on > today:
+        on = resolve_day(args.on, today)
+        if on > today:
             raise CLIError("cannot complete a habit in the future", EXIT_CODES["usage"])
         days = store.habits[args.name]
-        if args.on.isoformat() not in days:
-            days.append(args.on.isoformat())
+        if on.isoformat() not in days:
+            days.append(on.isoformat())
             days.sort()
             store.save()
         return {"habit": args.name, "streak": streak(days, today)}

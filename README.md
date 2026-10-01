@@ -203,9 +203,9 @@ fails if they are out of date.
 
 <!-- kpis:start -->
 - **Curriculum completion:** 100 / 100 days covered, each with code, tests and a reflection.
-- **Test functions:** 974 across 100 test modules (parametrised cases run more).
+- **Test functions:** 975 across 100 test modules (parametrised cases run more).
 - **Deliverables mapped to code:** 646 `DELIVERABLES` entries, each checked to resolve.
-- **Source size:** 12,258 non-blank lines of Python in `src/`.
+- **Source size:** 12,266 non-blank lines of Python in `src/`.
 - **Self-check questions:** 200 multiple-choice questions with explanations, plus 200 open bonus questions (100 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below 85 % coverage (lines and branches).
 - **Python versions in CI:** 3.12, 3.13, 3.14.

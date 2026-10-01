@@ -12,6 +12,7 @@ from src.day_83_robust_cli_application.main import (
     build_parser,
     load_config,
     main,
+    resolve_day,
     run,
     streak,
 )
@@ -37,6 +38,18 @@ def test_full_workflow_and_json_output(capsys, env):
     code, out, _ = cli(capsys, env, "done", "read books")
     assert code == 0 and json.loads(cli(capsys, env, "--format", "json", "list")[1]) == {"read books": 3}
     assert "streak" in out
+
+
+def test_relative_days_follow_the_commands_today_not_the_system_clock(capsys, env):
+    """Regression: on a machine already past midnight (e.g. UTC+5:30) 'today' must not drift."""
+    far = date(2031, 3, 1)
+    assert run(["add", "yoga"], env=env, today=far) == 0
+    assert run(["done", "yoga", "--on", "yesterday"], env=env, today=far) == 0
+    assert run(["done", "yoga"], env=env, today=far) == 0
+    capsys.readouterr()
+    assert run(["--format", "json", "streak", "yoga"], env=env, today=far) == 0
+    assert json.loads(capsys.readouterr().out) == {"habit": "yoga", "streak": 2}
+    assert resolve_day("yesterday", far) == date(2031, 2, 28) and resolve_day(far, TODAY) == far
 
 
 def test_streak_logic():
