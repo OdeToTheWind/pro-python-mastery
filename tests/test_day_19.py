@@ -1,49 +1,71 @@
-# tests/test_day_19.py
+"""Tests for Day 19 – Nested Collections."""
+
 import pytest
 
-def calculate_class_average(class_data: list) -> float:
-    """Calculate average marks from list of student dicts"""
-    if not class_data:
-        return 0.0
-    total = 0
-    count = 0
-    for student in class_data:
-        total += sum(student["marks"].values())
-        count += len(student["marks"])
-    return round(total / count, 2)
+from src.day_19_nested_collections.main import (
+    RECORDS,
+    add_score,
+    build_gradebook,
+    class_report,
+    deep_get,
+    main,
+    student_average,
+    subject_scores,
+    subject_toppers,
+)
 
 
-def get_department_info(departments: dict, dept_name: str) -> dict:
-    """Safe access to nested dictionary"""
-    return departments.get(dept_name, {})
+@pytest.fixture
+def book():
+    return build_gradebook(RECORDS)
 
 
-def test_class_average():
-    students = [
-        {"marks": {"math": 90, "science": 85}},
-        {"marks": {"math": 88, "science": 92}}
-    ]
-    assert calculate_class_average(students) == 88.75
+def test_build_gradebook_shape(book):
+    assert book["10A"]["Aarav"] == {"math": [92, 88], "science": [79]}
+    assert list(book) == ["10A", "10B"]
 
 
-def test_empty_class_average():
-    assert calculate_class_average([]) == 0.0
+def test_add_score_creates_levels_and_validates():
+    book = {}
+    add_score(book, "9C", "Zoe", "art", 100)
+    assert book == {"9C": {"Zoe": {"art": [100]}}}
+    with pytest.raises(ValueError):
+        add_score(book, "9C", "Zoe", "art", 101)
 
 
-def test_nested_dict_access():
-    depts = {
-        "Engineering": {"employees": 25, "budget": 5000000},
-        "Marketing": {"employees": 12, "budget": 1200000}
-    }
-    eng = get_department_info(depts, "Engineering")
-    assert eng["employees"] == 25
-    assert get_department_info(depts, "HR") == {}
+def test_deep_get(book):
+    assert deep_get(book, ["10A", "Diya", "math", 0]) == 95
+    assert deep_get(book, ["10A", "Diya", "math", 5], "none") == "none"
+    assert deep_get(book, ["10X"]) is None
+    assert deep_get({"a": 1}, ["a", "b"], "bad") == "bad"
 
 
-def test_list_of_dicts_access():
-    data = [
-        {"name": "Aarav", "scores": [92, 88]},
-        {"name": "Diya", "scores": [85, 90]}
-    ]
-    assert data[0]["name"] == "Aarav"
-    assert data[1]["scores"][1] == 90
+def test_subject_scores_dict_of_lists(book):
+    assert subject_scores(book, "10A") == {"math": [92, 88, 95], "science": [79, 91]}
+    assert subject_scores(book, "missing") == {}
+
+
+def test_student_average(book):
+    assert student_average(book, "10A", "Aarav") == 86.3
+    assert student_average(book, "10A", "Nobody") is None
+
+
+def test_class_report_sorted_best_first(book):
+    report = class_report(book, "10A")
+    assert [r["student"] for r in report] == ["Diya", "Aarav"]
+    assert report[0] == {"student": "Diya", "average": 93, "subjects": ["math", "science"]}
+
+
+def test_subject_toppers(book):
+    assert subject_toppers(book, "10A") == {"math": "Diya", "science": "Diya"}
+
+
+def test_building_does_not_share_inner_lists():
+    book = build_gradebook(RECORDS)
+    book["10A"]["Aarav"]["math"].append(1)
+    assert build_gradebook(RECORDS)["10A"]["Aarav"]["math"] == [92, 88]
+
+
+def test_main(capsys):
+    main()
+    assert "Deep get missing → n/a" in capsys.readouterr().out

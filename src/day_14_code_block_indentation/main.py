@@ -1,131 +1,112 @@
-# src/day_14_code_block_indentation/main.py
+"""Day 14 – Code Blocks and Indentation.
+
+Scenario: a *snippet linter for a coding bootcamp* – students paste code and
+the tool compiles it, explains indentation errors and offers an automatic fix.
+
+Deliverables (syllabus):
+* Python indentation rules
+* Loop and function blocks
+* Common ``IndentationError`` fixes (and ``TabError``)
 """
-Day 14: Code Blocks and Indentation in Python – Interactive Explorer
-Understand why indentation matters, common mistakes, and best practices.
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+DELIVERABLES: dict[str, str] = {
+    "indentation rules (compile check)": "check_snippet",
+    "loop and function blocks": "block_outline",
+    "IndentationError / TabError fixes": "fix_tabs",
+    "catalogue of common errors": "BROKEN_SNIPPETS",
+}
+
+BROKEN_SNIPPETS: dict[str, str] = {
+    "expected an indented block": "def greet():\nprint('hi')\n",
+    "unexpected indent": "x = 1\n    y = 2\n",
+    "unindent does not match": "if True:\n        a = 1\n    b = 2\n",
+    "mixed tabs and spaces": "if True:\n\tx = 1\n        y = 2\n",
+}
+
+
+@dataclass(frozen=True, slots=True)
+class SnippetResult:
+    ok: bool
+    error: str | None = None
+    line: int | None = None
+    message: str = ""
+
+
+def check_snippet(code: str) -> SnippetResult:
+    """Compile *code* without running it and report indentation problems.
+
+    ``TabError`` is a subclass of ``IndentationError``, which is a subclass of
+    ``SyntaxError`` – so the most specific ``except`` must come first.
+    """
+    try:
+        compile(code, "<snippet>", "exec")
+    except TabError as exc:
+        return SnippetResult(False, "TabError", exc.lineno, exc.msg)
+    except IndentationError as exc:
+        return SnippetResult(False, "IndentationError", exc.lineno, exc.msg)
+    except SyntaxError as exc:
+        return SnippetResult(False, "SyntaxError", exc.lineno, exc.msg)
+    return SnippetResult(True)
+
+
+def fix_tabs(code: str, width: int = 8) -> str:
+    """Replace leading tabs with spaces – the fix for ``TabError``.
+
+    The default of 8 matches how the Python tokenizer measures a tab, so the
+    block structure the author intended is preserved.
+    """
+    fixed_lines = []
+    for line in code.splitlines():
+        stripped = line.lstrip(" \t")
+        indent = line[: len(line) - len(stripped)].expandtabs(width)
+        fixed_lines.append(indent + stripped)
+    return "\n".join(fixed_lines) + ("\n" if code.endswith("\n") else "")
+
+
+def indent_body(code: str, after_line: int, width: int = 4) -> str:
+    """Indent every line after *after_line* – the fix for 'expected an indented block'."""
+    lines = code.splitlines()
+    for index in range(after_line, len(lines)):
+        lines[index] = " " * width + lines[index]
+    return "\n".join(lines) + "\n"
+
+
+def block_outline(code: str) -> list[tuple[int, str]]:
+    """List ``(depth, statement)`` pairs – shows how blocks nest under ``:`` lines."""
+    outline: list[tuple[int, str]] = []
+    for raw in code.expandtabs(4).splitlines():
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        depth = (len(raw) - len(raw.lstrip(" "))) // 4
+        outline.append((depth, raw.strip()))
+    return outline
+
+
+SAMPLE_PROGRAM = """\
+def count_evens(numbers):
+    total = 0
+    for n in numbers:
+        if n % 2 == 0:
+            total += 1
+    return total
 """
 
-def print_indentation_guide():
-    print("\n" + "═" * 70)
-    print("Code Blocks & Indentation in Python (Day 14)")
-    print("═" * 70)
-    print("• Python uses indentation (not braces {}) to define code blocks")
-    print("• Standard is 4 spaces (never mix tabs and spaces)")
-    print("• Consistent indentation is mandatory")
-    print("• Common errors: IndentationError, unexpected indent, unindent does not match")
-    print("• Blocks occur after:, if, for, while, def, with, try, class, etc.")
-    print("═" * 70)
-    print("Rule: All statements in the same block must have the same indentation level.")
-    print("═" * 70)
 
-
-def demonstrate_indentation():
-    print("\nLet's see correct vs incorrect indentation through examples.\n")
-
-    print("Example 1: Correct if-else block")
-    score = 85
-    if score >= 90:
-        print("   Grade: A+")
-    elif score >= 80:
-        print("   Grade: A")
-    else:
-        print("   Grade: B")
-    print("   → This block ends here\n")
-
-    print("Example 2: Correct for loop")
-    for i in range(3):
-        print(f"   Iteration {i + 1}")
-        print("   Inside the loop")
-    print("   → Loop block ended\n")
-
-
-def main():
-    print("Welcome to Day 14 – Code Blocks and Indentation")
-    print("The most important (and sometimes tricky) concept in Python!\n")
-
-    print_indentation_guide()
-    demonstrate_indentation()
-
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose an activity to practice indentation:")
-        print("  1) Fix broken code (IndentationError examples)")
-        print("  2) Build a simple menu with proper blocks")
-        print("  3) Nested blocks challenge (if inside for)")
-        print("  4) Create your own function with correct indentation")
-        print("  5) Common mistakes quiz")
-        print("─" * 60)
-
-        choice = input("→ ").strip()
-
-        if choice.lower() in ('quit', 'q', 'exit'):
-            break
-
-        try:
-            if choice == "1":
-                print("\nFix this broken code mentally:")
-                print("if x > 10:")
-                print("print('Greater than 10')   # ← Wrong indentation")
-                print("    print('Still inside?') # ← Mixed levels")
-                fixed = input("\nWhat would the correct version look like? (describe or skip): ")
-                print("Correct version uses consistent 4 spaces for each block.")
-
-            elif choice == "2":
-                print("\nBuilding a proper menu with indentation:")
-                print("Main block starts here")
-                option = input("Choose 1, 2 or 3: ").strip()
-                
-                if option == "1":
-                    print("    You chose option 1")
-                    for i in range(3):
-                        print(f"        Sub-step {i+1} inside option 1")
-                elif option == "2":
-                    print("    You chose option 2")
-                    if True:                     # nested if
-                        print("        This is nested inside option 2")
-                else:
-                    print("    You chose option 3")
-                print("Back to main block after the if-elif-else")
-
-            elif choice == "3":
-                print("\nNested blocks challenge:")
-                n = int(input("Enter number of rows (1-8): ") or 5)
-                for i in range(1, n+1):
-                    if i % 2 == 0:
-                        print("    " * i + f"Even row {i}")
-                    else:
-                        print("  " * i + f"Odd row {i}")
-                print("→ Notice how inner if block is indented further")
-
-            elif choice == "4":
-                print("\nCreate your own function (we'll check indentation):")
-                print("Try writing a small function that prints even numbers up to N.")
-                n = int(input("Enter N: ") or 10)
-                print("Correct structure would be:")
-                print("def print_even(n):")
-                print("    for i in range(n+1):")
-                print("        if i % 2 == 0:")
-                print("            print(i)")
-                print("\n(You can copy this pattern in real code)")
-
-            elif choice == "5":
-                print("\nCommon Indentation Mistakes Quiz:")
-                print("1. Mixing tabs and spaces → IndentationError")
-                print("2. Forgetting to indent after ':' → IndentationError")
-                print("3. Unindenting too early or too late → unexpected indent")
-                print("4. Using 2 spaces in one place and 4 in another → Error")
-                print("→ Always use 4 spaces consistently!")
-
-            else:
-                print("Please choose 1-5.")
-
-        except ValueError:
-            print("✗ Please enter a valid number.")
-        except Exception as e:
-            print(f"✗ Something went wrong: {e}")
-
-    print("\nWell done! You now understand why Python cares so much about indentation.")
-    print("Consistent 4-space indentation is a core part of writing clean Python.")
-    print("Next: While Loops (Day 15).\n")
+def main() -> None:
+    print("Day 14 – Snippet linter\n")
+    for label, code in BROKEN_SNIPPETS.items():
+        result = check_snippet(code)
+        print(f"{label:<28} → {result.error} on line {result.line}: {result.message}")
+    print("\nAfter fixes:")
+    print("  tabs fixed   →", check_snippet(fix_tabs(BROKEN_SNIPPETS["mixed tabs and spaces"])).ok)
+    print("  body indented→", check_snippet(indent_body(BROKEN_SNIPPETS["expected an indented block"], 1)).ok)
+    print("\nBlock outline of a correct program:")
+    for depth, statement in block_outline(SAMPLE_PROGRAM):
+        print(f"  {'│   ' * depth}{statement}")
 
 
 if __name__ == "__main__":

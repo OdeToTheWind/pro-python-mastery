@@ -1,143 +1,125 @@
-# src/day_22_doc_string_vs_comments/main.py
+"""Day 22 – Docstrings vs. Comments.
+
+Scenario: a *kitchen unit-conversion library* that is documented properly and
+a documentation auditor that inspects it.
+
+Deliverables (syllabus):
+* ``#`` comments vs ``\"\"\"`` docstrings
+* Documentation standards (PEP 257, Google style)
+* Function metadata (``__doc__``, ``__name__``, ``__annotations__``, signature …)
 """
-Day 22: Docstrings vs Comments – Interactive Explorer
-Learn the difference between comments (#) and docstrings (" " "), and why docstrings matter.
-"""
 
-def print_guide():
-    print("\n" + "═" * 70)
-    print("Docstrings vs Comments – Quick Reference (Day 22)")
-    print("═" * 70)
-    print("Comments (#):")
-    print("• For developers reading the code")
-    print("• Ignored by Python and documentation tools")
-    print("• Use for 'why' and temporary notes")
-    print("")
-    print("Docstrings (triple quotes):")
-    print("• For users and tools (help(), Sphinx, IDEs)")
-    print("• Attached to modules, classes, and functions as __doc__")
-    print("• Can be accessed at runtime")
-    print("• Standard formats: Google, NumPy, reStructuredText")
-    print("═" * 70)
+from __future__ import annotations
+
+import inspect
+import io
+import tokenize
+from collections.abc import Callable
+from typing import Any
+
+DELIVERABLES: dict[str, str] = {
+    "docstrings (PEP 257, Google style)": "grams_to_cups",
+    "comments vs docstrings at runtime": "split_comments_and_docstrings",
+    "documentation standards check": "audit_docstring",
+    "function metadata": "function_metadata",
+}
+
+GRAMS_PER_CUP = {"flour": 120.0, "sugar": 200.0, "butter": 227.0}
 
 
-def add_numbers(a: int, b: int) -> int:
-    """
-    Add two numbers and return the result.
-    
-    This is a proper docstring using Google style.
-    
+def grams_to_cups(grams: float, ingredient: str) -> float:
+    """Convert a weight in grams to US cups for a baking ingredient.
+
     Args:
-        a (int): The first number
-        b (int): The second number
-        
+        grams: Weight in grams. Must not be negative.
+        ingredient: One of ``flour``, ``sugar`` or ``butter``.
+
     Returns:
-        int: The sum of a and b
+        The volume in cups, rounded to two decimals.
+
+    Raises:
+        ValueError: If *grams* is negative or the ingredient is unknown.
+
+    Example:
+        >>> grams_to_cups(240, "flour")
+        2.0
     """
-    # This is a comment - explains "how" or "why" internally
-    # We could add validation here in the future
-    return a + b
+    # Comments explain *why* to maintainers and are discarded by the compiler:
+    # densities differ a lot, so a single "grams per cup" constant would be wrong.
+    if grams < 0:
+        raise ValueError("grams must not be negative")
+    try:
+        density = GRAMS_PER_CUP[ingredient]
+    except KeyError:
+        raise ValueError(f"unknown ingredient {ingredient!r}") from None
+    return round(grams / density, 2)
 
 
-def calculate_bmi(weight_kg: float, height_m: float) -> float:
-    """Calculate Body Mass Index (BMI).
-    
-    A simple one-line docstring is also acceptable for short functions.
-    
-    Args:
-        weight_kg (float): Weight in kilograms
-        height_m (float): Height in meters
-        
-    Returns:
-        float: BMI value rounded to 2 decimal places
-    """
-    if height_m <= 0:
-        raise ValueError("Height must be positive")
-    bmi = weight_kg / (height_m ** 2)
-    return round(bmi, 2)
+def celsius_to_gas_mark(celsius: float) -> int:
+    """Return the nearest UK gas mark (1–9) for an oven temperature in °C."""
+    return max(1, min(9, round((celsius - 121) / 14)))
 
 
-def main():
-    print("Welcome to Day 22 – Docstrings vs Comments!")
-    print("Learn how to write proper documentation for your code.\n")
+def undocumented(x):  # type: ignore[no-untyped-def]
+    # A comment is not documentation: help() and IDEs cannot see it.
+    return x
 
-    print_guide()
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a Demo:")
-        print("  1) See Docstring vs Comment in Action")
-        print("  2) Interactive Function Documentation")
-        print("  3) Help() Simulation")
-        print("  4) Build a Function with Proper Docstring")
-        print("  5) Common Documentation Mistakes")
-        print("─" * 60)
+def function_metadata(func: Callable[..., Any]) -> dict[str, Any]:
+    """Collect the metadata Python stores on every function object."""
+    doc = inspect.getdoc(func)  # dedented, unlike raw __doc__
+    return {
+        "name": func.__name__,
+        "qualname": func.__qualname__,
+        "module": func.__module__,
+        "summary": doc.splitlines()[0] if doc else None,
+        "signature": str(inspect.signature(func)),
+        "annotations": inspect.get_annotations(func),
+        "defaults": func.__defaults__,
+    }
 
-        choice = input("→ ").strip().lower()
 
-        if choice in ('quit', 'q', 'exit'):
-            break
+def audit_docstring(func: Callable[..., Any]) -> list[str]:
+    """Check a docstring against PEP 257 and Google-style sections."""
+    doc = inspect.getdoc(func)
+    if not doc:
+        return ["missing docstring"]
+    problems: list[str] = []
+    summary = doc.splitlines()[0]
+    if not summary.endswith("."):
+        problems.append("summary line should end with a period")
+    params = [p for p in inspect.signature(func).parameters if p not in {"self", "cls"}]
+    if params and "Args:" not in doc:
+        problems.append("parameters are not documented in an Args: section")
+    if "Returns:" not in doc and inspect.signature(func).return_annotation not in (None, "None"):
+        problems.append("missing Returns: section")
+    return problems
 
-        try:
-            if choice == "1":
-                print("\nFunction with both docstring and comments:")
-                print("Docstring (accessible via help()):")
-                print(add_numbers.__doc__)
-                
-                print("\nInternal comments (not accessible):")
-                print("   # These are ignored by help() and documentation tools")
 
-            elif choice == "2":
-                print("\nInteractive Documentation")
-                weight = float(input("Enter weight (kg): "))
-                height = float(input("Enter height (m): "))
-                
-                bmi = calculate_bmi(weight, height)
-                print(f"\nYour BMI is: {bmi}")
-                
-                print("\nFunction docstring:")
-                print(calculate_bmi.__doc__)
+def split_comments_and_docstrings(source: str) -> dict[str, list[str]]:
+    """Use the tokenizer to separate ``#`` comments from docstring literals."""
+    comments, docstrings = [], []
+    previous_significant = tokenize.NEWLINE
+    for token in tokenize.generate_tokens(io.StringIO(source).readline):
+        if token.type == tokenize.COMMENT:
+            comments.append(token.string.lstrip("# ").rstrip())
+        elif token.type == tokenize.STRING and previous_significant in (tokenize.INDENT, tokenize.NEWLINE):
+            docstrings.append(token.string.strip("\"'").strip())
+        if token.type not in (tokenize.COMMENT, tokenize.NL):
+            previous_significant = token.type
+    return {"comments": comments, "docstrings": docstrings}
 
-            elif choice == "3":
-                print("\nSimulating help() on our functions:")
-                print("=== help(add_numbers) ===")
-                print(add_numbers.__doc__)
-                print("\n=== help(calculate_bmi) ===")
-                print(calculate_bmi.__doc__)
 
-            elif choice == "4":
-                print("\nCreate your own function with proper docstring")
-                print("Example structure:")
-                print('def your_function(param1, param2):')
-                print('    """')
-                print('    Short description.')
-                print('')
-                print('    Args:')
-                print('        param1: description')
-                print('    Returns:')
-                print('        description')
-                print('    """')
-                print("\nTry writing one mentally and imagine using help(your_function)")
-
-            elif choice == "5":
-                print("\nCommon Documentation Mistakes:")
-                print("• Writing comments instead of docstrings for public functions")
-                print("• No docstring at all")
-                print("• Outdated docstrings after changing function")
-                print("• Using print() for documentation instead of proper docstrings")
-                print("• Poor or missing argument descriptions")
-
-            else:
-                print("Please choose 1-5.")
-
-        except ValueError:
-            print("✗ Please enter valid numbers.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
-
-    print("\nGreat work! You now understand the importance of proper documentation.")
-    print("Well-written docstrings make your code professional and maintainable.")
-    print("Next: Scope and Local/Global Variables (Day 23).\n")
+def main() -> None:
+    print("Day 22 – Documentation auditor\n")
+    print("grams_to_cups(240, 'flour') =", grams_to_cups(240, "flour"))
+    for func in (grams_to_cups, celsius_to_gas_mark, undocumented):
+        print(f"{func.__name__:<20} audit: {audit_docstring(func) or 'passes'}")
+    meta = function_metadata(grams_to_cups)
+    print("\nMetadata:", {k: meta[k] for k in ("name", "summary", "signature")})
+    source = inspect.getsource(grams_to_cups)
+    split = split_comments_and_docstrings(source)
+    print(f"Tokens: {len(split['docstrings'])} docstring, {len(split['comments'])} comments")
 
 
 if __name__ == "__main__":

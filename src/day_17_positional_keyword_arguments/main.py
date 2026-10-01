@@ -1,134 +1,111 @@
-# src/day_17_positional_keyword_arguments/main.py
+"""Day 17 – Positional and Keyword Arguments.
+
+Scenario: an *airline booking API* where some arguments must be positional
+(route), some must be named (cabin, flexibility) and some are optional.
+
+Deliverables (syllabus):
+* Positional vs keyword arguments (incl. positional-only ``/`` and keyword-only ``*``)
+* Defaults
+* Argument flexibility (``*args`` / ``**kwargs`` at the call boundary)
 """
-Day 17: Positional and Keyword Arguments – Interactive Explorer
-Master how to pass arguments to functions using positional, keyword, default, *args, and **kwargs.
-"""
 
-def print_arguments_guide():
-    print("\n" + "═" * 70)
-    print("Positional vs Keyword Arguments – Quick Reference (Day 17)")
-    print("═" * 70)
-    print("• Positional arguments: passed by position/order")
-    print("• Keyword arguments: passed by name (order doesn't matter)")
-    print("• Default arguments: have fallback values")
-    print("• *args   → collects extra positional arguments as tuple")
-    print("• **kwargs → collects extra keyword arguments as dictionary")
-    print("")
-    print("Rules:")
-    print("1. Positional arguments must come before keyword arguments")
-    print("2. *args must come before **kwargs")
-    print("3. Default parameters must come after non-default ones")
-    print("═" * 70)
+from __future__ import annotations
 
+import inspect
+from collections.abc import Callable
+from typing import Any
 
-def student_info(name: str, age: int, grade: str = "10th", city: str = "Unknown") -> str:
-    """Demonstrates default + keyword arguments"""
-    return f"Student: {name}, Age: {age}, Grade: {grade}, City: {city}"
+DELIVERABLES: dict[str, str] = {
+    "positional arguments": "book_flight",
+    "keyword arguments": "book_flight",
+    "positional-only parameters (/)": "book_flight",
+    "keyword-only parameters (*)": "book_flight",
+    "default values": "book_flight",
+    "argument flexibility (*names, **titles)": "boarding_announcement",
+    "inspecting how arguments bind": "how_arguments_bind",
+}
+
+CABIN_MULTIPLIER = {"economy": 1.0, "premium": 1.6, "business": 3.2}
 
 
-def calculate_total(*items: float) -> float:
-    """Demonstrates *args"""
-    return sum(items)
+def book_flight(
+    origin: str,
+    destination: str,
+    /,
+    passengers: int = 1,
+    *,
+    cabin: str = "economy",
+    flexible: bool = False,
+    base_fare: float = 120.0,
+) -> dict[str, Any]:
+    """Book a flight.
+
+    * ``origin``/``destination`` are **positional-only** (before ``/``) – callers
+      can't write ``origin=`` so we may rename them later without breaking code.
+    * ``passengers`` may be passed either way.
+    * ``cabin``/``flexible``/``base_fare`` are **keyword-only** (after ``*``) –
+      ``book_flight("LHR", "JFK", 2, "business")`` is a ``TypeError``, which
+      prevents mixing up two string arguments.
+    """
+    if origin.upper() == destination.upper():
+        raise ValueError("origin and destination must differ")
+    if passengers < 1:
+        raise ValueError("at least one passenger")
+    if cabin not in CABIN_MULTIPLIER:
+        raise ValueError(f"cabin must be one of {sorted(CABIN_MULTIPLIER)}")
+    fare = base_fare * CABIN_MULTIPLIER[cabin] * passengers * (1.15 if flexible else 1.0)
+    return {
+        "route": f"{origin.upper()}→{destination.upper()}",
+        "passengers": passengers,
+        "cabin": cabin,
+        "flexible": flexible,
+        "total": round(fare, 2),
+    }
 
 
-def create_order(customer: str, **details) -> dict:
-    """Demonstrates **kwargs"""
-    order = {"customer": customer}
-    order.update(details)
-    return order
+def boarding_announcement(*names: str, greeting: str = "Welcome aboard", **titles: str) -> list[str]:
+    """Greet any number of passengers; ``titles`` maps a lowercase name to a title.
 
-
-def flexible_greeting(greeting: str = "Hello", *names, **styles):
-    """Advanced example combining all argument types"""
-    result = []
+    ``greeting`` sits *after* ``*names`` so it can only be given by keyword and
+    is never swallowed by a passenger name.
+    """
+    lines = []
     for name in names:
-        styled = styles.get(name.lower(), "")
-        result.append(f"{greeting} {styled} {name}!")
-    return "\n".join(result) if result else f"{greeting} everyone!"
+        title = titles.get(name.lower())
+        person = f"{title} {name}" if title else name
+        lines.append(f"{greeting}, {person}!")
+    return lines or [f"{greeting}, everyone!"]
 
 
-def main():
-    print("Welcome to Day 17 – Positional and Keyword Arguments!")
-    print("Learn how to call functions flexibly and professionally.\n")
+def how_arguments_bind(func: Callable[..., Any], *args: Any, **kwargs: Any) -> dict[str, Any]:
+    """Show which parameter each argument lands in (defaults included)."""
+    bound = inspect.signature(func).bind(*args, **kwargs)
+    bound.apply_defaults()
+    return dict(bound.arguments)
 
-    print_arguments_guide()
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a Demo (or 'quit' to exit):")
-        print("  1) Keyword vs Positional Arguments")
-        print("  2) Default Arguments")
-        print("  3) *args – Variable Positional Arguments")
-        print("  4) **kwargs – Variable Keyword Arguments")
-        print("  5) Mixed Arguments (All Together)")
-        print("  6) Real-world Example: Student Registration")
-        print("─" * 60)
+def parameter_kinds(func: Callable[..., Any]) -> dict[str, str]:
+    return {name: p.kind.description for name, p in inspect.signature(func).parameters.items()}
 
-        choice = input("→ ").strip().lower()
 
-        if choice in ('quit', 'q', 'exit'):
-            break
-
+def main() -> None:
+    print("Day 17 – Airline booking arguments\n")
+    print(book_flight("lhr", "jfk"))
+    print(book_flight("LHR", "JFK", 2, cabin="business", flexible=True))
+    print("\nParameter kinds:", parameter_kinds(book_flight))
+    print("Binding:", how_arguments_bind(book_flight, "DEL", "BLR", passengers=3))
+    mistakes: dict[str, Callable[[], object]] = {
+        'book_flight(origin="LHR", destination="JFK")':
+            lambda: book_flight(origin="LHR", destination="JFK"),  # type: ignore[call-arg]
+        'book_flight("LHR", "JFK", 2, "business")':
+            lambda: book_flight("LHR", "JFK", 2, "business"),  # type: ignore[misc]
+    }
+    for label, call in mistakes.items():
         try:
-            if choice == "1":
-                print("\nKeyword vs Positional:")
-                # Positional
-                print(student_info("Rahul", 16))
-                # Keyword (order doesn't matter)
-                print(student_info(age=17, name="Priya", city="Mumbai"))
-
-            elif choice == "2":
-                print("\nDefault Arguments:")
-                print(student_info("Anika", 15))                    # uses defaults
-                print(student_info("Vikram", 18, grade="12th"))     # overrides grade
-
-            elif choice == "3":
-                print("\n*args Example:")
-                total1 = calculate_total(100, 250, 75)
-                total2 = calculate_total(500, 1200, 300, 450)
-                print(f"Total 1: ₹{total1}")
-                print(f"Total 2: ₹{total2}")
-
-            elif choice == "4":
-                print("\n**kwargs Example:")
-                order = create_order("Alice", item="Laptop", price=65000, quantity=1, discount=10)
-                print("Order details:")
-                for key, value in order.items():
-                    print(f"  {key:12} : {value}")
-
-            elif choice == "5":
-                print("\nMixed Arguments (*args + **kwargs):")
-                message = flexible_greeting(
-                    "Namaste",
-                    "Aarav", "Diya", "Rohan",
-                    aarav="ji",
-                    diya="ji",
-                    rohan=""
-                )
-                print(message)
-
-            elif choice == "6":
-                print("\nStudent Registration System")
-                name = input("Student Name: ").strip()
-                age = int(input("Age: "))
-                grade = input("Grade (press Enter for default '10th'): ").strip() or "10th"
-                city = input("City (press Enter for default): ").strip() or "Bengaluru"
-                
-                # Using keyword arguments for clarity
-                info = student_info(name=name, age=age, grade=grade, city=city)
-                print("\n" + info)
-
-            else:
-                print("Please choose 1-6.")
-
-        except ValueError:
-            print("✗ Please enter valid numbers where required.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
-
-    print("\nExcellent! You now understand how to use arguments flexibly in Python.")
-    print("This knowledge is essential for writing clean, reusable functions.")
-    print("Next: Python Dictionaries and Lists (Day 18).\n")
+            call()
+        except TypeError as exc:
+            print(f"TypeError for {label}: {exc}")
+    print("\n".join(boarding_announcement("Aarav", "Diya", greeting="Namaste", diya="Dr.")))
 
 
 if __name__ == "__main__":

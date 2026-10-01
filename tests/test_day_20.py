@@ -1,50 +1,82 @@
-# tests/test_day_20.py
+"""Tests for Day 20 – Returning Functions."""
+
 import pytest
+
 from src.day_20_returning_functions.main import (
-    calculate_statistics,
-    get_grade_with_feedback,
-    is_valid_password
+    collapse_spaces,
+    compose,
+    main,
+    make_excerpt,
+    make_truncator,
+    reading_time,
+    strip_markdown,
+    text_stats,
+    validate_title,
 )
 
 
-def test_calculate_statistics():
-    stats = calculate_statistics([10, 20, 30, 40])
-    assert stats == (100, 25.0, 10, 40)
+@pytest.mark.parametrize(("words", "minutes"), [(0, 0), (1, 1), (200, 1), (201, 2)])
+def test_reading_time_rounds_up(words, minutes):
+    assert reading_time(words) == minutes
 
 
-def test_calculate_statistics_empty():
-    stats = calculate_statistics([])
-    assert stats == (0, 0, 0, 0)
+def test_reading_time_rejects_negative():
+    with pytest.raises(ValueError):
+        reading_time(-1)
 
 
-def test_get_grade_with_feedback():
-    grade, feedback = get_grade_with_feedback(92)
-    assert grade == "A+"
-    assert "Excellent" in feedback
-    
-    grade, feedback = get_grade_with_feedback(45)
-    assert grade == "F"
-    assert "harder" in feedback
+def test_text_stats_returns_tuple():
+    result = text_stats("Hi there. I'm here!")
+    assert isinstance(result, tuple)
+    words, sentences, avg = result
+    assert (words, sentences, avg) == (4, 2, 3.5)  # (2 + 5 + 3 + 4) / 4
 
 
-def test_is_valid_password():
-    valid, msg = is_valid_password("Python2025")
-    assert valid is True
-    assert msg == "Strong password!"
-    
-    valid, msg = is_valid_password("short")
-    assert valid is False
-    assert "short" in msg.lower()
-    
-    valid, msg = is_valid_password("nouppercase123")
-    assert valid is False
+def test_text_stats_empty_input():
+    assert text_stats("") == (0, 0, 0.0)
+    assert text_stats("...") == (0, 0, 0.0)
 
 
-def test_early_return_behavior():
-    def check_number(n):
-        if n > 0:
-            return "Positive"
-        return "Non-positive"
-    
-    assert check_number(5) == "Positive"
-    assert check_number(-3) == "Non-positive"
+@pytest.mark.parametrize(
+    ("title", "valid", "reason"),
+    [
+        ("", False, "title is empty"),
+        ("x" * 71, False, "title longer than 70 characters"),
+        (" Hi", False, "title has leading or trailing spaces"),
+        ("lower case", False, "title should start with a capital letter"),
+        ("Good Title", True, "ok"),
+    ],
+)
+def test_validate_title_guard_clauses(title, valid, reason):
+    assert validate_title(title) == (valid, reason)
+
+
+def test_make_truncator_returns_independent_functions():
+    short, long = make_truncator(6), make_truncator(20)
+    assert short("abcdefgh") == "abcde…"
+    assert long("abcdefgh") == "abcdefgh"
+    assert short("abc") == "abc"
+    with pytest.raises(ValueError):
+        make_truncator(1)
+
+
+def test_compose_order_is_left_to_right():
+    pipeline = compose(str.strip, str.upper, lambda s: s + "!")
+    assert pipeline("  hi ") == "HI!"
+    assert compose()("same") == "same"
+
+
+def test_pipeline_helpers():
+    assert collapse_spaces(" a \n b ") == "a b"
+    assert strip_markdown("# *Hi* `x`") == " Hi x"
+
+
+def test_make_excerpt():
+    excerpt = make_excerpt("# Title\n\n**Bold** text   with   spaces " * 3)
+    assert len(excerpt) <= 40 and excerpt.endswith("…")
+    assert "*" not in excerpt and "  " not in excerpt
+
+
+def test_main(capsys):
+    main()
+    assert "words=11 sentences=4" in capsys.readouterr().out

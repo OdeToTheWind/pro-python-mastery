@@ -1,158 +1,160 @@
-# src/day_18_dictionaries_lists/main.py
+"""Day 18 – Python Dictionaries and Lists.
+
+Scenario: a *neighbourhood grocery store* – a dict-based inventory behind the
+counter and a list-based shopping cart in front of it.
+
+Deliverables (syllabus):
+* List methods (append, extend, insert, remove, pop, sort, count, index)
+* Dict methods (get, setdefault, update, pop, items, keys, values)
+* Inventory management
+* Shopping-cart logic
 """
-Day 18: Python Dictionaries and Lists – Interactive Explorer
-Master lists (mutable sequences) and dictionaries (key-value mappings).
-"""
 
-def print_cheat_sheet():
-    print("\n" + "═" * 70)
-    print("Lists vs Dictionaries – Quick Reference (Day 18)")
-    print("═" * 70)
-    print("LISTS:")
-    print("• Ordered, mutable, allows duplicates")
-    print("• Methods: append(), pop(), remove(), sort(), reverse(), extend()")
-    print("• Access by index: mylist[0], slicing mylist[1:4]")
-    print("")
-    print("DICTIONARIES:")
-    print("• Unordered (insertion order preserved since 3.7), mutable, unique keys")
-    print("• Methods: .get(), .keys(), .values(), .items(), .update(), .pop()")
-    print("• Access by key: mydict['key'], safer with .get(key, default)")
-    print("═" * 70)
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+DELIVERABLES: dict[str, str] = {
+    "list methods": "list_method_tour",
+    "dict methods": "Inventory",
+    "inventory management": "Inventory",
+    "shopping cart logic": "Cart",
+}
 
 
-def student_info(name: str, age: int, grade: str = "10th", city: str = "Unknown") -> str:
-    """Demonstrates default + keyword arguments with a student record."""
-    return f"Student: {name}, Age: {age}, Grade: {grade}, City: {city}"
+class OutOfStockError(Exception):
+    """Raised when the cart asks for more than the store holds."""
 
 
-def create_order(customer: str, **details) -> dict:
-    """Demonstrates **kwargs for building flexible dictionaries."""
-    order = {"customer": customer}
-    order.update(details)
-    return order
+@dataclass
+class Inventory:
+    """Stock levels and prices keyed by product name (a dict of dicts)."""
+
+    stock: dict[str, int] = field(default_factory=dict)
+    prices: dict[str, Decimal] = field(default_factory=dict)
+
+    def add_product(self, name: str, price: str, quantity: int = 0) -> None:
+        if quantity < 0:
+            raise ValueError("quantity cannot be negative")
+        self.prices[name] = Decimal(price)
+        self.stock[name] = self.stock.get(name, 0) + quantity  # .get with default
+
+    def restock(self, deliveries: dict[str, int]) -> None:
+        """Add several deliveries at once; unknown products are rejected."""
+        unknown = deliveries.keys() - self.prices.keys()
+        if unknown:
+            raise KeyError(f"unknown products: {sorted(unknown)}")
+        for name, qty in deliveries.items():
+            if qty < 0:
+                raise ValueError("delivery quantities cannot be negative")
+            self.stock[name] += qty
+
+    def take(self, name: str, quantity: int) -> None:
+        available = self.stock.get(name, 0)
+        if quantity > available:
+            raise OutOfStockError(f"only {available} × {name} left")
+        self.stock[name] = available - quantity
+
+    def discontinue(self, name: str) -> int:
+        """Remove a product with ``dict.pop`` and return the stock that was left."""
+        self.prices.pop(name)
+        return self.stock.pop(name, 0)
+
+    def low_stock(self, threshold: int = 5) -> list[str]:
+        return sorted(name for name, qty in self.stock.items() if qty <= threshold)
+
+    def value(self) -> Decimal:
+        return sum((self.prices[n] * q for n, q in self.stock.items()), Decimal("0"))
 
 
-def main():
-    print("Welcome to Day 18 – Lists and Dictionaries in Python!")
-    print("Let's explore these two powerful data structures interactively.\n")
+@dataclass
+class Cart:
+    """An ordered list of ``(product, quantity)`` lines."""
 
-    print_cheat_sheet()
+    inventory: Inventory
+    lines: list[tuple[str, int]] = field(default_factory=list)
 
-    # Sample data for demos
-    students = [
-        {"name": "Aarav", "age": 16, "grade": "10th", "marks": 92},
-        {"name": "Diya", "age": 15, "grade": "9th", "marks": 88},
-        {"name": "Rohan", "age": 17, "grade": "11th", "marks": 95}
-    ]
+    def add(self, name: str, quantity: int = 1) -> None:
+        if quantity <= 0:
+            raise ValueError("quantity must be positive")
+        if name not in self.inventory.prices:
+            raise KeyError(name)
+        in_cart = sum(q for n, q in self.lines if n == name)
+        if in_cart + quantity > self.inventory.stock.get(name, 0):
+            raise OutOfStockError(f"not enough {name}")
+        self.lines.append((name, quantity))
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose an Activity:")
-        print("  1) List Operations (Shopping Cart)")
-        print("  2) Dictionary Operations (Student Record)")
-        print("  3) Combined: Student Management System")
-        print("  4) List Methods Explorer")
-        print("  5) Dictionary Methods Explorer")
-        print("  6) Real-world Example: Inventory System")
-        print("─" * 60)
+    def remove(self, name: str) -> None:
+        """Remove every line for *name* (list comprehension rebuild)."""
+        if all(n != name for n, _ in self.lines):
+            raise ValueError(f"{name} is not in the cart")
+        self.lines = [(n, q) for n, q in self.lines if n != name]
 
-        choice = input("→ ").strip().lower()
+    def merged(self) -> dict[str, int]:
+        totals: dict[str, int] = {}
+        for name, qty in self.lines:
+            totals[name] = totals.get(name, 0) + qty
+        return totals
 
-        if choice in ('quit', 'q', 'exit'):
-            break
+    def total(self) -> Decimal:
+        return sum(
+            (self.inventory.prices[n] * q for n, q in self.merged().items()), Decimal("0")
+        )
 
-        try:
-            if choice == "1":
-                print("\n🛒 Shopping Cart using List")
-                cart = []
-                while True:
-                    item = input("Add item (or 'done'): ").strip()
-                    if item.lower() in ('done', 'quit'):
-                        break
-                    if item:
-                        cart.append(item)
-                        print(f"Added: {item} | Cart: {len(cart)} items")
+    def checkout(self) -> Decimal:
+        """Take stock for every line atomically: either all lines succeed or none."""
+        merged = self.merged()
+        for name, qty in merged.items():
+            if qty > self.inventory.stock.get(name, 0):
+                raise OutOfStockError(f"not enough {name}")
+        for name, qty in merged.items():
+            self.inventory.take(name, qty)
+        amount = self.total()
+        self.lines.clear()
+        return amount
 
-                print("\nFinal Cart:", cart)
-                if cart:
-                    removed = cart.pop()
-                    print(f"Removed last item: {removed}")
 
-            elif choice == "2":
-                print("\n📚 Student Record using Dictionary")
-                student = {}
-                student["name"] = input("Student Name: ").strip()
-                student["age"] = int(input("Age: "))
-                student["grade"] = input("Grade: ").strip()
-                student["marks"] = int(input("Marks: "))
+def list_method_tour() -> dict[str, object]:
+    """Exercise the core list methods on a delivery manifest."""
+    manifest = ["milk", "eggs", "bread"]
+    manifest.append("apples")
+    manifest.extend(["eggs", "rice"])
+    manifest.insert(0, "coffee")
+    manifest.remove("eggs")  # first occurrence only
+    last = manifest.pop()
+    manifest.sort()
+    return {
+        "manifest": manifest,
+        "popped": last,
+        "eggs count": manifest.count("eggs"),
+        "bread index": manifest.index("bread"),
+    }
 
-                print("\nStudent Record:")
-                for key, value in student.items():
-                    print(f"  {key.capitalize():8} : {value}")
 
-                print(f"\nCity (safe get): {student.get('city', 'Not provided')}")
+def demo_store() -> Inventory:
+    store = Inventory()
+    for name, price, qty in [("milk", "1.10", 10), ("eggs", "0.30", 24), ("bread", "2.50", 3)]:
+        store.add_product(name, price, qty)
+    return store
 
-            elif choice == "3":
-                print("\nStudent Management System (Lists + Dictionaries)")
-                print("Current students:", [s["name"] for s in students])
 
-                action = input("Add new student? (y/n): ").lower()
-                if action == 'y':
-                    new_student = {}
-                    new_student["name"] = input("Name: ").strip()
-                    new_student["age"] = int(input("Age: "))
-                    new_student["grade"] = input("Grade: ").strip()
-                    new_student["marks"] = int(input("Marks: "))
-                    students.append(new_student)
-                    print(f"Added {new_student['name']}!")
-
-                print("\nAll Students:")
-                for i, student in enumerate(students, 1):
-                    print(f"{i}. {student['name']} - {student['grade']} - {student['marks']} marks")
-
-            elif choice == "4":
-                print("\nList Methods Explorer")
-                fruits = ["apple", "banana", "cherry", "apple", "date"]
-                print("Original:", fruits)
-                fruits.append("elderberry")
-                fruits.sort()
-                print("After append + sort:", fruits)
-                fruits.remove("apple")
-                print("After removing one apple:", fruits)
-                print("Count of 'apple':", fruits.count("apple"))
-
-            elif choice == "5":
-                print("\nDictionary Methods Explorer")
-                person = {"name": "Meera", "age": 22}
-                person.update({"city": "Bengaluru", "profession": "Engineer"})
-                print("Updated dict:", person)
-                print("Name:", person.get("name"))
-                print("Salary (safe):", person.get("salary", "Not set"))
-                removed = person.pop("age")
-                print(f"Removed age: {removed}")
-                print("Final dict:", person)
-
-            elif choice == "6":
-                print("\nInventory Management System")
-                inventory = {"laptop": 15, "mouse": 50, "keyboard": 30}
-                print("Current Inventory:", inventory)
-
-                item = input("Item to update/add: ").strip().lower()
-                qty = int(input(f"Quantity for {item}: "))
-                inventory[item] = qty
-                print(f"Updated/Added {item}: {qty}")
-                print("Final Inventory:", inventory)
-
-            else:
-                print("Please choose 1-6.")
-
-        except ValueError:
-            print("✗ Please enter valid numbers.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
-
-    print("\nGreat work! You now understand Lists and Dictionaries deeply.")
-    print("These two structures are used in almost every real Python project.\n")
+def main() -> None:
+    print("Day 18 – Grocery store\n")
+    print("List tour:", list_method_tour())
+    store = demo_store()
+    cart = Cart(store)
+    cart.add("milk", 2)
+    cart.add("eggs", 12)
+    cart.add("milk", 1)
+    print("Cart lines:", cart.lines, "merged:", cart.merged())
+    try:
+        cart.add("bread", 5)
+    except OutOfStockError as exc:
+        print("Refused:", exc)
+    print("Paid €", cart.checkout())
+    store.restock({"bread": 10})
+    print("Stock now:", store.stock, "| low stock:", store.low_stock(), "| value €", store.value())
 
 
 if __name__ == "__main__":

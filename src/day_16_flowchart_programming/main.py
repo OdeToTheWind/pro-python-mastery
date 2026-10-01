@@ -1,173 +1,128 @@
-# src/day_16_flowchart_programming/main.py
+"""Day 16 – Flowchart Programming.
+
+Scenario: a *public library desk* – loan approvals, overdue fines and a
+returns-sorting conveyor, each first drawn as a flowchart and then translated
+into Python.
+
+Deliverables (syllabus):
+* Translating logic flowcharts into ``if / elif / else``
+* Translating flowchart loops into ``while`` / ``for`` structures
+* (bonus) a tiny data-driven flowchart interpreter
 """
-Day 16: Flowchart Programming – Interactive Translator
-Learn how to read, understand, and convert flowcharts into Python code.
+
+from __future__ import annotations
+
+from collections.abc import Mapping
+from dataclasses import dataclass
+
+DELIVERABLES: dict[str, str] = {
+    "decision diamonds → if/elif/else": "loan_decision",
+    "process boxes and thresholds": "overdue_fine",
+    "loop arrows → while": "sort_returns",
+    "flowchart as data": "run_flowchart",
+}
+
+LOAN_FLOWCHART = """
+(START) → <member active?> -no→ [REFUSE: renew membership]
+              │yes
+              ▼
+          <fines > €5?> -yes→ [REFUSE: pay fines]
+              │no
+              ▼
+          <books out < limit?> -no→ [REFUSE: limit reached]
+              │yes
+              ▼
+          [APPROVE] → (END)
 """
 
-def print_flowchart_guide():
-    print("\n" + "═" * 70)
-    print("Flowchart Programming – Quick Reference (Day 16)")
-    print("═" * 70)
-    print("Common Flowchart Symbols:")
-    print("• Oval       → Start / End")
-    print("• Rectangle  → Process / Action")
-    print("• Diamond    → Decision (Yes/No)")
-    print("• Parallelogram → Input / Output")
-    print("• Arrow      → Flow direction")
-    print("")
-    print("Translation Rules:")
-    print("• Diamond (Decision) → if / elif / else")
-    print("• Rectangle          → normal statements")
-    print("• Loop arrows        → while or for loops")
-    print("• Multiple paths     → nested if or elif chains")
-    print("═" * 70)
+
+def loan_decision(*, active: bool, fines: float, books_out: int, limit: int = 5) -> str:
+    """Each diamond in ``LOAN_FLOWCHART`` becomes one condition, in the same order."""
+    if not active:
+        return "refuse: renew membership"
+    elif fines > 5:
+        return "refuse: pay fines"
+    elif books_out >= limit:
+        return "refuse: limit reached"
+    else:
+        return "approve"
 
 
-def main():
-    print("Welcome to Day 16 – Flowchart Programming!")
-    print("We'll convert real flowcharts into working Python code interactively.\n")
+def overdue_fine(days_late: int, *, is_child: bool = False) -> float:
+    """Tiered fine flowchart: free grace day, €0.25/day up to a week, then €0.50/day, capped."""
+    if days_late < 0:
+        raise ValueError("days_late cannot be negative")
+    if days_late <= 1:
+        fine = 0.0
+    elif days_late <= 7:
+        fine = 0.25 * (days_late - 1)
+    else:
+        fine = 0.25 * 6 + 0.50 * (days_late - 7)
+    fine = min(fine, 10.0)
+    return round(fine / 2 if is_child else fine, 2)
 
-    print_flowchart_guide()
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a Flowchart to Convert into Code:")
-        print("  1) Simple Eligibility Checker")
-        print("  2) Grade Calculator Flowchart")
-        print("  3) Number Guessing Game Flowchart")
-        print("  4) Discount Calculator")
-        print("  5) Login System with Retry Limit")
-        print("  6) Custom Flowchart Builder (Simple)")
-        print("─" * 60)
+def sort_returns(conveyor: list[str]) -> dict[str, list[str]]:
+    """Loop arrow ``while items remain`` → decision 'which shelf?' → back to the loop."""
+    shelves: dict[str, list[str]] = {"fiction": [], "science": [], "repair": []}
+    queue = list(conveyor)
+    while queue:
+        item = queue.pop(0)
+        if item.endswith("!"):
+            shelves["repair"].append(item.rstrip("!"))
+        elif item.startswith("SCI-"):
+            shelves["science"].append(item)
+        else:
+            shelves["fiction"].append(item)
+    return shelves
 
-        choice = input("→ ").strip()
 
-        if choice.lower() in ('quit', 'q', 'exit'):
-            break
+@dataclass(frozen=True, slots=True)
+class Decision:
+    question: str
+    yes: str
+    no: str
 
-        try:
-            if choice == "1":
-                print("\nFlowchart: Eligibility Checker")
-                print("Start → Input Age → Age >= 18? → Yes → Input License → Has License? → Yes → Eligible")
-                print("                                           → No  → Not Eligible")
-                print("                                           → No  → Not Eligible\n")
 
-                age = int(input("Enter your age: "))
-                if age >= 18:
-                    has_license = input("Do you have a driving license? (y/n): ").strip().lower()
-                    if has_license == 'y':
-                        print("✅ You are eligible to drive!")
-                    else:
-                        print("❌ You need a driving license.")
-                else:
-                    print("❌ You must be 18 or older.")
+Flowchart = Mapping[str, Decision | str]
 
-            elif choice == "2":
-                print("\nFlowchart: Grade Calculator")
-                print("Input Score → Score >= 90? → A+")
-                print("            → Score >= 80? → A")
-                print("            → Score >= 70? → B  ... and so on\n")
 
-                score = float(input("Enter your score (0-100): "))
-                if score >= 90:
-                    grade = "A+"
-                elif score >= 80:
-                    grade = "A"
-                elif score >= 70:
-                    grade = "B"
-                elif score >= 60:
-                    grade = "C"
-                elif score >= 50:
-                    grade = "D"
-                else:
-                    grade = "F"
-                print(f"Your grade is: {grade}")
+def run_flowchart(chart: Flowchart, answers: Mapping[str, bool], start: str = "start") -> list[str]:
+    """Walk a flowchart stored as data. Strings are terminal boxes; returns the path taken."""
+    path = [start]
+    node = chart[start]
+    steps = 0
+    while isinstance(node, Decision):
+        steps += 1
+        if steps > len(chart):
+            raise RuntimeError("flowchart contains a cycle")
+        next_key = node.yes if answers[node.question] else node.no
+        path.append(next_key)
+        node = chart[next_key]
+    path.append(node)
+    return path
 
-            elif choice == "3":
-                print("\nFlowchart: Number Guessing Game")
-                print("This flowchart has a loop with decision diamonds.\n")
-                import random
-                secret = random.randint(1, 50)
-                attempts = 0
-                max_attempts = 8
 
-                print("Guess the secret number (1-50). You have 8 attempts.\n")
+LOAN_CHART: dict[str, Decision | str] = {
+    "start": Decision("active", yes="fines", no="renew"),
+    "fines": Decision("owes_over_5", yes="pay", no="limit"),
+    "limit": Decision("under_limit", yes="approve", no="full"),
+    "renew": "REFUSE: renew membership",
+    "pay": "REFUSE: pay fines",
+    "full": "REFUSE: limit reached",
+    "approve": "APPROVE",
+}
 
-                while attempts < max_attempts:
-                    guess = int(input(f"Attempt {attempts+1}/{max_attempts}: "))
-                    attempts += 1
 
-                    if guess == secret:
-                        print(f"🎉 Correct! You guessed it in {attempts} attempts!")
-                        break
-                    elif guess < secret:
-                        print("Too low ↑")
-                    else:
-                        print("Too high ↓")
-                else:
-                    print(f"Game Over! The number was {secret}.")
-
-            elif choice == "4":
-                print("\nFlowchart: Discount Calculator")
-                amount = float(input("Enter purchase amount (₹): "))
-                
-                if amount > 10000:
-                    discount = 0.20
-                    print("20% discount applied (Premium customer)")
-                elif amount > 5000:
-                    discount = 0.10
-                    print("10% discount applied")
-                elif amount > 2000:
-                    discount = 0.05
-                    print("5% discount applied")
-                else:
-                    discount = 0.0
-                    print("No discount")
-
-                final_price = amount * (1 - discount)
-                print(f"Final price after discount: ₹{final_price:.2f}")
-
-            elif choice == "5":
-                print("\nFlowchart: Login System with 3 attempts")
-                correct_pin = "1234"
-                attempts = 0
-
-                while attempts < 3:
-                    pin = input("Enter 4-digit PIN: ")
-                    attempts += 1
-                    if pin == correct_pin:
-                        print("✅ Login Successful! Welcome.")
-                        break
-                    else:
-                        print(f"❌ Wrong PIN. {3 - attempts} attempts remaining.")
-                else:
-                    print("❌ Too many failed attempts. Account temporarily locked.")
-
-            elif choice == "6":
-                print("\nCustom Simple Flowchart Builder")
-                print("We'll build a basic decision flowchart together.")
-                age = int(input("Enter age: "))
-                if age >= 18:
-                    print("Adult branch:")
-                    student = input("Are you a student? (y/n): ").lower()
-                    if student == 'y':
-                        print("→ Student discount available")
-                    else:
-                        print("→ Regular adult pricing")
-                else:
-                    print("→ Minor branch: Parent consent required")
-
-            else:
-                print("Please choose 1-6.")
-
-        except ValueError:
-            print("✗ Please enter valid numbers.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
-
-    print("\nGreat work translating flowcharts into Python code!")
-    print("You now understand how to convert visual logic into working programs.")
-    print("Next: Positional and Keyword Arguments (Day 17).\n")
+def main() -> None:
+    print("Day 16 – Library desk flowcharts")
+    print(LOAN_FLOWCHART)
+    print("Coded:", loan_decision(active=True, fines=2, books_out=1))
+    print("Data :", " → ".join(run_flowchart(
+        LOAN_CHART, {"active": True, "owes_over_5": False, "under_limit": True})))
+    for days in (0, 3, 10, 40):
+        print(f"fine for {days:>2} day(s) late: €{overdue_fine(days):.2f}")
+    print(sort_returns(["Dune", "SCI-Cosmos", "Emma!", "SCI-Genes!"]))
 
 
 if __name__ == "__main__":

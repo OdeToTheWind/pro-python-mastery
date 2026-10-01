@@ -1,149 +1,173 @@
-# src/day_15_while_loops/main.py
+"""Day 15 – While Loops.
+
+Scenario: an *arcade cabinet* – a number-guessing game, a PIN lock and a
+coin-counting machine, each driven by ``while`` loops.
+
+Deliverables (syllabus):
+* ``while`` loops
+* ``break`` and ``continue``
+* ``while ... else``
+* Input validation
+* Games
 """
-Day 15: While Loops in Python – Interactive Explorer
-Learn while loops, break, continue, while-else, and real-world input validation patterns.
-"""
 
-def print_while_cheat_sheet():
-    print("\n" + "═" * 70)
-    print("While Loops in Python – Quick Reference (Day 15)")
-    print("═" * 70)
-    print("while condition:")
-    print("    # code block (must be indented)")
-    print("")
-    print("Key keywords:")
-    print("• break    → exit the loop immediately")
-    print("• continue → skip the rest of the current iteration")
-    print("• while-else → else runs only if loop ended normally (no break)")
-    print("")
-    print("Common use cases:")
-    print("• Input validation until correct data is entered")
-    print("• Games (keep playing until user quits)")
-    print("• Waiting for a condition (e.g. until balance > 0)")
-    print("═" * 70)
+from __future__ import annotations
+
+import ast
+import operator
+import random
+from collections.abc import Callable, Iterator
+from dataclasses import dataclass, field
+
+DELIVERABLES: dict[str, str] = {
+    "while loop": "collatz_steps",
+    "break": "guessing_game",
+    "continue": "count_coins",
+    "while ... else": "unlock",
+    "input validation loop": "ask_int",
+    "game": "guessing_game",
+    "safe calculator (replaces eval)": "safe_eval",
+}
+
+COIN_VALUES = {"1c": 1, "2c": 2, "5c": 5, "10c": 10, "20c": 20, "50c": 50, "1e": 100, "2e": 200}
 
 
-def main():
-    print("Welcome to Day 15 – While Loops in Python!")
-    print("While loops are perfect for repeating until a condition changes.\n")
+def collatz_steps(n: int) -> int:
+    """Count steps until *n* reaches 1 – we can't know the count in advance, so ``while``."""
+    if n < 1:
+        raise ValueError("n must be positive")
+    steps = 0
+    while n != 1:
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        steps += 1
+    return steps
 
-    print_while_cheat_sheet()
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a While Loop Demo (or 'quit' to exit):")
-        print("  1) Number Guessing Game")
-        print("  2) Password Retry System (with limited attempts)")
-        print("  3) Interactive Calculator (keep calculating until quit)")
-        print("  4) Input Validation (force valid input)")
-        print("  5) Countdown Timer Simulation")
-        print("  6) while-else demonstration")
-        print("─" * 60)
-
-        choice = input("→ ").strip().lower()
-
-        if choice in ('quit', 'q', 'exit'):
-            print("Thank you for exploring While Loops!")
+def count_coins(inserted: list[str]) -> tuple[int, list[str]]:
+    """Total valid coins; ``continue`` skips rejects, ``break`` stops at 'STOP'."""
+    total, rejected = 0, []
+    index = 0
+    while index < len(inserted):
+        coin = inserted[index]
+        index += 1
+        if coin == "STOP":
             break
+        if coin not in COIN_VALUES:
+            rejected.append(coin)
+            continue
+        total += COIN_VALUES[coin]
+    return total, rejected
 
+
+@dataclass
+class GameResult:
+    won: bool
+    attempts: int
+    hints: list[str] = field(default_factory=list)
+
+
+def guessing_game(secret: int, guesses: Iterator[int], max_attempts: int = 7) -> GameResult:
+    """Higher/lower game. ``break`` exits on a correct guess."""
+    result = GameResult(won=False, attempts=0)
+    while result.attempts < max_attempts:
         try:
-            if choice == "1":
-                print("\n🎮 Number Guessing Game")
-                secret = 42  # Fixed for demo (in real games use random)
-                attempts = 0
-                max_attempts = 7
+            guess = next(guesses)
+        except StopIteration:
+            break
+        result.attempts += 1
+        if guess == secret:
+            result.won = True
+            break
+        result.hints.append("higher" if guess < secret else "lower")
+    return result
 
-                while attempts < max_attempts:
-                    guess = int(input(f"Attempt {attempts+1}/{max_attempts} - Guess the number (1-100): "))
-                    attempts += 1
 
-                    if guess == secret:
-                        print(f"🎉 Correct! You guessed it in {attempts} attempts!")
-                        break
-                    elif guess < secret:
-                        print("Too low! Try higher.")
-                    else:
-                        print("Too high! Try lower.")
-                else:
-                    print(f"Game over! The number was {secret}.")
+def unlock(correct_pin: str, attempts: Iterator[str], max_tries: int = 3) -> str:
+    """``while ... else``: the ``else`` block runs only if the loop never hit ``break``."""
+    tries = 0
+    while tries < max_tries:
+        tries += 1
+        if next(attempts, None) == correct_pin:
+            message = f"unlocked after {tries} attempt(s)"
+            break
+    else:
+        message = "locked out"
+    return message
 
-            elif choice == "2":
-                print("\n🔐 Password Retry System")
-                correct_password = "python123"
-                attempts = 0
-                max_attempts = 3
 
-                while attempts < max_attempts:
-                    pwd = input("Enter password: ")
-                    attempts += 1
+def ask_int(prompt: str, low: int, high: int, ask: Callable[[str], str]) -> int | None:
+    """Keep asking until an integer in range is typed; ``None`` on EOF."""
+    while True:
+        try:
+            text = ask(prompt)
+        except EOFError:
+            return None
+        if not text.strip().lstrip("-").isdigit():
+            print("  ✗ whole numbers only")
+            continue
+        value = int(text)
+        if low <= value <= high:
+            return value
+        print(f"  ✗ between {low} and {high}, please")
 
-                    if pwd == correct_password:
-                        print("✅ Access granted! Welcome.")
-                        break
-                    else:
-                        print(f"❌ Wrong password. {max_attempts - attempts} attempts left.")
-                else:
-                    print("❌ Too many failed attempts. Account locked.")
 
-            elif choice == "3":
-                print("\n🧮 Interactive Calculator (type 'quit' to stop)")
-                while True:
-                    expr = input("Enter expression (e.g. 12 + 34) or 'quit': ").strip()
-                    if expr.lower() in ('quit', 'q', 'exit'):
-                        break
-                    try:
-                        result = eval(expr, {"__builtins__": {}}, {})
-                        print(f"Result: {result}")
-                    except:
-                        print("Invalid expression. Try again.")
+_BIN_OPS: dict[type[ast.operator], Callable[[float, float], float]] = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+}
 
-            elif choice == "4":
-                print("\nInput Validation Example")
-                while True:
-                    age_str = input("Enter your age (must be between 0 and 120): ")
-                    if age_str.lower() in ('quit', 'q'):
-                        break
-                    try:
-                        age = int(age_str)
-                        if 0 <= age <= 120:
-                            print(f"Valid age: {age}")
-                            break
-                        else:
-                            print("Age must be between 0 and 120.")
-                    except ValueError:
-                        print("Please enter a valid number.")
 
-            elif choice == "5":
-                print("\nCountdown Timer Simulation")
-                count = int(input("Enter countdown start number: ") or 10)
-                while count > 0:
-                    print(f"⏳ {count}...")
-                    count -= 1
-                print("🚀 Blast off!")
+def safe_eval(expression: str, max_exponent: int = 100) -> float:
+    """Evaluate arithmetic safely by walking the AST.
 
-            elif choice == "6":
-                print("\nwhile-else Demonstration")
-                print("We'll search for a number. If found with break, else won't run.")
-                target = int(input("Enter a number to search (1-10): ") or 5)
-                i = 1
-                while i <= 10:
-                    if i == target:
-                        print(f"Found {target} at position {i}!")
-                        break
-                    i += 1
-                else:
-                    print(f"Number {target} was not found in 1 to 10.")
+    The previous version used ``eval`` with empty builtins, which is *not* a
+    sandbox (``().__class__.__base__.__subclasses__()`` escapes it, and
+    ``9**9**9`` hangs the process). Only numbers and arithmetic are allowed here.
+    """
 
-            else:
-                print("Invalid choice. Please select 1-6.")
+    def visit(node: ast.AST) -> float:
+        if isinstance(node, ast.Expression):
+            return visit(node.body)
+        if (isinstance(node, ast.Constant) and isinstance(node.value, int | float)
+                and not isinstance(node.value, bool)):
+            return node.value
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub | ast.UAdd):
+            value = visit(node.operand)
+            return -value if isinstance(node.op, ast.USub) else value
+        if isinstance(node, ast.BinOp) and type(node.op) in _BIN_OPS:
+            left, right = visit(node.left), visit(node.right)
+            if isinstance(node.op, ast.Pow) and abs(right) > max_exponent:
+                raise ValueError("exponent too large")
+            return _BIN_OPS[type(node.op)](left, right)
+        raise ValueError(f"unsupported expression element: {type(node).__name__}")
 
-        except ValueError:
-            print("✗ Please enter a valid number.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
+    return visit(ast.parse(expression, mode="eval"))
 
-    print("\nExcellent work! While loops are now clear.")
-    print("Remember: Use while when you don't know in advance how many iterations you need.\n")
+
+def main(ask: Callable[[str], str] | None = None) -> None:
+    ask = ask or input
+    print("Day 15 – Arcade cabinet\n")
+    print("Collatz steps for 27:", collatz_steps(27))
+    print("Coins:", count_coins(["1e", "bottle-cap", "50c", "STOP", "2e"]))
+    print("PIN:", unlock("2468", iter(["1111", "2468"])))
+    print("Calculator 2 + 3 * 4 =", safe_eval("2 + 3 * 4"))
+
+    secret = random.randint(1, 50)
+    print("\nGuess my number between 1 and 50 (Ctrl-D to give up)")
+    attempts = 0
+    while (guess := ask_int("guess → ", 1, 50, ask)) is not None:
+        attempts += 1
+        if guess == secret:
+            print(f"🎉 Correct in {attempts} attempt(s)!")
+            break
+        print("  higher" if guess < secret else "  lower")
+    else:
+        print(f"The number was {secret}.")
 
 
 if __name__ == "__main__":

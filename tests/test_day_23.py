@@ -1,49 +1,55 @@
-# tests/test_day_23.py
+"""Tests for Day 23 – Scope and Local/Global Variables."""
+
 import pytest
 
-def outer_with_nonlocal():
-    count = 0
-    def inner():
-        nonlocal count
-        count += 1
-        return count
-    return inner
+from src.day_23_scope_local_global_variables import main as day23
 
 
-def test_nonlocal_behavior():
-    counter = outer_with_nonlocal()
-    assert counter() == 1
-    assert counter() == 2
-    assert counter() == 3
+@pytest.fixture(autouse=True)
+def _restore_environment():
+    original = day23.ENVIRONMENT
+    yield
+    day23.set_environment(original)
 
 
-def test_local_scope():
-    x = 100
-    def inner():
-        x = 200  # local variable
-        return x
-    assert inner() == 200
-    assert x == 100  # outer x unchanged
+def test_legb_trace():
+    assert day23.legb_trace() == {
+        "inside local()": "local",
+        "inside no_local()": "enclosing",
+        "module level": "global",
+        "len is built-in": "builtins",
+    }
 
 
-def test_global_scope_simulation():
-    # Simulate global behavior safely
-    global_var = 10
-    def modify():
-        nonlocal global_var   # in real global we would use global keyword
-        global_var += 5
-        return global_var
-    assert modify() == 15
-    assert global_var == 15
+def test_global_keyword_rebinds_module_variable():
+    assert day23.set_environment("staging") == "production"
+    assert day23.ENVIRONMENT == "staging"
+    assert day23.current_environment() == "staging"
 
 
-def test_le_gb_order():
-    x = "global"
-    def outer():
-        x = "enclosing"
-        def inner():
-            x = "local"
-            return x
-        return inner()
-    assert outer() == "local"
-    assert x == "global"
+def test_unbound_local_error():
+    assert day23.unbound_local_demo() == "UnboundLocalError"
+
+
+def test_rate_limiter_nonlocal_state_is_per_closure():
+    a, b = day23.make_rate_limiter(2), day23.make_rate_limiter(1)
+    assert [a(), a(), a()] == [True, True, False]
+    assert [b(), b()] == [True, False]
+
+
+def test_closure_cells_expose_captured_values():
+    limiter = day23.make_rate_limiter(3)
+    limiter()
+    assert day23.closure_cells(limiter) == {"calls": 1, "max_calls": 3}
+
+
+def test_feature_flags_hold_their_own_state():
+    first, second = day23.FeatureFlags(), day23.FeatureFlags()
+    first.enable("beta")
+    assert first.is_enabled("beta") and not second.is_enabled("beta")
+
+
+def test_main_restores_environment(capsys):
+    day23.main()
+    assert "production → staging" in capsys.readouterr().out
+    assert day23.ENVIRONMENT == "production"

@@ -1,151 +1,130 @@
-# src/day_23_scope_local_global_variables/main.py
+"""Day 23 – Scope and Local/Global Variables.
+
+Scenario: a *web-app feature-flag service*. Configuration lives at module
+level, request handlers have their own locals and rate limiters are closures.
+
+Deliverables (syllabus):
+* The LEGB rule (Local → Enclosing → Global → Built-in)
+* ``global`` and ``nonlocal`` usage
+* Good scoping practices (and the ``UnboundLocalError`` trap)
 """
-Day 23: Scope and Local/Global Variables – Interactive Explorer
-Master LEGB rule, global, nonlocal, and why global variables are often dangerous.
-"""
 
-# Global variable for demonstration (defined at module level)
-global_counter = 0
+from __future__ import annotations
 
+import builtins
+from collections.abc import Callable
+from dataclasses import dataclass, field
 
-def print_scope_guide():
-    print("\n" + "═" * 70)
-    print("Scope & LEGB Rule – Quick Reference (Day 23)")
-    print("═" * 70)
-    print("LEGB Rule (order Python looks for variables):")
-    print("  L - Local (inside current function)")
-    print("  E - Enclosing (nested functions)")
-    print("  G - Global (module level)")
-    print("  B - Built-in (len, sum, print, etc.)")
-    print("")
-    print("global keyword → modifies global variable from inside function")
-    print("nonlocal keyword → modifies variable from enclosing scope")
-    print("Best practice: Avoid global variables when possible")
-    print("═" * 70)
+DELIVERABLES: dict[str, str] = {
+    "LEGB lookup order": "legb_trace",
+    "global keyword": "set_environment",
+    "nonlocal keyword": "make_rate_limiter",
+    "UnboundLocalError pitfall": "unbound_local_demo",
+    "closures and captured cells": "closure_cells",
+    "good practice: explicit state instead of globals": "FeatureFlags",
+}
+
+# G – module (global) scope
+ENVIRONMENT = "production"
+source = "global"
 
 
-def main():
-    print("Welcome to Day 23 – Scope and Local/Global Variables!")
-    print("Understanding scope is crucial for writing bug-free code.\n")
+def legb_trace() -> dict[str, str]:
+    """Resolve the name ``source`` at each level and show where each lookup lands."""
+    results: dict[str, str] = {}
 
-    print_scope_guide()
+    def enclosing() -> None:
+        source = "enclosing"  # E – enclosing function scope
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a Scope Demo:")
-        print("  1) Local vs Global Variables")
-        print("  2) Modifying Global with 'global' keyword")
-        print("  3) Nested Functions and 'nonlocal'")
-        print("  4) LEGB Rule Demonstration")
-        print("  5) Why Global Variables Are Dangerous")
-        print("  6) Practical Example: Counter with Scope")
-        print("─" * 60)
+        def local() -> None:
+            source = "local"  # L – local scope wins first
+            results["inside local()"] = source
 
-        choice = input("→ ").strip().lower()
+        def no_local() -> None:
+            results["inside no_local()"] = source  # falls back to E
 
-        if choice in ('quit', 'q', 'exit'):
-            break
+        local()
+        no_local()
 
-        try:
-            if choice == "1":
-                print("\nLocal vs Global")
-                x = 10  # local variable
-                
-                def inner_function():
-                    x = 20  # creates a new local variable
-                    print(f"Inside function (local x): {x}")
-                
-                inner_function()
-                print(f"Outside function (global x): {x}")
+    enclosing()
+    results["module level"] = globals()["source"]  # G
+    results["len is built-in"] = "builtins" if len is builtins.len else "shadowed"  # B
+    return results
 
-            elif choice == "2":
-                print("\nModifying Global Variable")
-                print(f"Global counter before: {global_counter}")
-                
-                def increment_counter():
-                    global global_counter   # declare global at the top of the function
-                    global_counter += 1
-                    print(f"Inside function - counter increased to {global_counter}")
-                
-                increment_counter()
-                print(f"Global counter after: {global_counter}")
 
-            elif choice == "3":
-                print("\nNested Functions and 'nonlocal'")
-                def outer():
-                    count = 0
-                    
-                    def inner():
-                        nonlocal count   # refers to enclosing scope
-                        count += 1
-                        print(f"Inner function - count is now {count}")
-                    
-                    inner()
-                    inner()
-                    print(f"Outer function - final count: {count}")
-                
-                outer()
+def set_environment(name: str) -> str:
+    """Rebind the module-level ``ENVIRONMENT`` – requires ``global``."""
+    global ENVIRONMENT
+    previous, ENVIRONMENT = ENVIRONMENT, name
+    return previous
 
-            elif choice == "4":
-                print("\nLEGB Rule Demonstration")
-                x = "global"
-                
-                def outer_func():
-                    x = "enclosing"
-                    
-                    def inner_func():
-                        x = "local"
-                        print(f"Inside inner_func: {x}")
-                    
-                    inner_func()
-                    print(f"Inside outer_func: {x}")
-                
-                outer_func()
-                print(f"Global scope: {x}")
 
-            elif choice == "5":
-                print("\nWhy Global Variables Are Dangerous")
-                print("Problem: Any function can modify them → hard to debug")
-                print("Better approach: Pass values as parameters and return results")
-                
-                def bad_example():
-                    global global_counter
-                    global_counter += 100   # unexpected side effect
-                
-                def good_example(current_count):
-                    return current_count + 100
-                
-                print("Bad way (using global):")
-                bad_example()
-                print(f"Global counter changed unexpectedly: {global_counter}")
-                
-                print("\nGood way (return value):")
-                new_value = good_example(50)
-                print(f"New value returned: {new_value}")
+def current_environment() -> str:
+    return ENVIRONMENT  # reading a global needs no keyword
 
-            elif choice == "6":
-                print("\nPractical Counter Example")
-                count = 0
-                
-                def increment():
-                    nonlocal count
-                    count += 1
-                    return count
-                
-                for _ in range(5):
-                    print(f"Count after increment: {increment()}")
-                
-                print(f"Final count outside: {count}")
 
-            else:
-                print("Please choose 1-6.")
+def unbound_local_demo() -> str:
+    """Assigning anywhere in a function makes the name local for the *whole* body."""
+    counter = 0
 
-        except Exception as e:
-            print(f"✗ Error: {e}")
+    def broken() -> int:
+        counter += 1  # type: ignore[misc]  # noqa: F823 – deliberate: read-before-assign
+        return counter
 
-    print("\nExcellent! You now understand variable scope in Python.")
-    print("Remember the LEGB rule and prefer passing parameters over using globals.")
-    print("Next: Debugging Techniques (Day 24) - last day of Beginner Projects!\n")
+    try:
+        broken()
+    except UnboundLocalError as exc:
+        return type(exc).__name__
+    return "no error"
+
+
+def make_rate_limiter(max_calls: int) -> Callable[[], bool]:
+    """Allow *max_calls* requests; ``nonlocal`` updates the enclosing counter."""
+    calls = 0
+
+    def allow() -> bool:
+        nonlocal calls
+        if calls >= max_calls:
+            return False
+        calls += 1
+        return True
+
+    return allow
+
+
+def closure_cells(func: Callable[..., object]) -> dict[str, object]:
+    """Show the variables a closure has captured (``__closure__`` cells)."""
+    names = func.__code__.co_freevars
+    cells = func.__closure__ or ()
+    return {name: cell.cell_contents for name, cell in zip(names, cells, strict=True)}
+
+
+@dataclass
+class FeatureFlags:
+    """Preferred design: pass state explicitly instead of mutating globals."""
+
+    flags: dict[str, bool] = field(default_factory=dict)
+
+    def enable(self, name: str) -> None:
+        self.flags[name] = True
+
+    def is_enabled(self, name: str) -> bool:
+        return self.flags.get(name, False)
+
+
+def main() -> None:
+    print("Day 23 – Scope & LEGB\n")
+    for where, value in legb_trace().items():
+        print(f"  {where:<18} → {value}")
+    old = set_environment("staging")
+    print(f"\nENVIRONMENT: {old} → {current_environment()}")
+    set_environment(old)
+    print("Read-before-assign raises:", unbound_local_demo())
+    limiter = make_rate_limiter(2)
+    print("Rate limiter:", [limiter() for _ in range(3)], "cells:", closure_cells(limiter))
+    flags = FeatureFlags()
+    flags.enable("dark_mode")
+    print("Feature flags object:", flags)
 
 
 if __name__ == "__main__":

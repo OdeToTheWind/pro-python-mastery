@@ -1,157 +1,139 @@
-# src/day_24_debugging_techniques/main.py
+"""Day 24 – Debugging Techniques.
+
+Scenario: a *payroll script* that ships with a real bug. We find it with print
+debugging, read its traceback, set a (switchable) breakpoint, and locate the
+first failing input systematically.
+
+Deliverables (syllabus):
+* Print debugging (done properly: switchable, to stderr / logging)
+* Reading tracebacks
+* Breakpoints (``breakpoint()`` / ``pdb``)
+* Systematic bug fixing (reproduce → isolate → fix → test)
 """
-Day 24: Debugging Techniques – Interactive Explorer
-Learn practical debugging strategies: print debugging, reading tracebacks, 
-using breakpoint(), and common bug patterns.
-"""
 
-def print_debugging_guide():
-    print("\n" + "═" * 70)
-    print("Debugging Techniques – Quick Reference (Day 24)")
-    print("═" * 70)
-    print("1. Print Debugging     → Add strategic print() statements")
-    print("2. Read Tracebacks     → Understand error messages")
-    print("3. breakpoint() / pdb  → Interactive debugger")
-    print("4. Rubber Duck Debugging → Explain code to an object")
-    print("5. Common Bugs         → Off-by-one, NoneType, IndexError, etc.")
-    print("")
-    print("Best Practice:")
-    print("• Start with the traceback")
-    print("• Reproduce the bug reliably")
-    print("• Isolate the problem")
-    print("• Fix and test")
-    print("═" * 70)
+from __future__ import annotations
+
+import functools
+import logging
+import sys
+import traceback
+from collections.abc import Callable, Sequence
+from dataclasses import dataclass
+from typing import Any
+
+DELIVERABLES: dict[str, str] = {
+    "print debugging (switchable trace)": "trace_calls",
+    "reading tracebacks": "summarize_traceback",
+    "breakpoints": "maybe_breakpoint",
+    "systematic isolation of failing input": "first_failing_input",
+    "bug and its fix side by side": "net_pay_fixed",
+}
+
+log = logging.getLogger("payroll")
 
 
-def main():
-    print("Welcome to Day 24 – Debugging Techniques!")
-    print("The final day of Beginner Projects. Let's learn how to find and fix bugs.\n")
+def net_pay_buggy(hours: Sequence[float], rate: float) -> float:
+    """BUG: overtime starts after 40h, but ``range(1, len(...))`` skips day one
+    and an empty week divides by zero when computing the average day."""
+    total_hours = 0.0
+    for day in range(1, len(hours)):  # off-by-one: should start at 0
+        total_hours += hours[day]
+    average_day = total_hours / len(hours)  # ZeroDivisionError for []
+    log.debug("average day: %.1f h", average_day)
+    overtime = max(0.0, total_hours - 40)
+    return round((total_hours - overtime) * rate + overtime * rate * 1.5, 2)
 
-    print_debugging_guide()
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a Debugging Scenario:")
-        print("  1) Reading and Understanding Tracebacks")
-        print("  2) Print Debugging Strategy")
-        print("  3) Common Bug: IndexError & Off-by-One")
-        print("  4) Common Bug: NoneType / TypeError")
-        print("  5) Common Bug: Logic Error (Silent Bug)")
-        print("  6) Interactive Bug Hunt Game")
-        print("  7) Using breakpoint() Simulation")
-        print("─" * 60)
+def net_pay_fixed(hours: Sequence[float], rate: float) -> float:
+    """Fixed version: iterate every day, guard empty weeks and negative values."""
+    if rate < 0 or any(h < 0 for h in hours):
+        raise ValueError("hours and rate must be non-negative")
+    total_hours = sum(hours)
+    overtime = max(0.0, total_hours - 40)
+    return round((total_hours - overtime) * rate + overtime * rate * 1.5, 2)
 
-        choice = input("→ ").strip().lower()
 
-        if choice in ('quit', 'q', 'exit'):
-            break
+def trace_calls(enabled: bool = True, stream: Any = sys.stderr) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """Decorator for print-debugging: logs arguments and results when enabled.
 
+    Prints to *stderr* (not stdout) so debug noise never mixes with real output,
+    and can be switched off without deleting lines.
+    """
+
+    def decorate(func: Callable[..., Any]) -> Callable[..., Any]:
+        @functools.wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            if enabled:
+                print(f"[debug] → {func.__name__}{args}{kwargs or ''}", file=stream)
+            result = func(*args, **kwargs)
+            if enabled:
+                print(f"[debug] ← {func.__name__} = {result!r}", file=stream)
+            return result
+
+        return wrapper
+
+    return decorate
+
+
+@dataclass(frozen=True, slots=True)
+class TracebackSummary:
+    exception: str
+    message: str
+    function: str
+    line: int
+    code: str
+
+
+def summarize_traceback(exc: BaseException) -> TracebackSummary:
+    """Read a traceback the right way: the **last line** names the exception;
+    the **last frame** (just above it) is where it was raised."""
+    frames = traceback.extract_tb(exc.__traceback__)
+    last = frames[-1]
+    return TracebackSummary(type(exc).__name__, str(exc), last.name, last.lineno or 0,
+                            (last.line or "").strip())
+
+
+def maybe_breakpoint(enabled: bool, hook: Callable[[], None] | None = None) -> bool:
+    """Pause in the debugger only when asked to.
+
+    ``breakpoint()`` calls ``sys.breakpointhook`` (pdb by default). Setting the
+    environment variable ``PYTHONBREAKPOINT=0`` disables every breakpoint.
+    """
+    if not enabled:
+        return False
+    if hook is not None:
+        hook()
+    else:  # pragma: no cover – interactive
+        breakpoint()
+    return True
+
+
+def first_failing_input[T](func: Callable[[T], Any], inputs: Sequence[T]) -> tuple[int, T, str] | None:
+    """Systematic isolation: run every input and report the first one that raises."""
+    for index, value in enumerate(inputs):
         try:
-            if choice == "1":
-                print("\n🔍 Reading Tracebacks")
-                print("Example error you might see:")
-                print("Traceback (most recent call last):")
-                print("  File 'main.py', line 42, in <module>")
-                print("    print(my_list[10])")
-                print("IndexError: list index out of range")
-                print("\nKey parts:")
-                print("• Last line = where the error happened")
-                print("• File and line number = where to look")
-                print("• Error type (IndexError, ValueError, etc.)")
+            func(value)
+        except Exception as exc:  # noqa: BLE001 – we want any failure
+            return index, value, type(exc).__name__
+    return None
 
-            elif choice == "2":
-                print("\n🖨️  Print Debugging Strategy")
-                numbers = [5, 12, 8, 3, 19]
-                print("Finding the maximum with print debugging:")
-                max_val = numbers[0]
-                for i, num in enumerate(numbers):
-                    print(f"Step {i}: Current number = {num}, Current max = {max_val}")
-                    if num > max_val:
-                        max_val = num
-                        print(f"  → New max found: {max_val}")
-                print(f"Final maximum: {max_val}")
 
-            elif choice == "3":
-                print("\n🐛 Common Bug: IndexError / Off-by-One")
-                lst = ["apple", "banana", "cherry"]
-                print(f"List: {lst} (length = {len(lst)})")
-                
-                try:
-                    index = int(input("Enter index to access (0-2): "))
-                    print(f"Item at index {index}: {lst[index]}")
-                except IndexError:
-                    print("IndexError! Remember: indices go from 0 to len-1")
-                    print("Common fix: Check index < len(list)")
+def main() -> None:
+    week = [8, 8, 8, 8, 10]
+    print("Day 24 – Debugging the payroll script\n")
+    print(f"buggy={net_pay_buggy(week, 20)}  fixed={net_pay_fixed(week, 20)}  (expected 860.0)")
 
-            elif choice == "4":
-                print("\n🐛 Common Bug: NoneType / TypeError")
-                def get_user():
-                    # Simulate sometimes returning None
-                    return None
-                
-                user = get_user()
-                print("Trying to use the result...")
-                try:
-                    print(f"User name length: {len(user)}")
-                except TypeError:
-                    print("TypeError: 'NoneType' object has no len()")
-                    print("Common fix: Add None check -> if user is not None:")
+    traced = trace_calls(stream=sys.stdout)(net_pay_fixed)
+    traced([9, 9], 15)
 
-            elif choice == "5":
-                print("\n🐛 Silent Logic Bug")
-                print("Bug: Calculate average but forget to handle empty list")
-                scores = []
-                # Buggy code:
-                # avg = sum(scores) / len(scores)
-                
-                # Fixed version:
-                if scores:
-                    avg = sum(scores) / len(scores)
-                    print(f"Average: {avg}")
-                else:
-                    print("Cannot calculate average of empty list")
+    try:
+        net_pay_buggy([], 20)
+    except ZeroDivisionError as exc:
+        print("Traceback summary:", summarize_traceback(exc))
 
-            elif choice == "6":
-                print("\n🔎 Interactive Bug Hunt Game")
-                print("Find the bug in this small program:")
-                print("def calculate_total(items):")
-                print("    total = 0")
-                print("    for item in items:")
-                print("        total = total + item  # Bug is here?")
-                print("    return total")
-                
-                guess = input("\nWhat is the bug? (or 'run' to test): ").strip().lower()
-                if guess == "run":
-                    print("Running with [10, 20, 30] → Result should be 60")
-                    # Corrected version for demo
-                    def calculate_total(items):
-                        return sum(items)
-                    print("Correct result:", calculate_total([10, 20, 30]))
-
-            elif choice == "7":
-                print("\n🔧 breakpoint() Simulation")
-                print("In real code you can insert `breakpoint()` to pause execution")
-                print("Here we simulate it:")
-                x = 10
-                y = 20
-                print(f"Before breakpoint: x={x}, y={y}")
-                # breakpoint() would pause here in real Python 3.7+
-                print("Imagine debugger is active now...")
-                z = x + y
-                print(f"After calculation: z={z}")
-
-            else:
-                print("Please choose 1-7.")
-
-        except ValueError:
-            print("✗ Please enter valid numbers.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
-
-    print("\n🎉 Congratulations! You have completed all 24 Beginner Projects.")
-    print("You now have a strong foundation in Python programming.")
-    print("Next stage: Intermediate Projects starting from Day 25.")
-    print("Well done on this journey!\n")
+    weeks: list[list[float]] = [[8, 8], [40], [], [5]]
+    print("First failing week:", first_failing_input(lambda w: net_pay_buggy(w, 10), weeks))
+    print("Breakpoint triggered?", maybe_breakpoint(False))
 
 
 if __name__ == "__main__":

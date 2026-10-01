@@ -1,178 +1,101 @@
-# src/day_20_returning_functions/main.py
+"""Day 20 – Returning Functions.
+
+Scenario: a *blog post analyser* – functions that return values, multiple
+values, exit early on bad input, return other functions and compose into a
+text-processing pipeline.
+
+Deliverables (syllabus):
+* ``return`` statements
+* Returning multiple values
+* Early returns (guard clauses)
+* Function composition
 """
-Day 20: Returning Functions in Python – Interactive Explorer
-Learn how to return values from functions, return multiple values, early returns, 
-and the important difference between return vs print.
-"""
 
-def print_return_guide():
-    print("\n" + "═" * 70)
-    print("Returning Functions – Key Concepts (Day 20)")
-    print("═" * 70)
-    print("• return statement sends a value back to the caller")
-    print("• Functions without return implicitly return None")
-    print("• You can return multiple values (as a tuple)")
-    print("• Early return exits the function immediately")
-    print("• return vs print: print shows output, return passes data")
-    print("• Returned values can be used in expressions, assigned, or passed to other functions")
-    print("═" * 70)
+from __future__ import annotations
 
+import re
+from collections.abc import Callable
+from functools import reduce
 
-def calculate_statistics(numbers: list) -> tuple:
-    """Return multiple values: sum, average, min, max"""
-    if not numbers:
-        return 0, 0, 0, 0
-    total = sum(numbers)
-    avg = round(total / len(numbers), 2)
-    minimum = min(numbers)
-    maximum = max(numbers)
-    return total, avg, minimum, maximum
+DELIVERABLES: dict[str, str] = {
+    "return statement": "reading_time",
+    "returning multiple values (tuple unpacking)": "text_stats",
+    "early returns / guard clauses": "validate_title",
+    "functions that return functions": "make_truncator",
+    "function composition": "compose",
+}
+
+WORDS_PER_MINUTE = 200
 
 
-def get_grade_with_feedback(score: float) -> tuple[str, str]:
-    """Return both grade and feedback message"""
-    if score >= 90:
-        return "A+", "Excellent work!"
-    elif score >= 80:
-        return "A", "Very good!"
-    elif score >= 70:
-        return "B", "Good job!"
-    elif score >= 60:
-        return "C", "Satisfactory"
-    elif score >= 50:
-        return "D", "Needs improvement"
-    else:
-        return "F", "Please work harder"
+def reading_time(word_count: int) -> int:
+    """Minutes to read, rounded up (``-(-a // b)`` is ceiling division)."""
+    if word_count < 0:
+        raise ValueError("word_count cannot be negative")
+    return -(-word_count // WORDS_PER_MINUTE)
 
 
-def is_valid_password(password: str) -> tuple[bool, str]:
-    """Return (is_valid, reason) - common pattern"""
-    if len(password) < 8:
-        return False, "Password too short (minimum 8 characters)"
-    if not any(c.isdigit() for c in password):
-        return False, "Password must contain at least one number"
-    if not any(c.isupper() for c in password):
-        return False, "Password must contain at least one uppercase letter"
-    return True, "Strong password!"
+def text_stats(text: str) -> tuple[int, int, float]:
+    """Return *three* values at once: word count, sentence count, average word length."""
+    words = re.findall(r"[A-Za-z']+", text)
+    sentences = [s for s in re.split(r"[.!?]+", text) if s.strip()]
+    if not words:
+        return 0, len(sentences), 0.0
+    return len(words), len(sentences), round(sum(map(len, words)) / len(words), 2)
 
 
-def main():
-    print("Welcome to Day 20 – Returning Functions!")
-    print("Understand the power of return vs print with interactive examples.\n")
+def validate_title(title: str) -> tuple[bool, str]:
+    """Guard clauses: each check returns immediately, so no deep ``if`` nesting."""
+    if not title.strip():
+        return False, "title is empty"
+    if len(title) > 70:
+        return False, "title longer than 70 characters"
+    if title != title.strip():
+        return False, "title has leading or trailing spaces"
+    if not title[0].isupper():
+        return False, "title should start with a capital letter"
+    return True, "ok"
 
-    print_return_guide()
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose a Returning Functions Demo:")
-        print("  1) Return Multiple Values (Statistics)")
-        print("  2) Grade with Feedback (Tuple Return)")
-        print("  3) Password Validator (bool + message)")
-        print("  4) Early Return Example")
-        print("  5) Return vs Print Comparison")
-        print("  6) Build Your Own Calculator Function")
-        print("─" * 60)
+def make_truncator(limit: int, suffix: str = "…") -> Callable[[str], str]:
+    """Return a *new function* that remembers ``limit`` (a closure)."""
+    if limit <= len(suffix):
+        raise ValueError("limit must be longer than the suffix")
 
-        choice = input("→ ").strip().lower()
+    def truncate(text: str) -> str:
+        return text if len(text) <= limit else text[: limit - len(suffix)].rstrip() + suffix
 
-        if choice in ('quit', 'q', 'exit'):
-            break
+    return truncate
 
-        try:
-            if choice == "1":
-                print("\nReturn Multiple Values")
-                nums_str = input("Enter numbers separated by space: ")
-                numbers = [float(x) for x in nums_str.split()]
-                
-                total, avg, min_val, max_val = calculate_statistics(numbers)
-                
-                print(f"\nResults:")
-                print(f"  Sum      : {total}")
-                print(f"  Average  : {avg}")
-                print(f"  Minimum  : {min_val}")
-                print(f"  Maximum  : {max_val}")
 
-            elif choice == "2":
-                print("\nGrade with Feedback")
-                score = float(input("Enter your score (0-100): "))
-                grade, feedback = get_grade_with_feedback(score)
-                print(f"\nYour grade : {grade}")
-                print(f"Feedback   : {feedback}")
+def compose(*functions: Callable[[str], str]) -> Callable[[str], str]:
+    """``compose(f, g, h)(x) == h(g(f(x)))`` – left-to-right pipeline."""
 
-            elif choice == "3":
-                print("\nPassword Validator")
-                pwd = input("Enter a password to check: ")
-                is_valid, message = is_valid_password(pwd)
-                if is_valid:
-                    print("✅ Strong password!")
-                else:
-                    print(f"❌ {message}")
+    def pipeline(value: str) -> str:
+        return reduce(lambda acc, func: func(acc), functions, value)
 
-            elif choice == "4":
-                print("\nEarly Return Example")
-                num = int(input("Enter a number: "))
-                def check_sign(n):
-                    if n > 0:
-                        return "Positive"
-                    elif n < 0:
-                        return "Negative"
-                    else:
-                        return "Zero"   # early return
-                print(f"The number is {check_sign(num)}")
+    return pipeline
 
-            elif choice == "5":
-                print("\nReturn vs Print Comparison")
-                def add_with_print(a, b):
-                    print(a + b)   # only shows on screen
-                
-                def add_with_return(a, b):
-                    return a + b   # can be used later
-                
-                x = 15
-                y = 27
-                
-                print("Using print inside function:")
-                add_with_print(x, y)
-                
-                print("\nUsing return:")
-                result = add_with_return(x, y)
-                print(f"Result = {result}")
-                print(f"Result * 2 = {result * 2}")   # we can reuse the returned value!
 
-            elif choice == "6":
-                print("\nBuild Your Own Calculator Function")
-                a = float(input("First number: "))
-                b = float(input("Second number: "))
-                op = input("Operator (+ - * /): ").strip()
-                
-                def calculate(x, y, operator):
-                    if operator == "+":
-                        return x + y
-                    elif operator == "-":
-                        return x - y
-                    elif operator == "*":
-                        return x * y
-                    elif operator == "/":
-                        if y == 0:
-                            return "Error: Division by zero"
-                        return x / y
-                    else:
-                        return "Invalid operator"
-                
-                result = calculate(a, b, op)
-                print(f"Result: {result}")
+def collapse_spaces(text: str) -> str:
+    return " ".join(text.split())
 
-            else:
-                print("Please choose 1-6.")
 
-        except ValueError:
-            print("✗ Please enter valid numbers.")
-        except Exception as e:
-            print(f"✗ Error: {e}")
+def strip_markdown(text: str) -> str:
+    return re.sub(r"[*_`#>]", "", text)
 
-    print("\nFantastic! You now understand the importance of returning values from functions.")
-    print("Remember: return passes data, print only displays it.")
-    print("Next: Return vs Print deep dive (Day 21).\n")
+
+make_excerpt = compose(strip_markdown, collapse_spaces, make_truncator(40))
+
+
+def main() -> None:
+    post = "# Why *Python*?\n\nPython reads like English.   It is fun! Isn't it?"
+    words, sentences, avg = text_stats(post)  # unpacking multiple return values
+    print("Day 20 – Blog analyser\n")
+    print(f"words={words} sentences={sentences} avg_len={avg} read={reading_time(words)} min")
+    for title in ["why python", "Why Python?", " Padded ", "X" * 80]:
+        print(f"  {title[:20]!r:<24} → {validate_title(title)}")
+    print("Excerpt:", make_excerpt(post))
 
 
 if __name__ == "__main__":
