@@ -1,139 +1,130 @@
-"""
-Day 61 – Sending SMS with Python
-Integrating Twilio (or similar) SMS gateways, environment variables for secrets.
-This module demonstrates the client pattern and falls back to a dry-run mode
-when credentials are missing (safe for CI and learning).
+"""Day 61 – SMS / Notification Automation.
+
+Scenario: a *server-monitoring alerter* that texts the on-call engineer when a
+health check fails. It integrates with Twilio when credentials and the
+``twilio`` package are present, and otherwise falls back to a safe dry run.
+
+Deliverables (syllabus):
+* Twilio integration (client creation, message sending, error handling)
+* Secure secrets management (environment variables, masking, no fallbacks)
 """
 
 from __future__ import annotations
 
 import os
-import sys
-from dataclasses import dataclass
+import re
+import warnings
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass, field
 from typing import Any
 
-from dotenv import load_dotenv
+DELIVERABLES: dict[str, str] = {
+    "Twilio client integration": "TwilioSender",
+    "dry-run fallback": "DryRunSender",
+    "choosing a transport safely": "make_sender",
+    "secrets from environment": "TwilioConfig.from_env",
+    "secret masking": "mask_sid",
+    "phone number validation (E.164)": "validate_e164",
+    "message composition and segment counting": "compose_alert",
+}
 
-load_dotenv()
+E164 = re.compile(r"^\+[1-9]\d{7,14}$")
+GSM_SEGMENT = 160
 
 
-@dataclass(slots=True)
-class SMSMessage:
+def validate_e164(number: str) -> str:
+    cleaned = re.sub(r"[\s\-()]", "", number)
+    if not E164.match(cleaned):
+        raise ValueError(f"{number!r} is not an E.164 phone number like +14155550123")
+    return cleaned
+
+
+def mask_sid(value: str) -> str:
+    return value[:2] + "•" * 6 + value[-4:] if len(value) > 10 else "•" * 6
+
+
+def compose_alert(service: str, status: int, latency_ms: int) -> tuple[str, int]:
+    """Return (body, number of SMS segments) – long texts cost more."""
+    level = "DOWN" if status >= 500 or status == 0 else "DEGRADED"
+    body = f"[{level}] {service}: HTTP {status or 'no response'}, {latency_ms} ms. Ack via dashboard."
+    return body, max(1, -(-len(body) // GSM_SEGMENT))
+
+
+@dataclass(frozen=True)
+class TwilioConfig:
+    account_sid: str
+    auth_token: str = field(repr=False)
+    from_number: str
+
+    @classmethod
+    def from_env(cls, env: Mapping[str, str] | None = None) -> TwilioConfig | None:
+        """``None`` when not configured – callers then choose the dry-run sender."""
+        env = os.environ if env is None else env
+        values = [env.get(k, "") for k in ("TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_FROM_NUMBER")]
+        if not all(values):
+            return None
+        return cls(values[0], values[1], validate_e164(values[2]))
+
+    def __repr__(self) -> str:
+        return f"TwilioConfig(account_sid={mask_sid(self.account_sid)!r}, from_number={self.from_number!r})"
+
+
+@dataclass(frozen=True, slots=True)
+class SendResult:
     to: str
-    body: str
-    from_: str | None = None
-    sid: str | None = None
-    status: str = "queued"
+    status: str
+    reference: str
 
 
-def get_twilio_credentials() -> dict[str, str | None]:
-    """Load Twilio credentials from environment."""
-    return {
-        "account_sid": os.getenv("TWILIO_ACCOUNT_SID"),
-        "auth_token": os.getenv("TWILIO_AUTH_TOKEN"),
-        "from_number": os.getenv("TWILIO_FROM_NUMBER"),
-    }
+class DryRunSender:
+    def __init__(self) -> None:
+        self.outbox: list[tuple[str, str]] = []
+
+    def send(self, to: str, body: str) -> SendResult:
+        self.outbox.append((validate_e164(to), body))
+        return SendResult(to, "dry-run", f"DRY{len(self.outbox):04d}")
 
 
-def send_sms_dry_run(to: str, body: str, from_: str | None = None) -> SMSMessage:
-    """Simulate sending an SMS (no network call)."""
-    print("[DRY-RUN] Would send SMS:")
-    print(f"  From : {from_ or 'TWILIO_FROM_NUMBER'}")
-    print(f"  To   : {to}")
-    print(f"  Body : {body[:80]}{'…' if len(body) > 80 else ''}")
-    return SMSMessage(to=to, body=body, from_=from_, sid="SMdryrun000000000000000000000000", status="dry-run")
+class TwilioSender:
+    def __init__(self, config: TwilioConfig, client_factory: Callable[[str, str], Any]) -> None:
+        self.config = config
+        self.client = client_factory(config.account_sid, config.auth_token)
+
+    def send(self, to: str, body: str) -> SendResult:
+        try:
+            message = self.client.messages.create(to=validate_e164(to), from_=self.config.from_number, body=body)
+        except ValueError:
+            raise
+        except Exception as exc:  # TwilioRestException, network errors …
+            return SendResult(to, "failed", f"{type(exc).__name__}: {exc}")
+        return SendResult(to, str(message.status), str(message.sid))
 
 
-def send_sms_twilio(to: str, body: str) -> SMSMessage:
-    """
-    Real Twilio send.
-    Requires: pip install twilio
-    and the three environment variables set.
-    """
-    try:
-        from twilio.rest import Client  # type: ignore
-    except ImportError as exc:
-        raise ImportError(
-            "twilio package not installed. Run: pip install twilio"
-        ) from exc
-
-    creds = get_twilio_credentials()
-    if not all(creds.values()):
-        raise RuntimeError(
-            "Missing Twilio credentials. Set TWILIO_ACCOUNT_SID, "
-            "TWILIO_AUTH_TOKEN and TWILIO_FROM_NUMBER in .env"
-        )
-
-    client = Client(creds["account_sid"], creds["auth_token"])
-    message = client.messages.create(
-        body=body,
-        from_=creds["from_number"],
-        to=to,
-    )
-    return SMSMessage(
-        to=to,
-        body=body,
-        from_=creds["from_number"],
-        sid=message.sid,
-        status=message.status,
-    )
-
-
-def send_sms(to: str, body: str, *, force_dry_run: bool = False) -> SMSMessage:
-    """
-    High-level helper: tries real Twilio, falls back to dry-run.
-    """
-    creds = get_twilio_credentials()
-    has_creds = all(creds.values())
-
-    if force_dry_run or not has_creds:
-        return send_sms_dry_run(to, body, from_=creds.get("from_number"))
-    return send_sms_twilio(to, body)
-
-
-def notification_template(event: str, details: dict[str, Any]) -> str:
-    """Simple template for notification bodies."""
-    return (
-        f"[Pro-Python] {event}\n"
-        f"Details: {details}\n"
-        f"— sent by Day 61 automation"
-    )
+def make_sender(env: Mapping[str, str] | None = None, *, force_dry_run: bool = False,
+                client_factory: Callable[[str, str], Any] | None = None) -> DryRunSender | TwilioSender:
+    """Use Twilio only when explicitly configured *and* installed; otherwise dry-run."""
+    config = None if force_dry_run else TwilioConfig.from_env(env)
+    if config is None:
+        return DryRunSender()
+    if client_factory is None:
+        try:
+            from twilio.rest import Client  # optional dependency
+        except ImportError:
+            warnings.warn("twilio is not installed (pip install twilio); using dry-run", stacklevel=2)
+            return DryRunSender()
+        client_factory = Client
+    return TwilioSender(config, client_factory)
 
 
 def main() -> None:
-    print("=" * 60)
-    print("Day 61 – SMS Notification Automation")
-    print("=" * 60)
-
-    creds = get_twilio_credentials()
-    print("\nCredential check:")
-    for k, v in creds.items():
-        status = "✓ set" if v else "✗ missing"
-        print(f"  {k}: {status}")
-
-    # Example notification
-    body = notification_template(
-        "API health check passed",
-        {"service": "jsonplaceholder", "latency_ms": 142},
-    )
-
-    # Always safe to run – uses dry-run when credentials are absent
-    msg = send_sms(
-        to=os.getenv("DEMO_TO_NUMBER", "+10000000000"),
-        body=body,
-        force_dry_run=True,          # set False only when you have real creds
-    )
-
-    print(f"\nResult: sid={msg.sid} status={msg.status}")
-    print("\nNotes:")
-    print("• Never hard-code Account SID / Auth Token")
-    print("• Use environment variables or a secret manager")
-    print("• Prefer dry-run mode during development and CI")
-    print("• Twilio trial accounts can only send to verified numbers")
-
-    print("\n✅ Day 61 complete")
+    print("Day 61 – On-call SMS alerter\n")
+    sender = make_sender(force_dry_run=os.environ.get("SEND_SMS") != "1")
+    body, segments = compose_alert("checkout-api", 503, 2400)
+    to = os.environ.get("DEMO_TO_NUMBER") or "+14155550123"
+    result = sender.send(to, body)
+    print(f"{type(sender).__name__}: {result}")
+    print(f"Body ({segments} segment): {body}")
 
 
 if __name__ == "__main__":
     main()
-    sys.exit(0)

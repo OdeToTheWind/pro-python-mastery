@@ -1,128 +1,100 @@
-"""
-Day 59 – Sending Parameters with the Request
-Query parameters, path parameters, request headers, form data, JSON payloads.
+"""Day 59 – Query Parameters, Headers & Payloads.
+
+Scenario: a *job-board search client*. The interesting part is what goes on
+the wire, so every request is first built offline with
+``requests.Request(...).prepare()`` – we can inspect the exact URL, headers
+and body – and only then sent through a session.
+
+Deliverables (syllabus):
+* Query strings (encoding, repeated keys, ``None`` dropped)
+* Custom headers
+* Forms (``application/x-www-form-urlencoded`` and multipart file upload)
+* JSON request bodies
 """
 
 from __future__ import annotations
 
-import sys
 from typing import Any
-from urllib.parse import urlencode
 
 import requests
 
+DELIVERABLES: dict[str, str] = {
+    "query strings": "search_request",
+    "custom headers": "search_request",
+    "form-encoded body": "apply_form_request",
+    "multipart file upload": "upload_cv_request",
+    "JSON body": "save_search_request",
+    "sending a prepared request": "send",
+}
 
-HTTPBIN = "https://httpbin.org"
-JSONPLACEHOLDER = "https://jsonplaceholder.typicode.com"
-
-
-def query_params_demo() -> dict[str, Any]:
-    """Send query string parameters."""
-    params = {
-        "q": "python mastery",
-        "page": 2,
-        "limit": 10,
-        "tags": ["api", "http"],          # requests will repeat the key
-    }
-    resp = requests.get(f"{HTTPBIN}/get", params=params, timeout=10)
-    resp.raise_for_status()
-    data = resp.json()
-    print("Query string that was actually sent:")
-    print(f"  {data['url']}")
-    print("Args parsed by server:")
-    print(f"  {data['args']}")
-    return data
+API = "https://jobs.example.com/api"
+TIMEOUT = (3.05, 10)
 
 
-def path_params_demo(post_id: int = 42) -> dict[str, Any]:
-    """Path parameters are just part of the URL (no special requests feature)."""
-    url = f"{JSONPLACEHOLDER}/posts/{post_id}"
-    resp = requests.get(url, timeout=10)
-    # We expect 404 for a non-existent high id; demonstrate status handling
-    print(f"Path URL: {url} → status {resp.status_code}")
-    if resp.ok:
-        return resp.json()
-    return {"error": "not found", "status": resp.status_code}
+def search_request(keywords: str, *, location: str | None = None, remote: bool = False,
+                   tags: list[str] | None = None, page: int = 1) -> requests.PreparedRequest:
+    """GET with a query string. Lists repeat the key; ``None`` values are omitted."""
+    if page < 1:
+        raise ValueError("page starts at 1")
+    params: dict[str, Any] = {"q": keywords, "location": location, "remote": str(remote).lower(),
+                              "tag": tags or [], "page": page}
+    headers = {"Accept": "application/json", "Accept-Language": "en-GB", "X-Client": "day59"}
+    return requests.Request("GET", f"{API}/jobs", params=params, headers=headers).prepare()
 
 
-def custom_headers_demo() -> dict[str, Any]:
-    """Send custom headers (User-Agent, Accept, Authorization-style, etc.)."""
-    headers = {
-        "User-Agent": "ProPythonMastery/1.0 (Day 59)",
-        "Accept": "application/json",
-        "X-Request-ID": "day59-demo-001",
-        "X-Custom-Header": "hello-from-python",
-    }
-    resp = requests.get(f"{HTTPBIN}/headers", headers=headers, timeout=10)
-    resp.raise_for_status()
-    data = resp.json()
-    print("Headers the server saw:")
-    for k, v in data["headers"].items():
-        if k.lower().startswith(("x-", "user-agent", "accept")):
-            print(f"  {k}: {v}")
-    return data
+def apply_form_request(job_id: int, name: str, email: str) -> requests.PreparedRequest:
+    """Classic HTML-form style body."""
+    return requests.Request("POST", f"{API}/jobs/{job_id}/apply",
+                            data={"name": name, "email": email}).prepare()
 
 
-def form_data_demo() -> dict[str, Any]:
-    """application/x-www-form-urlencoded payload."""
-    form = {
-        "username": "ada",
-        "password": "analytical",
-        "remember": "on",
-    }
-    resp = requests.post(f"{HTTPBIN}/post", data=form, timeout=10)
-    resp.raise_for_status()
-    data = resp.json()
-    print("Form data received by server:")
-    print(f"  {data['form']}")
-    print(f"Content-Type sent: {data['headers'].get('Content-Type')}")
-    return data
+def upload_cv_request(job_id: int, filename: str, content: bytes) -> requests.PreparedRequest:
+    """``files=`` produces ``multipart/form-data`` with a boundary."""
+    return requests.Request("POST", f"{API}/jobs/{job_id}/cv",
+                            files={"cv": (filename, content, "application/pdf")},
+                            data={"consent": "yes"}).prepare()
 
 
-def json_payload_demo() -> dict[str, Any]:
-    """application/json payload (preferred for modern APIs)."""
-    payload = {
-        "title": "Day 59",
-        "body": "JSON payloads are cleaner than form data for nested structures",
-        "userId": 1,
-        "meta": {"source": "pro-python-mastery", "version": 1},
-    }
-    resp = requests.post(
-        f"{JSONPLACEHOLDER}/posts",
-        json=payload,          # requests sets Content-Type and serializes
-        timeout=10,
-    )
-    resp.raise_for_status()
-    created = resp.json()
-    print("Created resource:")
-    print(f"  id={created.get('id')} title={created.get('title')}")
-    return created
+def save_search_request(name: str, filters: dict[str, Any], token: str) -> requests.PreparedRequest:
+    """``json=`` serialises nested data and sets ``Content-Type: application/json``."""
+    return requests.Request("POST", f"{API}/saved-searches",
+                            json={"name": name, "filters": filters},
+                            headers={"Authorization": f"Bearer {token}"}).prepare()
+
+
+def describe(prepared: requests.PreparedRequest) -> dict[str, Any]:
+    body = prepared.body
+    if isinstance(body, bytes):
+        body = body.decode("utf-8", errors="replace")
+    return {"method": prepared.method, "url": prepared.url,
+            "content_type": prepared.headers.get("Content-Type"), "body": body}
+
+
+def send(session: requests.Session, prepared: requests.PreparedRequest) -> Any:
+    """Merge session defaults (cookies, auth, adapters) and send with a timeout."""
+    response = session.send(session.prepare_request(_as_request(prepared)), timeout=TIMEOUT)
+    response.raise_for_status()
+    return response.json()
+
+
+def _as_request(prepared: requests.PreparedRequest) -> requests.Request:
+    return requests.Request(prepared.method, prepared.url, headers=dict(prepared.headers), data=prepared.body)
 
 
 def main() -> None:
-    print("=" * 60)
-    print("Day 59 – Request Parameters, Headers & Payloads")
-    print("=" * 60)
-
-    print("\n1. Query parameters")
-    query_params_demo()
-
-    print("\n2. Path parameters")
-    path_params_demo(1)
-    path_params_demo(99999)
-
-    print("\n3. Custom headers")
-    custom_headers_demo()
-
-    print("\n4. Form data (application/x-www-form-urlencoded)")
-    form_data_demo()
-
-    print("\n5. JSON payload (application/json)")
-    json_payload_demo()
-
-    print("\n✅ Day 59 complete")
+    print("Day 59 – What actually goes over the wire\n")
+    examples = [
+        search_request("python developer", location="Berlin", remote=True, tags=["django", "aws"]),
+        apply_form_request(42, "Ada Lovelace", "ada@example.com"),
+        save_search_request("remote python", {"remote": True, "salary": {"min": 60000}}, "demo-token"),
+        upload_cv_request(42, "cv.pdf", b"%PDF-1.7 demo"),
+    ]
+    for prepared in examples:
+        info = describe(prepared)
+        print(f"{info['method']} {info['url']}")
+        print(f"   Content-Type: {info['content_type']}")
+        print(f"   Body: {str(info['body'])[:90]!r}\n")
 
 
 if __name__ == "__main__":
     main()
-    sys.exit(0)

@@ -1,100 +1,75 @@
-"""Tests for Day 59 – Request Parameters, Headers & Payloads."""
+"""Tests for Day 59 – Query Parameters, Headers & Payloads.
 
-from __future__ import annotations
+Requests are prepared offline, so we assert on the exact bytes that would be sent.
+"""
 
-from unittest.mock import MagicMock, patch
+import json
+from unittest.mock import MagicMock
 
 import pytest
-import requests
 
 from src.day_59_request_parameters_headers_payloads.main import (
-    custom_headers_demo,
-    form_data_demo,
-    json_payload_demo,
-    path_params_demo,
-    query_params_demo,
+    TIMEOUT,
+    apply_form_request,
+    describe,
+    main,
+    save_search_request,
+    search_request,
+    send,
+    upload_cv_request,
 )
 
 
-def _ok_response(json_data: dict) -> MagicMock:
-    resp = MagicMock(spec=requests.Response)
-    resp.status_code = 200
-    resp.ok = True
-    resp.raise_for_status = MagicMock()
-    resp.json.return_value = json_data
-    return resp
+def test_query_string_encoding_and_repeated_keys():
+    prepared = search_request("python & data", location="São Paulo", remote=True, tags=["a", "b"], page=2)
+    assert prepared.url == ("https://jobs.example.com/api/jobs?q=python+%26+data&location=S%C3%A3o+Paulo"
+                            "&remote=true&tag=a&tag=b&page=2")
 
 
-def test_query_params_demo():
-    data = {
-        "url": "https://httpbin.org/get?q=python+mastery&page=2&limit=10&tags=api&tags=http",
-        "args": {"q": "python mastery", "page": "2", "limit": "10", "tags": ["api", "http"]},
-    }
-    with patch(
-        "src.day_59_request_parameters_headers_payloads.main.requests.get",
-        return_value=_ok_response(data),
-    ):
-        result = query_params_demo()
-    assert "args" in result
+def test_none_and_empty_values_are_dropped():
+    url = search_request("x").url
+    assert "location" not in url and "tag=" not in url
 
 
-def test_path_params_found():
-    with patch(
-        "src.day_59_request_parameters_headers_payloads.main.requests.get",
-        return_value=_ok_response({"id": 1, "title": "existing"}),
-    ):
-        result = path_params_demo(1)
-    assert result.get("id") == 1
+def test_custom_headers():
+    headers = search_request("x").headers
+    assert headers["Accept"] == "application/json" and headers["X-Client"] == "day59"
 
 
-def test_path_params_not_found():
-    resp = MagicMock(spec=requests.Response)
-    resp.status_code = 404
-    resp.ok = False
-    with patch(
-        "src.day_59_request_parameters_headers_payloads.main.requests.get",
-        return_value=resp,
-    ):
-        result = path_params_demo(99999)
-    assert result["status"] == 404
+def test_page_validation():
+    with pytest.raises(ValueError):
+        search_request("x", page=0)
 
 
-def test_custom_headers_demo():
-    data = {
-        "headers": {
-            "User-Agent": "ProPythonMastery/1.0 (Day 59)",
-            "X-Request-Id": "day59-demo-001",
-            "X-Custom-Header": "hello-from-python",
-            "Accept": "application/json",
-        }
-    }
-    with patch(
-        "src.day_59_request_parameters_headers_payloads.main.requests.get",
-        return_value=_ok_response(data),
-    ):
-        result = custom_headers_demo()
-    assert "headers" in result
+def test_form_body():
+    info = describe(apply_form_request(7, "Ada L", "ada@x.org"))
+    assert info["content_type"] == "application/x-www-form-urlencoded"
+    assert info["body"] == "name=Ada+L&email=ada%40x.org"
 
 
-def test_form_data_demo():
-    data = {
-        "form": {"username": "ada", "password": "analytical", "remember": "on"},
-        "headers": {"Content-Type": "application/x-www-form-urlencoded"},
-    }
-    with patch(
-        "src.day_59_request_parameters_headers_payloads.main.requests.post",
-        return_value=_ok_response(data),
-    ):
-        result = form_data_demo()
-    assert result["form"]["username"] == "ada"
+def test_multipart_upload():
+    info = describe(upload_cv_request(7, "cv.pdf", b"%PDF"))
+    assert info["content_type"].startswith("multipart/form-data; boundary=")
+    assert 'filename="cv.pdf"' in info["body"] and 'name="consent"' in info["body"]
 
 
-def test_json_payload_demo():
-    data = {"id": 101, "title": "Day 59", "body": "…", "userId": 1}
-    with patch(
-        "src.day_59_request_parameters_headers_payloads.main.requests.post",
-        return_value=_ok_response(data),
-    ):
-        result = json_payload_demo()
-    assert result["id"] == 101
-    assert result["title"] == "Day 59"
+def test_json_body_and_auth_header():
+    prepared = save_search_request("s", {"remote": True, "salary": {"min": 1}}, "tok")
+    assert prepared.headers["Content-Type"] == "application/json"
+    assert prepared.headers["Authorization"] == "Bearer tok"
+    assert json.loads(prepared.body) == {"name": "s", "filters": {"remote": True, "salary": {"min": 1}}}
+
+
+def test_send_uses_session_and_timeout():
+    session = MagicMock()
+    session.send.return_value.json.return_value = {"jobs": []}
+    assert send(session, search_request("x")) == {"jobs": []}
+    session.prepare_request.assert_called_once()
+    assert session.send.call_args.kwargs["timeout"] == TIMEOUT
+    session.send.return_value.raise_for_status.assert_called_once()
+
+
+def test_main(capsys):
+    main()
+    out = capsys.readouterr().out
+    assert "Content-Type: application/json" in out and "multipart/form-data" in out

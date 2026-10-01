@@ -1,118 +1,133 @@
-"""
-Day 60 – APIs with Authentication
-API keys, Bearer tokens, Basic Auth, secure credential handling with
-environment variables and python-dotenv.
+"""Day 60 – API Authentication (client-side).
+
+Scenario: a *weather-data aggregator* that talks to three providers, each
+with a different authentication scheme. Secrets come from the environment
+(optionally a git-ignored ``.env``), are never hard-coded and never printed.
+
+Deliverables (syllabus):
+* API keys (header vs query parameter)
+* Bearer tokens
+* Basic Auth (and what it really sends)
+* Environment variables / ``.env`` for secrets
 """
 
 from __future__ import annotations
 
 import base64
 import os
-import sys
-from typing import Any
+from collections.abc import Mapping
+from dataclasses import dataclass, field
+from typing import Literal
 
 import requests
-from dotenv import load_dotenv
+from requests.auth import AuthBase, HTTPBasicAuth
 
-# Load .env from project root if present
-load_dotenv()
-
-HTTPBIN = "https://httpbin.org"
-
-
-def basic_auth_demo(username: str, password: str) -> dict[str, Any]:
-    """HTTP Basic Authentication (Authorization: Basic …)."""
-    resp = requests.get(
-        f"{HTTPBIN}/basic-auth/{username}/{password}",
-        auth=(username, password),          # requests handles Base64 encoding
-        timeout=10,
-    )
-    print(f"Basic Auth status: {resp.status_code}")
-    if resp.ok:
-        print(f"  Authenticated as: {resp.json().get('user')}")
-    return resp.json() if resp.ok else {}
+DELIVERABLES: dict[str, str] = {
+    "API key in a header": "ApiKeyAuth",
+    "API key in the query string": "ApiKeyAuth",
+    "Bearer token": "BearerAuth",
+    "Basic Auth": "basic_auth_header",
+    "credentials from environment variables": "Credentials.from_env",
+    "loading a .env file explicitly": "load_env_file",
+    "safe secret masking": "mask_secret",
+}
 
 
-def bearer_token_demo(token: str) -> dict[str, Any]:
-    """Bearer token (common for OAuth2 / JWT style APIs)."""
-    headers = {"Authorization": f"Bearer {token}"}
-    resp = requests.get(f"{HTTPBIN}/bearer", headers=headers, timeout=10)
-    print(f"Bearer status: {resp.status_code}")
-    if resp.ok:
-        data = resp.json()
-        print(f"  Token accepted: {data.get('authenticated')}")
-        print(f"  Token value   : {data.get('token')[:20]}…")
-    return resp.json() if resp.ok else {}
+class MissingCredentialsError(RuntimeError):
+    pass
 
 
-def api_key_header_demo(api_key: str) -> dict[str, Any]:
-    """API key sent in a custom header (very common pattern)."""
-    headers = {
-        "X-API-Key": api_key,
-        "User-Agent": "ProPythonMastery/1.0",
-    }
-    # httpbin does not validate the key; we just show it is transmitted
-    resp = requests.get(f"{HTTPBIN}/headers", headers=headers, timeout=10)
-    resp.raise_for_status()
-    data = resp.json()
-    print("API key header received by server:")
-    print(f"  X-Api-Key: {data['headers'].get('X-Api-Key')}")
-    return data
+def mask_secret(secret: str, visible: int = 4) -> str:
+    """Show at most the last few characters, and never more than a quarter of the secret."""
+    if not secret:
+        return "<empty>"
+    shown = min(visible, len(secret) // 4)
+    return "•" * 8 + (secret[-shown:] if shown else "")
 
 
-def api_key_query_demo(api_key: str) -> dict[str, Any]:
-    """API key as a query parameter (less preferred but still used)."""
-    params = {"api_key": api_key}
-    resp = requests.get(f"{HTTPBIN}/get", params=params, timeout=10)
-    resp.raise_for_status()
-    data = resp.json()
-    print("API key query param seen by server:")
-    print(f"  {data['args']}")
-    return data
+def basic_auth_header(username: str, password: str) -> str:
+    """What ``HTTPBasicAuth`` sends: base64 is *encoding*, not encryption – HTTPS only!"""
+    token = base64.b64encode(f"{username}:{password}".encode()).decode("ascii")
+    return f"Basic {token}"
 
 
-def load_credentials() -> dict[str, str]:
-    """Load secrets from environment (never hard-code them)."""
-    return {
-        "username": os.getenv("DEMO_USERNAME", "user"),
-        "password": os.getenv("DEMO_PASSWORD", "passwd"),
-        "bearer_token": os.getenv("DEMO_BEARER_TOKEN", "my-secret-jwt-token-12345"),
-        "api_key": os.getenv("DEMO_API_KEY", "sk_test_abc123xyz"),
-    }
+class BearerAuth(AuthBase):
+    def __init__(self, token: str) -> None:
+        self.token = token
+
+    def __call__(self, request: requests.PreparedRequest) -> requests.PreparedRequest:
+        request.headers["Authorization"] = f"Bearer {self.token}"
+        return request
+
+
+class ApiKeyAuth(AuthBase):
+    """Attach an API key as a header (preferred) or a query parameter."""
+
+    def __init__(self, key: str, *, location: Literal["header", "query"] = "header",
+                 name: str = "X-API-Key") -> None:
+        self.key, self.location, self.name = key, location, name
+
+    def __call__(self, request: requests.PreparedRequest) -> requests.PreparedRequest:
+        if self.location == "header":
+            request.headers[self.name] = self.key
+        else:
+            request.prepare_url(request.url or "", {self.name: self.key})
+        return request
+
+
+@dataclass(frozen=True)
+class Credentials:
+    username: str
+    password: str = field(repr=False)
+    bearer_token: str = field(repr=False)
+    api_key: str = field(repr=False)
+
+    @classmethod
+    def from_env(cls, env: Mapping[str, str] | None = None) -> Credentials:
+        """Read secrets from the environment. No fallbacks: missing secrets are an error."""
+        env = os.environ if env is None else env
+        names = {"username": "DEMO_USERNAME", "password": "DEMO_PASSWORD",
+                 "bearer_token": "DEMO_BEARER_TOKEN", "api_key": "DEMO_API_KEY"}
+        missing = [var for var in names.values() if not env.get(var)]
+        if missing:
+            raise MissingCredentialsError(f"set {', '.join(missing)} (see .env.example)")
+        return cls(**{attr: env[var] for attr, var in names.items()})
+
+
+def load_env_file(path: str = ".env") -> bool:
+    """Load ``.env`` explicitly from ``main()`` – never as an import side effect."""
+    from dotenv import load_dotenv
+
+    return bool(load_dotenv(path, override=False))
+
+
+def authed_request(url: str, auth: AuthBase) -> requests.PreparedRequest:
+    return requests.Request("GET", url, auth=auth).prepare()
 
 
 def main() -> None:
-    print("=" * 60)
-    print("Day 60 – API Authentication")
-    print("=" * 60)
-
-    creds = load_credentials()
-    print("\nLoaded credentials from environment (or defaults):")
-    for k, v in creds.items():
-        masked = v[:4] + "…" + v[-4:] if len(v) > 8 else "***"
-        print(f"  {k}: {masked}")
-
-    print("\n1. Basic Authentication")
-    basic_auth_demo(creds["username"], creds["password"])
-
-    print("\n2. Bearer Token")
-    bearer_token_demo(creds["bearer_token"])
-
-    print("\n3. API Key in header")
-    api_key_header_demo(creds["api_key"])
-
-    print("\n4. API Key as query parameter")
-    api_key_query_demo(creds["api_key"])
-
-    print("\nBest practices:")
-    print("• Never commit secrets – use .env + python-dotenv or a secret manager")
-    print("• Prefer header-based API keys over query parameters")
-    print("• Use short-lived tokens when possible")
-    print("• Always call raise_for_status() or check status codes")
-
-    print("\n✅ Day 60 complete")
+    print("Day 60 – API authentication\n")
+    load_env_file()
+    try:
+        creds = Credentials.from_env()
+    except MissingCredentialsError as exc:
+        print(f"{exc}\nUsing throw-away demo values for the offline walkthrough.\n")
+        creds = Credentials("demo-user", "demo-pass-123", "demo-token-abcdef", "demo-key-987654")
+    print("Credentials:", creds)
+    print("Masked key:", mask_secret(creds.api_key))
+    base = "https://httpbin.org"
+    examples = {
+        "API key header": authed_request(f"{base}/headers", ApiKeyAuth(creds.api_key)),
+        "API key query": authed_request(f"{base}/get", ApiKeyAuth(creds.api_key, location="query", name="api_key")),
+        "Bearer": authed_request(f"{base}/bearer", BearerAuth(creds.bearer_token)),
+        "Basic": authed_request(f"{base}/basic-auth/{creds.username}", HTTPBasicAuth(creds.username, creds.password)),
+    }
+    for label, prepared in examples.items():
+        auth_header = str(prepared.headers.get("Authorization") or prepared.headers.get("X-API-Key") or "—")
+        url = prepared.url.replace(creds.api_key, mask_secret(creds.api_key)) if prepared.url else ""
+        print(f"{label:<15} {url}\n{'':<15} auth: {mask_secret(auth_header)}")
+    print("\nBest practice: header keys over query keys (URLs end up in logs); HTTPS always.")
 
 
 if __name__ == "__main__":
     main()
-    sys.exit(0)

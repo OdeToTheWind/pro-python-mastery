@@ -1,165 +1,163 @@
-"""
-Day 63 – Browser Automation with Selenium WebDriver
-Element locators, waits, form interactions, headless mode.
-Falls back gracefully when Selenium / browser drivers are not available.
+"""Day 63 – Browser Automation with Selenium.
+
+Scenario: a *QA smoke test* for quotes.toscrape.com (a practice site): log in
+through the form, read quotes from the JavaScript-rendered page that appears
+only after a delay, and page through results – using Page Objects.
+
+Deliverables (syllabus):
+* Locator strategies (ID, NAME, CSS selector, XPath, link text)
+* Waits (explicit ``WebDriverWait`` + expected conditions; no ``time.sleep``)
+* Form filling (clear, type, submit, verify)
+* Dynamic page interactions (JS-rendered content, pagination)
+* Graceful fallback when no browser/driver is available
 """
 
 from __future__ import annotations
 
-import sys
-import time
 from dataclasses import dataclass
 from typing import Any
 
+DELIVERABLES: dict[str, str] = {
+    "locator strategies": "LOCATORS",
+    "explicit waits": "LoginPage.login",
+    "form filling": "LoginPage.login",
+    "dynamic (JS-rendered, delayed) content": "QuotesPage.read_quotes",
+    "pagination clicks": "QuotesPage.next_page",
+    "driver factory (headless)": "create_driver",
+    "graceful fallback": "run",
+}
 
-@dataclass(slots=True)
-class SearchResult:
-    title: str
-    url: str
+BASE_URL = "https://quotes.toscrape.com"
+
+# (strategy, value) pairs – the same tuples Selenium's ``By`` API expects.
+LOCATORS: dict[str, tuple[str, str]] = {
+    "username": ("id", "username"),
+    "password": ("name", "password"),
+    "submit": ("css selector", "input[type='submit']"),
+    "logout": ("link text", "Logout"),
+    "quote": ("css selector", "div.quote"),
+    "quote_text": ("css selector", "span.text"),
+    "quote_author": ("xpath", ".//small[@class='author']"),
+    "next": ("css selector", "li.next > a"),
+}
 
 
-def selenium_available() -> bool:
-    try:
-        from selenium import webdriver  # noqa: F401
-        from selenium.webdriver.chrome.options import Options  # noqa: F401
+@dataclass(frozen=True, slots=True)
+class ScrapedQuote:
+    text: str
+    author: str
+
+
+class LoginPage:
+    """Page Object: tests talk to *pages*, not to raw selectors."""
+
+    path = "/login"
+
+    def __init__(self, driver: Any, wait: Any, ec: Any) -> None:
+        self.driver, self.wait, self.ec = driver, wait, ec
+
+    def open(self) -> LoginPage:
+        self.driver.get(BASE_URL + self.path)
+        return self
+
+    def login(self, username: str, password: str) -> bool:
+        user = self.wait.until(self.ec.element_to_be_clickable(LOCATORS["username"]))
+        user.clear()
+        user.send_keys(username)
+        pwd = self.driver.find_element(*LOCATORS["password"])
+        pwd.clear()
+        pwd.send_keys(password)
+        self.driver.find_element(*LOCATORS["submit"]).click()
+        self.wait.until(self.ec.presence_of_element_located(LOCATORS["logout"]))
         return True
-    except ImportError:
-        return False
 
 
-def create_driver(*, headless: bool = True):
-    """Create a Chrome WebDriver with sensible defaults."""
+class QuotesPage:
+    def __init__(self, driver: Any, wait: Any, ec: Any) -> None:
+        self.driver, self.wait, self.ec = driver, wait, ec
+
+    def open_delayed(self) -> QuotesPage:
+        """``/js-delayed/`` renders quotes with JavaScript after ~10 s."""
+        self.driver.get(f"{BASE_URL}/js-delayed/")
+        return self
+
+    def read_quotes(self) -> list[ScrapedQuote]:
+        self.wait.until(self.ec.presence_of_all_elements_located(LOCATORS["quote"]))
+        quotes = []
+        for element in self.driver.find_elements(*LOCATORS["quote"]):
+            text = element.find_element(*LOCATORS["quote_text"]).text.strip("“”")
+            author = element.find_element(*LOCATORS["quote_author"]).text
+            quotes.append(ScrapedQuote(text, author))
+        return quotes
+
+    def next_page(self) -> bool:
+        links = self.driver.find_elements(*LOCATORS["next"])
+        if not links:
+            return False
+        first_quote = self.driver.find_elements(*LOCATORS["quote"])[0]
+        links[0].click()
+        self.wait.until(self.ec.staleness_of(first_quote))  # old page gone → new page loaded
+        return True
+
+
+def create_driver(headless: bool = True) -> Any:
     from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
-    from selenium.webdriver.chrome.service import Service
 
-    options = Options()
+    options = webdriver.ChromeOptions()
     if headless:
         options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1280,800")
-    options.add_argument(
-        "--user-agent=ProPythonMastery/1.0 (educational Selenium; Day 63)"
-    )
-
-    # Prefer Selenium Manager (Selenium 4.6+) which auto-downloads drivers
-    driver = webdriver.Chrome(options=options)
+    options.add_argument("--window-size=1280,900")
+    driver = webdriver.Chrome(options=options)  # Selenium Manager finds/downloads the driver
     driver.set_page_load_timeout(30)
     return driver
 
 
-def demo_quotes_site(driver) -> list[SearchResult]:
-    """
-    Navigate to quotes.toscrape.com, wait for content,
-    extract a few quotes using different locator strategies.
-    """
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-
-    url = "https://quotes.toscrape.com"
-    print(f"Navigating to {url}")
-    driver.get(url)
-
-    # Explicit wait for the first quote
-    wait = WebDriverWait(driver, 10)
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.quote")))
-
-    results: list[SearchResult] = []
-    quotes = driver.find_elements(By.CSS_SELECTOR, "div.quote")
-    for q in quotes[:5]:
-        text_el = q.find_element(By.CSS_SELECTOR, "span.text")
-        author_el = q.find_element(By.CSS_SELECTOR, "small.author")
-        title = f"{text_el.text[:60]}… — {author_el.text}"
-        # There is no real "url" per quote; we just use the page
-        results.append(SearchResult(title=title, url=url))
-
-    return results
+def smoke_test(driver: Any, wait: Any, ec: Any, pages: int = 2) -> list[ScrapedQuote]:
+    LoginPage(driver, wait, ec).open().login("demo-user", "demo-pass")  # practice site accepts any login
+    page = QuotesPage(driver, wait, ec).open_delayed()
+    quotes = page.read_quotes()
+    while pages > 1 and page.next_page():
+        quotes += page.read_quotes()
+        pages -= 1
+    return quotes
 
 
-def demo_form_interaction(driver) -> None:
-    """Demonstrate filling a search form (DuckDuckGo) and waiting."""
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.common.keys import Keys
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-
-    print("\nForm interaction demo (DuckDuckGo)")
-    driver.get("https://duckduckgo.com")
-
-    wait = WebDriverWait(driver, 10)
-    search_box = wait.until(EC.element_to_be_clickable((By.NAME, "q")))
-    search_box.clear()
-    search_box.send_keys("Python Selenium WebDriver")
-    search_box.send_keys(Keys.RETURN)
-
-    # Wait for results
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "article, .result")))
-    print("  Search submitted and results appeared")
-    time.sleep(1)  # brief pause so the user can see it in non-headless mode
+DRY_RUN_STEPS = (
+    "driver = webdriver.Chrome(options=headless_options)",
+    "LoginPage.open() → wait until #username is clickable → type credentials → submit",
+    "wait until the 'Logout' link exists (proves login worked)",
+    "open /js-delayed/ → wait for all div.quote elements (rendered by JavaScript)",
+    "click 'Next' → wait for the old quote element to become stale",
+    "driver.quit() in a finally block",
+)
 
 
-def run_live_demo(*, headless: bool = True) -> None:
-    driver = None
+def run(headless: bool = True) -> str:
+    """Run the live smoke test, or explain the steps if no browser is available."""
     try:
-        driver = create_driver(headless=headless)
-        print(f"Browser started (headless={headless})")
-
-        results = demo_quotes_site(driver)
-        print(f"\nExtracted {len(results)} quotes:")
-        for i, r in enumerate(results, 1):
-            print(f"  {i}. {r.title}")
-
-        demo_form_interaction(driver)
-        print("\n✅ Live Selenium demo finished successfully")
+        from selenium.common.exceptions import WebDriverException
+        from selenium.webdriver.support import expected_conditions as ec
+        from selenium.webdriver.support.ui import WebDriverWait
+    except ImportError:
+        return "dry-run: selenium is not installed\n  " + "\n  ".join(DRY_RUN_STEPS)
+    try:
+        driver = create_driver(headless)
+    except WebDriverException as exc:
+        reason = str(exc).splitlines()[0][:80]
+        return f"dry-run: no browser/driver available ({reason})\n  " + "\n  ".join(DRY_RUN_STEPS)
+    try:
+        quotes = smoke_test(driver, WebDriverWait(driver, 15), ec)
+        return f"live: {len(quotes)} quotes, first by {quotes[0].author if quotes else 'nobody'}"
+    except WebDriverException as exc:
+        return f"failed: {type(exc).__name__}: {str(exc).splitlines()[0][:80]}"
     finally:
-        if driver is not None:
-            driver.quit()
-            print("Browser closed")
+        driver.quit()
 
 
-def run_dry_run() -> None:
-    """Explain what the live demo would do when Selenium is unavailable."""
-    print("Selenium / ChromeDriver not available – running dry-run explanation.")
-    print()
-    print("Typical workflow demonstrated on Day 63:")
-    print("  1. Create Chrome options (headless, user-agent, window size)")
-    print("  2. driver = webdriver.Chrome(options=options)")
-    print("  3. driver.get(url)")
-    print("  4. WebDriverWait + expected_conditions for robust waits")
-    print("  5. find_element / find_elements with By.CSS_SELECTOR, By.NAME, etc.")
-    print("  6. Interact: send_keys, click, submit")
-    print("  7. Always driver.quit() in a finally block")
-    print()
-    print("Install tips:")
-    print("  pip install selenium")
-    print("  # Selenium 4.6+ ships with Selenium Manager (auto driver download)")
-    print("  # Or install chromedriver / geckodriver manually")
+def main() -> None:  # pragma: no cover – may launch a browser
+    print("Day 63 – Selenium smoke test\n")
+    print(run())
 
 
-def main() -> None:
-    print("=" * 60)
-    print("Day 63 – Browser Automation with Selenium")
-    print("=" * 60)
-
-    if selenium_available():
-        # Prefer headless for CI / servers; set headless=False to watch the browser
-        run_live_demo(headless=True)
-    else:
-        run_dry_run()
-
-    print("\nKey takeaways:")
-    print("• Prefer explicit waits (WebDriverWait) over time.sleep")
-    print("• CSS selectors and data-testid attributes are the most stable locators")
-    print("• Always quit the driver to avoid zombie processes")
-    print("• Headless mode is essential for CI pipelines")
-    print("• Respect robots.txt and site terms of service")
-
-    print("\n✅ Day 63 complete")
-
-
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()
-    sys.exit(0)
