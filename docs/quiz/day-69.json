@@ -1,0 +1,37 @@
+{
+  "day": 69,
+  "mcq": [
+    {
+      "question": "In `precedence_demo`, `booking.__dict__['nights'] = 999` is ignored when reading `booking.nights`. Why?",
+      "options": {
+        "A": "`__dict__` is read-only",
+        "B": "999 is out of range",
+        "C": "Descriptors are cached",
+        "D": "`nights` is a *data* descriptor (it defines `__set__`), and data descriptors take priority over the instance dictionary"
+      },
+      "answer": "D",
+      "explanation": "Lookup order: data descriptors, then the instance `__dict__`, then non-data descriptors and class attributes."
+    },
+    {
+      "question": "What does `__set_name__` give a descriptor such as `Field`?",
+      "options": {
+        "A": "The name of the attribute it was assigned to in the class body, so it can store values and write error messages per field",
+        "B": "The instance being created",
+        "C": "The type hint of the field",
+        "D": "Its default value"
+      },
+      "answer": "A",
+      "explanation": "Python calls `__set_name__(owner, name)` when the class is created, so one descriptor class can serve many fields."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Django model fields, `@property` and `@classmethod` are all descriptors. Why is this one protocol so central to Python?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Create a new validated descriptor such as `EmailField` test-first: valid addresses are stored, and an invalid one raises with the field name in the message."
+    }
+  ]
+}

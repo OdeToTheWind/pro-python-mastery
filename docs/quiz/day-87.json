@@ -1,0 +1,37 @@
+{
+  "day": 87,
+  "mcq": [
+    {
+      "question": "How does the bot find plugins that are installed as separate packages?",
+      "options": {
+        "A": "By scanning `site-packages` for `.py` files",
+        "B": "By reading a hard-coded list",
+        "C": "Through environment variables",
+        "D": "Through `importlib.metadata.entry_points(group='chatbot.plugins')`, declared in each package's `pyproject.toml`"
+      },
+      "answer": "D",
+      "explanation": "Entry points are the standard discovery mechanism behind pytest plugins and console scripts."
+    },
+    {
+      "question": "A plugin fails while registering its commands. What does `CommandRegistry.install` guarantee?",
+      "options": {
+        "A": "Its registrations are rolled back (all-or-nothing) and the error is reported",
+        "B": "The bot crashes",
+        "C": "Half of the plugin's commands stay registered",
+        "D": "The plugin is retried forever"
+      },
+      "answer": "A",
+      "explanation": "A half-installed plugin is worse than none. The registry restores the previous command table."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Loading plugins means running third-party code inside your bot. What security risks does that bring, and how could you limit them?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a new folder plugin `remind.py` test-first, providing `!remind 10m stretch`. Test its parsing, and make sure a bad duration returns a friendly message instead of crashing."
+    }
+  ]
+}

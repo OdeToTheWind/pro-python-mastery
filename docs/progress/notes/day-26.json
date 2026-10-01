@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-07",
+  "learnings": [
+    "Rename refactoring must work on tokens; text replace also changes strings, comments and longer names.",
+    "Live templates are parameterised snippets – the same idea as `string.Template`.",
+    "Learning a few navigation and debugger shortcuts saves more time than any plugin."
+  ],
+  "pitfalls": [
+    "Numbering items by hand *and* with `enumerate` printed `1. 1.` – number in one place only."
+  ],
+  "next": "Practise the debugger shortcuts on Day 24's buggy payroll script."
+}

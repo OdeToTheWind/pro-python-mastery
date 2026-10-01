@@ -1,0 +1,37 @@
+{
+  "day": 66,
+  "mcq": [
+    {
+      "question": "What does `yield from sub_generator()` do?",
+      "options": {
+        "A": "Yields every value from it, forwards `send()`/`throw()`, and evaluates to its return value",
+        "B": "Runs the sub-generator in a thread",
+        "C": "Returns the sub-generator object",
+        "D": "Converts it to a list"
+      },
+      "answer": "A",
+      "explanation": "`yield from` delegates completely. `count_and_forward` uses it to capture the sub-generator's `return` value."
+    },
+    {
+      "question": "How do you feed a value into a running generator such as `revenue_tracker`?",
+      "options": {
+        "A": "`next(gen, value)`",
+        "B": "`gen.send(value)`; the value becomes the result of the paused `yield` expression",
+        "C": "`gen.push(value)`",
+        "D": "`gen.value = value`"
+      },
+      "answer": "B",
+      "explanation": "`send` resumes the generator with a value. It must be primed with `next()` (or `send(None)`) first."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Generator pipelines (parse → validate → enrich → batch) versus one big function: how does each stage being separate help with testing and reuse?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a new pipeline stage `dedupe_orders` test-first (it drops repeated order IDs) and insert it into `build_pipeline` without breaking the existing tests."
+    }
+  ]
+}

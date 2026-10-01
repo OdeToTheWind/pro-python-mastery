@@ -1,0 +1,37 @@
+{
+  "day": 49,
+  "mcq": [
+    {
+      "question": "What happens with `'3' + 4` in Python?",
+      "options": {
+        "A": "`'34'`",
+        "B": "`7`",
+        "C": "`TypeError`, because Python is strongly typed and does not coerce silently",
+        "D": "`'7'`"
+      },
+      "answer": "C",
+      "explanation": "Python refuses to guess which conversion you meant. You must write `int('3') + 4` or `'3' + str(4)`."
+    },
+    {
+      "question": "A function is annotated `def add(a: int, b: int) -> int` and called with `add('x', 'y')`. What happens at runtime?",
+      "options": {
+        "A": "It returns `'xy'`; annotations are not enforced at runtime",
+        "B": "It raises `TypeError` immediately",
+        "C": "It returns `0`",
+        "D": "It raises `SyntaxError`"
+      },
+      "answer": "A",
+      "explanation": "Hints are for tools like mypy. Runtime checks are opt-in, which is why the day writes the `enforce_types` decorator."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Duck typing (\"if it has `.read()` it's a file\") versus explicit type checks: when does each make code more robust?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `@enforce_types` rejects a wrong argument type, then extend it to support `list[int]` annotations (check the container and its items), test-first."
+    }
+  ]
+}

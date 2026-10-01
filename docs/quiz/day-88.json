@@ -1,0 +1,37 @@
+{
+  "day": 88,
+  "mcq": [
+    {
+      "question": "What does `string.Template.substitute` do when a placeholder has no value?",
+      "options": {
+        "A": "Leaves `$name` in the output",
+        "B": "Inserts an empty string",
+        "C": "Raises `KeyError`",
+        "D": "Inserts `None`"
+      },
+      "answer": "C",
+      "explanation": "`substitute` fails loudly, which the report wants. `safe_substitute` would leave the placeholder in place silently."
+    },
+    {
+      "question": "Why does the CSV export prefix values starting with `=`, `+`, `-` or `@` with `'`?",
+      "options": {
+        "A": "To stop spreadsheets from running them as formulas (CSV injection)",
+        "B": "To sort them",
+        "C": "Excel requires quotes",
+        "D": "To mark negative numbers"
+      },
+      "answer": "A",
+      "explanation": "A client name like `=HYPERLINK(...)` would otherwise execute when the accountant opens the file."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Hand-writing a minimal PDF teaches the format, but when would you use a library such as ReportLab or WeasyPrint instead?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a VAT line test-first: the report shows net, VAT (19 %) and gross, rounding once with `Decimal`, and the CSV gains the same columns."
+    }
+  ]
+}

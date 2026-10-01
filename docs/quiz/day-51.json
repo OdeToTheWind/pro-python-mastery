@@ -1,0 +1,37 @@
+{
+  "day": 51,
+  "mcq": [
+    {
+      "question": "Why do all booking errors inherit from `BookingError`?",
+      "options": {
+        "A": "Python requires a base class",
+        "B": "To make them faster",
+        "C": "Callers can catch everything from this service with one `except BookingError`, or a specific subclass when they need to",
+        "D": "To avoid writing messages"
+      },
+      "answer": "C",
+      "explanation": "An exception hierarchy lets callers choose how broad or narrow to be."
+    },
+    {
+      "question": "`charge()` catches a `ValueError` and raises `CardDeclinedError(...) from exc`. Why translate it?",
+      "options": {
+        "A": "`ValueError` cannot be caught",
+        "B": "To shorten the traceback",
+        "C": "To retry the payment",
+        "D": "Callers should deal with domain concepts (a declined card), not low-level details, while the cause stays attached"
+      },
+      "answer": "D",
+      "explanation": "Translating at a module boundary keeps the API meaningful, and `from exc` keeps the debugging information."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should a missing seat be an exception or a return value such as `None` or a result object? Argue both sides for a booking API."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `WaitlistFullError` to the hierarchy test-first: write a test that books past capacity, catches the error by its base class, and checks the data it carries."
+    }
+  ]
+}

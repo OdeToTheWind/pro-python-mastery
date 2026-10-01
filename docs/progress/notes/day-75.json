@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A coroutine does nothing until awaited; the event loop switches between coroutines at each `await`.",
+    "`gather` runs awaitables concurrently and keeps result order; `return_exceptions=True` keeps one failure from losing the others.",
+    "`create_task` starts background work immediately; `TaskGroup` gives structured concurrency with automatic cancellation."
+  ],
+  "pitfalls": [
+    "A cancelled task must still be awaited, otherwise the cancellation is never processed – `contextlib.suppress(CancelledError)` keeps it tidy."
+  ],
+  "next": "Add async context managers, async iterators and real HTTP on Day 76."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 36,
+  "mcq": [
+    {
+      "question": "`Order.open_orders` is a class variable. What does it track?",
+      "options": {
+        "A": "The state of one order only",
+        "B": "State shared by all orders, such as how many are currently open",
+        "C": "A copy per instance",
+        "D": "Nothing; class variables are read-only"
+      },
+      "answer": "B",
+      "explanation": "Class variables are shared across instances. Per-order data such as `state` and `history` lives in instance variables set in `__init__`."
+    },
+    {
+      "question": "`order.advance('delivered')` is called while the order is still `placed`. What happens?",
+      "options": {
+        "A": "The state jumps to delivered",
+        "B": "It silently does nothing",
+        "C": "It raises `InvalidTransition`, because only allowed transitions are accepted",
+        "D": "It resets the order"
+      },
+      "answer": "C",
+      "explanation": "A `TRANSITIONS` table lists the legal next states. Rejecting illegal jumps keeps every order's history believable."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why is an explicit transition table (a state machine) safer than letting code set `order.state = ...` anywhere? What bugs does it prevent?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that a cancelled order cannot be advanced, and that `snapshot()` followed by `restore()` returns the order to exactly the same state and history."
+    }
+  ]
+}

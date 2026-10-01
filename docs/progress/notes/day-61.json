@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "E.164 (`+14155550123`) is the only safe phone format for SMS APIs.",
+    "Inject the Twilio client factory so the integration can be tested without the network.",
+    "Choose a dry-run transport unless credentials *and* the library are present."
+  ],
+  "pitfalls": [
+    "Configured credentials without `twilio` installed used to crash with `ImportError`."
+  ],
+  "next": "Combine scraping, scheduling and notifications in the bot suite (Day 97)."
+}

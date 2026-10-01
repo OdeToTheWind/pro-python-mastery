@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`__exit__` always runs; returning a truthy value suppresses the exception, so only do it deliberately.",
+    "`@contextmanager` turns a generator into a context manager: code before `yield` is enter, `finally` is exit.",
+    "`ExitStack` manages a dynamic number of resources and releases them in reverse order, even if one fails to start."
+  ],
+  "pitfalls": [
+    "A transaction must roll back staged rows *and* re-raise – swallowing the error would hide the failed experiment."
+  ],
+  "next": "See the descriptor protocol that powers `@property` on Day 69."
+}

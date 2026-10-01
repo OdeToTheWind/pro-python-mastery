@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`TracebackException`, notes, causes and exception groups turn a crash into a structured report.",
+    "`sys.excepthook` and `threading.excepthook` catch uncaught errors in every thread.",
+    "`sys.settrace` and `bdb.Bdb` are enough to build a call tracer and a watchpoint debugger."
+  ],
+  "pitfalls": [
+    "Local variables in crash reports leak secrets unless names such as `token` or `password` are redacted, even inside dicts."
+  ],
+  "next": "Ship the portfolio capstone on Day 100."
+}

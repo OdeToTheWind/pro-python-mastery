@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-27",
+  "learnings": [
+    "`while` fits loops whose iteration count is unknown in advance (Collatz, retries, games).",
+    "`continue` skips the rest of one iteration; `break` leaves the loop; `while ... else` detects 'no break'.",
+    "An AST walker with an operator whitelist is a safe calculator; `eval` with empty builtins is not."
+  ],
+  "pitfalls": [
+    "The original calculator could be escaped with `().__class__.__base__.__subclasses__()` – it was replaced."
+  ],
+  "next": "Revisit AST processing when building the data-validation library on Day 94."
+}

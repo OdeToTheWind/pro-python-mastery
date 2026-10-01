@@ -1,0 +1,37 @@
+{
+  "day": 95,
+  "mcq": [
+    {
+      "question": "What is NumPy broadcasting in `_distance_matrix`?",
+      "options": {
+        "A": "Sending data to many machines",
+        "B": "Automatically expanding arrays of shapes `(R, 1)` and `(1, D)` so one expression computes all `R × D` distances without Python loops",
+        "C": "Printing arrays",
+        "D": "Converting to lists"
+      },
+      "answer": "B",
+      "explanation": "Broadcasting moves the loops into optimised C code, which is the main source of the speed-up."
+    },
+    {
+      "question": "Why does every fast implementation get compared with `nearest_naive`?",
+      "options": {
+        "A": "An optimisation is only valid if it gives the same answers; the obviously-correct baseline is the reference",
+        "B": "The naive one is the fastest",
+        "C": "To make tests slower",
+        "D": "Numba requires it"
+      },
+      "answer": "A",
+      "explanation": "`benchmark` refuses to time an implementation that disagrees with the baseline."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Numba, Cython, or rewriting in Rust: what are the trade-offs in build complexity, portability and speed for a module like this?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `k_nearest(riders, drivers, k=3)` test-first for the NumPy version (using `argpartition`), and prove it matches a naive sort for random data."
+    }
+  ]
+}

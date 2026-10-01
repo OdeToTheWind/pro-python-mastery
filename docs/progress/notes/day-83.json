@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "argparse subcommands, `type=` converters and mutually exclusive groups validate input before any logic runs.",
+    "Configuration layers (defaults < file < environment < flags) keep behaviour predictable.",
+    "Logs go to stderr and data to stdout, so the tool stays scriptable; exit codes tell scripts what happened."
+  ],
+  "pitfalls": [
+    "Calling `sys.exit` deep inside the code makes it untestable – return an exit code from `run()` instead."
+  ],
+  "next": "Stream files through an ETL pipeline on Day 84."
+}

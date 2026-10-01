@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`asyncio.start_server` runs one coroutine per client on a single thread.",
+    "A line protocol with validation and broadcast needs only `readline`, `write` and `drain`.",
+    "Timeouts, line-length limits and a goodbye on shutdown make even a small server robust."
+  ],
+  "pitfalls": [
+    "Forgetting `await writer.drain()` ignores back-pressure and lets buffers grow without bound."
+  ],
+  "next": "Build a reusable validation library on Day 94."
+}

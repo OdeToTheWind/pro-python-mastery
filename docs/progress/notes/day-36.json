@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-17",
+  "learnings": [
+    "Every instance owns its state; class variables track facts about all instances.",
+    "A transition table makes illegal state changes impossible to perform by accident.",
+    "Context managers and `weakref.finalize` give objects a predictable end of life."
+  ],
+  "pitfalls": [
+    "Negative damage used to heal a player above max HP; state changes now go through validated methods."
+  ],
+  "next": "Formalise `__enter__`/`__exit__` on Day 68."
+}

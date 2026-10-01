@@ -1,0 +1,37 @@
+{
+  "day": 84,
+  "mcq": [
+    {
+      "question": "Why does the ETL quarantine bad rows (with a reason) instead of stopping the run?",
+      "options": {
+        "A": "To make the pipeline faster",
+        "B": "One bad sensor row shouldn't block thousands of good ones, and the reasons let someone fix the source",
+        "C": "Because bad rows can't be detected",
+        "D": "To hide errors"
+      },
+      "answer": "B",
+      "explanation": "Robust pipelines separate good and bad data and report the bad data. Silent dropping or crashing are both worse."
+    },
+    {
+      "question": "`extract` is a generator. What does that mean for the whole pipeline?",
+      "options": {
+        "A": "Records are read all at once into memory",
+        "B": "It runs in parallel",
+        "C": "Records flow one at a time through transform and load, so memory stays flat for any input size",
+        "D": "It can only read CSV"
+      },
+      "answer": "C",
+      "explanation": "Chaining generators gives a single streaming pass; the test checks that nothing is read until the stream is consumed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The pipeline writes output atomically. Why does that matter if another program reads the output folder while the ETL is running?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a rule test-first: readings with a timestamp in the future are quarantined with the reason `future timestamp`. Check the run summary counts them."
+    }
+  ]
+}

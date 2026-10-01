@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-13",
+  "learnings": [
+    "Reject invalid state in `__init__` rather than silently 'fixing' it.",
+    "A mutable default is created once at definition time; use `None` or `default_factory`.",
+    "`__post_init__` adds validation and derived fields to dataclasses."
+  ],
+  "pitfalls": [
+    "`print()` inside a constructor is a side effect that makes objects noisy to create in tests."
+  ],
+  "next": "Use validated dataclasses in the type-safe config system (Day 91)."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 74,
+  "mcq": [
+    {
+      "question": "Why does CPU-bound image analysis use processes instead of threads?",
+      "options": {
+        "A": "Processes share memory automatically",
+        "B": "Processes start faster",
+        "C": "Each process has its own interpreter and GIL, so pure-Python work runs on several cores at once",
+        "D": "Threads cannot do maths"
+      },
+      "answer": "C",
+      "explanation": "Multiprocessing side-steps the GIL at the cost of start-up and of pickling data between processes."
+    },
+    {
+      "question": "According to `choose_executor`, when is a process pool *not* worth it for CPU work?",
+      "options": {
+        "A": "When there are more than two cores",
+        "B": "When tasks are very small, because start-up and pickling cost more than they save",
+        "C": "When the data is small",
+        "D": "Never; processes are always better"
+      },
+      "answer": "B",
+      "explanation": "Overhead matters: thousands of tiny tasks run faster in a single process, or when batched with `chunksize`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`shared_memory` avoids copying large arrays to workers. What new risks does sharing memory bring, and how does the day keep it safe?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `analyse_tiles` gives exactly the same counts as a simple single-process loop over the same tiles, so the parallel version is proven correct."
+    }
+  ]
+}

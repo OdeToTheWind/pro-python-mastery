@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A bot is a pipeline: scrape → enrich via API → filter → de-duplicate → notify.",
+    "Polite scraping respects `robots.txt`, identifies itself and pauses between pages.",
+    "Only mark an item as seen after the notification succeeds, so failures are retried on the next run."
+  ],
+  "pitfalls": [
+    "Retrying 4xx errors never helps – only server errors and timeouts deserve a retry."
+  ],
+  "next": "Simulate an epidemic with NumPy on Day 98."
+}

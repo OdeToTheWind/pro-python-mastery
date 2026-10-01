@@ -1,0 +1,37 @@
+{
+  "day": 75,
+  "mcq": [
+    {
+      "question": "What does calling an `async def` function *without* `await` give you?",
+      "options": {
+        "A": "A coroutine object; nothing runs until it is awaited or scheduled",
+        "B": "The result",
+        "C": "A thread",
+        "D": "An error immediately"
+      },
+      "answer": "A",
+      "explanation": "Coroutines are lazy. Forgetting `await` is a classic bug, and Python warns \"coroutine was never awaited\"."
+    },
+    {
+      "question": "What does `asyncio.gather(*coros, return_exceptions=True)` do when one coroutine fails?",
+      "options": {
+        "A": "Cancels all the others",
+        "B": "Waits for all of them and returns the exception object in that result's position",
+        "C": "Raises immediately",
+        "D": "Ignores the failure entirely"
+      },
+      "answer": "B",
+      "explanation": "`board_tolerant` uses this, so one airline's outage shows up as an error entry instead of breaking the whole board."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`TaskGroup` versus `gather`: what does \"structured concurrency\" guarantee about cancellation and errors that `gather` does not?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test proving five 0.1-second fake status calls finish in well under 0.5 seconds with `gather`, so they really ran concurrently."
+    }
+  ]
+}

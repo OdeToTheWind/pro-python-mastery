@@ -1,0 +1,37 @@
+{
+  "day": 56,
+  "mcq": [
+    {
+      "question": "What is a WSGI application, in the form PythonAnywhere expects?",
+      "options": {
+        "A": "A class named `App`",
+        "B": "A file called `server.py`",
+        "C": "A callable `application(environ, start_response)` that returns an iterable of bytes",
+        "D": "A Flask object only"
+      },
+      "answer": "C",
+      "explanation": "WSGI is the standard contract between Python web apps and servers. Flask and Django apps are WSGI callables too."
+    },
+    {
+      "question": "Why does the app expose a `/health` endpoint?",
+      "options": {
+        "A": "To show quotes",
+        "B": "So monitoring tools can check that the app is up without loading the full page",
+        "C": "To log users in",
+        "D": "It is required by WSGI"
+      },
+      "answer": "B",
+      "explanation": "Health checks are cheap, predictable URLs that uptime monitors and load balancers poll."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Free hosting puts apps to sleep or limits outbound requests. Which parts of this app would you change for a paid production deployment?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test calling `application` with a `POST` request and assert a 405 status with the right `Allow` header. Add the header if it is missing."
+    }
+  ]
+}

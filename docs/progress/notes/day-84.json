@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Generator stages (extract → transform → load) process any amount of data in one streaming pass.",
+    "Bad rows are quarantined with a reason instead of crashing the run or vanishing silently.",
+    "Writing to a temp file and renaming makes the output atomic for downstream consumers."
+  ],
+  "pitfalls": [
+    "Counting statistics inside lazy generators only works once the stream has actually been consumed."
+  ],
+  "next": "Combine threads, processes and asyncio in one processor on Day 85."
+}

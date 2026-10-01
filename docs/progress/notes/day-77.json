@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Handlers decide *where* logs go, formatters *how* they look, levels *what* gets through – per logger and per handler.",
+    "`dictConfig` keeps logging configuration declarative and in one place.",
+    "Settings should be layered (defaults < file < environment), type-converted and validated once at start-up."
+  ],
+  "pitfalls": [
+    "`yaml.load` can construct arbitrary Python objects – always use `yaml.safe_load` for configuration."
+  ],
+  "next": "Test the configuration loader thoroughly with pytest on Day 78."
+}

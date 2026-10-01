@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`sqlite3` with `?` placeholders makes SQL injection impossible – the unsafe f-string version leaks every row.",
+    "`with conn:` wraps statements in a transaction: all succeed or everything rolls back.",
+    "`PRAGMA user_version` gives simple, ordered schema migrations without an ORM."
+  ],
+  "pitfalls": [
+    "Foreign keys are off by default in SQLite – enable `PRAGMA foreign_keys = ON` on every connection."
+  ],
+  "next": "Build a robust command-line application on Day 83."
+}

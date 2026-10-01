@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-28",
+  "learnings": [
+    "`f(*seq)` spreads a sequence into positional arguments; `f(**mapping)` spreads keys into keyword arguments.",
+    "`first, *middle, last = seq` unpacks any length of sequence.",
+    "`zip(*pairs)` transposes a list of pairs."
+  ],
+  "pitfalls": [
+    "`**` unpacking still enforces the signature – a missing required key raises `TypeError`."
+  ],
+  "next": "Use argument forwarding inside decorators (Day 67)."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 53,
+  "mcq": [
+    {
+      "question": "Why does the save file store a `version` number?",
+      "options": {
+        "A": "To compress the data",
+        "B": "For sorting",
+        "C": "Git needs it",
+        "D": "So `migrate` can upgrade old save files instead of crashing on them"
+      },
+      "answer": "D",
+      "explanation": "Schemas change. A version field lets the loader apply the right upgrades step by step (v1 → v2 → …)."
+    },
+    {
+      "question": "What does `ProgressStore.load` do when the JSON file is corrupt?",
+      "options": {
+        "A": "Deletes it silently",
+        "B": "Crashes the app",
+        "C": "Keeps a backup of the bad file and starts from defaults, so learner data isn't lost without a trace",
+        "D": "Returns an empty string"
+      },
+      "answer": "C",
+      "explanation": "Corruption recovery: move the bad file aside, warn, and continue with defaults instead of crashing or overwriting evidence."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Local JSON file, SQLite or a cloud database: at what point does a learning app outgrow each choice?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a v3 migration test-first (for example rename `streak` to `streak_days`). Write tests that v1 and v2 files both upgrade correctly to v3."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 92,
+  "mcq": [
+    {
+      "question": "What is the advantage of `create_autospec(Notifier, instance=True)` over a plain `Mock()`?",
+      "options": {
+        "A": "It is faster",
+        "B": "It sends real e-mails",
+        "C": "It records nothing",
+        "D": "It fails when code calls a method or signature that the real `Notifier` doesn't have"
+      },
+      "answer": "D",
+      "explanation": "A plain `Mock` accepts any call, so tests keep passing after the real interface changes. Autospec catches that drift."
+    },
+    {
+      "question": "Why does `LendingService` take `today` as a callable?",
+      "options": {
+        "A": "Dates cannot be stored",
+        "B": "For time zones",
+        "C": "Tests can freeze and move time (due dates, fines) without waiting or patching the system clock",
+        "D": "pytest requires it"
+      },
+      "answer": "C",
+      "explanation": "An injected clock makes every fine calculation deterministic."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "100 % coverage doesn't mean bug-free. What kind of bug can a fully covered package still have? Think about mutation testing."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add reservations test-first: a member can reserve a book that is out, and when it is returned, the next reserver is notified through the (mocked) notifier."
+    }
+  ]
+}

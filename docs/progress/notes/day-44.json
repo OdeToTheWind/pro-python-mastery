@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-25",
+  "learnings": [
+    "`read_csv` + `fillna` + `astype` is the typical load-and-clean sequence.",
+    "Boolean masks with `.loc` select rows and columns in one step.",
+    "`groupby` and `pivot_table` answer most business questions in a line."
+  ],
+  "pitfalls": [
+    "`pandas` was missing from `requirements.txt`, which broke CI collection."
+  ],
+  "next": "Profile pandas vs pure Python on Day 80."
+}

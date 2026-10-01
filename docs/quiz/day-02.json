@@ -1,0 +1,37 @@
+{
+  "day": 2,
+  "mcq": [
+    {
+      "question": "Why does `clean_name` avoid plain `str.title()` for names?",
+      "options": {
+        "A": "`title()` capitalises after apostrophes too, so `\"john's\"` becomes `\"John'S\"`",
+        "B": "`title()` removes spaces between words",
+        "C": "`title()` only works on ASCII text",
+        "D": "`title()` is slower than `capwords`"
+      },
+      "answer": "A",
+      "explanation": "`str.title()` treats any non-letter as a word boundary, so it capitalises the letter after an apostrophe. `string.capwords` only splits on whitespace."
+    },
+    {
+      "question": "What does `'abc'.center(7, '*')` return?",
+      "options": {
+        "A": "`'abc****'`",
+        "B": "`'****abc'`",
+        "C": "`'*abc***'`",
+        "D": "`'**abc**'`"
+      },
+      "answer": "D",
+      "explanation": "`center` pads both sides to reach the width. 4 fill characters are split evenly, 2 on each side."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`casefold()` and `lower()` differ for some languages (for example German `ß`). When does that matter for a badge printer or a login form?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a test asking `slugify` to handle a name with accents such as `\"Zoë Ångström\"`. Decide what the slug should be, watch the test fail if it does, then make it pass."
+    }
+  ]
+}

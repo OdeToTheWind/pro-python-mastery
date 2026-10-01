@@ -1,0 +1,37 @@
+{
+  "day": 100,
+  "mcq": [
+    {
+      "question": "How does `budgetly` store money in SQLite?",
+      "options": {
+        "A": "As a float",
+        "B": "As integer cents, converted back to `Decimal`, so no rounding error ever enters the database",
+        "C": "As text",
+        "D": "As a JSON blob"
+      },
+      "answer": "B",
+      "explanation": "Integer cents are exact and sortable. `Decimal` handles display and arithmetic."
+    },
+    {
+      "question": "Why is the CLI's `main` given `env` and `today` parameters?",
+      "options": {
+        "A": "For speed",
+        "B": "argparse requires them",
+        "C": "To support Windows",
+        "D": "Tests can control configuration and dates without touching the real environment or clock"
+      },
+      "answer": "D",
+      "explanation": "The same dependency-injection idea from Days 3, 78 and 92, now in a complete tool."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "If `budgetly` had 10,000 users, what would you change first: storage, configuration, packaging or the interface? Justify the order."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `budgetly budget` subcommand test-first that shows the remaining budget per category for a month, with a warning for categories already over budget."
+    }
+  ]
+}

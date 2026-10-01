@@ -1,0 +1,37 @@
+{
+  "day": 55,
+  "mcq": [
+    {
+      "question": "Why does the planner use `ZoneInfo` instead of fixed UTC offsets?",
+      "options": {
+        "A": "`ZoneInfo` is faster",
+        "B": "Fixed offsets are not allowed in Python",
+        "C": "To avoid importing `datetime`",
+        "D": "A zone such as `Europe/Berlin` changes offset with daylight saving time; `ZoneInfo` knows the rules"
+      },
+      "answer": "D",
+      "explanation": "UTC+1 is right in winter and wrong in summer. IANA zone names carry the full history of DST rules."
+    },
+    {
+      "question": "Which `datetime` call gives an *aware* current time in UTC?",
+      "options": {
+        "A": "`datetime.utcnow()`",
+        "B": "`datetime.now(timezone.utc)`",
+        "C": "`datetime.today()`",
+        "D": "`time.time()`"
+      },
+      "answer": "B",
+      "explanation": "`utcnow()` returns a naive datetime, which is easy to misuse, and is deprecated since 3.12. Pass a timezone to `now()` instead."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Store timestamps in UTC and convert only for display: why is that the standard rule? Describe a bug caused by storing local times."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `add_business_days` starting on a Friday with a public holiday on the next Monday. Assert the exact result date, and fix the function if needed."
+    }
+  ]
+}

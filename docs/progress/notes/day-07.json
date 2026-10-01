@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-19",
+  "learnings": [
+    "`ValueError` means the type is right but the content is wrong (`int('abc')`); `TypeError` means the type itself is wrong (`int(None)`).",
+    "`bool('False')` is `True` – parse yes/no words explicitly.",
+    "`ast.literal_eval` safely turns text such as `\"[1, 2]\"` into Python objects."
+  ],
+  "pitfalls": [
+    "`int(float('inf'))` raises `OverflowError`, a third error class the converter must catch."
+  ],
+  "next": "Use these converters to clean CSV fields on Day 43."
+}

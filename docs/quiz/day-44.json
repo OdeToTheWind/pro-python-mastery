@@ -1,0 +1,37 @@
+{
+  "day": 44,
+  "mcq": [
+    {
+      "question": "What does `df.loc[mask, ['date', 'revenue']]` do?",
+      "options": {
+        "A": "Selects rows by position",
+        "B": "Deletes those rows",
+        "C": "Sorts by revenue",
+        "D": "Selects the rows where the boolean `mask` is `True`, and only the listed columns"
+      },
+      "answer": "D",
+      "explanation": "`loc` selects by label and accepts boolean masks for rows. `iloc` selects by integer position."
+    },
+    {
+      "question": "What does `df.groupby('store')['revenue'].sum()` return?",
+      "options": {
+        "A": "The total revenue of the whole DataFrame",
+        "B": "A DataFrame sorted by store",
+        "C": "A Series with one total per store",
+        "D": "One row per sale"
+      },
+      "answer": "C",
+      "explanation": "groupby → select a column → aggregate: split the rows by store, sum each group, and return the results indexed by store."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When is pandas overkill compared with the `csv` module and plain dicts? Think about dependency size, start-up time and data volume."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `load_sales` with a row whose revenue is missing. Decide whether to drop it or fill it, then make the cleaning step do that explicitly."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 77,
+  "mcq": [
+    {
+      "question": "Why does `load_yaml` use `yaml.safe_load` instead of `yaml.load`?",
+      "options": {
+        "A": "`safe_load` is faster",
+        "B": "`yaml.load` can construct arbitrary Python objects from tags, so an untrusted config could run code",
+        "C": "`yaml.load` cannot read dicts",
+        "D": "`safe_load` supports comments"
+      },
+      "answer": "B",
+      "explanation": "`safe_load` only builds plain data types. Never use full loading on files you didn't write."
+    },
+    {
+      "question": "Which standard-library module reads TOML files (Python 3.11+)?",
+      "options": {
+        "A": "`tomllib`",
+        "B": "`toml`",
+        "C": "`configparser`",
+        "D": "`json`"
+      },
+      "answer": "A",
+      "explanation": "`tomllib` is read-only and built in. Writing TOML needs a third-party package."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Layered settings (file < environment < command line): why do 12-factor apps prefer environment variables in production?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that an environment variable overrides the TOML file's value for the log level, and that an invalid level such as `LOUD` fails with a clear error."
+    }
+  ]
+}

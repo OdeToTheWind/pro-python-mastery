@@ -1,0 +1,37 @@
+{
+  "day": 35,
+  "mcq": [
+    {
+      "question": "Why does `EventBus.emit` wrap each listener call in `try/except`?",
+      "options": {
+        "A": "To make listeners run faster",
+        "B": "To retry failed listeners",
+        "C": "One failing listener must not stop the others from receiving the event",
+        "D": "Because listeners always raise"
+      },
+      "answer": "C",
+      "explanation": "Error isolation: the doorbell should still ring the phone even if the camera listener crashes. Errors are collected in `errors` for later inspection."
+    },
+    {
+      "question": "What does a \"one-shot\" listener registered with `once` do?",
+      "options": {
+        "A": "Runs only on the first event of any type",
+        "B": "Runs on the next matching event and then unsubscribes itself",
+        "C": "Runs only once per second",
+        "D": "Blocks all other listeners"
+      },
+      "answer": "B",
+      "explanation": "`once` wraps the callback so it removes itself after its first call, which is useful for one-time setup or confirmations."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Events decouple devices from listeners. What becomes harder to understand or debug in an event-driven system, and how can logging help?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `emit` calls listeners in registration order, then add priority support (higher priority first), test-first."
+    }
+  ]
+}

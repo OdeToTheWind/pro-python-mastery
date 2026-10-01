@@ -1,0 +1,37 @@
+{
+  "day": 86,
+  "mcq": [
+    {
+      "question": "Why does the monitor carry the request id in a `contextvars.ContextVar` instead of a global variable?",
+      "options": {
+        "A": "Globals are slower",
+        "B": "Each thread or async task sees its own value, so concurrent requests never mix up their ids",
+        "C": "ContextVars are saved to disk",
+        "D": "Logging requires it"
+      },
+      "answer": "B",
+      "explanation": "Context variables are per-execution-context. A global would be overwritten by whichever request ran last."
+    },
+    {
+      "question": "What does `RotatingFileHandler(maxBytes=1_000_000, backupCount=3)` do?",
+      "options": {
+        "A": "Starts a new file when the current one would exceed ~1 MB, keeping at most 3 old files",
+        "B": "Rotates the log every day",
+        "C": "Compresses old logs",
+        "D": "Sends logs to 3 servers"
+      },
+      "answer": "A",
+      "explanation": "Old files are renamed `.1`, `.2`, `.3` and the oldest is deleted, so disk use is bounded."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Logs, metrics and traces: what question does each answer best? Give one payment-gateway example for each."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a new metric test-first: `payments_amount_cents_total` per status. Check it appears correctly in `Metrics.render()` output."
+    }
+  ]
+}

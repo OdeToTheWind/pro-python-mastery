@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-16",
+  "learnings": [
+    "`str.isidentifier()` implements the real lexer rules; hand-rolled `isalnum()` checks accept `x²`.",
+    "Hard keywords are errors, soft keywords (`match`, `case`, `type`) are legal but confusing, built-ins can be shadowed.",
+    "Style depends on what the name is for: snake_case variables, CONSTANT_CASE constants, CapWords classes."
+  ],
+  "pitfalls": [
+    "Lower-casing every suggestion wrongly told people to rename constants – suggestions are now kind-aware."
+  ],
+  "next": "Run `ruff` with the `N` (pep8-naming) rules to enforce this automatically."
+}

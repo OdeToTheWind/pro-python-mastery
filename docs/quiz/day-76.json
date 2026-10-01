@@ -1,0 +1,37 @@
+{
+  "day": 76,
+  "mcq": [
+    {
+      "question": "What does the `asyncio.Semaphore` in `ShopClient.fetch_price` limit?",
+      "options": {
+        "A": "The number of retries",
+        "B": "The total number of shops",
+        "C": "The response size",
+        "D": "How many requests can be in flight at the same time"
+      },
+      "answer": "D",
+      "explanation": "`async with self.semaphore` lets only N coroutines past at once, which is polite to the shops and avoids hitting connection limits."
+    },
+    {
+      "question": "How is an async generator such as `stream_prices` consumed?",
+      "options": {
+        "A": "A plain `for` loop",
+        "B": "`async for price in stream_prices(...)` inside a coroutine",
+        "C": "`list(stream_prices(...))`",
+        "D": "`next(stream_prices(...))`"
+      },
+      "answer": "B",
+      "explanation": "Async iterators implement `__aiter__`/`__anext__` and must be iterated with `async for`, or with an async comprehension."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Retries plus timeouts plus a concurrency limit: in what order should they wrap a request, and why does the order matter?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Using the day's local test server, write a test where one shop always returns 503. Assert the retries happen, the final offer reports the error, and the other shops still return prices."
+    }
+  ]
+}

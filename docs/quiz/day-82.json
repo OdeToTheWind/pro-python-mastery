@@ -1,0 +1,37 @@
+{
+  "day": 82,
+  "mcq": [
+    {
+      "question": "What does `with conn:` do for a `sqlite3` connection?",
+      "options": {
+        "A": "Commits the transaction if the block succeeds and rolls it back if it raises; it does not close the connection",
+        "B": "Opens and closes the connection",
+        "C": "Locks the database file permanently",
+        "D": "Enables foreign keys"
+      },
+      "answer": "A",
+      "explanation": "A common surprise: the connection's context manager manages *transactions*. `open_db` adds closing on top."
+    },
+    {
+      "question": "Why are foreign keys enabled explicitly with `PRAGMA foreign_keys = ON` in `connect`?",
+      "options": {
+        "A": "It makes queries faster",
+        "B": "It is needed for indexes",
+        "C": "SQLite has foreign-key enforcement turned off by default, on every new connection",
+        "D": "Python requires it"
+      },
+      "answer": "C",
+      "explanation": "Without the pragma, SQLite happily stores a check-in for a member that doesn't exist."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When does a hand-written SQL layer like this become painful enough that an ORM (SQLAlchemy) or a query builder is worth it?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add migration v3 test-first: passes get an `expires_on` date, and `check_in` refuses expired passes. Write tests that an old v2 database upgrades cleanly."
+    }
+  ]
+}

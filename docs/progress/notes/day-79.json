@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`pyproject.toml` holds PEP 621 metadata; the build backend (hatchling, setuptools, poetry-core) is just a pluggable implementation.",
+    "A wheel is a zip of code plus `*.dist-info` metadata; `py3-none-any` means one wheel for every platform.",
+    "`twine check` and a TestPyPI upload rehearse a release safely; tokens belong in environment variables or CI secrets."
+  ],
+  "pitfalls": [
+    "`python -m build` normally downloads the backend; `--no-isolation` uses the installed one so builds work offline in CI."
+  ],
+  "next": "Measure and optimise the package's performance on Day 80."
+}

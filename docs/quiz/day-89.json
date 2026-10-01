@@ -1,0 +1,37 @@
+{
+  "day": 89,
+  "mcq": [
+    {
+      "question": "What does `subprocess.run(cmd, timeout=5)` do when the child runs longer than 5 seconds?",
+      "options": {
+        "A": "Kills the child and raises `subprocess.TimeoutExpired`",
+        "B": "Waits anyway",
+        "C": "Returns exit code 0",
+        "D": "Leaves the child running in the background"
+      },
+      "answer": "A",
+      "explanation": "`run_command` catches `TimeoutExpired` and records a timed-out result, so a hung backup can't block the scheduler."
+    },
+    {
+      "question": "Why is the PID file created with `os.O_CREAT | os.O_EXCL`?",
+      "options": {
+        "A": "It makes the file hidden",
+        "B": "It sets file permissions",
+        "C": "It is required on Windows",
+        "D": "Creation is atomic: if two runners start at the same moment, only one can create the file"
+      },
+      "answer": "D",
+      "explanation": "Checking `exists()` and then creating the file can race. `O_EXCL` makes the check and the creation one step."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The runner skips a job if its previous run is still busy. When would you rather queue it, or run both? Think about backups versus sending reports."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add retries for failing jobs test-first: a job may declare `retries=2`, and the history shows each attempt. Use a command that fails, then succeeds, to prove it."
+    }
+  ]
+}

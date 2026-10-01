@@ -1,0 +1,37 @@
+{
+  "day": 9,
+  "mcq": [
+    {
+      "question": "What does `display_name('', 'Ada Lovelace')` return, given it uses `nickname or full_name`?",
+      "options": {
+        "A": "`'Ada Lovelace'`",
+        "B": "`''`",
+        "C": "`True`",
+        "D": "`None`"
+      },
+      "answer": "A",
+      "explanation": "`or` returns the first truthy *operand*, not a bool. The empty string is falsy, so the full name is returned."
+    },
+    {
+      "question": "In `can_open(user) and expensive_check()`, when is `expensive_check()` skipped?",
+      "options": {
+        "A": "When `can_open(user)` is truthy",
+        "B": "When `can_open(user)` is falsy",
+        "C": "Never; both sides always run",
+        "D": "Only inside a loop"
+      },
+      "answer": "B",
+      "explanation": "`and` short-circuits: if the left side is falsy, the result is already known, so the right side is never evaluated."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`x = value or default` is a common idiom. Describe a case where it gives the wrong answer (hint: legitimate zero or empty values) and the safer alternative."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test proving the right-hand side of `or` is *not* evaluated when the left side is truthy, using the day's `ShortCircuitTracer` or a function that records calls."
+    }
+  ]
+}

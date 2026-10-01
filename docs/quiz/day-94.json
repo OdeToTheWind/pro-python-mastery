@@ -1,0 +1,37 @@
+{
+  "day": 94,
+  "mcq": [
+    {
+      "question": "What does `text() >> Validator(str.upper)` produce?",
+      "options": {
+        "A": "A validator that only uppercases",
+        "B": "A syntax error",
+        "C": "A list of validators",
+        "D": "A composed validator: the first validates and cleans the text, then its output is passed to the second"
+      },
+      "answer": "D",
+      "explanation": "`__rshift__` chains validators, so cleaning and validation steps compose like a pipeline."
+    },
+    {
+      "question": "Why do errors carry a path such as `visits[1].date`?",
+      "options": {
+        "A": "For sorting errors",
+        "B": "So the person fixing the form knows exactly which nested field is wrong",
+        "C": "Paths are required by Python",
+        "D": "To make errors shorter"
+      },
+      "answer": "B",
+      "explanation": "Nested schemas prefix each error with the field or index as it bubbles up, which turns a vague failure into a precise one."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Writing your own validation library versus using Pydantic: what does each teach, and what would you choose for a real clinical system?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add an `email()` validator test-first, and a `date_between(start, end)` check. Use them in `patient_schema` and update the batch-report tests."
+    }
+  ]
+}

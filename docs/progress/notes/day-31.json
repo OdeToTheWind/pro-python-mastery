@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-12",
+  "learnings": [
+    "Instance methods change one object, class methods work with the class (alternative constructors), static methods are plain utilities.",
+    "`cls(...)` in a classmethod returns the right subclass automatically.",
+    "Class-level state changes should be scoped and restored (a context manager helps)."
+  ],
+  "pitfalls": [
+    "A negative withdrawal used to *add* money – the new domain validates inputs inside the methods."
+  ],
+  "next": "Use classmethod constructors for config objects on Day 91."
+}

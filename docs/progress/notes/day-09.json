@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-21",
+  "learnings": [
+    "`and`/`or` return one of their *operands*, not necessarily `True`/`False`.",
+    "Short-circuiting is observable: a tracer shows the right operand never runs.",
+    "Name sub-conditions (`is_staff`) before combining them so access rules stay readable."
+  ],
+  "pitfalls": [
+    "Using `print()` as an operand always yields `None`, so the original demo printed the wrong branch."
+  ],
+  "next": "Model the door rules as data (a permission table) when building plugins on Day 87."
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-04",
+  "learnings": [
+    "LEGB: Local → Enclosing → Global → Built-in, and the first match wins.",
+    "Assigning anywhere in a function makes the name local everywhere in it (`UnboundLocalError`).",
+    "Closures store captured variables in cells you can inspect via `__closure__`."
+  ],
+  "pitfalls": [
+    "The original demo labelled a local of `main()` as 'global' – a real module global is now used."
+  ],
+  "next": "Prefer explicit objects (`FeatureFlags`) over module globals in larger programs."
+}

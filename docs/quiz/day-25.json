@@ -1,0 +1,37 @@
+{
+  "day": 25,
+  "mcq": [
+    {
+      "question": "How does `in_virtualenv()` detect a virtual environment reliably?",
+      "options": {
+        "A": "It compares `sys.prefix` with `sys.base_prefix`",
+        "B": "It checks the `VIRTUAL_ENV` environment variable",
+        "C": "It looks for a `.venv` folder",
+        "D": "It runs `pip --version`"
+      },
+      "answer": "A",
+      "explanation": "Inside a venv, `sys.prefix` points to the venv while `sys.base_prefix` points to the base install. `VIRTUAL_ENV` is only set by `activate`, so IDE and CI interpreters would be missed."
+    },
+    {
+      "question": "Which file should *never* be committed to git in a Python project?",
+      "options": {
+        "A": "`pyproject.toml`",
+        "B": "`requirements.txt`",
+        "C": "`.env` containing secrets",
+        "D": "`README.md`"
+      },
+      "answer": "C",
+      "explanation": "`.env` files hold credentials. Commit an `.env.example` with placeholder values instead and list `.env` in `.gitignore`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Pinned versions (`requests==2.32.3`) or ranges (`requests>=2.31,<3`): which is better for an application and which for a library, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that runs the project doctor against a temporary folder missing a `.gitignore`, assert the report flags it, then add the file and assert the warning disappears."
+    }
+  ]
+}

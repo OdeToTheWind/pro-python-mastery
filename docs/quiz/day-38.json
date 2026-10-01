@@ -1,0 +1,37 @@
+{
+  "day": 38,
+  "mcq": [
+    {
+      "question": "Why does `Battle` accept an `rng` (random generator) argument?",
+      "options": {
+        "A": "To make battles harder",
+        "B": "Tests can pass a seeded generator, making every hit and miss reproducible",
+        "C": "Random numbers need a class",
+        "D": "To save memory"
+      },
+      "answer": "B",
+      "explanation": "Injecting randomness turns an unpredictable game into a deterministic one under test."
+    },
+    {
+      "question": "`Hero` extends `Character` with potions and healing. Which relationship is this?",
+      "options": {
+        "A": "Inheritance: a Hero *is a* Character with extra behaviour",
+        "B": "Composition",
+        "C": "Aggregation",
+        "D": "Polymorphism only"
+      },
+      "answer": "A",
+      "explanation": "`Hero` reuses `Character`'s attack and HP logic and adds its own. Composition would mean a Hero *has a* Character."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "If the game grew to 20 monster types with different abilities, would you use deep inheritance or composition of abilities? Sketch both."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for the losing path: with a seeded `rng`, the hero runs out of HP and the battle reports defeat. Then write a test proving a potion never heals above `max_hp`, and add a new rule test-first: drinking a potion at full HP is refused and does not use up the potion."
+    }
+  ]
+}

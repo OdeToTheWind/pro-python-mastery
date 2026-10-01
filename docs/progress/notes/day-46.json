@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-27",
+  "learnings": [
+    "Index records by key with `{r[key]: r for r in records}` for O(1) lookups.",
+    "Inverting a mapping must handle duplicate values (map to lists).",
+    "Set comprehensions (`{...}` without `:`) deduplicate inline."
+  ],
+  "pitfalls": [
+    "`apply_discount` must return a new dict; mutating the caller's prices was a hidden side effect."
+  ],
+  "next": "Combine with `Counter` and `defaultdict` on Day 71."
+}

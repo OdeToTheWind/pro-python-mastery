@@ -1,0 +1,37 @@
+{
+  "day": 5,
+  "mcq": [
+    {
+      "question": "What is `-7 // 2` in Python?",
+      "options": {
+        "A": "`-3`",
+        "B": "`-3.5`",
+        "C": "`4`",
+        "D": "`-4`"
+      },
+      "answer": "D",
+      "explanation": "`//` is floor division: it rounds towards negative infinity, so -3.5 becomes -4, not -3."
+    },
+    {
+      "question": "Why does a bill splitter use `Decimal` (or integer cents) instead of `float` for money?",
+      "options": {
+        "A": "`float` cannot store negative numbers",
+        "B": "`Decimal` is faster than `float`",
+        "C": "Binary floats cannot represent most decimal fractions exactly, so `0.1 + 0.2 != 0.3`",
+        "D": "`float` has no rounding function"
+      },
+      "answer": "C",
+      "explanation": "Floats are binary approximations, so cents drift. `Decimal` stores decimal digits exactly and rounds the way you specify."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A €100 bill is split 3 ways. Who pays the extra cent, and how would you make that rule explicit and fair in code?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `split_bill` always returns shares that sum exactly to the bill total (try 100.00 split 3, 7 and 9 ways). Make it pass if it fails."
+    }
+  ]
+}

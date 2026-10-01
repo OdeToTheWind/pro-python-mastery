@@ -1,0 +1,37 @@
+{
+  "day": 37,
+  "mcq": [
+    {
+      "question": "To draw a regular polygon with n sides, how far must the turtle turn at each corner?",
+      "options": {
+        "A": "`180 / n` degrees",
+        "B": "`90` degrees",
+        "C": "`360 * n` degrees",
+        "D": "`360 / n` degrees (the exterior angle)"
+      },
+      "answer": "D",
+      "explanation": "After n turns the turtle has rotated a full 360°, so each turn is `360 / n`. `exterior_angle` computes this, and it is testable without opening a window."
+    },
+    {
+      "question": "Why does the day compute `orbit_positions` as plain numbers instead of moving the turtle directly in the loop?",
+      "options": {
+        "A": "Turtle cannot move in loops",
+        "B": "The maths can be unit-tested without a screen, and the drawing code stays a thin layer",
+        "C": "It is faster to draw",
+        "D": "Turtle only accepts integers"
+      },
+      "answer": "B",
+      "explanation": "Separating geometry from drawing means the tests can run in CI with no display."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`ontimer` schedules the next frame instead of using a `while` loop with `sleep`. Why does a GUI need its event loop to stay free?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `draw_star` (or its angle helper) produces a closed shape: after all turns the total rotation is a multiple of 360°. Then add a new shape, test-first."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 93,
+  "mcq": [
+    {
+      "question": "What does `await writer.drain()` do in the quiz server?",
+      "options": {
+        "A": "Closes the connection",
+        "B": "Waits until the send buffer has room, applying back-pressure when a client reads slowly",
+        "C": "Clears the input buffer",
+        "D": "Flushes the log"
+      },
+      "answer": "B",
+      "explanation": "Without `drain()`, writing to a slow client lets memory grow without limit."
+    },
+    {
+      "question": "Why is the server started with `limit=MAX_LINE`?",
+      "options": {
+        "A": "To limit the number of players",
+        "B": "To speed up reading",
+        "C": "So `readline()` raises once a line exceeds the limit, protecting the server from huge or endless input",
+        "D": "It sets the port"
+      },
+      "answer": "C",
+      "explanation": "Bounded input is a basic defence: a client sending gigabytes without a newline would otherwise fill memory."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "One coroutine per client versus one thread per client: how many connections can each approach handle, and what limits each one?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `HINT` command test-first: it reveals the first letter of the answer, costs 5 points, and can only be used once per question."
+    }
+  ]
+}

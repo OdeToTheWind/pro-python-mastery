@@ -1,0 +1,37 @@
+{
+  "day": 58,
+  "mcq": [
+    {
+      "question": "Why does every request in this client pass a `timeout`?",
+      "options": {
+        "A": "It makes downloads faster",
+        "B": "It is required by HTTPS",
+        "C": "Without one, `requests` can wait forever on a stalled server",
+        "D": "To retry automatically"
+      },
+      "answer": "C",
+      "explanation": "`requests` has no default timeout. One hung connection can block your program indefinitely."
+    },
+    {
+      "question": "What does mounting an `HTTPAdapter` with `Retry(...)` on a `Session` give you?",
+      "options": {
+        "A": "Automatic retries with backoff for transient errors (429/5xx), plus connection reuse",
+        "B": "Caching of responses",
+        "C": "Automatic JSON parsing",
+        "D": "Parallel requests"
+      },
+      "answer": "A",
+      "explanation": "The session reuses TCP connections, and the retry policy handles temporary failures without retry loops in your own code."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should `POST` be retried automatically? Explain the risk (double-creating orders) and how idempotency keys solve it."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write three tests for `safe_get` with a mocked session: a timeout, an HTTP 404 and a refused connection. Assert each returns a readable outcome instead of crashing, and add any case that is missing."
+    }
+  ]
+}

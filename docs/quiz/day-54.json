@@ -1,0 +1,37 @@
+{
+  "day": 54,
+  "mcq": [
+    {
+      "question": "Why does `validate_address` reject addresses containing `\\n` or `\\r`?",
+      "options": {
+        "A": "Newlines are not allowed in Unicode",
+        "B": "To prevent header injection, where a newline would let an attacker add extra headers such as `Bcc:`",
+        "C": "SMTP servers don't accept long addresses",
+        "D": "To make the regex simpler"
+      },
+      "answer": "B",
+      "explanation": "Email headers are line-based. A newline inside an address could inject extra headers into the message."
+    },
+    {
+      "question": "Where should SMTP passwords come from?",
+      "options": {
+        "A": "Hard-coded in `main.py`",
+        "B": "A command-line argument",
+        "C": "Environment variables (or a git-ignored `.env`), never the source code",
+        "D": "The email body"
+      },
+      "answer": "C",
+      "explanation": "Secrets in code end up in git history forever. `SmtpConfig.from_env` reads them at runtime."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why build a multipart email with both plain text and HTML? What happens in clients that block HTML or images?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `send_email` in dry-run mode never opens a network connection (mock `smtplib.SMTP` and assert it was not called)."
+    }
+  ]
+}

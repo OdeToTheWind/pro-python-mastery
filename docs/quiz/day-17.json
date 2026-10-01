@@ -1,0 +1,37 @@
+{
+  "day": 17,
+  "mcq": [
+    {
+      "question": "`book_flight(origin, destination, /, ...)`: what does the `/` mean?",
+      "options": {
+        "A": "They are optional",
+        "B": "They must be keywords",
+        "C": "`origin` and `destination` must be passed positionally, never as `origin=...`",
+        "D": "It divides the arguments"
+      },
+      "answer": "C",
+      "explanation": "Parameters before `/` are positional-only, so their names are not part of the public API and can be renamed later safely."
+    },
+    {
+      "question": "What does a bare `*` in a parameter list do?",
+      "options": {
+        "A": "Collects extra positional arguments",
+        "B": "Makes every parameter after it keyword-only",
+        "C": "Makes the following parameters optional",
+        "D": "Unpacks a list"
+      },
+      "answer": "B",
+      "explanation": "A lone `*` (without a name) ends the positional parameters. Everything after must be passed by name, for example `cabin='business'`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When designing a public function, which arguments should be positional-only, which keyword-only, and why does it matter for backwards compatibility?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `book_flight(origin='LHR', destination='JFK')` raises `TypeError`. Then remove the `/` and watch the test fail, to understand what the marker protects."
+    }
+  ]
+}

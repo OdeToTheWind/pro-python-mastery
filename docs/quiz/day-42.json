@@ -1,0 +1,37 @@
+{
+  "day": 42,
+  "mcq": [
+    {
+      "question": "What does `inside(root, '../../etc/passwd')` do?",
+      "options": {
+        "A": "Returns the path unchanged",
+        "B": "Creates the file",
+        "C": "Raises `PermissionError`, because the resolved path escapes `root`",
+        "D": "Returns `None`"
+      },
+      "answer": "C",
+      "explanation": "Resolving the path and checking `is_relative_to(root)` blocks path-traversal attacks such as `../`."
+    },
+    {
+      "question": "What is the difference between `Path.glob('*.pdf')` and `Path.rglob('*.pdf')`?",
+      "options": {
+        "A": "`rglob` is faster",
+        "B": "`glob` follows symlinks, `rglob` doesn't",
+        "C": "There is no difference",
+        "D": "`rglob` searches all subfolders recursively; `glob` only matches the given pattern from that folder"
+      },
+      "answer": "D",
+      "explanation": "`rglob(pattern)` is the same as `glob('**/' + pattern)`: it walks the whole tree below the folder."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`os.path` functions versus `pathlib.Path` methods: list two things that are clearer with `pathlib` and one situation where `os` is still needed."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test where two files with the same name but different case (`Report.PDF`, `report.pdf`) are organised. Decide what should happen on a case-insensitive file system and make the organiser safe."
+    }
+  ]
+}

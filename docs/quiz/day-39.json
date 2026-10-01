@@ -1,0 +1,37 @@
+{
+  "day": 39,
+  "mcq": [
+    {
+      "question": "For `class D(B, C)` where both `B` and `C` inherit from `A`, what is `D.__mro__`?",
+      "options": {
+        "A": "D, B, A, C, object",
+        "B": "D, C, B, A, object",
+        "C": "A, B, C, D, object",
+        "D": "D, B, C, A, object"
+      },
+      "answer": "D",
+      "explanation": "C3 linearisation keeps each parent's order and puts a shared base (`A`) after all its subclasses."
+    },
+    {
+      "question": "Why must cooperative mixins like `WiFiMixin.__init__` call `super().__init__(**kwargs)`?",
+      "options": {
+        "A": "So every class in the MRO gets its turn to initialise; skipping it breaks the chain",
+        "B": "So `super()` can find `object`",
+        "C": "Python requires every `__init__` to call `super()`",
+        "D": "To make the mixin abstract"
+      },
+      "answer": "A",
+      "explanation": "`super()` follows the MRO, not just the direct parent. Each class passes the remaining arguments on, so all initialisers run exactly once."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Mixins versus composition for adding Wi-Fi to devices: which is easier to test, and which is easier to explain to a new team member?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `BatteryMixin` with its own `__init__`. Write a test that a `SmartDoorbell` with Wi-Fi and battery initialises both correctly, and check `mro_names`."
+    }
+  ]
+}

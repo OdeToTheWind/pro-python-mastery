@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-01",
+  "learnings": [
+    "`raise X from exc` keeps the original error as `__cause__` for debugging.",
+    "`ExceptionGroup` reports many validation problems at once; `except*` handles each kind.",
+    "Retry only transient errors, with backoff, and re-raise the last one."
+  ],
+  "pitfalls": [
+    "`logging.exception` records the traceback; printing `str(exc)` loses it."
+  ],
+  "next": "Structured logging and log rotation come on Days 77 and 86."
+}

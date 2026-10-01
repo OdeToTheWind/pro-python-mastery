@@ -1,0 +1,37 @@
+{
+  "day": 1,
+  "mcq": [
+    {
+      "question": "In `make_streak_counter`, the inner function updates `streak`, a variable of the outer function. Which keyword makes that rebinding possible?",
+      "options": {
+        "A": "`global`",
+        "B": "`static`",
+        "C": "`nonlocal`",
+        "D": "No keyword is needed"
+      },
+      "answer": "C",
+      "explanation": "`nonlocal` rebinds a name in the nearest enclosing function scope. `global` would target the module, and without either keyword the assignment creates a new local variable."
+    },
+    {
+      "question": "What does `f\"{3.14159:8.2f}|\"` produce?",
+      "options": {
+        "A": "`    3.14|`",
+        "B": "`3.14|`",
+        "C": "`3.14159 |`",
+        "D": "`00003.14|`"
+      },
+      "answer": "A",
+      "explanation": "The format spec `8.2f` means width 8 with 2 decimals, and numbers right-align by default, so 4 spaces pad `3.14`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When would you choose a closure (like `make_streak_counter`) over a class to keep state? Give one advantage and one limitation of each."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that calls `record_session` twice and checks the global `total_minutes`. Then delete the `global` line in the function, run the test, and explain the exact error you get."
+    }
+  ]
+}

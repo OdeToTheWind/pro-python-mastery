@@ -1,0 +1,37 @@
+{
+  "day": 80,
+  "mcq": [
+    {
+      "question": "What is the first step when a report is slow?",
+      "options": {
+        "A": "Measure with a profiler (`cProfile`, `timeit`) to find the real hotspot",
+        "B": "Rewrite it in C",
+        "C": "Add caching everywhere",
+        "D": "Use threads"
+      },
+      "answer": "A",
+      "explanation": "Guessing wastes effort. The profiler shows where time actually goes, and only then do you optimise."
+    },
+    {
+      "question": "Why does checking `customer in seen_set` beat `customer in seen_list` for large data?",
+      "options": {
+        "A": "Sets keep insertion order",
+        "B": "Lists cannot hold strings",
+        "C": "Sets use less memory",
+        "D": "Set membership is O(1) on average (hashing), while a list scans every element, O(n)"
+      },
+      "answer": "D",
+      "explanation": "`report_slow` uses a list and `report_fast` a set: the change turns an O(n²) loop into O(n)."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`@cache` on `tax_rate` speeds things up. When can caching cause wrong results in production, and how do you invalidate it?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test proving `report_fast` returns exactly the same result as `report_slow` on 1,000 random orders, then time both and record the speed-up in the test output."
+    }
+  ]
+}

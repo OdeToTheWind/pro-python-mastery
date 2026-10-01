@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Classes are objects whose class is `type`; `type(name, bases, namespace)` creates classes at runtime.",
+    "A metaclass's `__new__` runs at *class definition* time, so it can validate and register plugins before any instance exists.",
+    "`__init_subclass__` covers most real use cases (registration, validation) without a metaclass."
+  ],
+  "pitfalls": [
+    "Combining two unrelated metaclasses raises a metaclass conflict – a strong reason to prefer simpler hooks."
+  ],
+  "next": "Use functional tools (`functools`, `itertools`) to simplify plugin logic on Day 71."
+}

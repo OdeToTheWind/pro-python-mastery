@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Threads help with I/O-bound work: while one waits on the network, others run.",
+    "Read-modify-write on shared state is a race; a `Lock` makes the section atomic.",
+    "`queue.Queue` is the safe hand-over point between producers and consumers; sentinels stop workers cleanly."
+  ],
+  "pitfalls": [
+    "With the GIL, pure-Python CPU work does not get faster with threads – the experiment shows a speed-up near 1×."
+  ],
+  "next": "Use separate processes for CPU-bound work on Day 74."
+}

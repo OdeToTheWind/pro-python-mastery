@@ -1,0 +1,37 @@
+{
+  "day": 59,
+  "mcq": [
+    {
+      "question": "What URL does `requests` prepare for `params={'q': 'py dev', 'location': None, 'tag': ['a', 'b']}`?",
+      "options": {
+        "A": "`?q=py+dev&tag=a&tag=b`",
+        "B": "`?q=py dev&location=None&tag=['a', 'b']`",
+        "C": "`?q=py%20dev&tag=a,b`",
+        "D": "`?q=py+dev&location=&tag=a&tag=b`"
+      },
+      "answer": "A",
+      "explanation": "`None` values are dropped, lists repeat the key, and spaces are encoded as `+`. Building requests offline with `.prepare()` lets you assert exactly this."
+    },
+    {
+      "question": "Which body type should a file upload use?",
+      "options": {
+        "A": "`application/json`",
+        "B": "`text/plain`",
+        "C": "A query string",
+        "D": "`multipart/form-data`"
+      },
+      "answer": "D",
+      "explanation": "Multipart bodies carry binary file parts alongside normal form fields, which is what `files=` in `requests` produces."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Form-encoded versus JSON bodies: why do many older APIs still expect forms, and how do you tell which one a server wants?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `search_request` with `page=0` raises, and another that asserts the exact prepared URL for a search with two tags and remote jobs only."
+    }
+  ]
+}

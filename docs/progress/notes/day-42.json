@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-23",
+  "learnings": [
+    "`pathlib` reads better than `os.path` for most work; `os.walk` is still handy for full traversals.",
+    "Resolve and check `is_relative_to(root)` to block `../` path traversal.",
+    "Destructive operations should need explicit consent (`recursive=True`)."
+  ],
+  "pitfalls": [
+    "`os.rmdir` on a non-empty folder raised an unhandled `OSError` in the original version."
+  ],
+  "next": "Combine globbing and generators in the ETL pipeline (Day 84)."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 26,
+  "mcq": [
+    {
+      "question": "Why does `safe_rename` use the `tokenize` module instead of `str.replace`?",
+      "options": {
+        "A": "`tokenize` is faster",
+        "B": "`str.replace` cannot handle Unicode",
+        "C": "So only real identifier tokens change, not matches inside strings, comments or longer names like `old_total`",
+        "D": "`tokenize` also formats the code"
+      },
+      "answer": "C",
+      "explanation": "A plain text replace would turn `total` into `amount` inside `\"total:\"`, a comment, and `subtotal`. Working on NAME tokens mirrors what an IDE refactoring does."
+    },
+    {
+      "question": "`safe_rename(src, 'x', 'class')` is called. What should happen?",
+      "options": {
+        "A": "It renames anyway",
+        "B": "It raises `ValueError`, because `class` is a keyword and not a valid identifier",
+        "C": "It returns the source unchanged",
+        "D": "It renames to `class_`"
+      },
+      "answer": "B",
+      "explanation": "The function checks `new.isidentifier()` and `keyword.iskeyword(new)`, so a rename can never produce code that fails to compile."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Which three IDE features save you the most time, and which would you avoid relying on (for example auto-imports that pick the wrong module)?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for renaming an attribute accessed as `obj.total` while a local variable `total` also exists. Should both change? Decide, then document the limitation or fix it."
+    }
+  ]
+}

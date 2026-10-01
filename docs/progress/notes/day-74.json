@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Each process has its own interpreter and GIL, so CPU-bound work scales across cores.",
+    "Arguments and results are pickled between processes – small tasks can be slower in parallel than sequentially.",
+    "`shared_memory` shares one buffer by name instead of copying it; always `close()` and `unlink()` it."
+  ],
+  "pitfalls": [
+    "Forgetting `unlink()` leaks the OS shared-memory block until reboot – a test now proves it is released."
+  ],
+  "next": "Handle thousands of I/O waits in one thread with asyncio on Day 75."
+}

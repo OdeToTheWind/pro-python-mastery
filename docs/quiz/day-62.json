@@ -1,0 +1,37 @@
+{
+  "day": 62,
+  "mcq": [
+    {
+      "question": "What should a polite scraper do before fetching pages from a site?",
+      "options": {
+        "A": "Disable its User-Agent",
+        "B": "Fetch as fast as possible",
+        "C": "Log in with a fake account",
+        "D": "Read `robots.txt` and respect it, identify itself with a User-Agent, and rate-limit its requests"
+      },
+      "answer": "D",
+      "explanation": "`PoliteFetcher` checks `robots.txt`, sends a descriptive User-Agent and waits between requests."
+    },
+    {
+      "question": "`soup.select('div.quote span.text')` uses what kind of query?",
+      "options": {
+        "A": "XPath",
+        "B": "A regular expression",
+        "C": "A CSS selector",
+        "D": "SQL"
+      },
+      "answer": "C",
+      "explanation": "BeautifulSoup's `select` and `select_one` take CSS selectors: tag names, `.class`, `#id` and descendant relationships."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When is scraping a site ethically or legally questionable even if `robots.txt` allows it? Consider terms of service, personal data and server load."
+    },
+    {
+      "type": "hands-on",
+      "question": "Save one quotes page as a local HTML fixture and write a test that `parse_page` extracts the right quotes, authors and next-page link, with no network access."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 28,
+  "mcq": [
+    {
+      "question": "`LOAN_DAYS` is defined in the class body of `Book`, not in `__init__`. What does that make it?",
+      "options": {
+        "A": "An instance attribute",
+        "B": "A global variable",
+        "C": "A constant that cannot be changed",
+        "D": "A class attribute shared by all books unless an instance overrides it"
+      },
+      "answer": "D",
+      "explanation": "Class attributes live on the class; instances find them through attribute lookup. Assigning `book.LOAN_DAYS = 7` creates an instance attribute that shadows it for that book only."
+    },
+    {
+      "question": "What is the purpose of `__repr__`?",
+      "options": {
+        "A": "A user-friendly display for end users",
+        "B": "An unambiguous, developer-facing representation, ideally one that could recreate the object",
+        "C": "Converting the object to JSON",
+        "D": "Comparing two objects"
+      },
+      "answer": "B",
+      "explanation": "`repr()` is what you see in the REPL, logs and debuggers. `__str__` is the friendly version; if missing, `str()` falls back to `__repr__`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When should `__eq__` compare all fields, and when only an ID such as an ISBN? What changes if you also need the objects in a `set`?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `Book.check_out` on an already checked-out book raises a clear error. Then write tests proving two `Book` objects with the same ISBN are equal and collapse into one entry in a `set`, and explain why `__hash__` must agree with `__eq__`."
+    }
+  ]
+}

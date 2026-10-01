@@ -1,0 +1,37 @@
+{
+  "day": 29,
+  "mcq": [
+    {
+      "question": "What does `optional_import('numpy')` return if NumPy is not installed?",
+      "options": {
+        "A": "An empty module",
+        "B": "`None`, by catching `ModuleNotFoundError`",
+        "C": "It raises `ImportError`",
+        "D": "`False`"
+      },
+      "answer": "B",
+      "explanation": "The optional-dependency pattern: try the import, and on `ModuleNotFoundError` return `None` so features can degrade gracefully."
+    },
+    {
+      "question": "What does `__all__` in a package's `__init__.py` control?",
+      "options": {
+        "A": "Which names `from package import *` exports",
+        "B": "Which modules are installed",
+        "C": "The order of imports",
+        "D": "Which functions are type-checked"
+      },
+      "answer": "A",
+      "explanation": "`__all__` lists the public names. It also documents the intended API for readers and tools."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Absolute imports versus relative imports (`from .helpers import x`): which is clearer in a large project, and when does a relative import break?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `check_requirement` with a requirement string that pins an impossible version (for example `requests>=999`) and assert it is reported as unsatisfied."
+    }
+  ]
+}

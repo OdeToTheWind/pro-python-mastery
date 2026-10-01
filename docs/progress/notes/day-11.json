@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-23",
+  "learnings": [
+    "`else` runs only when the `try` succeeded; `finally` always runs – ideal for closing resources.",
+    "Catch the narrowest exception that you can actually handle.",
+    "Bad lines in a data file should be reported and skipped, not crash the whole import."
+  ],
+  "pitfalls": [
+    "A `KeyError` message already contains quotes, so wrapping it in more quotes printed `''zzz''`."
+  ],
+  "next": "Build an exception hierarchy of my own on Day 51."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 78,
+  "mcq": [
+    {
+      "question": "Why does `QuoteService` receive its carrier and its clock as arguments?",
+      "options": {
+        "A": "To make it faster",
+        "B": "pytest requires it",
+        "C": "To avoid importing `time`",
+        "D": "So tests can inject a `FakeCarrier` and a controllable clock instead of calling a real API and waiting real time"
+      },
+      "answer": "D",
+      "explanation": "Dependency injection makes code testable. The fakes make every test fast and deterministic."
+    },
+    {
+      "question": "What does `@pytest.mark.parametrize` (used with `ZONE_CASES`) do?",
+      "options": {
+        "A": "Runs the same test function once for each set of arguments, reporting each case separately",
+        "B": "Runs tests in parallel",
+        "C": "Skips slow tests",
+        "D": "Creates fixtures"
+      },
+      "answer": "A",
+      "explanation": "One test body, many cases: failures show exactly which input broke."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Fakes, mocks and stubs: what is the difference, and why does this day prefer a hand-written `FakeCarrier` over `unittest.mock` here?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that a cached quote expires after `ttl_seconds` by moving the injected clock forward, and that the carrier is called again exactly once."
+    }
+  ]
+}

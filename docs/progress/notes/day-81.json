@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Verbose patterns (`re.VERBOSE`) with named groups make complex regexes readable and reviewable.",
+    "Lookarounds check context (a currency sign before, a digit after) without consuming characters.",
+    "`re.sub` with a function can transform each match – e.g. redact while keeping triage hints."
+  ],
+  "pitfalls": [
+    "Greedy quantifiers and unanchored patterns match far more than intended; `fullmatch` and tests with near-misses catch this."
+  ],
+  "next": "Store structured data properly in SQLite on Day 82."
+}

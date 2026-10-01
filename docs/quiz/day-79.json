@@ -1,0 +1,37 @@
+{
+  "day": 79,
+  "mcq": [
+    {
+      "question": "What is a wheel (`.whl`) file?",
+      "options": {
+        "A": "A compressed source tarball",
+        "B": "A zip archive with the built package plus `.dist-info` metadata, ready to install without a build step",
+        "C": "A Python script",
+        "D": "A Docker image"
+      },
+      "answer": "B",
+      "explanation": "`inspect_wheel` opens it with `zipfile`. An sdist contains source to build; a wheel is already built."
+    },
+    {
+      "question": "Why use TestPyPI before PyPI?",
+      "options": {
+        "A": "It is faster",
+        "B": "PyPI requires it",
+        "C": "It removes the need for a version number",
+        "D": "You can rehearse the upload and the install without publishing a real, permanent release"
+      },
+      "answer": "D",
+      "explanation": "PyPI never lets you reuse a version number, even after deleting it. Practise on TestPyPI first."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "src layout versus flat layout: what bug does the src layout prevent (hint: testing the installed package rather than the local folder)?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `validate_pyproject` reports a missing `requires-python`. Then add a new check test-first: a project with no `license` (or `license-files`) entry is reported, since publishing without a licence makes the code legally unusable for others."
+    }
+  ]
+}

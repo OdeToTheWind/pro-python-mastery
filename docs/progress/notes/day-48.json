@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-29",
+  "learnings": [
+    "Keep the calculation pure and the widgets thin – the logic is testable without a display.",
+    "`grid` with `sticky` and `columnconfigure` makes layouts resize well.",
+    "Tk variables (`StringVar`, `IntVar`) connect widgets to Python state."
+  ],
+  "pitfalls": [
+    "Importing `tkinter` at module level made the app crash before its fallback could run."
+  ],
+  "next": "Explore a modern UI alternative (Textual or a web front end) after the capstone."
+}

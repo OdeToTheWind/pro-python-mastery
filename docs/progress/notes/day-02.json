@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-14",
+  "learnings": [
+    "`str.title()` capitalises after apostrophes (`John'S`); `string.capwords` plus a hyphen rule handles real names.",
+    "`casefold()` is the right tool for case-insensitive work, not `lower()`.",
+    "Alignment (`^`, `<`, `>`) and fill characters (`:.^32`) produce fixed-width output with no manual maths."
+  ],
+  "pitfalls": [
+    "Building a handle from a name with no letters produced `@05` – now it is rejected with `ValueError`."
+  ],
+  "next": "Use the slug and alignment helpers again when formatting reports on Day 21."
+}

@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use or reference this project, please cite it as below."
+title: "Pro Python Mastery: 100 Days of Professional Python"
+type: software
+authors:
+  - family-names: Badal
+    given-names: Bhargavi
+repository-code: "https://github.com/OdeToTheWind/pro-python-mastery"
+license: MIT
+version: 1.0.0
+date-released: 2026-10-01
+keywords: [python, course, education, testing, pytest, curriculum]

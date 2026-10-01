@@ -1,0 +1,37 @@
+{
+  "day": 83,
+  "mcq": [
+    {
+      "question": "What exit code does an `argparse` usage error (for example an unknown subcommand) produce?",
+      "options": {
+        "A": "`0`",
+        "B": "`1`",
+        "C": "`2`",
+        "D": "`127`"
+      },
+      "answer": "C",
+      "explanation": "By convention 2 means \"command-line usage error\". The `habits` CLI keeps that and adds its own codes, such as 3 for not found."
+    },
+    {
+      "question": "Why does `habits` log to *stderr* while printing results to *stdout*?",
+      "options": {
+        "A": "stderr is faster",
+        "B": "So output can be piped to other programs (or parsed as JSON) without log lines mixed in",
+        "C": "stdout cannot show colours",
+        "D": "Logging requires stderr"
+      },
+      "answer": "B",
+      "explanation": "`habits list --format json | jq` keeps working even with `-vv`, because diagnostics travel on a separate stream."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Configuration precedence is defaults < config file < environment < flags. Why that order, and which setting should *never* come from an environment variable?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `habits rename OLD NEW` subcommand test-first: it keeps the history, refuses to overwrite an existing habit, and returns the right exit codes."
+    }
+  ]
+}

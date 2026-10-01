@@ -1,0 +1,37 @@
+{
+  "day": 21,
+  "mcq": [
+    {
+      "question": "What does `compare_designs` find when it stores the result of `print_line_total(line)`?",
+      "options": {
+        "A": "The printed total as a string",
+        "B": "The total as a `Decimal`",
+        "C": "An empty string",
+        "D": "`None`, because a function without `return` returns `None`"
+      },
+      "answer": "D",
+      "explanation": "Printing is a side effect, not a result. A function that only prints implicitly returns `None`, so callers cannot reuse the value."
+    },
+    {
+      "question": "What is the \"pure core + I/O shell\" design used by `render_invoice` and `show`?",
+      "options": {
+        "A": "Calculations return values; a thin outer layer does all printing",
+        "B": "Every function prints its own result",
+        "C": "All I/O happens inside the calculation functions",
+        "D": "Output is written only to files"
+      },
+      "answer": "A",
+      "explanation": "Pure functions are easy to test and reuse. Keeping printing at the edge (`show`) means you can switch to a file, a GUI or a web page without touching the maths."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Find a function you wrote earlier in the course that prints instead of returning. How would you refactor it, and what new uses does that unlock?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that captures what `show` outputs by passing a list's `append` as `output`. Then make `render_invoice` include a discount line, test-first."
+    }
+  ]
+}

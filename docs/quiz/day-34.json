@@ -1,0 +1,37 @@
+{
+  "day": 34,
+  "mcq": [
+    {
+      "question": "Which parameter order does Python require in a `def`?",
+      "options": {
+        "A": "Positional-only, then regular (required before defaults), then `*args`, then keyword-only, then `**kwargs`",
+        "B": "`**kwargs`, `*args`, defaults, required",
+        "C": "Defaults first, then required",
+        "D": "Any order is allowed"
+      },
+      "answer": "A",
+      "explanation": "`def f(a, /, b, c=1, *args, d, e=2, **kwargs)` shows the full legal order. A required parameter cannot follow one with a default in the positional part."
+    },
+    {
+      "question": "Why does `add_label(label, labels=None)` use `None` instead of `labels=[]`?",
+      "options": {
+        "A": "`None` is faster",
+        "B": "Lists cannot be default values",
+        "C": "A `[]` default is shared across calls, so labels from earlier calls would leak into later ones",
+        "D": "To make the parameter required"
+      },
+      "answer": "C",
+      "explanation": "`None` acts as a sentinel: the function creates a fresh list per call unless the caller passes one."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`with_defaults` forwards `*args` and `**kwargs`. What do you lose (signature, IDE help) when wrapping functions this way, and how does `functools.wraps` help?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test calling `schedule_job` without its required keyword-only argument and assert the `TypeError` message names the missing parameter."
+    }
+  ]
+}

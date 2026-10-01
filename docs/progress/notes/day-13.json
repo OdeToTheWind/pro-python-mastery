@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-25",
+  "learnings": [
+    "`enumerate(start=1)` and `zip(strict=True)` remove manual index bookkeeping and catch length mismatches.",
+    "`range(stop)` excludes `stop`; a zero step raises `ValueError`.",
+    "`for ... else` runs the `else` only when no `break` happened – a clean 'not found' branch."
+  ],
+  "pitfalls": [
+    "Printing `start..end-1` was wrong for any step other than 1, so the label was removed."
+  ],
+  "next": "Replace loops with comprehensions where it improves clarity (Day 45)."
+}

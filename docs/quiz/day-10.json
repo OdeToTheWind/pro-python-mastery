@@ -1,0 +1,37 @@
+{
+  "day": 10,
+  "mcq": [
+    {
+      "question": "Why does `generate_password` use the `secrets` module rather than `random`?",
+      "options": {
+        "A": "`random` cannot produce letters",
+        "B": "`secrets` is faster",
+        "C": "`secrets` uses a cryptographically secure generator, while `random`'s output can be predicted",
+        "D": "`random` is deprecated"
+      },
+      "answer": "C",
+      "explanation": "`random` uses the Mersenne Twister, which is reproducible and predictable from its output: good for games, wrong for passwords."
+    },
+    {
+      "question": "Two `random.Random(1)` instances each call `randint(1, 6)`. What happens?",
+      "options": {
+        "A": "They return the same number",
+        "B": "They return different numbers",
+        "C": "The second call raises an error",
+        "D": "Both return 1"
+      },
+      "answer": "A",
+      "explanation": "The same seed gives the same sequence. That is why the dice functions accept an optional seeded `rng`: tests become reproducible."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Is shuffling a deck by repeatedly swapping two random cards as fair as `random.shuffle` (Fisher–Yates)? How would you check fairness empirically?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that seeds an `rng`, deals two hands and asserts the exact cards. Then change the seed and watch the test fail, to see why seeding matters for reproducible tests."
+    }
+  ]
+}

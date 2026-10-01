@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A descriptor is any class attribute with `__get__`; adding `__set__`/`__delete__` makes it a data descriptor.",
+    "Lookup order: data descriptors → instance `__dict__` → non-data descriptors → class attributes.",
+    "`__set_name__` tells a descriptor which attribute name it was assigned to, so one class serves many fields."
+  ],
+  "pitfalls": [
+    "A cached non-data descriptor is shadowed by the instance dict after the first access – that is the trick, not a bug."
+  ],
+  "next": "Look one level deeper at what creates classes themselves on Day 70."
+}

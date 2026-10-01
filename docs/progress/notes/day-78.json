@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Fixtures build what a test needs and clean up after `yield`; factory fixtures keep tests short and explicit.",
+    "Stacked `parametrize` decorators multiply cases; `ids` and `pytest.param` make failures readable.",
+    "`Mock(spec=...)` fails on methods the real class doesn't have, and call assertions verify interactions."
+  ],
+  "pitfalls": [
+    "`assert a == b if cond else c` parses as `assert (a == b) if cond else c` – one branch silently asserted nothing until rewritten."
+  ],
+  "next": "Package a tested project for distribution on Day 79."
+}

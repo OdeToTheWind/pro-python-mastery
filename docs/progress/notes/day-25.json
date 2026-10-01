@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-06",
+  "learnings": [
+    "`sys.prefix != sys.base_prefix` detects a venv even when `activate` was never run.",
+    "Duplicate or unpinned requirements make installs non-reproducible.",
+    "`.gitignore` must cover `.venv/`, `__pycache__/` and `.env` from day one."
+  ],
+  "pitfalls": [
+    "This repository itself had duplicate `pytest` lines and an ignored-but-missing `.env` rule – the doctor caught both."
+  ],
+  "next": "Move to `pyproject.toml` dependency groups when packaging on Day 79."
+}

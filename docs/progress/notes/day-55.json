@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-06",
+  "learnings": [
+    "Store and compare times in UTC; convert with `zoneinfo` only for display.",
+    "Exact age compares (month, day) tuples – `days // 365` is wrong near birthdays.",
+    "The same wall-clock time has different UTC offsets in winter and summer (DST)."
+  ],
+  "pitfalls": [
+    "`datetime.now()` without a timezone is naive and can't be compared with aware times."
+  ],
+  "next": "Schedule recurring jobs across time zones on Day 89."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 63,
+  "mcq": [
+    {
+      "question": "Why does the Selenium test use explicit waits (`WebDriverWait`) instead of `time.sleep(5)`?",
+      "options": {
+        "A": "`sleep` is not allowed in Selenium",
+        "B": "Explicit waits continue as soon as the element appears and fail clearly on timeout, while a fixed sleep is either too slow or too short",
+        "C": "Explicit waits disable JavaScript",
+        "D": "To run in headless mode"
+      },
+      "answer": "B",
+      "explanation": "Fixed sleeps make tests slow and flaky. Waiting for a condition is fast and reliable."
+    },
+    {
+      "question": "Which locator strategy is usually the most robust for a login button?",
+      "options": {
+        "A": "An absolute XPath like `/html/body/div[2]/form/input[3]`",
+        "B": "The button's position on the screen",
+        "C": "A stable ID or `name`/`data-*` attribute",
+        "D": "Its exact visible text with all whitespace"
+      },
+      "answer": "C",
+      "explanation": "Absolute XPaths break when the layout changes. IDs and dedicated test attributes survive redesigns."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When should you use Selenium instead of `requests` + BeautifulSoup? Name the costs: speed, flakiness and setup in CI."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `run` that forces the driver factory to fail (for example no browser installed) and asserts the graceful fallback message instead of a crash."
+    }
+  ]
+}

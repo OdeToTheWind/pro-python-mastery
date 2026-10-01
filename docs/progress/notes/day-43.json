@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-24",
+  "learnings": [
+    "`DictReader`/`DictWriter` map columns by name, so column order can change safely.",
+    "Open CSV files with `newline=''`, as the csv docs require.",
+    "Validate each row and collect errors with line numbers instead of failing the whole import."
+  ],
+  "pitfalls": [
+    "The Sniffer guessed quoting rules wrongly from one header line; only the delimiter is sniffed now."
+  ],
+  "next": "Export reports to CSV in the report generator (Day 88)."
+}

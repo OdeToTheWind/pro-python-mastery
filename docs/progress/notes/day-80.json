@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Measure before optimising: `cProfile` shows which functions consume the time.",
+    "`timeit.repeat` with the minimum gives a stable comparison of alternatives.",
+    "The biggest wins come from algorithms and data structures (set/Counter instead of list scans), not micro-tweaks."
+  ],
+  "pitfalls": [
+    "An optimisation is only valid if it returns the same result – every fast path is checked against the slow one."
+  ],
+  "next": "Tackle advanced regular expressions on Day 81."
+}

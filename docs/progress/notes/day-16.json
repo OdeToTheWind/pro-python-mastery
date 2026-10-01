@@ -1,0 +1,12 @@
+{
+  "date": "2026-03-28",
+  "learnings": [
+    "Each decision diamond maps to one condition in the same order as the drawing.",
+    "Loop arrows become `while queue:`; process boxes become plain statements.",
+    "Storing a flowchart as data lets one interpreter run many charts, and it can detect cycles."
+  ],
+  "pitfalls": [
+    "A flowchart test is strongest when it checks that the coded version and the data version agree for every input combination."
+  ],
+  "next": "Grow the data-driven idea into the plugin registry on Day 87."
+}

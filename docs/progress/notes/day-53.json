@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-04",
+  "learnings": [
+    "Merge saved data over defaults so new settings appear for old users.",
+    "Version the file format and migrate old saves instead of crashing.",
+    "Back up a corrupt file before resetting – never destroy user data silently."
+  ],
+  "pitfalls": [
+    "The original test overwrote and deleted the real `app_data.json`; tests now use `tmp_path`."
+  ],
+  "next": "Move to SQLite transactions on Day 82."
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-29",
+  "learnings": [
+    "Prefer explicit waits (`WebDriverWait` + expected conditions) to `time.sleep`.",
+    "Page Objects keep selectors in one place and tests readable.",
+    "Wait for the old element to go stale to know a click really loaded a new page."
+  ],
+  "pitfalls": [
+    "A missing browser crashed the old demo even though it promised a dry run."
+  ],
+  "next": "Run the smoke test on a schedule with screenshots on failure (Day 97)."
+}

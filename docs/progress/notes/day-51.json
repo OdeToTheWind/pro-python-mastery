@@ -1,0 +1,12 @@
+{
+  "date": "2026-05-02",
+  "learnings": [
+    "One base exception per domain lets callers catch everything with a single `except`.",
+    "Categories (validation, availability, payment) let callers react differently.",
+    "Exceptions can carry data (`seats`, `requested`, `limit`) for precise messages."
+  ],
+  "pitfalls": [
+    "Catch the most specific classes first – a base-class `except` placed earlier would swallow them."
+  ],
+  "next": "Reuse the hierarchy pattern in the validation library (Day 94)."
+}

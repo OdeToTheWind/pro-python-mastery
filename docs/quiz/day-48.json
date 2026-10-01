@@ -1,0 +1,37 @@
+{
+  "day": 48,
+  "mcq": [
+    {
+      "question": "Why is `calculate_tip` a separate pure function instead of code inside the button handler?",
+      "options": {
+        "A": "It can be unit-tested everywhere, including CI with no display, while the GUI stays a thin layer",
+        "B": "Tkinter cannot call functions",
+        "C": "It makes the window load faster",
+        "D": "Pure functions use less memory"
+      },
+      "answer": "A",
+      "explanation": "Keeping logic out of widgets is the same \"core + shell\" idea as Day 21, applied to a GUI."
+    },
+    {
+      "question": "What does `grid(row=1, column=0, sticky='ew')` do?",
+      "options": {
+        "A": "Makes the widget invisible",
+        "B": "Places the widget in a grid cell and stretches it horizontally to fill the cell",
+        "C": "Binds a click event",
+        "D": "Sets the window size"
+      },
+      "answer": "B",
+      "explanation": "`sticky` names the sides (n, s, e, w) the widget sticks to. `'ew'` fills the cell's width."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The GUI shows validation errors in a label instead of a pop-up. Which is better for users, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write tests for the existing round-up option: one amount where rounding changes each share and one where it doesn't. Then add a new rule test-first: more than 50 people is rejected with a friendly message."
+    }
+  ]
+}

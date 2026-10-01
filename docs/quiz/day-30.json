@@ -1,0 +1,37 @@
+{
+  "day": 30,
+  "mcq": [
+    {
+      "question": "What does the `@celsius.setter` on the thermostat enable?",
+      "options": {
+        "A": "Making `celsius` read-only",
+        "B": "Deleting the attribute",
+        "C": "Caching the value",
+        "D": "Running validation whenever someone writes `thermostat.celsius = value`"
+      },
+      "answer": "D",
+      "explanation": "A property setter intercepts assignment, so the thermostat can reject unsafe temperatures while callers still use plain attribute syntax."
+    },
+    {
+      "question": "`fahrenheit` is a property with no stored value of its own. What makes this good design?",
+      "options": {
+        "A": "There is one source of truth (`celsius`), and Fahrenheit is computed on demand so the two can never disagree",
+        "B": "It is faster than a regular attribute",
+        "C": "It cannot be set",
+        "D": "It uses less memory"
+      },
+      "answer": "A",
+      "explanation": "Derived values computed from the stored one avoid inconsistency; the Fahrenheit setter converts and stores Celsius."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When is a property the wrong tool? Think about expensive work, network calls, or surprising side effects hidden behind attribute access."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test: setting `celsius` to a value outside the safe range must raise and leave the old value unchanged. Make sure `history` is not updated by the rejected value."
+    }
+  ]
+}
