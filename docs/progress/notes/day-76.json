@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Reuse one `aiohttp.ClientSession` per client – it owns the connection pool and must be closed in `__aexit__`.",
+    "A `Semaphore` caps requests in flight so concurrency stays polite to servers.",
+    "Async generators stream results as they finish; cancel outstanding tasks if the consumer stops early."
+  ],
+  "pitfalls": [
+    "Tests must never depend on the internet – a local aiohttp `TestServer` makes the HTTP lesson real and deterministic."
+  ],
+  "next": "Log what the client does with structured logging on Day 77."
+}

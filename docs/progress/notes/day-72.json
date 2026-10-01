@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A `Protocol` checks structure, not inheritance – unrelated vendor classes satisfy it if they have the right members.",
+    "A bounded `TypeVar` keeps the precise type flowing through a function; a constrained one allows only listed types.",
+    "`TypedDict` and `Literal` describe JSON payloads and allowed strings so mypy can catch mistakes before runtime."
+  ],
+  "pitfalls": [
+    "`from __future__ import annotations` stops `NotRequired` from being seen at runtime inside a `TypedDict`, so the key was reported as required."
+  ],
+  "next": "Use these types to describe thread-safe workers on Day 73."
+}

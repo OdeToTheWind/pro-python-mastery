@@ -4,3 +4,8 @@ pytest>=8.0,<10
 pytest-cov>=5.0
 ruff>=0.6
 mypy>=1.10
+
+# Day 79 – building and checking distributions offline
+build>=1.2
+hatchling>=1.25
+twine>=5.0

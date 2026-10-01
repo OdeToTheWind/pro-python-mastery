@@ -78,16 +78,16 @@
 | 68 | Context Managers | The with statement, __enter__, __exit__, and contextlib | Advanced | Covered |
 | 69 | Descriptors | Data and non-data descriptors; how @property works under the hood | Advanced | Covered |
 | 70 | Metaclasses (Introduction) | type, custom metaclasses, and when or when not to use them | Advanced | Covered |
-| 71 | Functional Tools | itertools, functools, partial, lru_cache, and reduce | Advanced | Planned |
-| 72 | Advanced Typing | Protocol, TypeVar, Generic, TypedDict, Literal, and checking with mypy/pyright | Advanced | Planned |
-| 73 | Concurrency: Threading | threading, locks, queues, and GIL implications | Advanced | Planned |
-| 74 | Concurrency: Multiprocessing | Process pools, shared memory, and choosing processes vs. threads | Advanced | Planned |
-| 75 | Asyncio Fundamentals | Event loop, coroutines, async/await, gather, and create_task | Advanced | Planned |
-| 76 | Advanced Asyncio | Async context managers, async iterators, and concurrent HTTP with aiohttp | Advanced | Planned |
-| 77 | Logging & Configuration | Logging handlers, formatters, levels, configparser, YAML, and TOML | Advanced | Planned |
-| 78 | Testing with pytest | Fixtures, parametrization, mocking, and coverage | Advanced | Planned |
-| 79 | Packaging & Distribution | pyproject.toml, setuptools/hatch/poetry, wheels, and test publishing to PyPI | Advanced | Planned |
-| 80 | Profiling & Performance | cProfile, timeit, memory_profiler, and optimization patterns | Advanced | Planned |
+| 71 | Functional Tools | itertools, functools, partial, lru_cache, and reduce | Advanced | Covered |
+| 72 | Advanced Typing | Protocol, TypeVar, Generic, TypedDict, Literal, and checking with mypy/pyright | Advanced | Covered |
+| 73 | Concurrency: Threading | threading, locks, queues, and GIL implications | Advanced | Covered |
+| 74 | Concurrency: Multiprocessing | Process pools, shared memory, and choosing processes vs. threads | Advanced | Covered |
+| 75 | Asyncio Fundamentals | Event loop, coroutines, async/await, gather, and create_task | Advanced | Covered |
+| 76 | Advanced Asyncio | Async context managers, async iterators, and concurrent HTTP with aiohttp | Advanced | Covered |
+| 77 | Logging & Configuration | Logging handlers, formatters, levels, configparser, YAML, and TOML | Advanced | Covered |
+| 78 | Testing with pytest | Fixtures, parametrization, mocking, and coverage | Advanced | Covered |
+| 79 | Packaging & Distribution | pyproject.toml, setuptools/hatch/poetry, wheels, and test publishing to PyPI | Advanced | Covered |
+| 80 | Profiling & Performance | cProfile, timeit, memory_profiler, and optimization patterns | Advanced | Covered |
 | 81 | Advanced Regular Expressions | Complex patterns, groups, lookarounds, and the re module | Advanced | Planned |
 | 82 | SQLite & Pure Database Work | sqlite3, transactions, context managers, and basic schema design without an ORM | Advanced | Planned |
 | 83 | Robust CLI Application | argparse or click/typer, subcommands, configuration, and logging | Capstone | Planned |
@@ -112,6 +112,6 @@
 - **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
 - **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
 - **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Completed! 🎓**
-- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — In progress (Days 64–70 covered)**
+- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — In progress (Days 64–80 covered)**
 - **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Planned**
 

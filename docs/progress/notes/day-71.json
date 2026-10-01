@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`partial` freezes arguments to create specialised functions without writing wrappers.",
+    "`lru_cache` turns repeated expensive calls into dictionary look-ups; `cache_info()` shows hits and misses.",
+    "`itertools` tools are lazy building blocks: `groupby` needs sorted input, `accumulate` gives running totals, `pairwise`/`batched` slice streams."
+  ],
+  "pitfalls": [
+    "`groupby` only groups *consecutive* equal keys – forgetting to sort first silently splits groups."
+  ],
+  "next": "Describe these functions precisely with Protocols and generics on Day 72."
+}

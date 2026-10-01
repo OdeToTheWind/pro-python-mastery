@@ -5,8 +5,8 @@
 > public, sponsor-backed Python course that learners trust, contributors
 > improve and companies want to support.
 >
-> **Status (Oct 2026):** Days 01–70 are complete (code + tests + reflection,
-> kept in sync by CI). Days 71–100 are planned.
+> **Status (Oct 2026):** Days 01–80 are complete (code + tests + reflection,
+> kept in sync by CI). Days 81–100 are planned.
 
 ---
 

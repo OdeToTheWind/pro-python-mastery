@@ -2,7 +2,7 @@
 
 [![Python CI](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml)
 ![Python](https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-blue)
-![Progress](https://img.shields.io/badge/progress-70%20%2F%20100%20days-brightgreen)
+![Progress](https://img.shields.io/badge/progress-80%20%2F%20100%20days-brightgreen)
 ![Coverage gate](https://img.shields.io/badge/coverage%20gate-85%25-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -39,7 +39,7 @@ pytest tests/test_day_05.py -v              # read its tests
 
 Days 37 (Turtle) and 48 (Tkinter) need Tk (`sudo apt install python3-tk` on
 Debian/Ubuntu). Days 58, 62 and 63 talk to public practice sites when run
-directly; their tests never use the network. Secrets for Days 54, 60 and 61
+directly; their tests never use the network (Day 76 uses a local aiohttp server). Secrets for Days 54, 60 and 61
 go in a git-ignored `.env` – copy [`.env.example`](.env.example).
 
 ## How a day is organised
@@ -131,16 +131,16 @@ docs/progress/
 | 68 | Context Managers | 🟠 | A *laboratory experiment runner*. Instruments must always be switched off, partial results rolled back on failure, and timings recorded – even when an experiment crashes halfway. | [code](src/day_68_context_managers/main.py) · [tests](tests/test_day_68.py) · [notes](docs/progress/day-68-reflection.md) |
 | 69 | Descriptors | 🟠 | A *hotel-booking form model* whose fields validate themselves – the same machinery behind Django/SQLAlchemy model fields, ``@property``, ``@classmethod`` and bound methods. | [code](src/day_69_descriptors/main.py) · [tests](tests/test_day_69.py) · [notes](docs/progress/day-69-reflection.md) |
 | 70 | Metaclasses (Introduction) | 🟠 | A *document-converter app* with format plugins (Markdown → HTML, CSV → JSON …). Every plugin class must declare its formats and is registered automatically – first with a metaclass, then with the simpler ``__init_subclass__`` hook that is usually the better choice. | [code](src/day_70_metaclasses_intro/main.py) · [tests](tests/test_day_70.py) · [notes](docs/progress/day-70-reflection.md) |
-| 71 | Functional Tools | 🟠 | _planned_ | – |
-| 72 | Advanced Typing | 🟠 | _planned_ | – |
-| 73 | Concurrency: Threading | 🟠 | _planned_ | – |
-| 74 | Concurrency: Multiprocessing | 🟠 | _planned_ | – |
-| 75 | Asyncio Fundamentals | 🟠 | _planned_ | – |
-| 76 | Advanced Asyncio | 🟠 | _planned_ | – |
-| 77 | Logging & Configuration | 🟠 | _planned_ | – |
-| 78 | Testing with pytest | 🟠 | _planned_ | – |
-| 79 | Packaging & Distribution | 🟠 | _planned_ | – |
-| 80 | Profiling & Performance | 🟠 | _planned_ | – |
+| 71 | Functional Tools | 🟠 | A *music-streaming royalty calculator* – play logs are grouped, accumulated and combined with ``itertools``; pricing rules are pre-configured with ``partial``; expensive look-ups are cached with ``lru_cache``; totals are folded with ``reduce``. | [code](src/day_71_functional_tools/main.py) · [tests](tests/test_day_71.py) · [notes](docs/progress/day-71-reflection.md) |
+| 72 | Advanced Typing | 🟠 | A *warehouse-robot fleet manager*. Robots from different vendors share no base class, yet the dispatcher accepts any of them because they satisfy a ``Protocol``. Payloads from the vendors' JSON APIs are described with ``TypedDict``; commands are restricted with ``Literal``; a generic repository works for robots, shelves or anything with an ``id``. | [code](src/day_72_advanced_typing/main.py) · [tests](tests/test_day_72.py) · [notes](docs/progress/day-72-reflection.md) |
+| 73 | Concurrency: Threading | 🟠 | A *photo-sharing upload service*. Thumbnails are fetched from slow storage (I/O bound → threads help), view counters are updated from many threads (needs a lock), and uploads flow through a producer/consumer queue. A CPU-bound resize shows why the GIL limits threads for pure-Python work. | [code](src/day_73_concurrency_threading/main.py) · [tests](tests/test_day_73.py) · [notes](docs/progress/day-73-reflection.md) |
+| 74 | Concurrency: Multiprocessing | 🟠 | A *satellite-image analysis lab*. Counting "bright pixels" in large tiles is pure CPU work, so it runs in a process pool (each process has its own interpreter and GIL). Tiles are shared through ``shared_memory`` instead of being copied, and a small advisor decides when processes beat threads. | [code](src/day_74_concurrency_multiprocessing/main.py) · [tests](tests/test_day_74.py) · [notes](docs/progress/day-74-reflection.md) |
+| 75 | Asyncio Fundamentals | 🟠 | An *airport departures board* that queries several airline status services at once. Each query mostly waits on the network, so one thread with an event loop can overlap all of them. | [code](src/day_75_asyncio_fundamentals/main.py) · [tests](tests/test_day_75.py) · [notes](docs/progress/day-75-reflection.md) |
+| 76 | Advanced Asyncio | 🟠 | A *price-comparison engine* that asks many online shops for the price of a product concurrently with ``aiohttp`` – politely (connection limits), safely (timeouts, retries) and streaming results as they arrive. | [code](src/day_76_advanced_asyncio/main.py) · [tests](tests/test_day_76.py) · [notes](docs/progress/day-76-reflection.md) |
+| 77 | Logging & Configuration | 🟠 | A *food-delivery dispatch service* that reads its settings from INI, YAML or TOML files (plus environment overrides) and logs to the console for humans and to a rotating JSON file for machines. | [code](src/day_77_logging_configuration/main.py) · [tests](tests/test_day_77.py) · [notes](docs/progress/day-77-reflection.md) |
+| 78 | Testing with pytest | 🟠 | A *parcel-shipping quote service* that calls a carrier's rate API. This module is the code under test; ``tests/test_day_78.py`` is the real lesson – it shows fixtures (scopes, factories, teardown, built-ins), parametrisation (ids, stacked parameters), mocking (``Mock(spec=...)``, ``patch``, ``monkeypatch``, call assertions) and coverage. | [code](src/day_78_testing_with_pytest/main.py) · [tests](tests/test_day_78.py) · [notes](docs/progress/day-78-reflection.md) |
+| 79 | Packaging & Distribution | 🟠 | Publish *"kitchenconv"*, a tiny cooking-unit converter with a CLI, as a real Python package: generate a ``src``-layout project with a complete ``pyproject.toml``, build a wheel and an sdist offline, inspect what is inside, validate the metadata with ``twine check`` and prepare (not perform) the TestPyPI upload. | [code](src/day_79_packaging_distribution/main.py) · [tests](tests/test_day_79.py) · [notes](docs/progress/day-79-reflection.md) |
+| 80 | Profiling & Performance | 🟠 | An *e-commerce nightly report* that got slow as the shop grew. We measure first (``cProfile``, ``timeit``, ``tracemalloc``/``memory_profiler``), find the hotspots, then apply targeted optimisation patterns – and prove the fast version returns exactly the same answer. | [code](src/day_80_profiling_performance/main.py) · [tests](tests/test_day_80.py) · [notes](docs/progress/day-80-reflection.md) |
 | 81 | Advanced Regular Expressions | 🟠 | _planned_ | – |
 | 82 | SQLite & Pure Database Work | 🟠 | _planned_ | – |
 | 83 | Robust CLI Application | 🔴 | _planned_ | – |
@@ -173,7 +173,7 @@ docs/progress/
 
 ## Roadmap
 
-Days 71–100 (the rest of Advanced Python and the capstone projects) are planned in
+Days 81–100 (regular expressions, SQLite and the capstone projects) are planned in
 [`syllabus.md`](syllabus.md). The plan for turning the finished course into a
 high-impact learning resource – contributor programme, learner experience,
 sponsorship and governance – is in [`learning_develop.md`](learning_develop.md).
