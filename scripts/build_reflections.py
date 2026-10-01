@@ -120,7 +120,7 @@ def update_readme(rows: dict[int, dict[str, str]]) -> None:
     text = readme.read_text(encoding="utf-8")
     before, rest = text.split(INDEX_START, 1)
     _, after = rest.split(INDEX_END, 1)
-    readme.write_text(f"{before}{INDEX_START}\n{course_index(rows)}\n{INDEX_END}{after}", encoding="utf-8")
+    readme.write_text(f"{before}{INDEX_START}\n{course_index(rows)}\n{INDEX_END}{after}", encoding="utf-8", newline="\n")
 
 
 def main() -> None:
@@ -132,7 +132,7 @@ def main() -> None:
             continue
         notes = json.loads((notes_dir / f"day-{day:02d}.json").read_text(encoding="utf-8"))
         target = ROOT / "docs" / "progress" / f"day-{day:02d}-reflection.md"
-        target.write_text(render(day, row, notes, notes["date"]), encoding="utf-8")
+        target.write_text(render(day, row, notes, notes["date"]), encoding="utf-8", newline="\n")
         written += 1
     update_readme(rows)
     print(f"wrote {written} reflections and refreshed the README course index")
