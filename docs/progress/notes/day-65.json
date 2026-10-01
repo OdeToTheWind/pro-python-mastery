@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A function containing `yield` returns a generator; its body runs only when `next()` asks for a value.",
+    "Generators pause with their local variables intact, which makes stateful streams (spike detection) simple.",
+    "Memory stays constant: a generator object is ~200 bytes whatever the stream length, a list grows with it."
+  ],
+  "pitfalls": [
+    "A generator can be consumed only once – a second `sum()` over it silently returns 0."
+  ],
+  "next": "Chain generators into pipelines and send values into them on Day 66."
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A decorator is a function that takes a function and returns a replacement; `@` is just assignment sugar.",
+    "`functools.wraps` keeps `__name__`, `__doc__`, `__wrapped__` and the signature – without it tools and tests see `wrapper`.",
+    "Parameterised decorators are factories (three levels); class-based decorators keep state on the instance."
+  ],
+  "pitfalls": [
+    "Stacked decorators are applied bottom-up but their wrappers run top-down – order matters for caching vs timing."
+  ],
+  "next": "Use context managers for setup/teardown that decorators can't express cleanly (Day 68)."
+}

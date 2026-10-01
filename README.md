@@ -2,7 +2,7 @@
 
 [![Python CI](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml)
 ![Python](https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-blue)
-![Progress](https://img.shields.io/badge/progress-63%20%2F%20100%20days-brightgreen)
+![Progress](https://img.shields.io/badge/progress-70%20%2F%20100%20days-brightgreen)
 ![Coverage gate](https://img.shields.io/badge/coverage%20gate-85%25-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -124,13 +124,13 @@ docs/progress/
 | 61 | SMS / Notification Automation | 🟠 | A *server-monitoring alerter* that texts the on-call engineer when a health check fails. It integrates with Twilio when credentials and the ``twilio`` package are present, and otherwise falls back to a safe dry run. | [code](src/day_61_sms_notification_automation/main.py) · [tests](tests/test_day_61.py) · [notes](docs/progress/day-61-reflection.md) |
 | 62 | Web Scraping with Beautiful Soup | 🟠 | A *quotes research assistant* that collects quotes and authors from quotes.toscrape.com – a site built for scraping practice – *politely*. | [code](src/day_62_web_scraping/main.py) · [tests](tests/test_day_62.py) · [notes](docs/progress/day-62-reflection.md) |
 | 63 | Browser Automation with Selenium | 🟠 | A *QA smoke test* for quotes.toscrape.com (a practice site): log in through the form, read quotes from the JavaScript-rendered page that appears only after a delay, and page through results – using Page Objects. | [code](src/day_63_browser_automation_selenium/main.py) · [tests](tests/test_day_63.py) · [notes](docs/progress/day-63-reflection.md) |
-| 64 | Iterators & the Iterator Protocol | 🟠 | _planned_ | – |
-| 65 | Generators & yield | 🟠 | _planned_ | – |
-| 66 | Advanced Generators | 🟠 | _planned_ | – |
-| 67 | Decorators Deep Dive | 🟠 | _planned_ | – |
-| 68 | Context Managers | 🟠 | _planned_ | – |
-| 69 | Descriptors | 🟠 | _planned_ | – |
-| 70 | Metaclasses (Introduction) | 🟠 | _planned_ | – |
+| 64 | Iterators & the Iterator Protocol | 🟠 | A *paginated API cursor for a museum collection* – the client hides page requests behind a plain ``for`` loop, exactly like database cursors and cloud SDK paginators do. | [code](src/day_64_iterators_iterator_protocol/main.py) · [tests](tests/test_day_64.py) · [notes](docs/progress/day-64-reflection.md) |
+| 65 | Generators & yield | 🟠 | A *smart-meter energy monitor* that streams millions of readings. Generators process them one at a time, so memory stays flat no matter how large the stream is. | [code](src/day_65_generators_yield/main.py) · [tests](tests/test_day_65.py) · [notes](docs/progress/day-65-reflection.md) |
+| 66 | Advanced Generators | 🟠 | An *online-shop order pipeline* – raw order lines flow through composable generator stages (parse → validate → enrich → batch), nested category trees are flattened with ``yield from``, and a live revenue tracker receives values via ``send()``. | [code](src/day_66_advanced_generators/main.py) · [tests](tests/test_day_66.py) · [notes](docs/progress/day-66-reflection.md) |
+| 67 | Decorators Deep Dive | 🟠 | A *weather-service client toolkit* – cross-cutting concerns (timing, retries, caching per city, rate limiting, input validation) are added to plain functions with decorators instead of being copy-pasted. | [code](src/day_67_decorators_deep_dive/main.py) · [tests](tests/test_day_67.py) · [notes](docs/progress/day-67-reflection.md) |
+| 68 | Context Managers | 🟠 | A *laboratory experiment runner*. Instruments must always be switched off, partial results rolled back on failure, and timings recorded – even when an experiment crashes halfway. | [code](src/day_68_context_managers/main.py) · [tests](tests/test_day_68.py) · [notes](docs/progress/day-68-reflection.md) |
+| 69 | Descriptors | 🟠 | A *hotel-booking form model* whose fields validate themselves – the same machinery behind Django/SQLAlchemy model fields, ``@property``, ``@classmethod`` and bound methods. | [code](src/day_69_descriptors/main.py) · [tests](tests/test_day_69.py) · [notes](docs/progress/day-69-reflection.md) |
+| 70 | Metaclasses (Introduction) | 🟠 | A *document-converter app* with format plugins (Markdown → HTML, CSV → JSON …). Every plugin class must declare its formats and is registered automatically – first with a metaclass, then with the simpler ``__init_subclass__`` hook that is usually the better choice. | [code](src/day_70_metaclasses_intro/main.py) · [tests](tests/test_day_70.py) · [notes](docs/progress/day-70-reflection.md) |
 | 71 | Functional Tools | 🟠 | _planned_ | – |
 | 72 | Advanced Typing | 🟠 | _planned_ | – |
 | 73 | Concurrency: Threading | 🟠 | _planned_ | – |
@@ -173,7 +173,7 @@ docs/progress/
 
 ## Roadmap
 
-Days 64–100 (Advanced Python and the capstone projects) are planned in
+Days 71–100 (the rest of Advanced Python and the capstone projects) are planned in
 [`syllabus.md`](syllabus.md). The plan for turning the finished course into a
 high-impact learning resource – contributor programme, learner experience,
 sponsorship and governance – is in [`learning_develop.md`](learning_develop.md).

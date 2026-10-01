@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "An *iterable* returns a fresh iterator from `__iter__`; an *iterator* returns itself and is consumed once.",
+    "`for` is sugar for `iter()` + repeated `next()` until `StopIteration`.",
+    "`iter(callable, sentinel)` and `next(it, default)` remove most manual try/except around iteration."
+  ],
+  "pitfalls": [
+    "The first cursor popped items out of the collection's own page lists, so every later loop came back empty – iterators must copy or index, never consume shared data."
+  ],
+  "next": "Replace the hand-written iterator with a generator function on Day 65."
+}

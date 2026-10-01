@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "`yield from` delegates to a sub-generator and captures its `return` value.",
+    "Pipeline stages pull lazily from each other, so the first result arrives before the input is fully read.",
+    "`send()` turns a generator into a coroutine-style consumer; it must be primed with `next()` first."
+  ],
+  "pitfalls": [
+    "Sending to an unprimed generator raises `TypeError`; `close()` and `throw()` are the clean ways to stop or signal it."
+  ],
+  "next": "Wrap pipeline stages with timing and retry decorators on Day 67."
+}

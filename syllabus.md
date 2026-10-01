@@ -71,13 +71,13 @@
 | 61 | SMS / Notification Automation | Twilio integration and secure secrets management | Advanced | Covered |
 | 62 | Web Scraping with Beautiful Soup | HTML parsing, selectors and ethical data extraction | Advanced | Covered |
 | 63 | Browser Automation with Selenium | Locator strategies, waits, form filling and dynamic page interactions | Advanced | Covered |
-| 64 | Iterators & the Iterator Protocol | __iter__, __next__, and custom iterators | Advanced | Planned |
-| 65 | Generators & yield | Generator functions, lazy evaluation, and memory benefits | Advanced | Planned |
-| 66 | Advanced Generators | yield from, generator pipelines, and sending values | Advanced | Planned |
-| 67 | Decorators Deep Dive | Function decorators, @wraps, parameterized decorators, and class-based decorators | Advanced | Planned |
-| 68 | Context Managers | The with statement, __enter__, __exit__, and contextlib | Advanced | Planned |
-| 69 | Descriptors | Data and non-data descriptors; how @property works under the hood | Advanced | Planned |
-| 70 | Metaclasses (Introduction) | type, custom metaclasses, and when or when not to use them | Advanced | Planned |
+| 64 | Iterators & the Iterator Protocol | __iter__, __next__, and custom iterators | Advanced | Covered |
+| 65 | Generators & yield | Generator functions, lazy evaluation, and memory benefits | Advanced | Covered |
+| 66 | Advanced Generators | yield from, generator pipelines, and sending values | Advanced | Covered |
+| 67 | Decorators Deep Dive | Function decorators, @wraps, parameterized decorators, and class-based decorators | Advanced | Covered |
+| 68 | Context Managers | The with statement, __enter__, __exit__, and contextlib | Advanced | Covered |
+| 69 | Descriptors | Data and non-data descriptors; how @property works under the hood | Advanced | Covered |
+| 70 | Metaclasses (Introduction) | type, custom metaclasses, and when or when not to use them | Advanced | Covered |
 | 71 | Functional Tools | itertools, functools, partial, lru_cache, and reduce | Advanced | Planned |
 | 72 | Advanced Typing | Protocol, TypeVar, Generic, TypedDict, Literal, and checking with mypy/pyright | Advanced | Planned |
 | 73 | Concurrency: Threading | threading, locks, queues, and GIL implications | Advanced | Planned |
@@ -112,6 +112,6 @@
 - **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
 - **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
 - **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Completed! 🎓**
-- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — Planned**
+- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — In progress (Days 64–70 covered)**
 - **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Planned**
 
