@@ -9,8 +9,7 @@
   <img src="https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-3776ab?style=flat-square" alt="Python 3.12, 3.13, 3.14">
   <img src="https://img.shields.io/badge/days-100%20%2F%20100-2ea44f?style=flat-square" alt="100 of 100 days">
   <img src="https://img.shields.io/badge/coverage%20gate-85%25-2ea44f?style=flat-square" alt="Coverage gate 85%">
-  <a href="LICENSE.md"><img src="https://img.shields.io/badge/code-MIT-1a1a1a?style=flat-square" alt="Code: MIT"></a>
-  <a href="LICENSE-CONTENT"><img src="https://img.shields.io/badge/content-CC%20BY%204.0-1a1a1a?style=flat-square" alt="Content: CC BY 4.0"></a>
+  <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square" alt="License: MIT"></a>
 </p>
 
 **Pro Python Mastery** covers Python in 100 topics, one per day, from variables and strings
@@ -154,7 +153,7 @@ pro-python-mastery/
 ├── pyproject.toml                    # pytest, coverage, ruff and mypy configuration
 ├── requirements.txt / requirements-dev.txt
 ├── CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md · CITATION.cff
-└── LICENSE.md (MIT, code) · LICENSE-CONTENT (CC BY 4.0, written content)
+└── LICENSE.md                        # MIT License
 ```
 
 ---
@@ -391,7 +390,6 @@ The detailed curriculum, with the deliverables for every day, is in [`syllabus.m
 
 ### Licence
 
-The **code** (`src/`, `tests/`, `scripts/`) is released under the [MIT License](LICENSE.md). The
-**written content and images** (`README.md`, `syllabus.md`, `docs/` and the other Markdown files)
-are released under [CC BY 4.0](LICENSE-CONTENT). You may reuse and adapt both, including
-commercially, as long as you credit **"Pro Python Mastery" by [Bhargavi Badal](https://github.com/OdeToTheWind)**.
+Everything in this repository, code and written content alike, is released under the
+[MIT License](LICENSE.md). You may reuse and adapt it, including commercially, as long as
+the copyright notice is kept. Please credit **"Pro Python Mastery" by [Bhargavi Badal](https://github.com/OdeToTheWind)**.

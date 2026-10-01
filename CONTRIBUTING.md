@@ -75,6 +75,5 @@ A maintainer will review within a week. CI must be green before a merge.
 
 ## Licensing of contributions
 
-By submitting a contribution you agree that code is licensed under the [MIT License](LICENSE.md)
-and written course material under [CC BY 4.0](LICENSE-CONTENT), the same terms as the rest
-of the project.
+By submitting a contribution you agree that it is licensed under the [MIT License](LICENSE.md),
+the same terms as the rest of the project.
