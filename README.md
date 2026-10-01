@@ -2,7 +2,7 @@
 
 [![Python CI](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml/badge.svg)](https://github.com/OdeToTheWind/pro-python-mastery/actions/workflows/python-tests.yml)
 ![Python](https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-blue)
-![Progress](https://img.shields.io/badge/progress-80%20%2F%20100%20days-brightgreen)
+![Progress](https://img.shields.io/badge/progress-100%20%2F%20100%20days-brightgreen)
 ![Coverage gate](https://img.shields.io/badge/coverage%20gate-85%25-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -39,7 +39,7 @@ pytest tests/test_day_05.py -v              # read its tests
 
 Days 37 (Turtle) and 48 (Tkinter) need Tk (`sudo apt install python3-tk` on
 Debian/Ubuntu). Days 58, 62 and 63 talk to public practice sites when run
-directly; their tests never use the network (Day 76 uses a local aiohttp server). Secrets for Days 54, 60 and 61
+directly; their tests never use the internet (Days 76, 85, 93 and 97 use local servers on 127.0.0.1). Secrets for Days 54, 60 and 61
 go in a git-ignored `.env` – copy [`.env.example`](.env.example).
 
 ## How a day is organised
@@ -141,26 +141,26 @@ docs/progress/
 | 78 | Testing with pytest | 🟠 | A *parcel-shipping quote service* that calls a carrier's rate API. This module is the code under test; ``tests/test_day_78.py`` is the real lesson – it shows fixtures (scopes, factories, teardown, built-ins), parametrisation (ids, stacked parameters), mocking (``Mock(spec=...)``, ``patch``, ``monkeypatch``, call assertions) and coverage. | [code](src/day_78_testing_with_pytest/main.py) · [tests](tests/test_day_78.py) · [notes](docs/progress/day-78-reflection.md) |
 | 79 | Packaging & Distribution | 🟠 | Publish *"kitchenconv"*, a tiny cooking-unit converter with a CLI, as a real Python package: generate a ``src``-layout project with a complete ``pyproject.toml``, build a wheel and an sdist offline, inspect what is inside, validate the metadata with ``twine check`` and prepare (not perform) the TestPyPI upload. | [code](src/day_79_packaging_distribution/main.py) · [tests](tests/test_day_79.py) · [notes](docs/progress/day-79-reflection.md) |
 | 80 | Profiling & Performance | 🟠 | An *e-commerce nightly report* that got slow as the shop grew. We measure first (``cProfile``, ``timeit``, ``tracemalloc``/``memory_profiler``), find the hotspots, then apply targeted optimisation patterns – and prove the fast version returns exactly the same answer. | [code](src/day_80_profiling_performance/main.py) · [tests](tests/test_day_80.py) · [notes](docs/progress/day-80-reflection.md) |
-| 81 | Advanced Regular Expressions | 🟠 | _planned_ | – |
-| 82 | SQLite & Pure Database Work | 🟠 | _planned_ | – |
-| 83 | Robust CLI Application | 🔴 | _planned_ | – |
-| 84 | Data Pipeline / ETL Script | 🔴 | _planned_ | – |
-| 85 | Concurrent File / Network Processor | 🔴 | _planned_ | – |
-| 86 | Custom Logging & Monitoring Tool | 🔴 | _planned_ | – |
-| 87 | Plugin-style Architecture | 🔴 | _planned_ | – |
-| 88 | Automated Report Generator | 🔴 | _planned_ | – |
-| 89 | Background Task Runner | 🔴 | _planned_ | – |
-| 90 | Memory-efficient Large File Processor | 🔴 | _planned_ | – |
-| 91 | Type-safe Configuration System | 🔴 | _planned_ | – |
-| 92 | Test Suite for a Multi-module Package | 🔴 | _planned_ | – |
-| 93 | Simple Async Network Service | 🔴 | _planned_ | – |
-| 94 | Data Validation & Cleaning Library | 🔴 | _planned_ | – |
-| 95 | Performance-critical Module | 🔴 | _planned_ | – |
-| 96 | Packaging a Real Tool | 🔴 | _planned_ | – |
-| 97 | Automation Bot Suite | 🔴 | _planned_ | – |
-| 98 | Scientific / Simulation Mini-project | 🔴 | _planned_ | – |
-| 99 | Observability & Debugging Toolkit | 🔴 | _planned_ | – |
-| 100 | Portfolio Capstone: Production-ready Python Tool | 🔴 | _planned_ | – |
+| 81 | Advanced Regular Expressions | 🟠 | A *customer-support ticket parser* that pulls order numbers, amounts, dates and contact details out of free-text emails, redacts personal data before it reaches the logs, and normalises messy formatting. | [code](src/day_81_advanced_regular_expressions/main.py) · [tests](tests/test_day_81.py) · [notes](docs/progress/day-81-reflection.md) |
+| 82 | SQLite & Pure Database Work | 🟠 | A *climbing-gym membership system* – members, passes and check-ins stored in SQLite with a proper schema, constraints, indexes, transactions and versioned migrations, using nothing but the standard library. | [code](src/day_82_sqlite_database/main.py) · [tests](tests/test_day_82.py) · [notes](docs/progress/day-82-reflection.md) |
+| 83 | Robust CLI Application | 🔴 | ``habits`` – a *habit-tracker command-line app* with subcommands (``add``, ``done``, ``list``, ``streak``, ``config``), a TOML config file plus environment overrides, logging controlled by ``-v``/``-q``, JSON output for scripting, and proper exit codes. | [code](src/day_83_robust_cli_application/main.py) · [tests](tests/test_day_83.py) · [notes](docs/progress/day-83-reflection.md) |
+| 84 | Data Pipeline / ETL Script | 🔴 | A *city air-quality ETL*. Sensor stations drop CSV and JSON-lines files into an inbox folder; the pipeline extracts records lazily, transforms and validates them, quarantines bad rows with reasons, loads clean data into JSON-lines output, and writes a run summary – logging every step. | [code](src/day_84_data_pipeline_etl/main.py) · [tests](tests/test_day_84.py) · [notes](docs/progress/day-84-reflection.md) |
+| 85 | Concurrent File / Network Processor | 🔴 | A *podcast-archive mirroring tool*. Episodes are downloaded from a feed server with asyncio (I/O bound, hundreds of sockets on one thread), verified with SHA-256 in a thread pool (disk I/O releases the GIL), and compressed for cold storage in a process pool (pure CPU work). One report tells the operator what succeeded, what failed and why. | [code](src/day_85_concurrent_file_network_processor/main.py) · [tests](tests/test_day_85.py) · [notes](docs/progress/day-85-reflection.md) |
+| 86 | Custom Logging & Monitoring Tool | 🔴 | A *payment-gateway monitor*. Every payment attempt is logged as one JSON object (with the request id carried by ``contextvars``), files rotate before they fill the disk, latency and error counts are kept as metrics that render in the Prometheus text format, and an alert handler pages the on-call engineer when errors spike. | [code](src/day_86_custom_logging_monitoring/main.py) · [tests](tests/test_day_86.py) · [notes](docs/progress/day-86-reflection.md) |
+| 87 | Plugin-style Architecture | 🔴 | A *team chat-bot* whose commands (``!roll``, ``!weather``, ``!standup`` …) come from plugins. Built-in commands register with a decorator, local plugins are loaded from a folder at runtime, and installed packages contribute commands through ``importlib.metadata`` entry points – a broken or incompatible plugin is reported, never fatal. | [code](src/day_87_plugin_architecture/main.py) · [tests](tests/test_day_87.py) · [notes](docs/progress/day-87-reflection.md) |
+| 88 | Automated Report Generator | 🔴 | A *freelance design studio's month-end report*. Time-tracking entries are aggregated per client and project with exact ``Decimal`` money, then rendered three ways: an HTML e-mail body from ``string.Template`` (auto-escaped), a CSV for the accountant, and a one-page PDF written by hand – no third-party PDF library needed. | [code](src/day_88_automated_report_generator/main.py) · [tests](tests/test_day_88.py) · [notes](docs/progress/day-88-reflection.md) |
+| 89 | Background Task Runner | 🔴 | A *home-lab backup scheduler*. A small daemon reads job specs such as ``"every 15 minutes"`` or ``"daily at 02:30"``, runs each job as a child process with a timeout, never runs two copies of the same job at once, refuses to start twice (PID file) and shuts down gracefully on SIGTERM. | [code](src/day_89_background_task_runner/main.py) · [tests](tests/test_day_89.py) · [notes](docs/progress/day-89-reflection.md) |
+| 90 | Memory-efficient Large File Processor | 🔴 | A *DNA-sequencing lab* receives FASTQ files far larger than RAM. Reads are streamed in fixed-size binary chunks, re-assembled into lines and 4-line records, quality-filtered, counted, and sorted with an *external* merge sort – and ``tracemalloc`` proves the peak memory stays flat while the file grows. | [code](src/day_90_memory_efficient_file_processor/main.py) · [tests](tests/test_day_90.py) · [notes](docs/progress/day-90-reflection.md) |
+| 91 | Type-safe Configuration System | 🔴 | An *IoT fleet firmware-rollout service*. Its settings are frozen dataclasses whose **type hints drive parsing**: environment variables such as ``FLEET_DB__PORT=5433`` or ``FLEET_ROLLOUT__REGIONS=eu,us`` are coerced to ``int``, ``bool``, ``Path``, ``Literal``, ``Enum``, tuples and secrets, every problem is reported at once, and secrets never appear in logs. | [code](src/day_91_type_safe_configuration/main.py) · [tests](tests/test_day_91.py) · [notes](docs/progress/day-91-reflection.md) |
+| 92 | Test Suite for a Multi-module Package | 🔴 | ``lending`` – a *community library lending system* split into ``models``, ``repository``, ``notifier`` and ``service`` modules. The point of the day is the **test suite**: factory fixtures, a fake repository, mocked notifications, a frozen clock, parametrised business rules and a CI command that enforces >90 % branch coverage for the package. | [code](src/day_92_multi_module_test_suite/main.py) · [tests](tests/test_day_92.py) · [notes](docs/progress/day-92-reflection.md) |
+| 93 | Simple Async Network Service | 🔴 | A *pub-quiz game server*. Players connect over TCP with a tiny line protocol (``JOIN``, ``ANSWER``, ``SCORES``, ``QUIT``); questions are broadcast to everyone, only the first correct answer scores, and a hand-written HTTP endpoint serves the live scoreboard as JSON – all on ``asyncio`` streams from the standard library, no framework. | [code](src/day_93_async_network_service/main.py) · [tests](tests/test_day_93.py) · [notes](docs/progress/day-93-reflection.md) |
+| 94 | Data Validation & Cleaning Library | 🔴 | ``intake`` – a reusable validation library for a *clinical-trial patient intake* system. Messy form data ("72,5 kg", " F ", "1980/03/07") is cleaned and validated by small composable, type-hinted validators; every error carries its exact path (``visits[1].date``) so a coordinator can fix the whole form in one go. | [code](src/day_94_data_validation_library/main.py) · [tests](tests/test_day_94.py) · [notes](docs/progress/day-94-reflection.md) |
+| 95 | Performance-critical Module | 🔴 | A *ride-hailing dispatcher* must find the nearest free driver for every waiting rider, city-wide, several times per second. The same haversine matching is implemented four ways – naive Python, tuned Python with a spatial grid index, vectorised NumPy and (optionally) Numba – then profiled, benchmarked and cross-checked so every fast path returns exactly what the slow, obviously-correct version returns. | [code](src/day_95_performance_critical_module/main.py) · [tests](tests/test_day_95.py) · [notes](docs/progress/day-95-reflection.md) |
+| 96 | Packaging a Real Tool | 🔴 | Ship ``tidyfiles`` – a *downloads-folder organiser* that sorts files into ``images/``, ``documents/``, ``archives/`` … – as a release-ready project. Day 79 learned the packaging mechanics; today is the **release engineering** around a working tool: the tool's code is single-sourced into the package, usage docs are generated from the real ``argparse`` parser, the project ships its own tests, versions are bumped with a changelog, a pre-flight check blocks incomplete releases, and a GitHub Actions workflow publishes to TestPyPI with trusted publishing (no API token stored). | [code](src/day_96_packaging_real_tool/main.py) · [tests](tests/test_day_96.py) · [notes](docs/progress/day-96-reflection.md) |
+| 97 | Automation Bot Suite | 🔴 | An *apartment-hunting bot*. Every few minutes it scrapes a listings site (politely: ``robots.txt``, paging, a delay), enriches each new flat with commute time from a JSON API, filters by the user's criteria, remembers what it has already reported, and posts matches to a chat webhook with retries – combining the scraping, API, scheduling and notification skills of the course into one pipeline. | [code](src/day_97_automation_bot_suite/main.py) · [tests](tests/test_day_97.py) · [notes](docs/progress/day-97-reflection.md) |
+| 98 | Scientific / Simulation Mini-project | 🔴 | An *epidemic outbreak simulator* for a city health department. A deterministic SIR model is integrated in pure Python (RK4) and validated against the analytical final-size equation; NumPy then sweeps hundreds of transmission rates at once, and a stochastic chain-binomial Monte Carlo answers the questions a planner actually asks: *how likely is a major outbreak, and how large could it get?* | [code](src/day_98_scientific_simulation/main.py) · [tests](tests/test_day_98.py) · [notes](docs/progress/day-98-reflection.md) |
+| 99 | Observability & Debugging Toolkit | 🔴 | The support team of a *desktop photo-editing app* gets vague bug reports ("it crashed while exporting"). This toolkit turns every crash into a structured, secret-free report (frames, locals, notes, chained causes and exception groups), installs global hooks for the main thread and worker threads, traces nested operations as timed spans, and ships two small custom debuggers: a call tracer (``sys.settrace``) and a watchpoint debugger (``bdb``) that records every change of a variable. | [code](src/day_99_observability_debugging/main.py) · [tests](tests/test_day_99.py) · [notes](docs/progress/day-99-reflection.md) |
+| 100 | Portfolio Capstone: Production-ready Python Tool | 🔴 | ``budgetly`` – a *personal expense tracker* you could put on your CV. Five focused modules (models, config, storage, reports, cli) give a command-line tool with layered configuration, SQLite storage with schema migrations, logging, exit codes, CSV export, a ``pyproject.toml`` with a console script, a README, and a test suite holding the package above 90 % branch coverage. | [code](src/day_100_portfolio_capstone/main.py) · [tests](tests/test_day_100.py) · [notes](docs/progress/day-100-reflection.md) |
 <!-- course-index:end -->
 
 ## Quality bar
@@ -173,8 +173,8 @@ docs/progress/
 
 ## Roadmap
 
-Days 81–100 (regular expressions, SQLite and the capstone projects) are planned in
-[`syllabus.md`](syllabus.md). The plan for turning the finished course into a
+All 100 days in [`syllabus.md`](syllabus.md) are complete, from the fundamentals
+through to the Day 100 portfolio capstone (`budgetly`). The plan for turning the finished course into a
 high-impact learning resource – contributor programme, learner experience,
 sponsorship and governance – is in [`learning_develop.md`](learning_develop.md).
 

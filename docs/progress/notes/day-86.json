@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A JSON formatter turns every log record into one machine-searchable line, including `extra=` fields.",
+    "`contextvars` carries a request id into every log line without passing it through each function.",
+    "Counters, gauges and histogram percentiles describe behaviour; the Prometheus text format exposes them."
+  ],
+  "pitfalls": [
+    "Alert handlers need de-duplication – without it, one incident produces a storm of pages."
+  ],
+  "next": "Design a plugin architecture on Day 87."
+}

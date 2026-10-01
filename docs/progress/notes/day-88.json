@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Aggregate with `Decimal` and round once per line, never per entry, to keep totals exact.",
+    "`string.Template.substitute` fails loudly on a missing field; every value is HTML-escaped first.",
+    "A valid PDF is just objects plus a byte-exact cross-reference table – no library needed for simple pages."
+  ],
+  "pitfalls": [
+    "CSV cells starting with `=`, `+`, `-` or `@` run as spreadsheet formulas – prefix them to neutralise injection."
+  ],
+  "next": "Run background jobs on a schedule on Day 89."
+}

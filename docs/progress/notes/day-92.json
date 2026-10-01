@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Injecting dependencies (repository, notifier, clock) is what makes a package easy to test.",
+    "Factory fixtures, fakes and `create_autospec` mocks test behaviour without real e-mail or disk.",
+    "One deterministic CI command with a branch-coverage gate keeps quality from slipping."
+  ],
+  "pitfalls": [
+    "Plain `Mock()` accepts any call; `create_autospec` fails when the real signature changes."
+  ],
+  "next": "Write an asyncio network service on Day 93."
+}

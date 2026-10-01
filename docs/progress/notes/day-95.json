@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Profile the obvious implementation first; it also serves as the reference for correctness.",
+    "A spatial grid index avoids comparing every rider with every driver.",
+    "NumPy broadcasting computes whole distance matrices at once; Numba is an optional extra."
+  ],
+  "pitfalls": [
+    "Every fast path must be checked against the baseline, including ties and sparse, far-away data."
+  ],
+  "next": "Package and release a real tool on Day 96."
+}

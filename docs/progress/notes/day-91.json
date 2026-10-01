@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Type hints can drive parsing: one `coerce` function turns strings into int, bool, Path, Literal, Enum or tuples.",
+    "Collecting every problem before raising lets operators fix a configuration in one pass.",
+    "A `Secret` type whose repr is masked keeps passwords out of logs and tracebacks."
+  ],
+  "pitfalls": [
+    "A typo in an environment variable name is silently ignored unless unknown keys are reported."
+  ],
+  "next": "Write a full test suite for a multi-module package on Day 92."
+}

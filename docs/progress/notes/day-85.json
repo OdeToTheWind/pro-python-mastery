@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "asyncio suits many network waits, threads suit blocking file I/O, and processes suit CPU-bound work.",
+    "A semaphore caps concurrent requests; retries with backoff absorb transient 5xx errors.",
+    "`as_completed` handles results as soon as each finishes and collects failures without stopping the run."
+  ],
+  "pitfalls": [
+    "Forking a multi-threaded process can deadlock – the `spawn` start method is the safe, portable choice."
+  ],
+  "next": "Build structured logging and metrics on Day 86."
+}

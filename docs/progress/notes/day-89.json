@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "The `schedule` library expresses jobs in readable specs; a tick loop with `Event.wait` stays responsive.",
+    "`subprocess.run(timeout=...)` without `shell=True` runs jobs safely; terminate → wait → kill stops stubborn ones.",
+    "An `O_EXCL` PID file prevents two runners, and stale locks from crashed runs are recovered."
+  ],
+  "pitfalls": [
+    "Without overlap protection, a slow job piles up more and more copies of itself."
+  ],
+  "next": "Process files larger than memory on Day 90."
+}

@@ -88,30 +88,30 @@
 | 78 | Testing with pytest | Fixtures, parametrization, mocking, and coverage | Advanced | Covered |
 | 79 | Packaging & Distribution | pyproject.toml, setuptools/hatch/poetry, wheels, and test publishing to PyPI | Advanced | Covered |
 | 80 | Profiling & Performance | cProfile, timeit, memory_profiler, and optimization patterns | Advanced | Covered |
-| 81 | Advanced Regular Expressions | Complex patterns, groups, lookarounds, and the re module | Advanced | Planned |
-| 82 | SQLite & Pure Database Work | sqlite3, transactions, context managers, and basic schema design without an ORM | Advanced | Planned |
-| 83 | Robust CLI Application | argparse or click/typer, subcommands, configuration, and logging | Capstone | Planned |
-| 84 | Data Pipeline / ETL Script | Generators, pathlib, CSV/JSON, error handling, and logging | Capstone | Planned |
-| 85 | Concurrent File / Network Processor | Thread/process pools or asyncio for I/O-bound work | Capstone | Planned |
-| 86 | Custom Logging & Monitoring Tool | Structured logging, log rotation, and basic metrics | Capstone | Planned |
-| 87 | Plugin-style Architecture | Entry points, dynamic loading, and decorator-based registration | Capstone | Planned |
-| 88 | Automated Report Generator | Data aggregation, string.Template or Jinja2, and PDF/CSV output | Capstone | Planned |
-| 89 | Background Task Runner | Scheduling with schedule or APScheduler and process management | Capstone | Planned |
-| 90 | Memory-efficient Large File Processor | Generators, streaming, and chunking | Capstone | Planned |
-| 91 | Type-safe Configuration System | Pydantic or dataclasses, validation, and environment variables | Capstone | Planned |
-| 92 | Test Suite for a Multi-module Package | High coverage, fixtures, mocks, and CI-friendly structure | Capstone | Planned |
-| 93 | Simple Async Network Service | An asyncio TCP/HTTP server with the standard library or aiohttp, without a full framework | Capstone | Planned |
-| 94 | Data Validation & Cleaning Library | Reusable validators, custom exceptions, and type hints | Capstone | Planned |
-| 95 | Performance-critical Module | Profiling, optimization, and optional Cython/Numba | Capstone | Planned |
-| 96 | Packaging a Real Tool | Complete pyproject.toml, CLI entry point, documentation, tests, and TestPyPI publishing | Capstone | Planned |
-| 97 | Automation Bot Suite | Combining scraping, APIs, scheduling, and notifications | Capstone | Planned |
-| 98 | Scientific / Simulation Mini-project | NumPy and a pure-Python simulation or Monte Carlo project | Capstone | Planned |
-| 99 | Observability & Debugging Toolkit | Advanced traceback handling, custom debuggers, and structured logs | Capstone | Planned |
-| 100 | Portfolio Capstone: Production-ready Python Tool | A useful multi-module tool with CLI, tests (>90% coverage), logging, config, packaging, and docs | Capstone | Planned |
+| 81 | Advanced Regular Expressions | Complex patterns, groups, lookarounds, and the re module | Advanced | Covered |
+| 82 | SQLite & Pure Database Work | sqlite3, transactions, context managers, and basic schema design without an ORM | Advanced | Covered |
+| 83 | Robust CLI Application | argparse or click/typer, subcommands, configuration, and logging | Capstone | Covered |
+| 84 | Data Pipeline / ETL Script | Generators, pathlib, CSV/JSON, error handling, and logging | Capstone | Covered |
+| 85 | Concurrent File / Network Processor | Thread/process pools or asyncio for I/O-bound work | Capstone | Covered |
+| 86 | Custom Logging & Monitoring Tool | Structured logging, log rotation, and basic metrics | Capstone | Covered |
+| 87 | Plugin-style Architecture | Entry points, dynamic loading, and decorator-based registration | Capstone | Covered |
+| 88 | Automated Report Generator | Data aggregation, string.Template or Jinja2, and PDF/CSV output | Capstone | Covered |
+| 89 | Background Task Runner | Scheduling with schedule or APScheduler and process management | Capstone | Covered |
+| 90 | Memory-efficient Large File Processor | Generators, streaming, and chunking | Capstone | Covered |
+| 91 | Type-safe Configuration System | Pydantic or dataclasses, validation, and environment variables | Capstone | Covered |
+| 92 | Test Suite for a Multi-module Package | High coverage, fixtures, mocks, and CI-friendly structure | Capstone | Covered |
+| 93 | Simple Async Network Service | An asyncio TCP/HTTP server with the standard library or aiohttp, without a full framework | Capstone | Covered |
+| 94 | Data Validation & Cleaning Library | Reusable validators, custom exceptions, and type hints | Capstone | Covered |
+| 95 | Performance-critical Module | Profiling, optimization, and optional Cython/Numba | Capstone | Covered |
+| 96 | Packaging a Real Tool | Complete pyproject.toml, CLI entry point, documentation, tests, and TestPyPI publishing | Capstone | Covered |
+| 97 | Automation Bot Suite | Combining scraping, APIs, scheduling, and notifications | Capstone | Covered |
+| 98 | Scientific / Simulation Mini-project | NumPy and a pure-Python simulation or Monte Carlo project | Capstone | Covered |
+| 99 | Observability & Debugging Toolkit | Advanced traceback handling, custom debuggers, and structured logs | Capstone | Covered |
+| 100 | Portfolio Capstone: Production-ready Python Tool | A useful multi-module tool with CLI, tests (>90% coverage), logging, config, packaging, and docs | Capstone | Covered |
 
 - **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
 - **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
 - **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Completed! 🎓**
-- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — In progress (Days 64–80 covered)**
-- **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Planned**
+- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — Completed! 🎓**
+- **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Completed! 🎓**
 

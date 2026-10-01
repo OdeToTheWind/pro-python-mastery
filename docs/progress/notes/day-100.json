@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A production-style tool is small, focused modules: models, config, storage, reports and the CLI.",
+    "Layered configuration, SQLite migrations, logging, exit codes and packaging fit together into one product.",
+    "A branch-coverage gate above 90 % keeps the tool safe to change."
+  ],
+  "pitfalls": [
+    "Mixing CLI parsing with business logic makes both hard to test – keep the logic in pure functions."
+  ],
+  "next": "Course complete – continue with the roadmap in learning_develop.md."
+}

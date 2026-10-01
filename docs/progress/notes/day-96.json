@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Single-source the tool's code and generate the docs from the real parser, so they never drift apart.",
+    "A pre-flight check blocks releases that lack a changelog entry, licence, tests or up-to-date docs.",
+    "Trusted publishing (`id-token: write`) uploads to TestPyPI without storing an API token."
+  ],
+  "pitfalls": [
+    "Bumping the version without a matching changelog entry confuses users about what changed."
+  ],
+  "next": "Combine scraping, APIs, scheduling and notifications on Day 97."
+}

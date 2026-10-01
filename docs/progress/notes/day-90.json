@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Reading fixed-size chunks and gluing the tail of each chunk to the next keeps memory flat at any file size.",
+    "An external merge sort sorts more data than fits in RAM: sorted runs on disk plus `heapq.merge`.",
+    "`tracemalloc` proves the streaming version's peak memory does not grow with the input."
+  ],
+  "pitfalls": [
+    "Lines from a file keep their newline – strip them before parsing, or records shift silently."
+  ],
+  "next": "Build a type-safe configuration system on Day 91."
+}

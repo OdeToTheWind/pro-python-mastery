@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Decorator registration keeps plugins declarative: the function is registered and returned unchanged.",
+    "`importlib.util.spec_from_file_location` loads plugin files at runtime; entry points discover installed ones.",
+    "A plugin API version and all-or-nothing installation keep one broken plugin from breaking the bot."
+  ],
+  "pitfalls": [
+    "Silent name clashes let one plugin hijack another's command – detect and reject duplicates."
+  ],
+  "next": "Generate reports in several formats on Day 88."
+}

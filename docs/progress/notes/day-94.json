@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "Small generic `Validator[T]` objects compose with `>>`, `optional()` and `default()`.",
+    "Errors that carry a path (`visits[1].date`) tell users exactly what to fix.",
+    "Cleaning (whitespace, decimal commas, units) belongs in the validator, before checking the rules."
+  ],
+  "pitfalls": [
+    "Stopping at the first error forces users through many frustrating round-trips."
+  ],
+  "next": "Optimise a performance-critical module on Day 95."
+}

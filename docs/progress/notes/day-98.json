@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-01",
+  "learnings": [
+    "A hand-written RK4 integrator in pure Python is accurate enough to match the analytical final size.",
+    "NumPy integrates hundreds of models at once by running the same maths on whole arrays.",
+    "A seeded Monte Carlo answers probabilistic questions and reports confidence intervals."
+  ],
+  "pitfalls": [
+    "Without checks like population conservation, a simulation bug looks just like a scientific result."
+  ],
+  "next": "Build an observability and debugging toolkit on Day 99."
+}
