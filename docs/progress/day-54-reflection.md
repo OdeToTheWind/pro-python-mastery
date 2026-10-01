@@ -1,7 +1,7 @@
 # Day 54 – Sending Email with Python and SMTP Reflection
 
 **Date:** 2026-05-05 · **Level:** Intermediate · **Python:** 3.12+ · **Status:** Covered
-**Code:** [`src/day_54_sending_email/main.py`](../../src/day_54_sending_email/main.py) · **Tests:** [`tests/test_day_54.py`](../../tests/test_day_54.py) (9 tests)
+**Code:** [`src/day_54_sending_email/main.py`](../../src/day_54_sending_email/main.py) · **Tests:** [`tests/test_day_54.py`](../../tests/test_day_54.py) (10 tests)
 
 ## Scenario
 A *weekly study-report mailer*. It builds a proper MIME message (plain text + HTML + attachment), validates addresses, reads SMTP credentials from the environment and sends with ``smtplib`` over TLS – or does a dry run.

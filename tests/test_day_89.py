@@ -49,6 +49,7 @@ def test_run_command_outcomes():
     assert run_command("missing", ["definitely-not-a-binary-xyz"], 1).returncode == 127
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="Windows has no ignorable SIGTERM; terminate() already kills")
 def test_stop_process_escalates_to_kill():
     stubborn = subprocess.Popen([PY, "-c", "import signal, time; signal.signal(signal.SIGTERM, signal.SIG_IGN);"
                                  "print('ready', flush=True); time.sleep(30)"], stdout=subprocess.PIPE, text=True)
@@ -57,7 +58,13 @@ def test_stop_process_escalates_to_kill():
     stubborn.stdout.close()
     polite = subprocess.Popen([PY, "-c", "import time; time.sleep(30)"], text=True)
     assert stop_process(polite) == -signal.SIGTERM
-    assert stop_process(polite) == -signal.SIGTERM  # already stopped: just returns
+
+
+def test_stop_process_on_every_platform():
+    sleeper = subprocess.Popen([PY, "-c", "import time; time.sleep(30)"])
+    code = stop_process(sleeper, grace=1)
+    assert code != 0 and sleeper.poll() == code
+    assert stop_process(sleeper) == code  # already stopped: just returns the code
 
 
 def test_pid_file_single_instance_and_stale_lock(tmp_path):
@@ -97,7 +104,8 @@ def test_loop_stops_on_signal():
     runner = TaskRunner()
     restore = runner.install_signal_handlers()
     try:
-        threading.Timer(0.1, lambda: os.kill(os.getpid(), signal.SIGTERM)).start()
+        # raise_signal runs our handler on every OS; os.kill(own pid) would terminate the process on Windows
+        threading.Timer(0.1, signal.raise_signal, args=(signal.SIGTERM,)).start()
         start = time.monotonic()
         runner.run(tick=0.02)
         assert runner.stop_event.is_set() and time.monotonic() - start < 2
@@ -111,3 +119,12 @@ def test_main(capsys):
     main()
     out = capsys.readouterr().out
     assert "'snapshot ok'" in out and "timeout" in out and "Every 1 day at 02:30:00" in out
+
+
+def test_pid_alive_never_signals_the_process(monkeypatch):
+    from src.day_89_background_task_runner import main as runner_module
+
+    calls = []
+    monkeypatch.setattr(runner_module.os, "kill", lambda pid, sig: calls.append((pid, sig)))
+    monkeypatch.setattr(runner_module.sys, "platform", "linux")
+    assert runner_module._pid_alive(12345) and calls == [(12345, 0)]  # signal 0 = existence check on POSIX

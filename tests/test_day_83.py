@@ -2,6 +2,7 @@
 
 import json
 from datetime import date
+from pathlib import Path
 
 import pytest
 
@@ -88,7 +89,7 @@ def test_logging_goes_to_stderr_with_verbosity(capsys, env):
 def test_config_layers(tmp_path, env):
     cfg = tmp_path / "habits.toml"
     cfg.write_text('[habits]\ndata_file = "/tmp/from-file.json"\ndefault_format = "json"\n', encoding="utf-8")
-    assert str(load_config(cfg, env={}).data_file) == "/tmp/from-file.json"
+    assert load_config(cfg, env={}).data_file == Path("/tmp/from-file.json")
     config = load_config(cfg, env=env)
     assert config.data_file.name == "habits.json" and config.default_format == "json"  # env wins
 

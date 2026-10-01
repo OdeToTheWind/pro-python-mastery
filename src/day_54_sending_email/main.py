@@ -34,6 +34,7 @@ DELIVERABLES: dict[str, str] = {
 }
 
 ADDRESS = re.compile(r"^[^@\s]+@[^@\s]+\.[a-z]{2,}$", re.IGNORECASE)
+ATTACHMENT_TYPES = {".csv": "text/csv", ".pdf": "application/pdf", ".txt": "text/plain", ".json": "application/json"}
 
 
 class EmailConfigError(Exception):
@@ -86,7 +87,8 @@ def build_report_email(sender: str, to: list[str], learner: str, minutes: dict[s
     msg.add_alternative(f"<h2>Great work, {learner}!</h2><table>{rows}</table>"
                         f"<p><b>Total:</b> {total} minutes</p>", subtype="html")
     if attachment is not None:
-        ctype, _ = mimetypes.guess_type(attachment.name)
+        # Fixed table first: mimetypes reads the Windows registry, where .csv may be "vnd.ms-excel"
+        ctype = ATTACHMENT_TYPES.get(attachment.suffix.lower()) or mimetypes.guess_type(attachment.name)[0]
         maintype, subtype = (ctype or "application/octet-stream").split("/", 1)
         msg.add_attachment(attachment.read_bytes(), maintype=maintype, subtype=subtype,
                            filename=attachment.name)

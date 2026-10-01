@@ -1,7 +1,7 @@
 # Day 89 – Background Task Runner Reflection
 
 **Date:** 2026-10-01 · **Level:** Capstone · **Python:** 3.12+ · **Status:** Covered
-**Code:** [`src/day_89_background_task_runner/main.py`](../../src/day_89_background_task_runner/main.py) · **Tests:** [`tests/test_day_89.py`](../../tests/test_day_89.py) (9 tests)
+**Code:** [`src/day_89_background_task_runner/main.py`](../../src/day_89_background_task_runner/main.py) · **Tests:** [`tests/test_day_89.py`](../../tests/test_day_89.py) (11 tests)
 
 ## Scenario
 A *home-lab backup scheduler*. A small daemon reads job specs such as ``"every 15 minutes"`` or ``"daily at 02:30"``, runs each job as a child process with a timeout, never runs two copies of the same job at once, refuses to start twice (PID file) and shuts down gracefully on SIGTERM.

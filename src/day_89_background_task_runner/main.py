@@ -86,7 +86,10 @@ def run_command(name: str, argv: Sequence[str], timeout: float) -> JobResult:
 
 
 def stop_process(proc: subprocess.Popen[str], grace: float = 2.0) -> int:
-    """Ask nicely (SIGTERM), wait, then insist (SIGKILL). Returns the exit code."""
+    """Ask nicely (SIGTERM), wait, then insist (SIGKILL). Returns the exit code.
+
+    On Windows both steps are ``TerminateProcess`` – there is no polite signal to ignore.
+    """
     if proc.poll() is None:
         proc.terminate()
         try:
@@ -97,6 +100,9 @@ def stop_process(proc: subprocess.Popen[str], grace: float = 2.0) -> int:
 
 
 def _pid_alive(pid: int) -> bool:
+    """Is ``pid`` running? On Windows ``os.kill(pid, 0)`` would send Ctrl+C, so ask the OS instead."""
+    if sys.platform == "win32":  # pragma: no cover - exercised on Windows only
+        return _windows_pid_alive(pid)
     try:
         os.kill(pid, 0)
     except ProcessLookupError:
@@ -104,6 +110,21 @@ def _pid_alive(pid: int) -> bool:
     except PermissionError:  # pragma: no cover - exists but owned by someone else
         return True
     return True
+
+
+def _windows_pid_alive(pid: int) -> bool:  # pragma: no cover - Windows only
+    import ctypes
+
+    kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
+    handle = kernel32.OpenProcess(0x1000, False, pid)  # PROCESS_QUERY_LIMITED_INFORMATION
+    if not handle:
+        return kernel32.GetLastError() == 5  # ERROR_ACCESS_DENIED: exists, owned by someone else
+    try:
+        code = ctypes.c_ulong()
+        kernel32.GetExitCodeProcess(handle, ctypes.byref(code))
+        return code.value == 259  # STILL_ACTIVE
+    finally:
+        kernel32.CloseHandle(handle)
 
 
 @contextmanager

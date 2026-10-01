@@ -91,3 +91,13 @@ def test_main_without_env(capsys, monkeypatch):
     main()
     out = capsys.readouterr().out
     assert "[dry-run] would send" in out and "not-a-real-password" not in out
+
+
+def test_attachment_type_does_not_depend_on_the_os(tmp_path, monkeypatch):
+    import mimetypes
+
+    monkeypatch.setattr(mimetypes, "guess_type", lambda name: ("application/vnd.ms-excel", None))  # Windows registry
+    attachment = tmp_path / "progress.csv"
+    attachment.write_text("day,minutes\n", encoding="utf-8")
+    msg = build_report_email("bot@test.org", ["a@test.org"], "Asha", {"Mon": 1}, attachment)
+    assert next(msg.iter_attachments()).get_content_type() == "text/csv"

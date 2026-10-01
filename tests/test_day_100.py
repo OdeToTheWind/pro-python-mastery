@@ -7,6 +7,7 @@ import sqlite3
 import tomllib
 from datetime import date
 from decimal import Decimal
+from pathlib import Path
 
 import pytest
 
@@ -62,7 +63,7 @@ def test_config_layers(tmp_path):
     assert loaded.currency == "GBP" and loaded.budgets == {"food": Decimal("400.5")}
     assert loaded.db_path.name == "b.db" and "~" not in str(loaded.db_path)
     overridden = load_config(cfg, env={"BUDGETLY_DB": "/x/y.db", "BUDGETLY_LOG_LEVEL": "debug"})
-    assert str(overridden.db_path) == "/x/y.db" and overridden.log_level == "DEBUG"
+    assert overridden.db_path == Path("/x/y.db") and overridden.log_level == "DEBUG"
     assert load_config(None, env={}).currency == "EUR"
 
 

@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import inspect
+import os
 import re
 import shutil
 import subprocess
@@ -314,7 +315,7 @@ def run_shipped_tests(project: Path) -> subprocess.CompletedProcess[str]:
     """Run the project's own tests against its ``src`` package, exactly as CI would."""
     return subprocess.run([sys.executable, "-m", "pytest", "-p", "no:cacheprovider", "tests"],
                           cwd=project, capture_output=True, text=True, timeout=120, check=False,
-                          env={"PYTHONPATH": str(project / "src"), "PATH": "/usr/bin:/bin"})
+                          env={**os.environ, "PYTHONPATH": str(project / "src")})
 
 
 def main() -> None:
