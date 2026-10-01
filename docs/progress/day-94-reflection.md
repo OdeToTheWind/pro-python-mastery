@@ -29,6 +29,7 @@
 
 ## Run it
 ```bash
+./propython.sh 94                 # study mode: explanation, code map, notes and tests
 python -m src.day_94_data_validation_library.main
 pytest tests/test_day_94.py -v
 ```

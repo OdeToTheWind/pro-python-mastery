@@ -28,6 +28,7 @@ A *community library catalogue* – a ``Book`` class with an initialiser, instan
 
 ## Run it
 ```bash
+./propython.sh 28                 # study mode: explanation, code map, notes and tests
 python -m src.day_28_classes.main
 pytest tests/test_day_28.py -v
 ```

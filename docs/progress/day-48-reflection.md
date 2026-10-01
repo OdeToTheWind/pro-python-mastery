@@ -27,6 +27,7 @@ A *restaurant tip splitter* desktop app. The calculation is a pure function (uni
 
 ## Run it
 ```bash
+./propython.sh 48                 # study mode: explanation, code map, notes and tests
 python -m src.day_48_tkinter_gui.main
 pytest tests/test_day_48.py -v
 ```

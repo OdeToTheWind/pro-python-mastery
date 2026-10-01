@@ -29,6 +29,7 @@ A *global team meeting planner* – ages, deadlines, business days and one meeti
 
 ## Run it
 ```bash
+./propython.sh 55                 # study mode: explanation, code map, notes and tests
 python -m src.day_55_date_and_time.main
 pytest tests/test_day_55.py -v
 ```

@@ -26,6 +26,7 @@ A *pizzeria ordering system* where each kind of method has a clear job: instance
 
 ## Run it
 ```bash
+./propython.sh 31                 # study mode: explanation, code map, notes and tests
 python -m src.day_31_python_methods.main
 pytest tests/test_day_31.py -v
 ```

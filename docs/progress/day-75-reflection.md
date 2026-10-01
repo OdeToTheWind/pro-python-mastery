@@ -31,6 +31,7 @@ An *airport departures board* that queries several airline status services at on
 
 ## Run it
 ```bash
+./propython.sh 75                 # study mode: explanation, code map, notes and tests
 python -m src.day_75_asyncio_fundamentals.main
 pytest tests/test_day_75.py -v
 ```

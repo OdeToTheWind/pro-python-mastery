@@ -27,6 +27,7 @@
 
 ## Run it
 ```bash
+./propython.sh 38                 # study mode: explanation, code map, notes and tests
 python -m src.day_38_game_development_with_python_and_oop.main
 pytest tests/test_day_38.py -v
 ```

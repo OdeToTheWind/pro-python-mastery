@@ -28,6 +28,7 @@ Deploy a tiny *"Quote of the Day" web app* – a standard-library WSGI applicati
 
 ## Run it
 ```bash
+./propython.sh 56                 # study mode: explanation, code map, notes and tests
 python -m src.day_56_pythonanywhere_hosting.main
 pytest tests/test_day_56.py -v
 ```

@@ -27,6 +27,7 @@ A *hiking-trip weather advisor* that decides what to pack and whether the hike i
 
 ## Run it
 ```bash
+./propython.sh 8                 # study mode: explanation, code map, notes and tests
 python -m src.day_08_if_else_conditionals.main
 pytest tests/test_day_08.py -v
 ```

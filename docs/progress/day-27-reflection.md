@@ -26,6 +26,7 @@ A *payment gateway* that accepts several payment methods through one abstract in
 
 ## Run it
 ```bash
+./propython.sh 27                 # study mode: explanation, code map, notes and tests
 python -m src.day_27_oop_basics.main
 pytest tests/test_day_27.py -v
 ```

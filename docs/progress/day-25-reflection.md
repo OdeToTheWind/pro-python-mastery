@@ -27,6 +27,7 @@ A *project doctor* that inspects a checkout (this repository by default) and rep
 
 ## Run it
 ```bash
+./propython.sh 25                 # study mode: explanation, code map, notes and tests
 python -m src.day_25_dev_env_setup_local.main
 pytest tests/test_day_25.py -v
 ```

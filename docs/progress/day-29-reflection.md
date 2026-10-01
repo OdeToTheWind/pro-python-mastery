@@ -29,6 +29,7 @@ A *dependency inspector* for this course – it checks which third-party package
 
 ## Run it
 ```bash
+./propython.sh 29                 # study mode: explanation, code map, notes and tests
 python -m src.day_29_external_modules.main
 pytest tests/test_day_29.py -v
 ```

@@ -27,6 +27,7 @@ A *household expense tracker* that imports a bank CSV export, validates each row
 
 ## Run it
 ```bash
+./propython.sh 43                 # study mode: explanation, code map, notes and tests
 python -m src.day_43_reading_writing_csv.main
 pytest tests/test_day_43.py -v
 ```

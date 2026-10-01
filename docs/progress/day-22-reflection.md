@@ -26,6 +26,7 @@ A *kitchen unit-conversion library* that is documented properly and a documentat
 
 ## Run it
 ```bash
+./propython.sh 22                 # study mode: explanation, code map, notes and tests
 python -m src.day_22_doc_string_vs_comments.main
 pytest tests/test_day_22.py -v
 ```

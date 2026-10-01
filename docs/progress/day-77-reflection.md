@@ -31,6 +31,7 @@ A *food-delivery dispatch service* that reads its settings from INI, YAML or TOM
 
 ## Run it
 ```bash
+./propython.sh 77                 # study mode: explanation, code map, notes and tests
 python -m src.day_77_logging_configuration.main
 pytest tests/test_day_77.py -v
 ```

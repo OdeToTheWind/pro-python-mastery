@@ -29,6 +29,7 @@ An *airline booking API* where some arguments must be positional (route), some m
 
 ## Run it
 ```bash
+./propython.sh 17                 # study mode: explanation, code map, notes and tests
 python -m src.day_17_positional_keyword_arguments.main
 pytest tests/test_day_17.py -v
 ```

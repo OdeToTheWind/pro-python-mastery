@@ -30,6 +30,7 @@ An *apartment-hunting bot*. Every few minutes it scrapes a listings site (polite
 
 ## Run it
 ```bash
+./propython.sh 97                 # study mode: explanation, code map, notes and tests
 python -m src.day_97_automation_bot_suite.main
 pytest tests/test_day_97.py -v
 ```

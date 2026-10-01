@@ -26,6 +26,7 @@ A *greenhouse sensor log reader* – log files are messy, devices disappear and 
 
 ## Run it
 ```bash
+./propython.sh 11                 # study mode: explanation, code map, notes and tests
 python -m src.day_11_error_handling.main
 pytest tests/test_day_11.py -v
 ```

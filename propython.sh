@@ -1,37 +1,42 @@
 #!/usr/bin/env bash
-# Local quality gate – runs exactly what CI runs.
+# Pro Python Mastery – study a day, or run the full quality gate.
 #
-#   ./propython.sh            lint + type-check + regenerate docs + tests with coverage
-#   ./propython.sh --commit   …then show `git status`, ask for a message, commit and
-#                             push the *current* branch (never a hard-coded one)
+#   ./propython.sh              menu: pick a day to study, or run the full check
+#   ./propython.sh 18           study Day 18: explanation, code map, notes, tests (+ optional demo)
+#   ./propython.sh 18 --demo    …and run the day's demo straight away
+#   ./propython.sh --check      lint + type-check + regenerate docs + all tests with coverage (= CI)
+#   ./propython.sh --commit     full check, then commit and push the *current* branch
+#
+# With no arguments and no terminal (e.g. in a script), it runs --check.
 set -euo pipefail
-
-echo "------------------------------------------"
-echo "🐍 PRO PYTHON MASTERY: ENGINEERING CHECK"
-echo "------------------------------------------"
+cd "$(dirname "$0")"
 
 if [[ -z "${VIRTUAL_ENV:-}" ]]; then
     for activate in .venv/bin/activate .venv/Scripts/activate; do
         if [[ -f "$activate" ]]; then
             # shellcheck disable=SC1090
             source "$activate"
-            echo "🔧 Activated $activate"
             break
         fi
     done
 fi
+PYTHON="$(command -v python || command -v python3)"
 
-echo "🔎 ruff";  ruff check src tests scripts
-echo "🧠 mypy";  mypy src
-echo "📝 reflections"; python scripts/build_reflections.py
-echo "🧪 pytest"; python -m pytest -m "not network" --cov=src --cov-report=term --cov-fail-under=85 -q
+full_check() {
+    echo "------------------------------------------"
+    echo "🐍 PRO PYTHON MASTERY: ENGINEERING CHECK"
+    echo "------------------------------------------"
+    echo "🔎 ruff";  ruff check src tests scripts
+    echo "🧠 mypy";  mypy src
+    echo "📝 reflections"; "$PYTHON" scripts/build_reflections.py
+    echo "🧪 pytest"; "$PYTHON" -m pytest -m "not network" --cov=src --cov-report=term --cov-fail-under=85 -q
+    if ! git diff --quiet -- docs/progress README.md; then
+        echo "⚠️  Reflections/README were regenerated – review and commit them."
+    fi
+    echo "✅ All checks passed."
+}
 
-if ! git diff --quiet -- docs/progress README.md; then
-    echo "⚠️  Reflections/README were regenerated – review and commit them."
-fi
-echo "✅ All checks passed."
-
-if [[ "${1:-}" == "--commit" ]]; then
+commit_and_push() {
     branch="$(git rev-parse --abbrev-ref HEAD)"
     git status --short
     if git ls-files --others --exclude-standard | grep -qE '(^|/)\.env$'; then
@@ -43,4 +48,29 @@ if [[ "${1:-}" == "--commit" ]]; then
     git add -A
     git commit -m "$message"
     git push -u origin "$branch"
-fi
+}
+
+menu() {
+    echo "------------------------------------------"
+    echo "🐍 PRO PYTHON MASTERY"
+    echo "------------------------------------------"
+    echo "  1–100   study that day (explanation, code map, notes, tests)"
+    echo "  c       run the full quality check (same as CI)"
+    echo "  q       quit"
+    read -r -p "Your choice: " choice
+    case "$choice" in
+        q|Q|"") exit 0 ;;
+        c|C) full_check ;;
+        *[!0-9]*) echo "Please enter a day number, c or q." >&2; exit 2 ;;
+        *) exec "$PYTHON" scripts/learn.py "$choice" ;;
+    esac
+}
+
+case "${1:-}" in
+    --check|--all) full_check ;;
+    --commit) full_check; commit_and_push ;;
+    -h|--help) sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//' ;;
+    "") if [[ -t 0 ]]; then menu; else full_check; fi ;;
+    *[!0-9]*) echo "Unknown option '$1' – try ./propython.sh --help" >&2; exit 2 ;;
+    *) exec "$PYTHON" scripts/learn.py "$@" ;;
+esac

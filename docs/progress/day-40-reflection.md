@@ -29,6 +29,7 @@ A *bank-statement parser* for fixed-width text records, plus a playlist editor â
 
 ## Run it
 ```bash
+./propython.sh 40                 # study mode: explanation, code map, notes and tests
 python -m src.day_40_python_slice_function.main
 pytest tests/test_day_40.py -v
 ```

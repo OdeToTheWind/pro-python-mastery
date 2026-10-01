@@ -28,6 +28,7 @@
 
 ## Run it
 ```bash
+./propython.sh 32                 # study mode: explanation, code map, notes and tests
 python -m src.day_32_class_initialisers.main
 pytest tests/test_day_32.py -v
 ```

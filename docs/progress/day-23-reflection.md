@@ -28,6 +28,7 @@ A *web-app feature-flag service*. Configuration lives at module level, request h
 
 ## Run it
 ```bash
+./propython.sh 23                 # study mode: explanation, code map, notes and tests
 python -m src.day_23_scope_local_global_variables.main
 pytest tests/test_day_23.py -v
 ```

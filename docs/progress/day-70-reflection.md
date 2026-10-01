@@ -29,6 +29,7 @@ A *document-converter app* with format plugins (Markdown → HTML, CSV → JSON 
 
 ## Run it
 ```bash
+./propython.sh 70                 # study mode: explanation, code map, notes and tests
 python -m src.day_70_metaclasses_intro.main
 pytest tests/test_day_70.py -v
 ```

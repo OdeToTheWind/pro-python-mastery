@@ -27,6 +27,7 @@ A *freelancer invoicing tool* – the same calculations written two ways (print-
 
 ## Run it
 ```bash
+./propython.sh 21                 # study mode: explanation, code map, notes and tests
 python -m src.day_21_return_vs_print.main
 pytest tests/test_day_21.py -v
 ```

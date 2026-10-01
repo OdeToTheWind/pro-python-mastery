@@ -27,6 +27,7 @@ A *spreadsheet import cleaner* – every cell arrives as text and must be cast t
 
 ## Run it
 ```bash
+./propython.sh 7                 # study mode: explanation, code map, notes and tests
 python -m src.day_07_converting_types.main
 pytest tests/test_day_07.py -v
 ```

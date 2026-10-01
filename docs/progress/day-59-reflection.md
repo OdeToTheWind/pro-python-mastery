@@ -28,6 +28,7 @@ A *job-board search client*. The interesting part is what goes on the wire, so e
 
 ## Run it
 ```bash
+./propython.sh 59                 # study mode: explanation, code map, notes and tests
 python -m src.day_59_request_parameters_headers_payloads.main
 pytest tests/test_day_59.py -v
 ```

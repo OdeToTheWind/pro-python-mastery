@@ -28,6 +28,7 @@ A *value inspector* – paste any Python literal and get a report on its type, c
 
 ## Run it
 ```bash
+./propython.sh 6                 # study mode: explanation, code map, notes and tests
 python -m src.day_06_data_types.main
 pytest tests/test_day_06.py -v
 ```

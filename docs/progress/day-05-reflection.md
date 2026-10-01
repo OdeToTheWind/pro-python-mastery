@@ -28,6 +28,7 @@ A *restaurant bill splitter* – arithmetic with money, where rounding, floor di
 
 ## Run it
 ```bash
+./propython.sh 5                 # study mode: explanation, code map, notes and tests
 python -m src.day_05_math_operations.main
 pytest tests/test_day_05.py -v
 ```

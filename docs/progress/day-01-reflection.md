@@ -29,6 +29,7 @@ A *learning-streak tracker* that records study sessions.
 
 ## Run it
 ```bash
+./propython.sh 1                 # study mode: explanation, code map, notes and tests
 python -m src.day_01_variables.main
 pytest tests/test_day_01.py -v
 ```

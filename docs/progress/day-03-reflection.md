@@ -26,6 +26,7 @@ A *workshop registration desk* that asks attendees questions in the console, val
 
 ## Run it
 ```bash
+./propython.sh 3                 # study mode: explanation, code map, notes and tests
 python -m src.day_03_input_output.main
 pytest tests/test_day_03.py -v
 ```

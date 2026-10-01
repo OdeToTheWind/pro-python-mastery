@@ -28,6 +28,7 @@ A *product-import pipeline* receiving loosely typed data from spreadsheets and A
 
 ## Run it
 ```bash
+./propython.sh 49                 # study mode: explanation, code map, notes and tests
 python -m src.day_49_strongly_dynamic_typing.main
 pytest tests/test_day_49.py -v
 ```

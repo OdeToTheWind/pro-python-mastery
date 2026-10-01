@@ -29,6 +29,7 @@ A *language-learning app* that remembers each learner's XP, streak and settings 
 
 ## Run it
 ```bash
+./propython.sh 53                 # study mode: explanation, code map, notes and tests
 python -m src.day_53_local_persistence.main
 pytest tests/test_day_53.py -v
 ```

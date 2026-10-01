@@ -126,14 +126,14 @@ exercises/day_18_dictionaries_lists/
   differ from the lesson scenario. Extend the CI uniqueness check to cover
   exercise scenarios too.
 
-**B2. Progress CLI (`ppm`)**
+**B2. Study mode in `propython.sh`** ✅ done
 
-* `ppm start 18` copies the starter files into a git-ignored `workspace/`.
-* `ppm check 18` runs the exercise tests and shows friendly hints on failure.
-* `ppm progress` prints a 100-cell heat-map of completed days, stored locally
-  only (no telemetry).
-* `ppm badge` writes an SVG badge learners can put on their own profile; it is
-  self-reported and honest about that.
+* `./propython.sh` asks for a day; `./propython.sh 18` opens Day 18 directly.
+* It explains the day from the repository itself: scenario, deliverables, the
+  file and line implementing each skill, learnings, pitfalls and what each test
+  proves. It then runs the day's tests and offers the demo.
+* `./propython.sh --check` remains the full quality gate for contributors.
+* A separate helper CLI is not planned; the study mode covers this need.
 
 **B3. Documentation site**
 
@@ -155,7 +155,7 @@ exercises/day_18_dictionaries_lists/
 **B5. Learning-science upgrades**
 
 * **Retrieval practice:** a five-question quiz at the end of each day,
-  stored as YAML, rendered on the site and checked by `ppm quiz 18`.
+  stored as YAML and rendered on the site.
 * **Spaced repetition:** "flashback" questions that resurface Day N
   concepts on Days N+3, N+10 and N+30.
 * **Cumulative projects:** Days 24, 56, 63 and 100 become checkpoint
@@ -339,7 +339,7 @@ This reads well as a one-page PDF or a 6-slide deck.
 | 0 | Day 100 merged · v1.0.0 tagged · default branch fixed · security tooling on |
 | 1 | CONTRIBUTING / CoC / templates · 20 good-first-issues · FUNDING.yml · Sponsors page live |
 | 2 | Docs site v1 (Days 1–56) · Codespaces devcontainer · exercises for Days 1–24 |
-| 3 | `ppm` CLI · exercises for Days 25–56 · first sponsor outreach wave · Open Collective live |
+| 3 | Exercises for Days 25–56 · first sponsor outreach wave · Open Collective live |
 | 4 | Quizzes + flashbacks · first cohort (beta, 30 learners) · first quarterly impact report |
 | 5 | Exercises for Days 57–82 · first translation (Hindi or Spanish) · conference talk submitted |
 | 6 | Checkpoint projects at Days 24/56/63 · coverage gate 95 % · mutation testing in CI |

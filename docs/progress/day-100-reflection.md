@@ -30,6 +30,7 @@
 
 ## Run it
 ```bash
+./propython.sh 100                 # study mode: explanation, code map, notes and tests
 python -m src.day_100_portfolio_capstone.main
 pytest tests/test_day_100.py -v
 ```

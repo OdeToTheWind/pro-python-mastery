@@ -29,6 +29,7 @@ A *daily journal* stored as a UTF-8 text file – one entry per line.
 
 ## Run it
 ```bash
+./propython.sh 41                 # study mode: explanation, code map, notes and tests
 python -m src.day_41_file_io.main
 pytest tests/test_day_41.py -v
 ```

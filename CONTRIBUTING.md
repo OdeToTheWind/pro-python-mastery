@@ -22,7 +22,7 @@ cd pro-python-mastery
 python -m venv .venv
 source .venv/bin/activate            # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
-./propython.sh                       # must end with "All checks passed"
+./propython.sh --check               # must end with "All checks passed"
 ```
 
 Python 3.12 or newer is required. CI runs Python 3.12, 3.13 and 3.14 on Linux, plus
@@ -62,7 +62,7 @@ Rules that keep the course trustworthy:
 
 1. Create a branch: `git switch -c fix/day-18-dict-merge-typo`.
 2. Make one focused change. Smaller pull requests are reviewed faster.
-3. Run `./propython.sh` and make sure it passes and leaves no uncommitted generated files.
+3. Run `./propython.sh --check` and make sure it passes and leaves no uncommitted generated files.
 4. Write a commit message that says *what* changed and *why*.
 5. Open the pull request and fill in the template.
 

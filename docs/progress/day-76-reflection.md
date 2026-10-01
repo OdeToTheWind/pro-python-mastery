@@ -30,6 +30,7 @@ A *price-comparison engine* that asks many online shops for the price of a produ
 
 ## Run it
 ```bash
+./propython.sh 76                 # study mode: explanation, code map, notes and tests
 python -m src.day_76_advanced_asyncio.main
 pytest tests/test_day_76.py -v
 ```

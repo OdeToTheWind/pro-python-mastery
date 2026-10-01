@@ -32,6 +32,7 @@ A *warehouse-robot fleet manager*. Robots from different vendors share no base c
 
 ## Run it
 ```bash
+./propython.sh 72                 # study mode: explanation, code map, notes and tests
 python -m src.day_72_advanced_typing.main
 pytest tests/test_day_72.py -v
 ```

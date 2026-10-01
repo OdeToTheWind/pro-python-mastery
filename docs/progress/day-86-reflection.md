@@ -30,6 +30,7 @@ A *payment-gateway monitor*. Every payment attempt is logged as one JSON object 
 
 ## Run it
 ```bash
+./propython.sh 86                 # study mode: explanation, code map, notes and tests
 python -m src.day_86_custom_logging_monitoring.main
 pytest tests/test_day_86.py -v
 ```

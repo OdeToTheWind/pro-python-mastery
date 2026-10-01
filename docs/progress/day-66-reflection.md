@@ -31,6 +31,7 @@ An *online-shop order pipeline* – raw order lines flow through composable gene
 
 ## Run it
 ```bash
+./propython.sh 66                 # study mode: explanation, code map, notes and tests
 python -m src.day_66_advanced_generators.main
 pytest tests/test_day_66.py -v
 ```

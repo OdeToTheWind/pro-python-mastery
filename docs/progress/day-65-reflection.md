@@ -30,6 +30,7 @@ A *smart-meter energy monitor* that streams millions of readings. Generators pro
 
 ## Run it
 ```bash
+./propython.sh 65                 # study mode: explanation, code map, notes and tests
 python -m src.day_65_generators_yield.main
 pytest tests/test_day_65.py -v
 ```

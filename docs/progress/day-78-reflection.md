@@ -28,6 +28,7 @@ A *parcel-shipping quote service* that calls a carrier's rate API. This module i
 
 ## Run it
 ```bash
+./propython.sh 78                 # study mode: explanation, code map, notes and tests
 python -m src.day_78_testing_with_pytest.main
 pytest tests/test_day_78.py -v
 ```

@@ -30,6 +30,7 @@ A *weather-data aggregator* that talks to three providers, each with a different
 
 ## Run it
 ```bash
+./propython.sh 60                 # study mode: explanation, code map, notes and tests
 python -m src.day_60_api_authentication.main
 pytest tests/test_day_60.py -v
 ```

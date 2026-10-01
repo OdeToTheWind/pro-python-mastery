@@ -46,11 +46,16 @@ repository that can be checked, so none of them is only a promise.
 
 ### How to use each day
 
-1. **Read the scenario** at the top of `src/day_XX_<topic>/main.py`, and the `DELIVERABLES` map below it.
-2. **Run the demo:** `python -m src.day_XX_<topic>.main`.
-3. **Read the tests** in `tests/test_day_XX.py`. They show the edge cases that matter.
-4. **Break something on purpose** and watch a test fail, then fix it.
-5. **Read the reflection** in `docs/progress/day-XX-reflection.md` for the pitfalls and the next step.
+Run `./propython.sh` and type a day number, or go straight to one with `./propython.sh 18`.
+For that day the study mode prints the scenario, what you will learn, **the file and line
+where each skill is implemented**, the key learnings and pitfalls from the day's notes, and
+what each test proves. It then runs the day's tests and offers to run the demo.
+
+1. **Study the day:** `./propython.sh 18` (on Windows, run it in Git Bash).
+2. **Open the code** at the locations it prints, and read the functions next to their tests.
+3. **Break something on purpose.** Change one line, run `./propython.sh 18` again, and read why a test turned red.
+4. **Make it green again**, then read the full reflection in `docs/progress/day-18-reflection.md`.
+5. **Run the demo** at any time with `./propython.sh 18 --demo`.
 
 ---
 
@@ -71,7 +76,7 @@ repository that can be checked, so none of them is only a promise.
 | **ruff** | Linting and import sorting (rule sets `E F W B I UP SIM`). |
 | **mypy** | Static type checking of every day module. |
 | **GitHub Actions** | CI on Python 3.12, 3.13 and 3.14 (Linux), plus Windows and macOS. |
-| **`propython.sh`** | One local command that runs exactly what CI runs. |
+| **`propython.sh`** | Study mode for one day (`./propython.sh 18`) and the full local quality gate (`./propython.sh --check`), which runs exactly what CI runs. |
 | **build** · **hatchling** · **twine** | Building and checking real wheels and source distributions (Days 79 and 96). |
 
 ### Libraries used by specific days
@@ -129,11 +134,13 @@ pro-python-mastery/
 │   └── progress/
 │       ├── notes/day-XX.json         # hand-written learnings, pitfalls, next step
 │       └── day-XX-reflection.md      # generated from notes + code
-├── scripts/build_reflections.py      # generates reflections and the README's tables
+├── scripts/
+│   ├── build_reflections.py          # generates reflections and the README's tables
+│   └── learn.py                      # the per-day study mode behind ./propython.sh <day>
 ├── .github/                          # CI workflow, issue and pull request templates
 ├── syllabus.md                       # the 100-day curriculum, grouped into five phases
 ├── learning_develop.md               # the plan for the course after Day 100
-├── propython.sh                      # local quality gate (same checks as CI)
+├── propython.sh                      # study a day (./propython.sh 18) or run the full check (--check)
 ├── pyproject.toml                    # pytest, coverage, ruff and mypy configuration
 ├── requirements.txt / requirements-dev.txt
 ├── CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md · CITATION.cff
@@ -355,9 +362,6 @@ The detailed curriculum, with the deliverables for every day, is in [`syllabus.m
 | `v1.0.0` release tag and protected default branch | Oct 2026 | ⏳ Next |
 | Exercises with failing-first tests, Days 1–3 (pilot) | Nov 2026 | ⬜ Planned |
 | Documentation site and Codespaces setup | Dec 2026 | ⬜ Planned |
-| Exercises for Days 1–56 and a learner helper CLI | Q1 2027 | ⬜ Planned |
-| Quizzes, spaced-repetition flashbacks, first learner cohort | Q1–Q2 2027 | ⬜ Planned |
-| Exercises for all 100 days · `v2.0.0` | Q3 2027 | ⬜ Planned |
 
 The full twelve-month plan, covering the contributor programme, learner experience,
 sponsorship and governance, is in [`learning_develop.md`](learning_develop.md).

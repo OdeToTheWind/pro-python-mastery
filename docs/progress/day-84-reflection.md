@@ -29,6 +29,7 @@ A *city air-quality ETL*. Sensor stations drop CSV and JSON-lines files into an 
 
 ## Run it
 ```bash
+./propython.sh 84                 # study mode: explanation, code map, notes and tests
 python -m src.day_84_data_pipeline_etl.main
 pytest tests/test_day_84.py -v
 ```

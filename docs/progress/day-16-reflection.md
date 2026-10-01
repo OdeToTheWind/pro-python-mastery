@@ -26,6 +26,7 @@ A *public library desk* – loan approvals, overdue fines and a returns-sorting 
 
 ## Run it
 ```bash
+./propython.sh 16                 # study mode: explanation, code map, notes and tests
 python -m src.day_16_flowchart_programming.main
 pytest tests/test_day_16.py -v
 ```

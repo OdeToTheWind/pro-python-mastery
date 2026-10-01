@@ -27,6 +27,7 @@ An *office building access controller* deciding who may open which door, and a t
 
 ## Run it
 ```bash
+./propython.sh 9                 # study mode: explanation, code map, notes and tests
 python -m src.day_09_logical_operations.main
 pytest tests/test_day_09.py -v
 ```

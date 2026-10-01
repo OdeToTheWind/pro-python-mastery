@@ -28,6 +28,7 @@ A *pub-quiz game server*. Players connect over TCP with a tiny line protocol (``
 
 ## Run it
 ```bash
+./propython.sh 93                 # study mode: explanation, code map, notes and tests
 python -m src.day_93_async_network_service.main
 pytest tests/test_day_93.py -v
 ```

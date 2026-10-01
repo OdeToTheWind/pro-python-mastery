@@ -27,6 +27,7 @@ A *freelance design studio's month-end report*. Time-tracking entries are aggreg
 
 ## Run it
 ```bash
+./propython.sh 88                 # study mode: explanation, code map, notes and tests
 python -m src.day_88_automated_report_generator.main
 pytest tests/test_day_88.py -v
 ```

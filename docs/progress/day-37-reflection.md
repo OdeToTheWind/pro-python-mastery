@@ -29,6 +29,7 @@ A *greeting-card artist* – draws shapes, a star burst, a spiral and an animate
 
 ## Run it
 ```bash
+./propython.sh 37                 # study mode: explanation, code map, notes and tests
 python -m src.day_37_python_turtle.main
 pytest tests/test_day_37.py -v
 ```

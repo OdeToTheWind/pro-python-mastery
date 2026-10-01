@@ -28,6 +28,7 @@ A *school sports-day results board* – iterate over athletes, lanes and heats t
 
 ## Run it
 ```bash
+./propython.sh 13                 # study mode: explanation, code map, notes and tests
 python -m src.day_13_for_loops.main
 pytest tests/test_day_13.py -v
 ```

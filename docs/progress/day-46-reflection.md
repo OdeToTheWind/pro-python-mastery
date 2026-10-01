@@ -29,6 +29,7 @@ An *online bookshop catalogue* – index products, reprice them, invert lookups 
 
 ## Run it
 ```bash
+./propython.sh 46                 # study mode: explanation, code map, notes and tests
 python -m src.day_46_dictionary_comprehensions.main
 pytest tests/test_day_46.py -v
 ```

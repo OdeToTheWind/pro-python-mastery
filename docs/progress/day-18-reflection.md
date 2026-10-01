@@ -26,6 +26,7 @@ A *neighbourhood grocery store* – a dict-based inventory behind the counter an
 
 ## Run it
 ```bash
+./propython.sh 18                 # study mode: explanation, code map, notes and tests
 python -m src.day_18_dictionaries_lists.main
 pytest tests/test_day_18.py -v
 ```

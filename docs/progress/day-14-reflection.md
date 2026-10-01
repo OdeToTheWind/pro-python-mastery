@@ -26,6 +26,7 @@ A *snippet linter for a coding bootcamp* – students paste code and the tool co
 
 ## Run it
 ```bash
+./propython.sh 14                 # study mode: explanation, code map, notes and tests
 python -m src.day_14_code_block_indentation.main
 pytest tests/test_day_14.py -v
 ```

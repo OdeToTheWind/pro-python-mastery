@@ -29,6 +29,7 @@ A *web-server log analyser* – raw access-log lines become clean, filtered, tra
 
 ## Run it
 ```bash
+./propython.sh 45                 # study mode: explanation, code map, notes and tests
 python -m src.day_45_list_comprehensions.main
 pytest tests/test_day_45.py -v
 ```

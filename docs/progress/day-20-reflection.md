@@ -27,6 +27,7 @@ A *blog post analyser* – functions that return values, multiple values, exit e
 
 ## Run it
 ```bash
+./propython.sh 20                 # study mode: explanation, code map, notes and tests
 python -m src.day_20_returning_functions.main
 pytest tests/test_day_20.py -v
 ```

@@ -29,6 +29,7 @@ A *home-lab backup scheduler*. A small daemon reads job specs such as ``"every 1
 
 ## Run it
 ```bash
+./propython.sh 89                 # study mode: explanation, code map, notes and tests
 python -m src.day_89_background_task_runner.main
 pytest tests/test_day_89.py -v
 ```

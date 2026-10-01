@@ -28,6 +28,7 @@ A *laboratory experiment runner*. Instruments must always be switched off, parti
 
 ## Run it
 ```bash
+./propython.sh 68                 # study mode: explanation, code map, notes and tests
 python -m src.day_68_context_managers.main
 pytest tests/test_day_68.py -v
 ```

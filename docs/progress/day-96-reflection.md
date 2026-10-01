@@ -30,6 +30,7 @@ Ship ``tidyfiles`` – a *downloads-folder organiser* that sorts files into ``im
 
 ## Run it
 ```bash
+./propython.sh 96                 # study mode: explanation, code map, notes and tests
 python -m src.day_96_packaging_real_tool.main
 pytest tests/test_day_96.py -v
 ```

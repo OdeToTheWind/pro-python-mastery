@@ -32,6 +32,7 @@ A *customer-support ticket parser* that pulls order numbers, amounts, dates and 
 
 ## Run it
 ```bash
+./propython.sh 81                 # study mode: explanation, code map, notes and tests
 python -m src.day_81_advanced_regular_expressions.main
 pytest tests/test_day_81.py -v
 ```

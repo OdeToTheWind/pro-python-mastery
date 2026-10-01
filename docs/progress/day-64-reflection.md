@@ -29,6 +29,7 @@ A *paginated API cursor for a museum collection* – the client hides page reque
 
 ## Run it
 ```bash
+./propython.sh 64                 # study mode: explanation, code map, notes and tests
 python -m src.day_64_iterators_iterator_protocol.main
 pytest tests/test_day_64.py -v
 ```

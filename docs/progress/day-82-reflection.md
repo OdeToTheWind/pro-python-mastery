@@ -31,6 +31,7 @@ A *climbing-gym membership system* – members, passes and check-ins stored in S
 
 ## Run it
 ```bash
+./propython.sh 82                 # study mode: explanation, code map, notes and tests
 python -m src.day_82_sqlite_database.main
 pytest tests/test_day_82.py -v
 ```

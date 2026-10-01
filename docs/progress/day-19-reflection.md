@@ -27,6 +27,7 @@ A *school gradebook* – classes contain students, students contain subjects, su
 
 ## Run it
 ```bash
+./propython.sh 19                 # study mode: explanation, code map, notes and tests
 python -m src.day_19_nested_collections.main
 pytest tests/test_day_19.py -v
 ```

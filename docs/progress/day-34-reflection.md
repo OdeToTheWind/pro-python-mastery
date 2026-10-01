@@ -29,6 +29,7 @@ A *CI job scheduler* whose ``schedule_job`` signature uses every parameter kind 
 
 ## Run it
 ```bash
+./propython.sh 34                 # study mode: explanation, code map, notes and tests
 python -m src.day_34_optional_required_default_parameters.main
 pytest tests/test_day_34.py -v
 ```

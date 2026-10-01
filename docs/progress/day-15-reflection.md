@@ -29,6 +29,7 @@ An *arcade cabinet* – a number-guessing game, a PIN lock and a coin-counting m
 
 ## Run it
 ```bash
+./propython.sh 15                 # study mode: explanation, code map, notes and tests
 python -m src.day_15_while_loops.main
 pytest tests/test_day_15.py -v
 ```

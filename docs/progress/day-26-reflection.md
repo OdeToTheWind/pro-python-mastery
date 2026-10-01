@@ -27,6 +27,7 @@ A *pocket IDE coach* – a searchable shortcut cheat-sheet per OS, a live-templa
 
 ## Run it
 ```bash
+./propython.sh 26                 # study mode: explanation, code map, notes and tests
 python -m src.day_26_pycharm_tips_tricks.main
 pytest tests/test_day_26.py -v
 ```

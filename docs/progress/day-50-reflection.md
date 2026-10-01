@@ -29,6 +29,7 @@ A *configuration loader for a microservice* that reads JSON from disk, validates
 
 ## Run it
 ```bash
+./propython.sh 50                 # study mode: explanation, code map, notes and tests
 python -m src.day_50_error_handling_exceptions.main
 pytest tests/test_day_50.py -v
 ```

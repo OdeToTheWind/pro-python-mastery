@@ -29,6 +29,7 @@ The support team of a *desktop photo-editing app* gets vague bug reports ("it cr
 
 ## Run it
 ```bash
+./propython.sh 99                 # study mode: explanation, code map, notes and tests
 python -m src.day_99_observability_debugging.main
 pytest tests/test_day_99.py -v
 ```

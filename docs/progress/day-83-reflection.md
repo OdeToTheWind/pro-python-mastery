@@ -29,6 +29,7 @@
 
 ## Run it
 ```bash
+./propython.sh 83                 # study mode: explanation, code map, notes and tests
 python -m src.day_83_robust_cli_application.main
 pytest tests/test_day_83.py -v
 ```

@@ -29,6 +29,7 @@ A *coffee-chain sales analysis* – load a CSV into a DataFrame, clean it, add d
 
 ## Run it
 ```bash
+./propython.sh 44                 # study mode: explanation, code map, notes and tests
 python -m src.day_44_pandas_framework.main
 pytest tests/test_day_44.py -v
 ```

@@ -29,6 +29,7 @@ A *quotes research assistant* that collects quotes and authors from quotes.toscr
 
 ## Run it
 ```bash
+./propython.sh 62                 # study mode: explanation, code map, notes and tests
 python -m src.day_62_web_scraping.main
 pytest tests/test_day_62.py -v
 ```

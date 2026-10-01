@@ -28,6 +28,7 @@ A *weekly study-report mailer*. It builds a proper MIME message (plain text + HT
 
 ## Run it
 ```bash
+./propython.sh 54                 # study mode: explanation, code map, notes and tests
 python -m src.day_54_sending_email.main
 pytest tests/test_day_54.py -v
 ```

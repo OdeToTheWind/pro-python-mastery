@@ -29,6 +29,7 @@ A *smart-home hub*. Devices emit events (doorbell rang, motion detected); any nu
 
 ## Run it
 ```bash
+./propython.sh 35                 # study mode: explanation, code map, notes and tests
 python -m src.day_35_event_listeners.main
 pytest tests/test_day_35.py -v
 ```

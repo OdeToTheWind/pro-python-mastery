@@ -29,6 +29,7 @@ An *epidemic outbreak simulator* for a city health department. A deterministic S
 
 ## Run it
 ```bash
+./propython.sh 98                 # study mode: explanation, code map, notes and tests
 python -m src.day_98_scientific_simulation.main
 pytest tests/test_day_98.py -v
 ```

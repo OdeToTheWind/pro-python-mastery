@@ -30,6 +30,7 @@ An *IoT fleet firmware-rollout service*. Its settings are frozen dataclasses who
 
 ## Run it
 ```bash
+./propython.sh 91                 # study mode: explanation, code map, notes and tests
 python -m src.day_91_type_safe_configuration.main
 pytest tests/test_day_91.py -v
 ```

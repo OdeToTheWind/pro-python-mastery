@@ -28,6 +28,7 @@ A *smart-device product line*. A base ``Device`` is specialised by single inheri
 
 ## Run it
 ```bash
+./propython.sh 39                 # study mode: explanation, code map, notes and tests
 python -m src.day_39_python_inheritance.main
 pytest tests/test_day_39.py -v
 ```

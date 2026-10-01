@@ -29,6 +29,7 @@
 
 ## Run it
 ```bash
+./propython.sh 36                 # study mode: explanation, code map, notes and tests
 python -m src.day_36_python_instances_and_state.main
 pytest tests/test_day_36.py -v
 ```

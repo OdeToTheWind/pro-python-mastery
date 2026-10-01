@@ -29,6 +29,7 @@ A *server-monitoring alerter* that texts the on-call engineer when a health chec
 
 ## Run it
 ```bash
+./propython.sh 61                 # study mode: explanation, code map, notes and tests
 python -m src.day_61_sms_notification_automation.main
 pytest tests/test_day_61.py -v
 ```

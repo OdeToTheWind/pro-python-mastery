@@ -29,6 +29,7 @@ A *code-review bot* that inspects proposed variable names and gives the author s
 
 ## Run it
 ```bash
+./propython.sh 4                 # study mode: explanation, code map, notes and tests
 python -m src.day_04_variable_name_rules.main
 pytest tests/test_day_04.py -v
 ```

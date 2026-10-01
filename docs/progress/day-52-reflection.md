@@ -27,6 +27,7 @@ A *weather-station API client* that receives JSON payloads, validates them into 
 
 ## Run it
 ```bash
+./propython.sh 52                 # study mode: explanation, code map, notes and tests
 python -m src.day_52_working_with_jsons.main
 pytest tests/test_day_52.py -v
 ```

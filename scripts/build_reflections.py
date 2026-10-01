@@ -86,6 +86,7 @@ def render(day: int, row: dict[str, str], notes: dict[str, object], date: str) -
 
 ## Run it
 ```bash
+./propython.sh {day}                 # study mode: explanation, code map, notes and tests
 python -m src.{folder.name}.main
 pytest tests/test_day_{day:02d}.py -v
 ```

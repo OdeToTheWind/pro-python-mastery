@@ -30,6 +30,7 @@ An *e-commerce nightly report* that got slow as the shop grew. We measure first 
 
 ## Run it
 ```bash
+./propython.sh 80                 # study mode: explanation, code map, notes and tests
 python -m src.day_80_profiling_performance.main
 pytest tests/test_day_80.py -v
 ```

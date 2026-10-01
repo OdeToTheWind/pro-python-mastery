@@ -30,6 +30,7 @@ A *downloads-folder organiser* – it scaffolds folders, prints a tree, finds fi
 
 ## Run it
 ```bash
+./propython.sh 42                 # study mode: explanation, code map, notes and tests
 python -m src.day_42_file_directories.main
 pytest tests/test_day_42.py -v
 ```

@@ -30,6 +30,7 @@ Publish *"kitchenconv"*, a tiny cooking-unit converter with a CLI, as a real Pyt
 
 ## Run it
 ```bash
+./propython.sh 79                 # study mode: explanation, code map, notes and tests
 python -m src.day_79_packaging_distribution.main
 pytest tests/test_day_79.py -v
 ```

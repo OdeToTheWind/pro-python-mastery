@@ -27,6 +27,7 @@ A *payroll script* that ships with a real bug. We find it with print debugging, 
 
 ## Run it
 ```bash
+./propython.sh 24                 # study mode: explanation, code map, notes and tests
 python -m src.day_24_debugging_techniques.main
 pytest tests/test_day_24.py -v
 ```

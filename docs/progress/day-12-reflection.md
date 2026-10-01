@@ -28,6 +28,7 @@ A *coffee-shop ordering system* built from small, documented, type-hinted functi
 
 ## Run it
 ```bash
+./propython.sh 12                 # study mode: explanation, code map, notes and tests
 python -m src.day_12_functions.main
 pytest tests/test_day_12.py -v
 ```

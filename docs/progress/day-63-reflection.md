@@ -29,6 +29,7 @@ A *QA smoke test* for quotes.toscrape.com (a practice site): log in through the 
 
 ## Run it
 ```bash
+./propython.sh 63                 # study mode: explanation, code map, notes and tests
 python -m src.day_63_browser_automation_selenium.main
 pytest tests/test_day_63.py -v
 ```

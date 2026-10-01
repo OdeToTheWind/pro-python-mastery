@@ -30,6 +30,7 @@ A *GPS route planner* – coordinates, waypoints and connection settings are pas
 
 ## Run it
 ```bash
+./propython.sh 47                 # study mode: explanation, code map, notes and tests
 python -m src.day_47_packing_unpacking.main
 pytest tests/test_day_47.py -v
 ```

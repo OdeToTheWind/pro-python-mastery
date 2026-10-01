@@ -28,6 +28,7 @@ A *hotel-booking form model* whose fields validate themselves – the same machi
 
 ## Run it
 ```bash
+./propython.sh 69                 # study mode: explanation, code map, notes and tests
 python -m src.day_69_descriptors.main
 pytest tests/test_day_69.py -v
 ```

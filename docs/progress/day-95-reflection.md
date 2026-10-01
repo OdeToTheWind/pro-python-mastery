@@ -28,6 +28,7 @@ A *ride-hailing dispatcher* must find the nearest free driver for every waiting 
 
 ## Run it
 ```bash
+./propython.sh 95                 # study mode: explanation, code map, notes and tests
 python -m src.day_95_performance_critical_module.main
 pytest tests/test_day_95.py -v
 ```

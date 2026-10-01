@@ -28,6 +28,7 @@ A *team chat-bot* whose commands (``!roll``, ``!weather``, ``!standup`` …) com
 
 ## Run it
 ```bash
+./propython.sh 87                 # study mode: explanation, code map, notes and tests
 python -m src.day_87_plugin_architecture.main
 pytest tests/test_day_87.py -v
 ```

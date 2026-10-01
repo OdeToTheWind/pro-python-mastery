@@ -27,6 +27,7 @@
 
 ## Run it
 ```bash
+./propython.sh 92                 # study mode: explanation, code map, notes and tests
 python -m src.day_92_multi_module_test_suite.main
 pytest tests/test_day_92.py -v
 ```

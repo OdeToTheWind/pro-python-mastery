@@ -29,6 +29,7 @@ A *podcast-archive mirroring tool*. Episodes are downloaded from a feed server w
 
 ## Run it
 ```bash
+./propython.sh 85                 # study mode: explanation, code map, notes and tests
 python -m src.day_85_concurrent_file_network_processor.main
 pytest tests/test_day_85.py -v
 ```

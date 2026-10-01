@@ -30,6 +30,7 @@ A *DNA-sequencing lab* receives FASTQ files far larger than RAM. Reads are strea
 
 ## Run it
 ```bash
+./propython.sh 90                 # study mode: explanation, code map, notes and tests
 python -m src.day_90_memory_efficient_file_processor.main
 pytest tests/test_day_90.py -v
 ```

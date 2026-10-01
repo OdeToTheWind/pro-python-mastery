@@ -28,6 +28,7 @@ A *board-game night toolkit* – dice, a card deck, a raffle and a password gene
 
 ## Run it
 ```bash
+./propython.sh 10                 # study mode: explanation, code map, notes and tests
 python -m src.day_10_randomisation.main
 pytest tests/test_day_10.py -v
 ```

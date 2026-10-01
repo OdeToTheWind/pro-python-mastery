@@ -28,6 +28,7 @@ A *to-do list REST API* simulated in memory. No network: the goal is to understa
 
 ## Run it
 ```bash
+./propython.sh 57                 # study mode: explanation, code map, notes and tests
 python -m src.day_57_rest_apis_json.main
 pytest tests/test_day_57.py -v
 ```

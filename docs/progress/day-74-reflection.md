@@ -28,6 +28,7 @@ A *satellite-image analysis lab*. Counting "bright pixels" in large tiles is pur
 
 ## Run it
 ```bash
+./propython.sh 74                 # study mode: explanation, code map, notes and tests
 python -m src.day_74_concurrency_multiprocessing.main
 pytest tests/test_day_74.py -v
 ```

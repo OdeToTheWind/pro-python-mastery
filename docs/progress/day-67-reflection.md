@@ -30,6 +30,7 @@ A *weather-service client toolkit* – cross-cutting concerns (timing, retries, 
 
 ## Run it
 ```bash
+./propython.sh 67                 # study mode: explanation, code map, notes and tests
 python -m src.day_67_decorators_deep_dive.main
 pytest tests/test_day_67.py -v
 ```

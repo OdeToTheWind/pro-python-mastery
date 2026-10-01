@@ -33,6 +33,7 @@ A *music-streaming royalty calculator* – play logs are grouped, accumulated an
 
 ## Run it
 ```bash
+./propython.sh 71                 # study mode: explanation, code map, notes and tests
 python -m src.day_71_functional_tools.main
 pytest tests/test_day_71.py -v
 ```

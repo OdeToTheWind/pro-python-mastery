@@ -27,6 +27,7 @@ A *conference badge printer* that turns messy sign-up data into clean, aligned b
 
 ## Run it
 ```bash
+./propython.sh 2                 # study mode: explanation, code map, notes and tests
 python -m src.day_02_strings.main
 pytest tests/test_day_02.py -v
 ```

@@ -28,6 +28,7 @@ A *public-holiday dashboard client* that talks to a JSON API (JSONPlaceholder / 
 
 ## Run it
 ```bash
+./propython.sh 58                 # study mode: explanation, code map, notes and tests
 python -m src.day_58_http_requests.main
 pytest tests/test_day_58.py -v
 ```

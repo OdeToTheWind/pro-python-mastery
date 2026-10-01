@@ -27,6 +27,7 @@ A *fitness-tracker weekly summary* that needs two different ``loads`` functions 
 
 ## Run it
 ```bash
+./propython.sh 33                 # study mode: explanation, code map, notes and tests
 python -m src.day_33_module_aliasing.main
 pytest tests/test_day_33.py -v
 ```

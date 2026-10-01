@@ -28,6 +28,7 @@ A *smart thermostat* whose temperature can be read and written in Celsius or Fah
 
 ## Run it
 ```bash
+./propython.sh 30                 # study mode: explanation, code map, notes and tests
 python -m src.day_30_getting_setting_attributes.main
 pytest tests/test_day_30.py -v
 ```

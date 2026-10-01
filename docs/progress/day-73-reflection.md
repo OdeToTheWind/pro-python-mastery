@@ -29,6 +29,7 @@ A *photo-sharing upload service*. Thumbnails are fetched from slow storage (I/O 
 
 ## Run it
 ```bash
+./propython.sh 73                 # study mode: explanation, code map, notes and tests
 python -m src.day_73_concurrency_threading.main
 pytest tests/test_day_73.py -v
 ```

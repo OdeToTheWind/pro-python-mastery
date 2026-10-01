@@ -28,6 +28,7 @@ A *concert ticket booking service* with its own exception hierarchy, so callers 
 
 ## Run it
 ```bash
+./propython.sh 51                 # study mode: explanation, code map, notes and tests
 python -m src.day_51_try_except_raise.main
 pytest tests/test_day_51.py -v
 ```
