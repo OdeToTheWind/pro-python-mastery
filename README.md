@@ -354,11 +354,20 @@ The detailed curriculum, with the deliverables for every day, is in [`syllabus.m
 
 ## Project Timeline & Deadlines
 
+### Completed
+
+| Milestone | Status |
+|---|---|
+| Phases 1–3 · Days 1–63 (fundamentals, intermediate Python, APIs and automation) | ✅ Done |
+| Phases 4–5 · Days 64–100 (advanced language features, capstone projects) | ✅ Done |
+| Licences, community files, README and syllabus restructure | ✅ Done |
+| Study mode: `./propython.sh <day>` explains and tests any day | ✅ Done |
+| CI on Linux, Windows and macOS | ✅ Done |
+
+### Upcoming
+
 | Milestone | Target | Status |
 |---|---|---|
-| Phases 1–3 · Days 1–63 (fundamentals, intermediate, APIs) | Mar–Sep 2026 | ✅ Done |
-| Phases 4–5 · Days 64–100 (advanced, capstones) | Oct 2026 | ✅ Done |
-| Community files, licences, README and syllabus restructure | Oct 2026 | ✅ Done |
 | `v1.0.0` release tag and protected default branch | Oct 2026 | ⏳ Next |
 | Exercises with failing-first tests, Days 1–3 (pilot) | Nov 2026 | ⬜ Planned |
 | Documentation site and Codespaces setup | Dec 2026 | ⬜ Planned |
