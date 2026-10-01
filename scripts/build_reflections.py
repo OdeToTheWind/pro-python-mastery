@@ -115,12 +115,76 @@ def course_index(rows: dict[int, dict[str, str]]) -> str:
     return "\n".join(lines)
 
 
+PHASE = re.compile(r"^## Phase (\d+) · (.+?) \(Days (\d+)–(\d+)\)$")
+
+
+def phases() -> list[tuple[int, str, int, int]]:
+    """``(number, name, first_day, last_day)`` from the ``## Phase …`` headings in syllabus.md."""
+    found = []
+    for line in (ROOT / "syllabus.md").read_text(encoding="utf-8").splitlines():
+        if match := PHASE.match(line):
+            number, name, first, last = match.groups()
+            found.append((int(number), name, int(first), int(last)))
+    return found
+
+
+def phase_status(rows: dict[int, dict[str, str]]) -> str:
+    """Three-column progress table: one line per phase."""
+    lines = ["| Phase | Days | Status |", "|---|:-:|---|"]
+    for number, name, first, last in phases():
+        total = last - first + 1
+        done = sum(rows[d]["status"] == "Covered" for d in range(first, last + 1) if d in rows)
+        state = "✅ Complete" if done == total else ("🟡 In progress" if done else "⬜ Planned")
+        lines.append(f"| {number} · {name} | {first}–{last} | {state} ({done}/{total}) |")
+    return "\n".join(lines)
+
+
+def kpis(rows: dict[int, dict[str, str]]) -> str:
+    """Numbers measured from the repository itself, so the README can never overstate them."""
+    covered = [d for d, r in rows.items() if r["status"] == "Covered"]
+    tests = sum(count_tests(d) for d in covered)
+    source_lines = sum(len([ln for ln in f.read_text(encoding="utf-8").splitlines() if ln.strip()])
+                       for f in (ROOT / "src").rglob("*.py"))
+    deliverables = sum(len(importlib.import_module(f"src.{day_dir(d).name}.main").DELIVERABLES) for d in covered)
+    workflow = (ROOT / ".github" / "workflows" / "python-tests.yml").read_text(encoding="utf-8")
+    versions = re.search(r'python-version: \[(.+?)\]', workflow)
+    gate = re.search(r"--cov-fail-under=(\d+)", workflow)
+    systems = sorted({m for m in re.findall(r"(ubuntu|windows|macos)-latest", workflow)})
+    return "\n".join([
+        f"- **Curriculum completion:** {len(covered)} / {len(rows)} days covered, each with code, tests and a reflection.",
+        f"- **Test functions:** {tests} across {len(covered)} test modules (parametrised cases run more).",
+        f"- **Deliverables mapped to code:** {deliverables} `DELIVERABLES` entries, each checked to resolve.",
+        f"- **Source size:** {source_lines:,} non-blank lines of Python in `src/`.",
+        f"- **Coverage gate:** CI fails below {gate.group(1) if gate else '?'} % coverage (lines and branches).",
+        f"- **Python versions in CI:** {versions.group(1).replace(chr(34), '') if versions else '?'}.",
+        f"- **Operating systems in CI:** {', '.join(OS_NAMES[s] for s in systems)}.",
+        "- **Quality checks per commit:** ruff lint · mypy type-check · pytest with coverage · syllabus sync.",
+    ])
+
+
+OS_NAMES = {"ubuntu": "Linux", "windows": "Windows", "macos": "macOS"}
+
+README_BLOCKS = {
+    "course-index": course_index,
+    "phase-status": phase_status,
+    "kpis": kpis,
+}
+
+
+def render_readme(text: str, rows: dict[int, dict[str, str]]) -> str:
+    for name, build in README_BLOCKS.items():
+        start, end = f"<!-- {name}:start -->", f"<!-- {name}:end -->"
+        if start not in text:
+            continue
+        before, rest = text.split(start, 1)
+        _, after = rest.split(end, 1)
+        text = f"{before}{start}\n{build(rows)}\n{end}{after}"
+    return text
+
+
 def update_readme(rows: dict[int, dict[str, str]]) -> None:
     readme = ROOT / "README.md"
-    text = readme.read_text(encoding="utf-8")
-    before, rest = text.split(INDEX_START, 1)
-    _, after = rest.split(INDEX_END, 1)
-    readme.write_text(f"{before}{INDEX_START}\n{course_index(rows)}\n{INDEX_END}{after}", encoding="utf-8", newline="\n")
+    readme.write_text(render_readme(readme.read_text(encoding="utf-8"), rows), encoding="utf-8", newline="\n")
 
 
 def main() -> None:

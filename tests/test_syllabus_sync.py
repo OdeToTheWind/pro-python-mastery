@@ -86,8 +86,14 @@ def test_scenarios_are_unique_per_day():
     assert not duplicates, f"each day needs its own scenario: {duplicates}"
 
 
-def test_readme_course_index_is_current():
+def test_readme_generated_blocks_are_current():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    block = readme.split(build_reflections.INDEX_START, 1)[1].split(build_reflections.INDEX_END, 1)[0]
-    assert block.strip() == build_reflections.course_index(ROWS).strip(), (
-        "README course index is stale – run: python scripts/build_reflections.py")
+    for name in build_reflections.README_BLOCKS:
+        assert f"<!-- {name}:start -->" in readme, f"README lost its generated {name!r} block"
+    assert readme == build_reflections.render_readme(readme, ROWS), (
+        "README generated blocks are stale – run: python scripts/build_reflections.py")
+
+
+def test_syllabus_phases_cover_every_day_once():
+    days = [d for _n, _name, first, last in build_reflections.phases() for d in range(first, last + 1)]
+    assert days == list(range(1, 101)), "phase headings in syllabus.md must cover days 1–100 in order"

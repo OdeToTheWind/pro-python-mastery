@@ -100,8 +100,9 @@ Build on these; don't rebuild them.
    - `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1)
    - issue templates: *content error*, *bug*, *new exercise*, *new scenario idea*
    - a PR template
-6. **Licensing clarity:** keep code under MIT and put lesson prose under
-   CC BY 4.0, so teachers can reuse the text with attribution.
+6. **Licensing clarity:** ✅ done – code under MIT ([`LICENSE`](LICENSE)), lesson
+   prose under CC BY 4.0 ([`LICENSE-CONTENT`](LICENSE-CONTENT)), so teachers can
+   reuse the text with attribution.
 
 ### Phase B – Learner experience (months 1–3)
 
@@ -353,8 +354,10 @@ This reads well as a one-page PDF or a 6-slide deck.
 
 - [ ] Make the branch with the course content the default branch; protect it; require CI
 - [ ] Tag `v1.0.0` and publish release notes listing all 100 days
-- [ ] Add `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SPONSORS.md`, `.github/FUNDING.yml`
-- [ ] Add issue and PR templates; label 20 good-first-issues
+- [x] Add `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CITATION.cff`
+- [ ] Add `SPONSORS.md` and `.github/FUNDING.yml` (needs a GitHub Sponsors or Open Collective account)
+- [x] Add issue and PR templates
+- [ ] Label 20 good-first-issues
 - [ ] Enable Dependabot, CodeQL, `pip-audit`, `bandit` in CI
 - [ ] Add `.devcontainer/` and an "Open in Codespaces" badge
 - [ ] Draft the one-page sponsor pitch and the first outreach list (10 companies)

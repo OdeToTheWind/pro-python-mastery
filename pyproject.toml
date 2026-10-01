@@ -1,6 +1,6 @@
 [project]
 name = "pro-python-mastery"
-version = "0.63.0"
+version = "1.0.0"
 description = "100 days of professional Python: one topic per day, each with code, tests and a reflection."
 readme = "README.md"
 license = { text = "MIT" }

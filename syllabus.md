@@ -1,13 +1,40 @@
-# Python Project Syllabus
+# Pro Python Mastery — Syllabus
+
+The complete 100-day curriculum: five phases, each building on the one before.
+Every day is a self-contained mini-project with its own code, tests and reflection.
+
+## How to read this syllabus
+
+| Column | Meaning |
+|---|---|
+| **Day** | Position in the course; `src/day_XX_<topic>/` holds its code. |
+| **Topic** | What the day teaches. |
+| **Key Learnings / Deliverables** | The skills the day's code must demonstrate. Each one maps to real code via the module's `DELIVERABLES` dict. |
+| **Level** | Beginner · Intermediate · Advanced · Capstone. |
+| **Status** | `Covered` (code, tests and reflection exist and agree) or `Planned`. |
 
 > **How status is verified.** A day is marked **Covered** only when it has
 > `src/day_XX_<topic>/main.py` with a `DELIVERABLES` map, `tests/test_day_XX.py`
 > that imports and exercises that code, and `docs/progress/day-XX-reflection.md`
 > that lists the same deliverables. `tests/test_syllabus_sync.py` enforces this
-> in CI, so the table below cannot drift from the code.
+> in CI, so these tables cannot drift from the code.
 
-| Day | Topic | Key Learnings/Deliverables | Topic Level | Status of covered |
-|-----|-------|---------------------------|-------------|------------------|
+## Phase overview
+
+| Phase | Days | Focus |
+|---|---|---|
+| 1 · Beginner Fundamentals | 1–24 | Write small, correct programs: variables, strings, numbers, conditionals, loops, functions, collections and error handling. |
+| 2 · Intermediate Python | 25–56 | Organise real programs: environments, OOP, files and data formats, comprehensions, closures, GUIs, persistence and deployment. |
+| 3 · API Clients, Automation & Data Acquisition | 57–63 | Talk to the outside world: REST and JSON, HTTP clients, authentication, notifications, scraping and browser automation. |
+| 4 · Advanced Python Language & Tooling | 64–82 | Use the language at full strength: iterators, generators, decorators, context managers, descriptors, typing, concurrency, asyncio, packaging, profiling, regex and SQL. |
+| 5 · Capstone-Style Pure-Python Projects | 83–100 | Ship complete tools: CLIs, pipelines, services, plugins, validation, performance work, packaging and a portfolio capstone. |
+
+## Phase 1 · Beginner Fundamentals (Days 1–24)
+
+**By the end of this phase you can** read and write idiomatic Python with type hints, handle bad input without crashing, and test a function with pytest.
+
+| Day | Topic | Key Learnings / Deliverables | Level | Status |
+|----:|-------|------------------------------|-------|--------|
 | 01 | Variables, Type Hinting & Scoping | Strict typing with PEP 484/695, f-strings, scope rules, local vs global vs nonlocal | Beginner | Covered |
 | 02 | String Manipulation | Advanced string methods, cleaning input, string formatting and alignment | Beginner | Covered |
 | 03 | Input & Print Functions | User input validation, type conversion, interactive console applications | Beginner | Covered |
@@ -32,6 +59,13 @@
 | 22 | Docstrings vs. Comments | # comments vs """ docstrings, documentation standards and metadata | Beginner | Covered |
 | 23 | Scope and Local/Global Variables | LEGB rule, global and nonlocal usage, and good scoping practices | Beginner | Covered |
 | 24 | Debugging Techniques | Print debugging, tracebacks, breakpoints, and systematic bug fixing | Beginner | Covered |
+
+## Phase 2 · Intermediate Python (Days 25–56)
+
+**By the end of this phase you can** design classes and modules, persist data safely (atomic writes, JSON, CSV, pandas) and ship a small web app.
+
+| Day | Topic | Key Learnings / Deliverables | Level | Status |
+|----:|-------|------------------------------|-------|--------|
 | 25 | Local Development Environment Setup | Virtual environments, project structure, and local development best practices | Intermediate | Covered |
 | 26 | PyCharm Tips and Tricks | IDE productivity, debugging, refactoring tools, templates and shortcuts | Intermediate | Covered |
 | 27 | Python Object Oriented Programming | OOP fundamentals, classes, objects, encapsulation and abstraction | Intermediate | Covered |
@@ -64,6 +98,13 @@
 | 54 | Sending Email with Python and SMTP | Automating email delivery with smtplib | Intermediate | Covered |
 | 55 | Working with Date and Time | datetime usage, calculations, formatting and timezone awareness | Intermediate | Covered |
 | 56 | Hosting Python Code Online with PythonAnywhere | Cloud deployment basics and live app hosting | Intermediate | Covered |
+
+## Phase 3 · API Clients, Automation & Data Acquisition (Days 57–63)
+
+**By the end of this phase you can** build polite, testable clients that keep secrets in the environment and never hit the network in tests.
+
+| Day | Topic | Key Learnings / Deliverables | Level | Status |
+|----:|-------|------------------------------|-------|--------|
 | 57 | REST APIs & JSON | HTTP methods, status codes, serialization and API payload processing | Advanced | Covered |
 | 58 | HTTP Requests with requests | GET/POST requests, response handling, sessions and timeouts | Advanced | Covered |
 | 59 | Query Parameters, Headers & Payloads | Query strings, custom headers, forms and JSON request bodies | Advanced | Covered |
@@ -71,6 +112,13 @@
 | 61 | SMS / Notification Automation | Twilio integration and secure secrets management | Advanced | Covered |
 | 62 | Web Scraping with Beautiful Soup | HTML parsing, selectors and ethical data extraction | Advanced | Covered |
 | 63 | Browser Automation with Selenium | Locator strategies, waits, form filling and dynamic page interactions | Advanced | Covered |
+
+## Phase 4 · Advanced Python Language & Tooling (Days 64–82)
+
+**By the end of this phase you can** pick the right concurrency model, type a public API, profile before optimising and package a library.
+
+| Day | Topic | Key Learnings / Deliverables | Level | Status |
+|----:|-------|------------------------------|-------|--------|
 | 64 | Iterators & the Iterator Protocol | __iter__, __next__, and custom iterators | Advanced | Covered |
 | 65 | Generators & yield | Generator functions, lazy evaluation, and memory benefits | Advanced | Covered |
 | 66 | Advanced Generators | yield from, generator pipelines, and sending values | Advanced | Covered |
@@ -90,6 +138,13 @@
 | 80 | Profiling & Performance | cProfile, timeit, memory_profiler, and optimization patterns | Advanced | Covered |
 | 81 | Advanced Regular Expressions | Complex patterns, groups, lookarounds, and the re module | Advanced | Covered |
 | 82 | SQLite & Pure Database Work | sqlite3, transactions, context managers, and basic schema design without an ORM | Advanced | Covered |
+
+## Phase 5 · Capstone-Style Pure-Python Projects (Days 83–100)
+
+**By the end of this phase you can** deliver a multi-module, tested, logged, configured and packaged tool you can show an employer.
+
+| Day | Topic | Key Learnings / Deliverables | Level | Status |
+|----:|-------|------------------------------|-------|--------|
 | 83 | Robust CLI Application | argparse or click/typer, subcommands, configuration, and logging | Capstone | Covered |
 | 84 | Data Pipeline / ETL Script | Generators, pathlib, CSV/JSON, error handling, and logging | Capstone | Covered |
 | 85 | Concurrent File / Network Processor | Thread/process pools or asyncio for I/O-bound work | Capstone | Covered |
@@ -108,10 +163,3 @@
 | 98 | Scientific / Simulation Mini-project | NumPy and a pure-Python simulation or Monte Carlo project | Capstone | Covered |
 | 99 | Observability & Debugging Toolkit | Advanced traceback handling, custom debuggers, and structured logs | Capstone | Covered |
 | 100 | Portfolio Capstone: Production-ready Python Tool | A useful multi-module tool with CLI, tests (>90% coverage), logging, config, packaging, and docs | Capstone | Covered |
-
-- **Phase 1: Beginner Fundamentals (Days 1–24) — Completed! 🎓**
-- **Phase 2: Intermediate Python (Days 25–56) — Completed! 🎓**
-- **Phase 3: API Clients, Automation & Data Acquisition (Days 57–63) — Completed! 🎓**
-- **Phase 4: Advanced Python Language & Tooling (Days 64–82) — Completed! 🎓**
-- **Phase 5: Capstone-Style Pure-Python Projects (Days 83–100) — Completed! 🎓**
-
