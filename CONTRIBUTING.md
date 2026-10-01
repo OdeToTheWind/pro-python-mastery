@@ -39,6 +39,7 @@ src/day_XX_<topic>/
 tests/test_day_XX.py        # at least 5 tests; imports src.day_XX_<topic>.main
 docs/progress/notes/day-XX.json        # hand-written learnings, pitfalls, next step
 docs/progress/day-XX-reflection.md     # GENERATED, so never edit it by hand
+docs/quiz/day-XX.json                  # 2 multiple-choice questions + bonus questions
 ```
 
 Rules that keep the course trustworthy:
@@ -48,7 +49,11 @@ Rules that keep the course trustworthy:
 3. **Tests teach.** Test real behaviour and edge cases. `assert True` and tests that only check that code runs are rejected.
 4. **No network in tests.** Use `tmp_path`, mocks, or a local server on `127.0.0.1`.
 5. **Secrets stay out of code.** Read them from the environment; never commit a `.env` file.
-6. **Generated files are generated.** After you change notes, docstrings, `syllabus.md` or the tests, run
+6. **Quizzes test this day's code.** Each `docs/quiz/day-XX.json` has exactly 2 multiple-choice
+   questions (options A–D, one correct answer, an explanation that doesn't depend on option
+   order) and at least one *discuss* and one *hands-on* bonus question, with no answer key.
+   `tests/test_quiz.py` also keeps the correct letters balanced across the course.
+7. **Generated files are generated.** After you change notes, docstrings, `syllabus.md` or the tests, run
    `python scripts/build_reflections.py`. It rewrites the reflections and the generated blocks in the README.
 
 ## Style
@@ -70,6 +75,6 @@ A maintainer will review within a week. CI must be green before a merge.
 
 ## Licensing of contributions
 
-By submitting a contribution you agree that code is licensed under the [MIT License](LICENSE)
+By submitting a contribution you agree that code is licensed under the [MIT License](LICENSE.md)
 and written course material under [CC BY 4.0](LICENSE-CONTENT), the same terms as the rest
 of the project.

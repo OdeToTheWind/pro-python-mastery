@@ -1,0 +1,37 @@
+{
+  "day": 20,
+  "mcq": [
+    {
+      "question": "What does `-(-a // b)` compute (used in `reading_time`)?",
+      "options": {
+        "A": "Floor division",
+        "B": "Ceiling division for positive numbers",
+        "C": "The remainder",
+        "D": "Integer division rounded towards zero"
+      },
+      "answer": "B",
+      "explanation": "Negating, floor-dividing and negating again rounds up: `-(-401 // 200)` is 3. It avoids importing `math.ceil` and stays in integers."
+    },
+    {
+      "question": "`make_truncator(10)` returns a function. Where does that function keep the value `10`?",
+      "options": {
+        "A": "In the closure (a cell captured from the enclosing scope)",
+        "B": "In a global variable",
+        "C": "In the function's default arguments",
+        "D": "It is recomputed on each call"
+      },
+      "answer": "A",
+      "explanation": "The inner function closes over `limit` and `suffix`. You can see them in `truncate.__closure__`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Returning a tuple `(words, sentences, avg)` versus returning a small dataclass or `NamedTuple`: which is clearer for callers, and when does it start to matter?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Using `compose`, build a pipeline that strips, lower-cases and truncates a title. Write the test first, watch it fail, then implement it."
+    }
+  ]
+}

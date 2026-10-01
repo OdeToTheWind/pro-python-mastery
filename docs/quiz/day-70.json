@@ -1,0 +1,37 @@
+{
+  "day": 70,
+  "mcq": [
+    {
+      "question": "What is `type(int)`?",
+      "options": {
+        "A": "`int`",
+        "B": "`type`, because classes are objects created by the metaclass `type`",
+        "C": "`object`",
+        "D": "`class`"
+      },
+      "answer": "B",
+      "explanation": "Every class is an instance of a metaclass, and by default that metaclass is `type`, which is also its own type."
+    },
+    {
+      "question": "Which simpler feature often replaces a registration metaclass?",
+      "options": {
+        "A": "`__slots__`",
+        "B": "`__new__` on instances",
+        "C": "`@staticmethod`",
+        "D": "`__init_subclass__`, which runs whenever a subclass is defined"
+      },
+      "answer": "D",
+      "explanation": "`Exporter` uses `__init_subclass__` to register plugins without a custom metaclass, so it avoids metaclass conflicts."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Read `WHEN_TO_USE`. Describe one real case where a metaclass is justified, and one where a class decorator or `__init_subclass__` is the better choice."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that defining a plugin class without its required `formats` attribute raises immediately at class-creation time, then add a second required attribute test-first."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 Pro Python Mastery — Course Content Licence
 ===========================================
 
-Copyright (c) 2026 Bhargavi Badal
+Copyright (c) 2026 Bhargavi Badal (https://github.com/OdeToTheWind)
 
 The written course material in this repository is licensed under the
 Creative Commons Attribution 4.0 International licence (CC BY 4.0).
@@ -11,13 +11,13 @@ the images under docs/assets/.
 
 Source code — everything under src/, tests/ and scripts/, plus build and
 configuration files — is licensed separately under the MIT License; see
-LICENSE.
+LICENSE.md.
 
 How to attribute
 ----------------
 When you reuse or adapt the course material, please credit it like this:
 
-    "Pro Python Mastery" by Bhargavi Badal
+    "Pro Python Mastery" by Bhargavi Badal (https://github.com/OdeToTheWind)
     (https://github.com/OdeToTheWind/pro-python-mastery), licensed under
     CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
     Changes were made.   <- include this line only if you changed it

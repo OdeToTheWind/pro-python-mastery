@@ -1,0 +1,37 @@
+{
+  "day": 91,
+  "mcq": [
+    {
+      "question": "How does `load_settings` know to turn `FLEET_DB__PORT=5433` into the integer `5433`?",
+      "options": {
+        "A": "It reads the dataclass type hints with `get_type_hints` and coerces each value to the annotated type",
+        "B": "It guesses from the text",
+        "C": "JSON parsing",
+        "D": "All environment values are already ints"
+      },
+      "answer": "A",
+      "explanation": "Type hints drive the parsing: one `coerce` function handles int, bool, Path, Literal, Enum, tuples and secrets."
+    },
+    {
+      "question": "Why does the `Secret` class override `__repr__`?",
+      "options": {
+        "A": "To compress the value",
+        "B": "For sorting",
+        "C": "So passwords never appear in logs, tracebacks or print output, even when the whole settings object is printed",
+        "D": "It is required for dataclasses"
+      },
+      "answer": "C",
+      "explanation": "Dataclass reprs include every field. A masked `Secret` keeps `print(settings)` safe."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Reporting *all* configuration errors at once versus failing on the first: why does it matter for someone deploying at 2 a.m.?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add support for `dict[str, int]` settings test-first (written as `FLEET_LIMITS=eu=5,us=3`), including a clear error for a malformed pair."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 46,
+  "mcq": [
+    {
+      "question": "Why does `invert` map each value to a *list* of keys?",
+      "options": {
+        "A": "Lists are faster than strings",
+        "B": "Dict keys must be lists",
+        "C": "To keep the order",
+        "D": "Different keys can share the same value; a plain swap would silently drop all but one"
+      },
+      "answer": "D",
+      "explanation": "`{v: k for k, v in d.items()}` loses data when values repeat. Mapping to lists keeps every original key."
+    },
+    {
+      "question": "What does `{x for x in words}` (curly braces, no colon) create?",
+      "options": {
+        "A": "A dict",
+        "B": "A set",
+        "C": "A tuple",
+        "D": "A generator"
+      },
+      "answer": "B",
+      "explanation": "A comprehension with braces and no `key: value` is a set comprehension. Add `:` to get a dict comprehension."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`collections.Counter` versus a dict comprehension for word counts: which is clearer, and which avoids an accidental O(n²) loop?"
+    },
+    {
+      "type": "hands-on",
+      "question": "`word_frequencies` calls `words.count(w)` inside a comprehension. Write a test with 50,000 words that measures its time, explain why it is slow (O(n × unique words)), then rewrite it in O(n) and keep all existing tests green."
+    }
+  ]
+}

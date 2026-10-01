@@ -1,0 +1,37 @@
+{
+  "day": 45,
+  "mcq": [
+    {
+      "question": "What does the walrus operator `:=` do in `slow_requests`?",
+      "options": {
+        "A": "Compares two values",
+        "B": "Assigns a value inside an expression, so `secs` is computed once and used in both the filter and the output",
+        "C": "Creates a constant",
+        "D": "Defines a lambda"
+      },
+      "answer": "B",
+      "explanation": "Without `:=` you would compute `float(m['secs'])` twice: once in `if` and once in the output expression."
+    },
+    {
+      "question": "Which is a valid conditional expression inside a list comprehension?",
+      "options": {
+        "A": "`[x for x in xs if x > 0 else 0]`",
+        "B": "`[if x > 0: x for x in xs]`",
+        "C": "`[x if x > 0 else 0 for x in xs]`",
+        "D": "`[x for x in xs else 0]`"
+      },
+      "answer": "C",
+      "explanation": "`if/else` *before* `for` transforms every item. `if` *after* `for` filters items, and a filter cannot have an `else`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When does a comprehension become less readable than a plain loop? Find a nested or long comprehension in the course and rewrite it both ways."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `transpose` with a ragged matrix (rows of different lengths). Decide the right behaviour (error? pad?) and implement it."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 99,
+  "mcq": [
+    {
+      "question": "Which hook catches an uncaught exception in a worker thread?",
+      "options": {
+        "A": "`sys.excepthook`",
+        "B": "`atexit`",
+        "C": "`threading.excepthook`",
+        "D": "`signal.signal`"
+      },
+      "answer": "C",
+      "explanation": "`sys.excepthook` covers only the main thread. `install_crash_hooks` sets both hooks so no crash goes unreported."
+    },
+    {
+      "question": "Why does `crash_report` pass every local variable through `redact`?",
+      "options": {
+        "A": "To make reports shorter",
+        "B": "To sort the variables",
+        "C": "To speed up tracing",
+        "D": "Variables named like `token`, `password` or `api_key` must never be written to a crash file, including inside dicts such as `kwargs`"
+      },
+      "answer": "D",
+      "explanation": "Crash reports are often shared with support teams. Local variables can contain secrets."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`sys.settrace` makes code much slower. When is a tracing debugger worth it, and what does Python 3.12's `sys.monitoring` improve?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Extend `redact` test-first so values that *look* secret are masked even under innocent names, for example strings matching a credit-card or bearer-token pattern."
+    }
+  ]
+}

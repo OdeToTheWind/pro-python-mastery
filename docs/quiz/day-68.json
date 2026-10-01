@@ -1,0 +1,37 @@
+{
+  "day": 68,
+  "mcq": [
+    {
+      "question": "What happens if `__exit__` returns `True`?",
+      "options": {
+        "A": "The exception is re-raised twice",
+        "B": "The exception raised in the `with` block is suppressed",
+        "C": "The context manager restarts",
+        "D": "Nothing; return values are ignored"
+      },
+      "answer": "B",
+      "explanation": "A truthy return from `__exit__` swallows the exception. `IgnoreCalibrationWarnings` does it only for the type it chooses."
+    },
+    {
+      "question": "Why does `run_experiment` use `contextlib.ExitStack`?",
+      "options": {
+        "A": "It manages a number of context managers that is only known at runtime, and closes them all in reverse order",
+        "B": "It is faster than `with`",
+        "C": "To suppress all errors",
+        "D": "To run code in parallel"
+      },
+      "answer": "A",
+      "explanation": "You cannot write a variable number of nested `with` statements. ExitStack enters them dynamically and guarantees cleanup."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A `@contextmanager` generator versus a class with `__enter__`/`__exit__`: when does the class form become clearer?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that instruments are switched off even when the experiment raises halfway, and that partial results are rolled back. Make a failing experiment on purpose."
+    }
+  ]
+}

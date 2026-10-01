@@ -1,0 +1,37 @@
+{
+  "day": 6,
+  "mcq": [
+    {
+      "question": "Which built-in type is *immutable* and can therefore be used as a dictionary key?",
+      "options": {
+        "A": "`list`",
+        "B": "`tuple` (of hashable items)",
+        "C": "`dict`",
+        "D": "`set`"
+      },
+      "answer": "B",
+      "explanation": "Dict keys must be hashable, which requires an immutable value. A tuple of hashable items qualifies; lists, dicts and sets are mutable."
+    },
+    {
+      "question": "Why does `parse_literal` use `ast.literal_eval` instead of `eval`?",
+      "options": {
+        "A": "`eval` cannot parse lists",
+        "B": "`literal_eval` is faster",
+        "C": "`literal_eval` only accepts literals, so it cannot run arbitrary code",
+        "D": "`eval` only works on numbers"
+      },
+      "answer": "C",
+      "explanation": "`eval` executes any expression, including `__import__('os').system(...)`. `literal_eval` accepts only literals (numbers, strings, tuples, lists, dicts, sets, booleans, None)."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`isinstance(True, int)` is `True`. Why did Python make `bool` a subclass of `int`, and when can that surprise you?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test showing the aliasing bug: two names point at one list and a change through one is visible through the other. Then write a version using `copy.deepcopy` that passes."
+    }
+  ]
+}

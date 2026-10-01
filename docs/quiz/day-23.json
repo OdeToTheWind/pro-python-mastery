@@ -1,0 +1,37 @@
+{
+  "day": 23,
+  "mcq": [
+    {
+      "question": "In what order does Python look up a name (LEGB)?",
+      "options": {
+        "A": "Global → Local → Built-in → Enclosing",
+        "B": "Built-in → Global → Enclosing → Local",
+        "C": "Enclosing → Local → Global → Built-in",
+        "D": "Local → Enclosing → Global → Built-in"
+      },
+      "answer": "D",
+      "explanation": "Python searches the innermost scope first and moves outwards to the module, then to `builtins`."
+    },
+    {
+      "question": "`unbound_local_demo` runs `counter += 1` inside a nested function without `nonlocal`. What happens?",
+      "options": {
+        "A": "It increments the outer `counter`",
+        "B": "It creates a new global",
+        "C": "`UnboundLocalError`, because the assignment makes `counter` local for the whole function body",
+        "D": "Nothing; the line is ignored"
+      },
+      "answer": "C",
+      "explanation": "The compiler marks any assigned name as local for the entire function, so reading it before assignment fails. `nonlocal counter` fixes it."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why does the day replace module-level globals with a `FeatureFlags` object? List two testing problems that global state causes."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that two rate limiters from `make_rate_limiter` do not share state. Then inspect `limiter.__closure__` and explain what each cell holds."
+    }
+  ]
+}

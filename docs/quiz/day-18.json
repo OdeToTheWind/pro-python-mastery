@@ -1,0 +1,37 @@
+{
+  "day": 18,
+  "mcq": [
+    {
+      "question": "`inventory.get('kiwi', 0)`: what does `dict.get` return for a missing key?",
+      "options": {
+        "A": "It returns the default you pass (here `0`), or `None` without one",
+        "B": "It raises `KeyError`",
+        "C": "It inserts the key",
+        "D": "It returns `False`"
+      },
+      "answer": "A",
+      "explanation": "`get` never raises. Use `dict[key]` when a missing key is a bug, and `get` when absence is normal."
+    },
+    {
+      "question": "Why does `Cart` use `field(default_factory=list)` for its lines?",
+      "options": {
+        "A": "Lists cannot be dataclass fields",
+        "B": "A plain `[]` default would be one list shared by every cart",
+        "C": "It is faster",
+        "D": "`default_factory` sorts the list"
+      },
+      "answer": "B",
+      "explanation": "Mutable defaults are created once. `default_factory` builds a fresh list for each instance, and dataclasses refuse a bare `[]` for exactly this reason."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The cart stores `(product, quantity)` tuples in a list. When would a `dict` (product → quantity) be a better structure, and what would you lose?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test: adding more items to the cart than are in stock (across two `add` calls) must raise. Check that the stock-limit logic counts what is already in the cart."
+    }
+  ]
+}

@@ -33,6 +33,7 @@ import shutil
 import subprocess
 import sys
 import textwrap
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -71,6 +72,12 @@ def wrap(text: str, indent: str = "  ") -> str:
     """Wrap to the terminal width; continuation lines line up under the text, not the bullet."""
     return textwrap.fill(" ".join(text.split()), WIDTH, initial_indent=indent,
                          subsequent_indent=" " * len(indent))
+
+
+def wrap_exact(text: str, indent: str = "  ") -> str:
+    """Like :func:`wrap` but keeps runs of spaces – quiz options such as ``'    3.14'`` depend on them."""
+    return textwrap.fill(text, WIDTH, initial_indent=indent, subsequent_indent=" " * len(indent),
+                         break_on_hyphens=False)
 
 
 def phase_of(day: int) -> str:
@@ -174,6 +181,63 @@ def next_steps(day: int, style: Style) -> None:
     print()
 
 
+QUIZ_DIR = ROOT / "docs" / "quiz"
+
+
+def load_quiz(day: int) -> dict[str, Any]:
+    return json.loads((QUIZ_DIR / f"day-{day:02d}.json").read_text(encoding="utf-8"))
+
+
+def run_quiz(day: int, style: Style, ask: Callable[[str], str] | None = None) -> tuple[int, int]:
+    """Ask the day's multiple-choice questions; return ``(correct, asked)``.
+
+    Answers are typed as a letter (A–D). Without a terminal the questions are only listed,
+    so an answer key is never printed.
+    """
+    quiz = load_quiz(day)
+    questions = quiz["mcq"]
+    print(style.heading(f"\n▸ Quick check: {len(questions)} multiple-choice questions"))
+    if ask is None and not sys.stdin.isatty():
+        for number, item in enumerate(questions, 1):
+            print(wrap_exact(f"Q{number}. {item['question']}"))
+            for letter, option in item["options"].items():
+                print(wrap_exact(f"{letter}) {option}", "      "))
+        print(style.dim("  (Run ./propython.sh in a terminal to answer them.)"))
+        return 0, 0
+    ask = ask or input
+    correct = 0
+    for number, item in enumerate(questions, 1):
+        print()
+        print(wrap_exact(f"Q{number}. {item['question']}"))
+        for letter, option in item["options"].items():
+            print(wrap_exact(f"{letter}) {option}", "      "))
+        while True:
+            try:
+                answer = ask("  Your answer (A–D): ").strip().upper()
+            except EOFError:
+                return correct, number - 1
+            if answer in item["options"]:
+                break
+            print("  Please type one letter: A, B, C or D.")
+        if answer == item["answer"]:
+            correct += 1
+            print(style.code("  ✔ Correct!"))
+        else:
+            print(wrap_exact(f"✘ Not quite – the answer is {item['answer']}) {item['options'][item['answer']]}"))
+        print(wrap_exact(item["explanation"], "    "))
+    print(style.heading(f"\n  Score: {correct}/{len(questions)}"))
+    return correct, len(questions)
+
+
+def show_bonus(day: int, style: Style) -> None:
+    """Open questions with no answer key: research them, or turn them into code and tests."""
+    bonus = load_quiz(day)["bonus"]
+    print(style.heading(f"\n▸ Bonus questions ({len(bonus)}) – no answers given, find out for yourself"))
+    for number, item in enumerate(bonus, 1):
+        tag = "🧪 Hands-on" if item["type"] == "hands-on" else "💬 Think & explain"
+        print(wrap(f"{number}. [{tag}] {item['question']}"))
+
+
 def ask_day(prompt: str = "Which day do you want to study? (1–100, q to quit): ") -> int | None:
     while True:
         try:
@@ -199,6 +263,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("day", nargs="?", type=int, help="day number 1–100 (asked for when omitted)")
     parser.add_argument("--demo", action="store_true", help="run the day's demo without asking")
     parser.add_argument("--no-tests", action="store_true", help="explain only, do not run the tests")
+    parser.add_argument("--no-quiz", action="store_true", help="skip the multiple-choice and bonus questions")
+    parser.add_argument("--quiz", action="store_true", help="only the questions: skip explanation, tests and demo")
     args = parser.parse_args(argv)
 
     with contextlib.suppress(AttributeError, ValueError):  # emoji on Windows consoles
@@ -216,10 +282,17 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Day {day} is planned but not written yet.", file=sys.stderr)
         return 2
 
+    if args.quiz:
+        run_quiz(day, style)
+        show_bonus(day, style)
+        return 0
     explain(day, style)
     code = 0 if args.no_tests else run_tests(day, style)
     if args.demo or (interactive and ask_yes("\nRun the demo now? [y/N] ")):
         run_demo(day, style)
+    if not args.no_quiz:
+        run_quiz(day, style)
+        show_bonus(day, style)
     next_steps(day, style)
     return code
 

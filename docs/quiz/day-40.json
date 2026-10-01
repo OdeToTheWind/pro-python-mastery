@@ -1,0 +1,37 @@
+{
+  "day": 40,
+  "mcq": [
+    {
+      "question": "What does `'abcdef'[::2]` return?",
+      "options": {
+        "A": "`'bdf'`",
+        "B": "`'fdb'`",
+        "C": "`'ace'`",
+        "D": "`'ab'`"
+      },
+      "answer": "C",
+      "explanation": "`[start:stop:step]` with a step of 2 takes every second character from the start."
+    },
+    {
+      "question": "`slice(-3, None).indices(10)` returns what?",
+      "options": {
+        "A": "`(7, 10, 1)`",
+        "B": "`(-3, None, 1)`",
+        "C": "`(0, 3, 1)`",
+        "D": "`(3, 10, 1)`"
+      },
+      "answer": "A",
+      "explanation": "`indices(length)` resolves negative and `None` bounds for a sequence of that length: -3 becomes 7, `None` becomes 10, and the step defaults to 1."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Fixed-width records parsed with named `slice` objects versus a regex versus `struct`: compare readability and safety."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `mask_account` with an account number shorter than 4 characters. Decide the right behaviour and implement it."
+    }
+  ]
+}

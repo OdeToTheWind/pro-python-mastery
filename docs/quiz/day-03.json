@@ -1,0 +1,37 @@
+{
+  "day": 3,
+  "mcq": [
+    {
+      "question": "`to_int_in_range('3.5', 1, 10)` is called. Which exception does the underlying `int()` conversion raise?",
+      "options": {
+        "A": "`TypeError`",
+        "B": "`ArithmeticError`",
+        "C": "`ValueError`",
+        "D": "None, because it returns 3"
+      },
+      "answer": "C",
+      "explanation": "`int('3.5')` raises `ValueError: invalid literal for int()`. The type (str) is acceptable, but the value cannot be parsed as an integer."
+    },
+    {
+      "question": "Why does `register` accept `ask_fn` and `print_fn` callables (defaulting to `input` and `print`) instead of calling them directly?",
+      "options": {
+        "A": "It makes the program faster",
+        "B": "`input()` is deprecated in Python 3.12",
+        "C": "Callables use less memory",
+        "D": "Tests can inject scripted answers and capture output without a keyboard"
+      },
+      "answer": "D",
+      "explanation": "Dependency injection lets tests pass a fake `ask_fn` that returns prepared answers and a `print_fn` that records output. The real program uses the defaults."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "What should a console program do when the user presses Ctrl+D (end of input) in the middle of a form? Compare raising, returning a default, and cancelling cleanly."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for an attendee who types ` 42 ` (with spaces) for their age. Decide whether it should be accepted, then change the code so the test passes."
+    }
+  ]
+}

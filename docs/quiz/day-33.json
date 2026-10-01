@@ -1,0 +1,37 @@
+{
+  "day": 33,
+  "mcq": [
+    {
+      "question": "Why does the day write `from json import loads as json_loads`?",
+      "options": {
+        "A": "`loads` is deprecated",
+        "B": "Aliases make imports faster",
+        "C": "To avoid a name clash with another `loads`, such as `tomllib.loads`",
+        "D": "Because `json.loads` cannot be called directly"
+      },
+      "answer": "C",
+      "explanation": "Two modules export a function named `loads`. Aliasing at least one of them keeps both usable and makes the source of each obvious."
+    },
+    {
+      "question": "According to `ALIAS_GUIDE`, which alias should you avoid?",
+      "options": {
+        "A": "`import numpy as np`",
+        "B": "`import pandas as pd`",
+        "C": "`import datetime as dt`",
+        "D": "`import math as m`"
+      },
+      "answer": "D",
+      "explanation": "Community-standard aliases (`np`, `pd`) are instantly recognised. Single-letter aliases like `m` hide meaning."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When does aliasing *hurt* readability? Consider a codebase where the same module is aliased differently in different files."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test using `resolve_aliases` that proves `json_loads` really is `json.loads` (same object). Then add an alias for `datetime` and extend the test."
+    }
+  ]
+}

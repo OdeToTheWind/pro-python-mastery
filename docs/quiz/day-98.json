@@ -1,0 +1,37 @@
+{
+  "day": 98,
+  "mcq": [
+    {
+      "question": "In the SIR model, what is the basic reproduction number R0?",
+      "options": {
+        "A": "`beta / gamma`: the average number of people one case infects in a fully susceptible population",
+        "B": "`beta + gamma`",
+        "C": "The final number infected",
+        "D": "The recovery time"
+      },
+      "answer": "A",
+      "explanation": "If R0 ≤ 1 the outbreak dies out; above 1 it grows. The herd-immunity threshold is `1 - 1/R0`."
+    },
+    {
+      "question": "Why is the RK4 simulation checked against `final_size(r0)`?",
+      "options": {
+        "A": "It is faster",
+        "B": "RK4 requires it",
+        "C": "To find R0",
+        "D": "Comparing with an independent analytical result is strong evidence the integrator and the model are implemented correctly"
+      },
+      "answer": "D",
+      "explanation": "Scientific code needs validation against known answers, not just \"it runs\"."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The stochastic model sometimes dies out early even with R0 = 2. Why, and what does that mean for public-health planning?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add an SEIR model test-first (an \"exposed\" compartment with incubation rate sigma). Test population conservation and that it peaks later than SIR with the same R0."
+    }
+  ]
+}

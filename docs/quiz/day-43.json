@@ -1,0 +1,37 @@
+{
+  "day": 43,
+  "mcq": [
+    {
+      "question": "What does `csv.DictReader` give you for each row?",
+      "options": {
+        "A": "A dict mapping header names to the row's values (all strings)",
+        "B": "A list of strings",
+        "C": "A tuple",
+        "D": "Typed values such as `int` and `float`"
+      },
+      "answer": "A",
+      "explanation": "The CSV module never converts types. Every value is a string, which is why `parse_row` validates and converts each field."
+    },
+    {
+      "question": "Why should CSV files be opened with `newline=''`?",
+      "options": {
+        "A": "To make reading faster",
+        "B": "To skip empty lines",
+        "C": "So the `csv` module handles line endings itself, including newlines inside quoted fields",
+        "D": "It is required for UTF-8"
+      },
+      "answer": "C",
+      "explanation": "Without `newline=''`, Python's newline translation can corrupt quoted multi-line fields and add blank rows on Windows."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Bad rows are reported instead of crashing the import. Who should see that report, and what information does it need to be actionable?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for a bank export that uses `;` as the delimiter and `,` as the decimal separator (common in Europe). Make `parse_expenses` handle it."
+    }
+  ]
+}

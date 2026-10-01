@@ -1,0 +1,37 @@
+{
+  "day": 14,
+  "mcq": [
+    {
+      "question": "A file mixes tabs and spaces so that indentation is ambiguous. Which error does Python 3 raise?",
+      "options": {
+        "A": "`SyntaxWarning`",
+        "B": "`IndentationWarning`",
+        "C": "`ValueError`",
+        "D": "`TabError`"
+      },
+      "answer": "D",
+      "explanation": "`TabError` (a subclass of `IndentationError`) is raised when tabs and spaces are mixed inconsistently."
+    },
+    {
+      "question": "How does `check_snippet` find indentation problems without running the student's code?",
+      "options": {
+        "A": "It counts spaces with a regular expression",
+        "B": "It runs the code in a sandbox",
+        "C": "It calls `compile()`, which parses the code and raises syntax errors without executing it",
+        "D": "It uses `exec()` with a timeout"
+      },
+      "answer": "C",
+      "explanation": "`compile(source, filename, 'exec')` parses and compiles to bytecode. Indentation and syntax errors surface there, and nothing is executed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why did Python choose significant indentation instead of braces? Name one benefit for readability and one practical risk (copy-pasting code)."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a new broken snippet to `BROKEN_SNIPPETS` (for example a dedent that matches no outer level), write the test that expects its error, and make sure the explanation is helpful."
+    }
+  ]
+}

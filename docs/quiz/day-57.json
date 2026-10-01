@@ -1,0 +1,37 @@
+{
+  "day": 57,
+  "mcq": [
+    {
+      "question": "Which HTTP method is *idempotent* but not *safe*?",
+      "options": {
+        "A": "`PUT`",
+        "B": "`GET`",
+        "C": "`POST`",
+        "D": "`PATCH` (always)"
+      },
+      "answer": "A",
+      "explanation": "`PUT` changes state (so it is not safe), but sending the same `PUT` twice leaves the same result (idempotent). `POST` is neither."
+    },
+    {
+      "question": "A client creates a new to-do with `POST`. Which status code fits best?",
+      "options": {
+        "A": "`200 OK`",
+        "B": "`201 Created`",
+        "C": "`204 No Content`",
+        "D": "`404 Not Found`"
+      },
+      "answer": "B",
+      "explanation": "201 says a new resource exists, ideally with a `Location` header pointing to it."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When should an API return 400, 404, 409 and 422? Give one to-do API example of each."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write tests for `PATCH`: a partial update must keep the other fields, and an unknown field must return 400 with a helpful error body. If either test fails, fix the API."
+    }
+  ]
+}

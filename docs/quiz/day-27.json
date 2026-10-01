@@ -1,0 +1,37 @@
+{
+  "day": 27,
+  "mcq": [
+    {
+      "question": "`CreditCard` stores the number as `self.__number`. What does the double underscore do?",
+      "options": {
+        "A": "Name mangling: it is stored as `_CreditCard__number`, which prevents accidental clashes in subclasses",
+        "B": "It makes the attribute truly private and impossible to read",
+        "C": "It encrypts the value",
+        "D": "It makes the attribute read-only"
+      },
+      "answer": "A",
+      "explanation": "Python has no true privacy. Double-underscore names are rewritten per class; the intent is to avoid collisions and signal \"internal\"."
+    },
+    {
+      "question": "`checkout` calls `method.pay(amount)` on any payment method without checking its type. Which OOP principle is that?",
+      "options": {
+        "A": "Encapsulation",
+        "B": "Polymorphism",
+        "C": "Inheritance",
+        "D": "Composition"
+      },
+      "answer": "B",
+      "explanation": "Each subclass implements `pay` its own way; the caller relies only on the shared interface defined by the abstract `PaymentMethod`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Abstract base classes versus `typing.Protocol` for the payment interface: which suits third-party payment providers you don't control, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a new payment method (for example a gift card with a balance), writing its tests first: it must be accepted by `checkout` and refuse to overspend."
+    }
+  ]
+}

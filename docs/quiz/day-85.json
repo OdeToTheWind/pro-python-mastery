@@ -1,0 +1,37 @@
+{
+  "day": 85,
+  "mcq": [
+    {
+      "question": "In the podcast mirror, which tool handles which stage?",
+      "options": {
+        "A": "Threads download, processes hash, asyncio compresses",
+        "B": "Processes for everything",
+        "C": "One thread for everything",
+        "D": "Asyncio for network downloads, a thread pool for disk hashing, a process pool for CPU-heavy compression"
+      },
+      "answer": "D",
+      "explanation": "Match the tool to the bottleneck: waiting on sockets (asyncio), blocking file I/O (threads), pure CPU work (processes)."
+    },
+    {
+      "question": "Why does `download_one` write to a `.part` file and rename it at the end?",
+      "options": {
+        "A": "`.part` files download faster",
+        "B": "So a failed or interrupted download never leaves a file that looks complete",
+        "C": "Renaming compresses the file",
+        "D": "aiohttp requires it"
+      },
+      "answer": "B",
+      "explanation": "It is the same atomic-write idea as Day 41: only finished downloads get the real name."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why does the process pool use the `spawn` start method instead of `fork`? What can go wrong when forking a process that is already running threads?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add checksum verification test-first: given a manifest of expected SHA-256 values, the mirror reports any episode whose hash doesn't match."
+    }
+  ]
+}

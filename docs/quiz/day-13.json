@@ -1,0 +1,37 @@
+{
+  "day": 13,
+  "mcq": [
+    {
+      "question": "What does `list(range(10, 0, -3))` produce?",
+      "options": {
+        "A": "`[10, 7, 4, 1, -2]`",
+        "B": "`[10, 7, 4, 1]`",
+        "C": "`[]`",
+        "D": "`[1, 4, 7, 10]`"
+      },
+      "answer": "B",
+      "explanation": "`range(start, stop, step)` stops *before* `stop`. Counting down by 3 from 10 gives 10, 7, 4, 1; the next value, -2, is past the stop of 0."
+    },
+    {
+      "question": "In a `for ... else` loop, when does the `else` block run?",
+      "options": {
+        "A": "When the loop body raises an exception",
+        "B": "On every iteration",
+        "C": "Only when the iterable is empty",
+        "D": "When the loop finishes without hitting `break`"
+      },
+      "answer": "D",
+      "explanation": "`else` runs when the loop ends normally. `first_disqualified` uses it to report \"nobody disqualified\" only when no athlete triggered `break`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`zip(names, times)` silently drops extra items when lengths differ. Why does the day use `strict=True`, and what real bug does it catch?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test giving `pair_results` lists of different lengths and assert it raises. Then remove `strict=True` and watch the test turn red."
+    }
+  ]
+}

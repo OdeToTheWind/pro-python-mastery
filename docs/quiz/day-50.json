@@ -1,0 +1,37 @@
+{
+  "day": 50,
+  "mcq": [
+    {
+      "question": "What does `raise ConfigError(...) from exc` add?",
+      "options": {
+        "A": "It links the original exception as `__cause__`, so the traceback shows both",
+        "B": "It hides the original exception",
+        "C": "It retries the operation",
+        "D": "It converts the error to a warning"
+      },
+      "answer": "A",
+      "explanation": "Explicit chaining keeps the low-level cause (for example `JSONDecodeError`) visible under the high-level error."
+    },
+    {
+      "question": "Why does `validate_config` raise an `ExceptionGroup` instead of the first error it finds?",
+      "options": {
+        "A": "Exception groups are faster",
+        "B": "To stop logging",
+        "C": "Python requires it for validation",
+        "D": "So every invalid field is reported at once, instead of fixing them one by one"
+      },
+      "answer": "D",
+      "explanation": "`ExceptionGroup` bundles many errors, and `except*` handles them by type. The user sees all problems in a single run."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Which errors deserve a retry (timeouts, a locked file) and which never do (bad JSON, a wrong password)? How does `retry_on` encode that decision?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `retry` using a fake `sleep` that records delays. Assert the backoff doubles each time and that a non-retryable error is raised immediately."
+    }
+  ]
+}

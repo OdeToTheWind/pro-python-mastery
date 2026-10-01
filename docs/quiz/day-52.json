@@ -1,0 +1,37 @@
+{
+  "day": 52,
+  "mcq": [
+    {
+      "question": "What does `json.dumps(data, separators=(',', ':'))` change?",
+      "options": {
+        "A": "It sorts the keys",
+        "B": "It removes the spaces after `,` and `:`, giving the most compact output",
+        "C": "It escapes Unicode",
+        "D": "It pretty-prints"
+      },
+      "answer": "B",
+      "explanation": "The default separators are `', '` and `': '`. Compact separators are used for network payloads; `indent=2` is for humans."
+    },
+    {
+      "question": "How does the weather client turn ISO timestamp strings back into `datetime` objects while parsing?",
+      "options": {
+        "A": "JSON supports `datetime` natively",
+        "B": "With `parse_int`",
+        "C": "Only by post-processing the file text with regex",
+        "D": "With an `object_hook` that json calls for every decoded object"
+      },
+      "answer": "D",
+      "explanation": "JSON has no date type. The `object_hook` revives fields when it recognises them; a custom encoder does the reverse."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why must floats like `NaN` and `Infinity` be handled carefully in JSON? What do other languages do when they receive them?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that a payload with a missing `temperature` raises a clear validation error, then add support for an optional `wind_kmh` field, test-first."
+    }
+  ]
+}

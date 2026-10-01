@@ -1,0 +1,37 @@
+{
+  "day": 15,
+  "mcq": [
+    {
+      "question": "When does the `else` of a `while` loop run?",
+      "options": {
+        "A": "Every time the condition is checked",
+        "B": "When the condition becomes false and the loop was not ended by `break`",
+        "C": "Only if the loop body never ran",
+        "D": "Only after `continue`"
+      },
+      "answer": "B",
+      "explanation": "Like `for ... else`, the `else` runs on normal termination. `unlock` uses it for \"all attempts used\"."
+    },
+    {
+      "question": "Why does the arcade calculator walk the AST in `safe_eval` instead of calling `eval()`?",
+      "options": {
+        "A": "`eval` cannot do exponentiation",
+        "B": "AST walking is always faster",
+        "C": "`eval` would run any Python code the user types; walking the AST allows only numbers and arithmetic operators",
+        "D": "`eval` does not support floats"
+      },
+      "answer": "C",
+      "explanation": "Whitelisting AST node types (numbers, + - * / **) blocks function calls, attribute access and imports, and the exponent cap stops `9**9**9` from hanging the program."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`collatz_steps` uses `while` because the number of steps is unknown. Give two other real problems where `while` is clearer than `for`, and how you guarantee they terminate."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test that `safe_eval('__import__(\"os\")')` raises, and one that `safe_eval('2 ** 1000')` is rejected by the exponent limit. Confirm both pass."
+    }
+  ]
+}

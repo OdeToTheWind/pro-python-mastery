@@ -1,0 +1,37 @@
+{
+  "day": 72,
+  "mcq": [
+    {
+      "question": "Robots from different vendors share no base class, yet `Movable` accepts them. Why?",
+      "options": {
+        "A": "They inherit from `object`",
+        "B": "Python ignores types",
+        "C": "`Protocol` uses structural typing: any class with the required methods and attributes matches",
+        "D": "They are registered with `ABC.register`"
+      },
+      "answer": "C",
+      "explanation": "Protocols check shape, not ancestry. This is static duck typing, checked by mypy or pyright."
+    },
+    {
+      "question": "What does `TypeVar('Number', int, float)` mean for `scale`?",
+      "options": {
+        "A": "The argument may be any type",
+        "B": "It converts ints to floats",
+        "C": "It is the same as `int | float` everywhere",
+        "D": "The type must be exactly `int` or exactly `float`, and the return type matches the input"
+      },
+      "answer": "D",
+      "explanation": "A constrained TypeVar picks one of the listed types per call and keeps it consistent, unlike a plain union."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`TypedDict` checks JSON-like dicts statically but not at runtime. What extra step do you need when the data comes from an API?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a new robot vendor class that satisfies `Movable` without inheriting anything. Write a test that the dispatcher accepts it, then run mypy on the day to confirm it type-checks."
+    }
+  ]
+}

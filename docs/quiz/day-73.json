@@ -1,0 +1,37 @@
+{
+  "day": 73,
+  "mcq": [
+    {
+      "question": "Why can `unsafe_increment` lose updates when many threads call it?",
+      "options": {
+        "A": "`count += 1` is a read-modify-write sequence; a thread switch between the read and the write loses another thread's update",
+        "B": "Threads cannot share integers",
+        "C": "The GIL makes it fail",
+        "D": "Integers are immutable, so `+=` raises"
+      },
+      "answer": "A",
+      "explanation": "The GIL protects interpreter internals, not your multi-step operations. `safe_increment` wraps the update in a `Lock`."
+    },
+    {
+      "question": "For which work do threads give a real speed-up in CPython (with the GIL)?",
+      "options": {
+        "A": "CPU-bound pure-Python loops",
+        "B": "Both equally",
+        "C": "I/O-bound work such as network or disk waits, because the GIL is released while waiting",
+        "D": "Neither"
+      },
+      "answer": "C",
+      "explanation": "`gil_experiment` shows it: threads overlap waiting time, but CPU-bound bytecode runs one thread at a time."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Python 3.13 offers an experimental free-threaded build without the GIL. What changes for code like `ViewCounter`, and what doesn't?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test using `queue.Queue` and a sentinel value that proves every uploaded item is processed exactly once and that all consumer threads stop cleanly."
+    }
+  ]
+}

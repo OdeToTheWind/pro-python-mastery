@@ -1,0 +1,37 @@
+{
+  "day": 67,
+  "mcq": [
+    {
+      "question": "What breaks when a decorator does *not* use `functools.wraps`?",
+      "options": {
+        "A": "The function cannot be called",
+        "B": "Arguments are lost",
+        "C": "The decorated function reports the wrapper's `__name__`, docstring and signature instead of its own",
+        "D": "The decorator runs twice"
+      },
+      "answer": "C",
+      "explanation": "`naive_timed` shows this: `hello.__name__` becomes `'wrapper'`, which confuses logs, `help()` and tools."
+    },
+    {
+      "question": "Given `@a` above `@b` above `def f`, which decorator is applied *first*?",
+      "options": {
+        "A": "`b`, the one closest to the function",
+        "B": "`a`",
+        "C": "Both at the same time",
+        "D": "It depends on their arguments"
+      },
+      "answer": "A",
+      "explanation": "It is the same as `f = a(b(f))`: `b` wraps the function first and `a` wraps the result. At call time, `a`'s wrapper runs first. `STACKING_ORDER` records this."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Decorators hide behaviour (retries, caching) from the call site. When is that good, and when would you rather see it written explicitly?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `@retry` gives up after the configured attempts and re-raises the last error. Use a fake sleep so the test is instant."
+    }
+  ]
+}

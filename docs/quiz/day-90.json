@@ -1,0 +1,37 @@
+{
+  "day": 90,
+  "mcq": [
+    {
+      "question": "Why does `lines_from_chunks` keep the *tail* of each chunk?",
+      "options": {
+        "A": "To skip headers",
+        "B": "To count chunks",
+        "C": "A fixed-size chunk can end in the middle of a line; the partial line is glued to the start of the next chunk",
+        "D": "Because the last byte is always a newline"
+      },
+      "answer": "C",
+      "explanation": "Chunk borders don't respect line borders. The test checks that the results are identical for chunk sizes from 1 byte upwards."
+    },
+    {
+      "question": "How does `external_sort` sort more data than fits in memory?",
+      "options": {
+        "A": "It compresses the data",
+        "B": "It uses a database",
+        "C": "It sorts on disk byte by byte",
+        "D": "It sorts fixed-size runs, writes each to a temporary file, then lazily merges them with `heapq.merge`"
+      },
+      "answer": "D",
+      "explanation": "Only one run is in memory at a time, and the k-way merge reads all run files in step."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`mmap` lets the operating system page a file into memory on demand. When is that better than reading chunks, and when is it worse?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add support for gzipped input (`reads.fastq.gz`) test-first, using `gzip.open` in binary mode, and prove the statistics match the uncompressed file exactly."
+    }
+  ]
+}

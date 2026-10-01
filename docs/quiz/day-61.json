@@ -1,0 +1,37 @@
+{
+  "day": 61,
+  "mcq": [
+    {
+      "question": "What does `validate_e164('+44 20 7946 0958')` return?",
+      "options": {
+        "A": "It raises `ValueError`, because spaces are not allowed",
+        "B": "`'+442079460958'`: spaces, dashes and brackets are stripped, then the E.164 format is checked",
+        "C": "`'442079460958'` without the plus",
+        "D": "`True`"
+      },
+      "answer": "B",
+      "explanation": "The validator cleans common separators first and then requires a `+`, a country code and up to 15 digits, which is the format SMS gateways expect."
+    },
+    {
+      "question": "Why does `make_sender` fall back to a `DryRunSender`?",
+      "options": {
+        "A": "Twilio does not work in Python",
+        "B": "Dry runs are faster",
+        "C": "To save Twilio credit only",
+        "D": "So the alerter still works and can be tested when credentials or the `twilio` package are missing, without sending real SMS"
+      },
+      "answer": "D",
+      "explanation": "Choosing the transport at start-up keeps the rest of the code identical, and tests never text anyone by accident."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "An alert storm sends 200 identical SMS in one minute. How would you design de-duplication or rate limiting for on-call alerts?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that a long alert is counted as 2 SMS segments (more than 160 characters). Then add an option that shortens the body to fit one segment, test-first."
+    }
+  ]
+}

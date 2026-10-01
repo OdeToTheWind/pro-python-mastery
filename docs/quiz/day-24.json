@@ -1,0 +1,37 @@
+{
+  "day": 24,
+  "mcq": [
+    {
+      "question": "When reading a Python traceback, where is the line that actually raised the exception?",
+      "options": {
+        "A": "At the top",
+        "B": "In the middle",
+        "C": "At the bottom, just above the exception message",
+        "D": "Tracebacks don't show it"
+      },
+      "answer": "C",
+      "explanation": "Tracebacks list calls from oldest (top) to newest (bottom). The last frame is where the error happened; the frames above show how you got there."
+    },
+    {
+      "question": "What does the built-in `breakpoint()` do when called (as in `maybe_breakpoint`)?",
+      "options": {
+        "A": "Stops the program permanently",
+        "B": "Prints the call stack and continues",
+        "C": "Raises an exception",
+        "D": "Starts the debugger set by `PYTHONBREAKPOINT` (pdb by default); `PYTHONBREAKPOINT=0` disables it"
+      },
+      "answer": "D",
+      "explanation": "`breakpoint()` calls `sys.breakpointhook()`. The environment variable selects a debugger or turns breakpoints off, so they are safe to leave behind a switch."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Print debugging, a debugger, logging, and a failing test: describe a bug for which each is the best first tool."
+    },
+    {
+      "type": "hands-on",
+      "question": "Reproduce the payroll bug with a failing test against the buggy function, confirm it passes against `net_pay_fixed`, then use `first_failing_input` to find the smallest input that breaks the buggy version."
+    }
+  ]
+}

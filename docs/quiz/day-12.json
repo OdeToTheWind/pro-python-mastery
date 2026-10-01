@@ -1,0 +1,37 @@
+{
+  "day": 12,
+  "mcq": [
+    {
+      "question": "In `customize(name, size='medium', **extras)`, what is `extras` inside the function when called as `customize('latte', extra_shot=2, oat_milk=1)`?",
+      "options": {
+        "A": "A tuple `(2, 1)`",
+        "B": "A list of strings",
+        "C": "`None`",
+        "D": "A dict `{'extra_shot': 2, 'oat_milk': 1}`"
+      },
+      "answer": "D",
+      "explanation": "`**extras` collects all unmatched keyword arguments into a new dictionary."
+    },
+    {
+      "question": "What is true about type hints such as `def price_drink(name: str, size: str) -> Decimal`?",
+      "options": {
+        "A": "They are documentation for readers and tools like mypy; Python does not enforce them at runtime",
+        "B": "Python converts the arguments to those types automatically",
+        "C": "Passing a wrong type raises `TypeError` at call time",
+        "D": "They make the function faster"
+      },
+      "answer": "A",
+      "explanation": "Annotations are stored in `__annotations__` and checked by static tools, but the interpreter ignores them when calling the function."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A function takes 7 parameters. What are signs it is doing too much, and how could a dataclass or splitting the function help?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `customize('latte', extra_shot=-1)` raises `ValueError`, and another for an unknown extra. Then add a new extra to the menu, test-first."
+    }
+  ]
+}

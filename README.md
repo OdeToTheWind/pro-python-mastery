@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-3776ab?style=flat-square" alt="Python 3.12, 3.13, 3.14">
   <img src="https://img.shields.io/badge/days-100%20%2F%20100-2ea44f?style=flat-square" alt="100 of 100 days">
   <img src="https://img.shields.io/badge/coverage%20gate-85%25-2ea44f?style=flat-square" alt="Coverage gate 85%">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-1a1a1a?style=flat-square" alt="Code: MIT"></a>
+  <a href="LICENSE.md"><img src="https://img.shields.io/badge/code-MIT-1a1a1a?style=flat-square" alt="Code: MIT"></a>
   <a href="LICENSE-CONTENT"><img src="https://img.shields.io/badge/content-CC%20BY%204.0-1a1a1a?style=flat-square" alt="Content: CC BY 4.0"></a>
 </p>
 
@@ -49,13 +49,19 @@ repository that can be checked, so none of them is only a promise.
 Run `./propython.sh` and type a day number, or go straight to one with `./propython.sh 18`.
 For that day the study mode prints the scenario, what you will learn, **the file and line
 where each skill is implemented**, the key learnings and pitfalls from the day's notes, and
-what each test proves. It then runs the day's tests and offers to run the demo.
+what each test proves. It then runs the day's tests, offers to run the demo, and ends with
+a short self-check:
+
+* **2 multiple-choice questions.** Type A, B, C or D, and you see straight away whether you
+  were right, with an explanation.
+* **Bonus questions with no answers given.** One asks you to think and explain; the other is
+  a hands-on, test-first task: write a failing test, then make it pass.
 
 1. **Study the day:** `./propython.sh 18` (on Windows, run it in Git Bash).
 2. **Open the code** at the locations it prints, and read the functions next to their tests.
 3. **Break something on purpose.** Change one line, run `./propython.sh 18` again, and read why a test turned red.
 4. **Make it green again**, then read the full reflection in `docs/progress/day-18-reflection.md`.
-5. **Run the demo** at any time with `./propython.sh 18 --demo`.
+5. **Test yourself** at any time with `./propython.sh 18 --quiz`, and run the demo with `./propython.sh 18 --demo`.
 
 ---
 
@@ -128,12 +134,14 @@ pro-python-mastery/
 ├── tests/
 │   ├── conftest.py                   # shared fixtures
 │   ├── test_day_01.py … test_day_100.py
+│   ├── test_learn.py · test_quiz.py   # study mode and quiz quality checks
 │   └── test_syllabus_sync.py         # keeps syllabus, code, tests, docs and README in agreement
 ├── docs/
 │   ├── assets/banner.svg
-│   └── progress/
-│       ├── notes/day-XX.json         # hand-written learnings, pitfalls, next step
-│       └── day-XX-reflection.md      # generated from notes + code
+│   ├── progress/
+│   │   ├── notes/day-XX.json         # hand-written learnings, pitfalls, next step
+│   │   └── day-XX-reflection.md      # generated from notes + code
+│   └── quiz/day-XX.json              # 2 multiple-choice + bonus questions per day
 ├── scripts/
 │   ├── build_reflections.py          # generates reflections and the README's tables
 │   └── learn.py                      # the per-day study mode behind ./propython.sh <day>
@@ -144,7 +152,7 @@ pro-python-mastery/
 ├── pyproject.toml                    # pytest, coverage, ruff and mypy configuration
 ├── requirements.txt / requirements-dev.txt
 ├── CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md · CITATION.cff
-└── LICENSE (MIT, code) · LICENSE-CONTENT (CC BY 4.0, course text)
+└── LICENSE.md (MIT, code) · LICENSE-CONTENT (CC BY 4.0, course text)
 ```
 
 ---
@@ -197,6 +205,7 @@ fails if they are out of date.
 - **Test functions:** 974 across 100 test modules (parametrised cases run more).
 - **Deliverables mapped to code:** 646 `DELIVERABLES` entries, each checked to resolve.
 - **Source size:** 12,258 non-blank lines of Python in `src/`.
+- **Self-check questions:** 200 multiple-choice questions with explanations, plus 200 open bonus questions (100 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below 85 % coverage (lines and branches).
 - **Python versions in CI:** 3.12, 3.13, 3.14.
 - **Operating systems in CI:** macOS, Linux, Windows.
@@ -379,7 +388,7 @@ sponsorship and governance, is in [`learning_develop.md`](learning_develop.md).
 
 ## Contact & Author Information
 
-**Bhargavi Badal**, author and maintainer
+**[Bhargavi Badal](https://github.com/OdeToTheWind)**, author and maintainer
 
 <p>
   <a href="https://github.com/OdeToTheWind"><img src="https://img.shields.io/badge/GitHub-OdeToTheWind-181717?style=flat-square&logo=github" alt="GitHub: OdeToTheWind"></a>
@@ -393,7 +402,7 @@ sponsorship and governance, is in [`learning_develop.md`](learning_develop.md).
 
 ### Licence
 
-The **code** (`src/`, `tests/`, `scripts/`) is released under the [MIT License](LICENSE). The
+The **code** (`src/`, `tests/`, `scripts/`) is released under the [MIT License](LICENSE.md). The
 **course text and images** (`README.md`, `syllabus.md`, `docs/` and the other Markdown files)
 are released under [CC BY 4.0](LICENSE-CONTENT). You may reuse and adapt both, including in
-paid courses, as long as you credit **"Pro Python Mastery" by Bhargavi Badal**.
+paid courses, as long as you credit **"Pro Python Mastery" by [Bhargavi Badal](https://github.com/OdeToTheWind)**.

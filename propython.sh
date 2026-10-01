@@ -2,7 +2,8 @@
 # Pro Python Mastery – study a day, or run the full quality gate.
 #
 #   ./propython.sh              menu: pick a day to study, or run the full check
-#   ./propython.sh 18           study Day 18: explanation, code map, notes, tests (+ optional demo)
+#   ./propython.sh 18           study Day 18: explanation, code map, notes, tests, quiz, bonus questions
+#   ./propython.sh 18 --quiz    only the quiz (2 multiple-choice questions) and the bonus questions
 #   ./propython.sh 18 --demo    …and run the day's demo straight away
 #   ./propython.sh --check      lint + type-check + regenerate docs + all tests with coverage (= CI)
 #   ./propython.sh --commit     full check, then commit and push the *current* branch
@@ -54,7 +55,7 @@ menu() {
     echo "------------------------------------------"
     echo "🐍 PRO PYTHON MASTERY"
     echo "------------------------------------------"
-    echo "  1–100   study that day (explanation, code map, notes, tests)"
+    echo "  1–100   study that day (explanation, code map, notes, tests, quiz)"
     echo "  c       run the full quality check (same as CI)"
     echo "  q       quit"
     read -r -p "Your choice: " choice
@@ -69,7 +70,7 @@ menu() {
 case "${1:-}" in
     --check|--all) full_check ;;
     --commit) full_check; commit_and_push ;;
-    -h|--help) sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//' ;;
+    -h|--help) sed -n '2,11p' "$0" | sed 's/^# \{0,1\}//' ;;
     "") if [[ -t 0 ]]; then menu; else full_check; fi ;;
     *[!0-9]*) echo "Unknown option '$1' – try ./propython.sh --help" >&2; exit 2 ;;
     *) exec "$PYTHON" scripts/learn.py "$@" ;;

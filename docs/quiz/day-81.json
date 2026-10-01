@@ -1,0 +1,37 @@
+{
+  "day": 81,
+  "mcq": [
+    {
+      "question": "What does the lookbehind `(?<=€)\\d+` match in `'Refund €45 now'`?",
+      "options": {
+        "A": "`€45`",
+        "B": "Nothing, because lookbehind is not supported",
+        "C": "`45`, the digits preceded by `€`, without including the `€` itself",
+        "D": "`Refund`"
+      },
+      "answer": "C",
+      "explanation": "Lookarounds check context without consuming it, so the match is only the digits. `parse_amounts` uses this to read amounts after a currency sign."
+    },
+    {
+      "question": "Why is a pattern like `(a+)+$` dangerous on input such as `'aaaaaaaaaaaaaaaaaaaaaaaaaab'`?",
+      "options": {
+        "A": "It matches too little",
+        "B": "It is a syntax error",
+        "C": "`$` is not allowed after a group",
+        "D": "Nested quantifiers cause catastrophic backtracking: the engine tries exponentially many ways to split the `a`s before failing"
+      },
+      "answer": "D",
+      "explanation": "This is the root of ReDoS attacks. `SAFE_EMAIL_RE` avoids nested, overlapping quantifiers for exactly this reason."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When is a regular expression the wrong tool? Compare it with a real parser for HTML, JSON or e-mail addresses."
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a pattern for UK postcodes (for example `SW1A 1AA`) test-first. Include at least three valid and three invalid examples, and use `fullmatch` so partial matches don't pass."
+    }
+  ]
+}

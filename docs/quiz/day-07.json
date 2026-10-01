@@ -1,0 +1,37 @@
+{
+  "day": 7,
+  "mcq": [
+    {
+      "question": "What is `bool('False')`?",
+      "options": {
+        "A": "`False`",
+        "B": "`None`",
+        "C": "It raises `ValueError`",
+        "D": "`True`"
+      },
+      "answer": "D",
+      "explanation": "Any non-empty string is truthy. That is why the day uses a strict `parse_bool` instead of `bool()` for spreadsheet text."
+    },
+    {
+      "question": "`int(None)` raises which exception?",
+      "options": {
+        "A": "`ValueError`",
+        "B": "`TypeError`",
+        "C": "`AttributeError`",
+        "D": "`NameError`"
+      },
+      "answer": "B",
+      "explanation": "Passing a value of the wrong *type* raises `TypeError`. `ValueError` is for the right type with an unusable value, such as `int('abc')`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should a CSV importer convert `\"\"` (an empty cell) to `None`, `0`, or reject it? Argue for one choice for a price column and a different one for a comment column."
+    },
+    {
+      "type": "hands-on",
+      "question": "`parse_bool` already accepts words such as `\"Yes\"` and `\"on\"`. Write a test for spreadsheet values it may not handle yet, such as `\"✓\"`, `\"Y\"` or `\"TRUE \"`. Decide which to accept, then make the test pass without accepting ambiguous values."
+    }
+  ]
+}

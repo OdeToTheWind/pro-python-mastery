@@ -1,0 +1,37 @@
+{
+  "day": 97,
+  "mcq": [
+    {
+      "question": "Why does the apartment bot only mark a listing as \"seen\" after the notification succeeds?",
+      "options": {
+        "A": "To save disk space",
+        "B": "Webhooks require it",
+        "C": "So a failed webhook is retried on the next run instead of the match being lost",
+        "D": "To avoid scraping"
+      },
+      "answer": "C",
+      "explanation": "The order of side effects matters: record success, not intent."
+    },
+    {
+      "question": "Why doesn't `notify` retry a 4xx response from the webhook?",
+      "options": {
+        "A": "4xx means the request itself is wrong (bad URL, auth or payload), so repeating it won't help; 5xx and timeouts might",
+        "B": "4xx responses are always temporary",
+        "C": "4xx responses are cached",
+        "D": "requests forbids it"
+      },
+      "answer": "A",
+      "explanation": "Retry transient failures only. Retrying permanent errors wastes time and can hide bugs."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The bot scrapes, calls an API and posts to chat. Which part is most likely to break first in production, and how would you find out quickly?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add \"quiet hours\" test-first: matches found between 23:00 and 07:00 are queued and sent together at 07:00. Use an injected clock in the tests."
+    }
+  ]
+}

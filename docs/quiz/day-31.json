@@ -1,0 +1,37 @@
+{
+  "day": 31,
+  "mcq": [
+    {
+      "question": "`Pizza.margherita()` is a `@classmethod`. Why use a class method for it?",
+      "options": {
+        "A": "Class methods are faster",
+        "B": "It is an alternative constructor: it receives `cls`, so subclasses calling it get instances of the subclass",
+        "C": "It cannot access the class",
+        "D": "To make it private"
+      },
+      "answer": "B",
+      "explanation": "Alternative constructors use `cls(...)` rather than hard-coding `Pizza(...)`, which keeps them correct for subclasses."
+    },
+    {
+      "question": "`valid_size` is a `@staticmethod`. What does that tell a reader?",
+      "options": {
+        "A": "It changes shared class state",
+        "B": "It is called automatically on creation",
+        "C": "It can only be called on instances",
+        "D": "It is a helper that needs neither the instance nor the class passed in"
+      },
+      "answer": "D",
+      "explanation": "A static method is a plain function grouped with the class for organisation. It receives no `self` or `cls`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A `@staticmethod` could often be a module-level function instead. What are the arguments for each placement?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Create a subclass `GlutenFreePizza` and write a test that `GlutenFreePizza.margherita()` returns a `GlutenFreePizza`. If it returns a plain `Pizza`, fix the class method."
+    }
+  ]
+}

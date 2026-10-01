@@ -1,0 +1,37 @@
+{
+  "day": 65,
+  "mcq": [
+    {
+      "question": "`squares = (n * n for n in range(5))`; `sum(squares)` is 30. What is a second `sum(squares)`?",
+      "options": {
+        "A": "`30`",
+        "B": "`60`",
+        "C": "`0`, because the generator is already exhausted",
+        "D": "It raises `StopIteration`"
+      },
+      "answer": "C",
+      "explanation": "Generators are single-use. Recreate them, or store the results in a list, if you need a second pass."
+    },
+    {
+      "question": "Why does the meter monitor use a generator instead of building a list of readings?",
+      "options": {
+        "A": "Generators are always faster",
+        "B": "It produces readings one at a time, so memory stays flat however long the stream is",
+        "C": "Generators can be indexed",
+        "D": "Lists cannot hold floats"
+      },
+      "answer": "B",
+      "explanation": "A generator keeps only its paused frame in memory. A list of millions of readings would grow with the data."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When is a list better than a generator, even for large data? Think about multiple passes, random access and debugging."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test using `tracemalloc` (or the day's `peak_memory_kib`) proving that summing 1,000,000 readings with a generator uses far less memory than with a list."
+    }
+  ]
+}

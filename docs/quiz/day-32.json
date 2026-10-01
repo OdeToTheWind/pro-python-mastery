@@ -1,0 +1,37 @@
+{
+  "day": 32,
+  "mcq": [
+    {
+      "question": "What goes wrong in `BadAccount(owner, transactions=[])`?",
+      "options": {
+        "A": "The default list is created once and shared by every account that uses the default",
+        "B": "Nothing; each account gets its own list",
+        "C": "The list is deleted after `__init__`",
+        "D": "Python raises `SyntaxError`"
+      },
+      "answer": "A",
+      "explanation": "Default values are evaluated once, when the function is defined. Use `None` as the default and create a new list inside."
+    },
+    {
+      "question": "What is `__post_init__` used for in a dataclass such as `SavingsGoal`?",
+      "options": {
+        "A": "Replacing `__init__` entirely",
+        "B": "Deleting fields",
+        "C": "Comparing instances",
+        "D": "Validation or derived fields after the generated `__init__` has assigned the fields"
+      },
+      "answer": "D",
+      "explanation": "Dataclasses write `__init__` for you; `__post_init__` is the hook that runs right after it, so the object is valid from the start."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should a constructor raise on bad input, or create an object in an \"invalid\" state that is checked later? Discuss for a bank account."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that demonstrates the `BadAccount` bug (two accounts sharing transactions). Then write the corrected class and make the same test pass against it."
+    }
+  ]
+}

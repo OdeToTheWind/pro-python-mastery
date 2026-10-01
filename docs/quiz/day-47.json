@@ -1,0 +1,37 @@
+{
+  "day": 47,
+  "mcq": [
+    {
+      "question": "What does `first, *middle, last = [1, 2, 3, 4, 5]` assign to `middle`?",
+      "options": {
+        "A": "`(2, 3, 4)`",
+        "B": "`[2, 3, 4]`",
+        "C": "`2`",
+        "D": "It raises `ValueError`"
+      },
+      "answer": "B",
+      "explanation": "Extended unpacking always collects the starred part into a *list*, even when unpacking a tuple."
+    },
+    {
+      "question": "`merge_settings({'a': 1}, {'a': 2})` uses `{**a, **b}`. What is the merged value of `'a'`?",
+      "options": {
+        "A": "`2`, because later dictionaries win",
+        "B": "`1`",
+        "C": "`[1, 2]`",
+        "D": "It raises `KeyError`"
+      },
+      "answer": "A",
+      "explanation": "When unpacking into a new dict, later keys overwrite earlier ones. That is how defaults plus overrides work."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`f(**settings)` raises `TypeError` for an unknown key. Is that a feature or a nuisance? When would you filter the dict first?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test passing `unzip` a list where one pair has three items. Thanks to `strict=True` it should raise `ValueError`. Remove `strict=True`, run the test again and explain what silently goes wrong."
+    }
+  ]
+}

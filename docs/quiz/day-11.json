@@ -1,0 +1,37 @@
+{
+  "day": 11,
+  "mcq": [
+    {
+      "question": "In `try / except / else / finally`, when does the `else` block run?",
+      "options": {
+        "A": "Only if the `try` block raised no exception",
+        "B": "Only if an exception was caught",
+        "C": "Always, before `finally`",
+        "D": "Only if `finally` raised"
+      },
+      "answer": "A",
+      "explanation": "`else` runs when `try` completed without an exception. Putting follow-up code there keeps the `try` block small, so it doesn't catch errors from unrelated code."
+    },
+    {
+      "question": "Why is a bare `except:` considered dangerous?",
+      "options": {
+        "A": "It is slower than `except Exception`",
+        "B": "It only catches `ValueError`",
+        "C": "It disables `finally`",
+        "D": "It also catches `KeyboardInterrupt` and `SystemExit`, so Ctrl+C cannot stop the program"
+      },
+      "answer": "D",
+      "explanation": "A bare `except:` catches `BaseException`, including control-flow exceptions. Catch the specific exceptions you can handle."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The log reader skips bad lines and keeps going. When is \"keep going\" the wrong choice, and what should the program report so problems aren't silently hidden?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test feeding `parse_line` a line with an extra column. Decide whether it is a bad line or acceptable, then make the code agree."
+    }
+  ]
+}

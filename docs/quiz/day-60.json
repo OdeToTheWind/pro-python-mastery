@@ -1,0 +1,37 @@
+{
+  "day": 60,
+  "mcq": [
+    {
+      "question": "A Basic Auth header for `ada:secret` is `Basic YWRhOnNlY3JldA==`. What is that encoding?",
+      "options": {
+        "A": "Strong encryption",
+        "B": "A hash of the password",
+        "C": "A JWT",
+        "D": "Base64, which anyone can decode, so it must only be sent over HTTPS"
+      },
+      "answer": "D",
+      "explanation": "Base64 only makes the text safe to put in a header. Without TLS, anyone on the network can read the password."
+    },
+    {
+      "question": "What does `mask_secret` ensure when printing an API key?",
+      "options": {
+        "A": "It shows at most a few trailing characters (never more than a quarter), enough to identify which key is used",
+        "B": "The whole key is printed for debugging",
+        "C": "It encrypts the key",
+        "D": "It deletes the key"
+      },
+      "answer": "A",
+      "explanation": "Logs are often shared. Masking lets you tell keys apart without exposing them."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "API key in a header versus in the query string: why is the header safer? Think about server logs and browser history."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `Credentials.from_env` raises a clear error naming the missing variable, without printing any secret values in the message."
+    }
+  ]
+}

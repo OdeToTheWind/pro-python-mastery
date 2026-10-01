@@ -1,0 +1,37 @@
+{
+  "day": 71,
+  "mcq": [
+    {
+      "question": "Why does `plays_per_artist` sort the plays before calling `itertools.groupby`?",
+      "options": {
+        "A": "Sorting makes `groupby` faster",
+        "B": "`groupby` requires a list",
+        "C": "To remove duplicates",
+        "D": "`groupby` only groups *consecutive* equal keys, so unsorted data produces several groups for one artist"
+      },
+      "answer": "D",
+      "explanation": "`groupby('aabaa')` gives groups a, b, a. Sorting by the same key first puts each artist's plays together."
+    },
+    {
+      "question": "What does `functools.partial(royalty, rate=0.004)` return?",
+      "options": {
+        "A": "The royalty value",
+        "B": "A copy of `royalty` with a different name",
+        "C": "A new callable with `rate` pre-filled, so callers pass only the remaining arguments",
+        "D": "A generator"
+      },
+      "answer": "C",
+      "explanation": "`partial` freezes some arguments. That is handy for configuring pricing rules once and passing them around."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`lru_cache` on a function that takes a mutable list will fail. Why do cached functions need hashable arguments, and what is the stale-cache risk?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `skip_detector` (built on `pairwise`) with an empty log and with a single play. Decide the correct result for each and make sure no exception occurs."
+    }
+  ]
+}

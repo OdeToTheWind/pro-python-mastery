@@ -100,7 +100,7 @@ Build on these; don't rebuild them.
    - `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1)
    - issue templates: *content error*, *bug*, *new exercise*, *new scenario idea*
    - a PR template
-6. **Licensing clarity:** ✅ done – code under MIT ([`LICENSE`](LICENSE)), lesson
+6. **Licensing clarity:** ✅ done – code under MIT ([`LICENSE.md`](LICENSE.md)), lesson
    prose under CC BY 4.0 ([`LICENSE-CONTENT`](LICENSE-CONTENT)), so teachers can
    reuse the text with attribution.
 
@@ -154,8 +154,9 @@ exercises/day_18_dictionaries_lists/
 
 **B5. Learning-science upgrades**
 
-* **Retrieval practice:** a five-question quiz at the end of each day,
-  stored as YAML and rendered on the site.
+* **Retrieval practice:** ✅ done – every day has 2 multiple-choice questions
+  with explanations and open bonus questions (one hands-on, test-first task),
+  stored in `docs/quiz/day-XX.json` and asked by `./propython.sh <day>`.
 * **Spaced repetition:** "flashback" questions that resurface Day N
   concepts on Days N+3, N+10 and N+30.
 * **Cumulative projects:** Days 24, 56, 63 and 100 become checkpoint

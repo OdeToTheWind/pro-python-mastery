@@ -1,0 +1,37 @@
+{
+  "day": 4,
+  "mcq": [
+    {
+      "question": "Which of these is a valid Python identifier?",
+      "options": {
+        "A": "`2nd_place`",
+        "B": "`_private_value`",
+        "C": "`class`",
+        "D": "`total-cost`"
+      },
+      "answer": "B",
+      "explanation": "An identifier may start with a letter or underscore, never a digit. `class` is a reserved keyword, and `-` is not allowed."
+    },
+    {
+      "question": "`match` and `case` are *soft* keywords. What does that mean?",
+      "options": {
+        "A": "They can never be used as variable names",
+        "B": "They only exist in type hints",
+        "C": "They are deprecated keywords",
+        "D": "They are keywords only in specific syntax, so `match = 3` is still legal"
+      },
+      "answer": "D",
+      "explanation": "Soft keywords are reserved only in their grammar context (a `match` statement). Elsewhere they are ordinary names, which keeps old code working."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "PEP 8 says constants use `UPPER_CASE`, but Python does not enforce constants. How can you make a value truly read-only, and is it worth it?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write tests for tricky inputs to `to_snake_case`, such as `\"getHTTPResponse2xx\"`, `\"XMLParser\"` and `\"already_snake\"`. Decide the correct output for each before running them, and improve the function if any result surprises you."
+    }
+  ]
+}

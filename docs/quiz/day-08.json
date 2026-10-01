@@ -1,0 +1,37 @@
+{
+  "day": 8,
+  "mcq": [
+    {
+      "question": "What does the chained comparison `0 < temp <= 25` mean?",
+      "options": {
+        "A": "`(0 < temp) <= 25`",
+        "B": "`0 < (temp <= 25)`",
+        "C": "`0 < temp and temp <= 25`, evaluating `temp` once",
+        "D": "It is a syntax error"
+      },
+      "answer": "C",
+      "explanation": "Python expands chained comparisons into `and`-joined comparisons and evaluates the middle operand only once."
+    },
+    {
+      "question": "Why must a weather advisor check for NaN explicitly?",
+      "options": {
+        "A": "NaN equals every number",
+        "B": "Every comparison with NaN is `False`, so it silently falls through `if/elif` branches",
+        "C": "NaN cannot be stored in a float",
+        "D": "Comparing with NaN raises an exception"
+      },
+      "answer": "B",
+      "explanation": "`float('nan') < 5` and `float('nan') >= 5` are both `False`, so NaN skips every branch and lands in `else`. `math.isnan` catches it."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A long `if/elif` ladder versus a lookup table (a list of thresholds): which is easier to test and change when the rules change every season?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for exactly 0 °C and exactly 25 °C. Decide which category each boundary belongs to, and fix `classify_temperature` if it disagrees."
+    }
+  ]
+}

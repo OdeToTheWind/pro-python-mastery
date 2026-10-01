@@ -1,0 +1,37 @@
+{
+  "day": 19,
+  "mcq": [
+    {
+      "question": "Why does `deep_get(data, path, default)` exist instead of writing `data['10A']['Diya']['math']`?",
+      "options": {
+        "A": "Chained indexing is slower",
+        "B": "Dicts cannot be nested",
+        "C": "It returns a default at the first missing step instead of raising `KeyError` or `IndexError` halfway",
+        "D": "To convert lists to dicts"
+      },
+      "answer": "C",
+      "explanation": "Nested lookups fail at the first missing level. A path-based getter makes optional data safe to read."
+    },
+    {
+      "question": "Given `scores = {'math': [90, 80]}`, which expression adds a score for a new subject in one line?",
+      "options": {
+        "A": "`scores.setdefault('art', []).append(70)`",
+        "B": "`scores['art'].append(70)`",
+        "C": "`scores.append('art', 70)`",
+        "D": "`scores['art'] += 70`"
+      },
+      "answer": "A",
+      "explanation": "`setdefault` returns the existing list or inserts a new empty one first. Plain `scores['art'].append(70)` would raise `KeyError`. `defaultdict(list)` is the alternative."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "List of dicts (flat records) versus dict of dicts (nested): which is easier to save as CSV, and which is easier to query by student? How do you convert between them?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for `class_report` with a student who has no scores in one subject. Decide what the average should be (skip? 0? None?) and make the code match."
+    }
+  ]
+}

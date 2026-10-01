@@ -1,0 +1,37 @@
+{
+  "day": 16,
+  "mcq": [
+    {
+      "question": "In a flowchart, what does a diamond translate to in Python?",
+      "options": {
+        "A": "An `if/elif/else` decision",
+        "B": "A function definition",
+        "C": "A `for` loop",
+        "D": "A `print` statement"
+      },
+      "answer": "A",
+      "explanation": "Diamonds are decisions with yes/no exits, which map to conditionals. Rectangles (process boxes) map to statements, and arrows looping back map to loops."
+    },
+    {
+      "question": "Why does the day also represent a flowchart *as data* (`run_flowchart`)?",
+      "options": {
+        "A": "Data is faster than code",
+        "B": "Flowcharts cannot be written in Python otherwise",
+        "C": "Business rules can change without editing control-flow code, and the same engine can run any chart",
+        "D": "To avoid using functions"
+      },
+      "answer": "C",
+      "explanation": "Rules as data (nodes and edges) let non-programmers change thresholds, and one tested interpreter runs all of them."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Draw (on paper) the flowchart for returning a book late with a child discount. Does your drawing match `overdue_fine`? Where did the code make a decision your drawing missed?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test for the boundary days of the fine (day 1 grace, day 7, day 8, the cap). Change one threshold in the flowchart and see which tests catch it."
+    }
+  ]
+}

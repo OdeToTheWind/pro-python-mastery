@@ -156,11 +156,22 @@ def kpis(rows: dict[int, dict[str, str]]) -> str:
         f"- **Test functions:** {tests} across {len(covered)} test modules (parametrised cases run more).",
         f"- **Deliverables mapped to code:** {deliverables} `DELIVERABLES` entries, each checked to resolve.",
         f"- **Source size:** {source_lines:,} non-blank lines of Python in `src/`.",
+        quiz_kpi(covered),
         f"- **Coverage gate:** CI fails below {gate.group(1) if gate else '?'} % coverage (lines and branches).",
         f"- **Python versions in CI:** {versions.group(1).replace(chr(34), '') if versions else '?'}.",
         f"- **Operating systems in CI:** {', '.join(OS_NAMES[s] for s in systems)}.",
         "- **Quality checks per commit:** ruff lint · mypy type-check · pytest with coverage · syllabus sync.",
     ])
+
+
+def quiz_kpi(covered: list[int]) -> str:
+    quizzes = [json.loads((ROOT / "docs" / "quiz" / f"day-{d:02d}.json").read_text(encoding="utf-8"))
+               for d in covered if (ROOT / "docs" / "quiz" / f"day-{d:02d}.json").exists()]
+    mcq = sum(len(q["mcq"]) for q in quizzes)
+    bonus = [b for q in quizzes for b in q["bonus"]]
+    hands_on = sum(b["type"] == "hands-on" for b in bonus)
+    return (f"- **Self-check questions:** {mcq} multiple-choice questions with explanations, plus "
+            f"{len(bonus)} open bonus questions ({hands_on} hands-on, test-first tasks).")
 
 
 OS_NAMES = {"ubuntu": "Linux", "windows": "Windows", "macos": "macOS"}

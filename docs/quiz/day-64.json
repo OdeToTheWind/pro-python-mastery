@@ -1,0 +1,37 @@
+{
+  "day": 64,
+  "mcq": [
+    {
+      "question": "What signals the end of iteration in the iterator protocol?",
+      "options": {
+        "A": "`__next__` raising `StopIteration`",
+        "B": "Returning `None` from `__next__`",
+        "C": "Returning `False` from `__iter__`",
+        "D": "Raising `IndexError`"
+      },
+      "answer": "A",
+      "explanation": "`for` loops call `next()` until `StopIteration` is raised. `None` is a valid item, so it cannot be the signal."
+    },
+    {
+      "question": "Why can a `Collection` be looped over twice, while a `PageCursor` cannot?",
+      "options": {
+        "A": "Cursors are slower",
+        "B": "`Collection` caches all pages",
+        "C": "`Collection.__iter__` returns a brand-new cursor each time, while a cursor is its own iterator and is exhausted after one pass",
+        "D": "Python allows only one loop per object"
+      },
+      "answer": "C",
+      "explanation": "Containers are *iterables* that create fresh iterators. Iterators keep their position and are single-use."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Database cursors and cloud SDK paginators hide paging behind `for`. What problems can that hide (rate limits, partial failures, huge result sets)?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that `PageCursor` fetches page 2 only when the loop actually reaches it (lazy paging), using a fake API that records calls."
+    }
+  ]
+}

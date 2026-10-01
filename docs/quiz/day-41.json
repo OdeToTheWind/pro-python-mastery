@@ -1,0 +1,37 @@
+{
+  "day": 41,
+  "mcq": [
+    {
+      "question": "How does `atomic_write` make sure a crash never leaves a half-written journal?",
+      "options": {
+        "A": "It writes to a temporary file in the same folder, then swaps it in with `os.replace`",
+        "B": "It writes the file twice",
+        "C": "It locks the file with `chmod`",
+        "D": "It writes in binary mode"
+      },
+      "answer": "A",
+      "explanation": "`os.replace` is atomic on the same file system: readers see either the old file or the complete new one, never a partial write."
+    },
+    {
+      "question": "What does opening a file with mode `'x'` do (as in `create_new`)?",
+      "options": {
+        "A": "Opens it for reading and writing",
+        "B": "Appends to the end",
+        "C": "Opens it in binary mode",
+        "D": "Creates the file but raises `FileExistsError` if it already exists"
+      },
+      "answer": "D",
+      "explanation": "Exclusive creation prevents accidentally overwriting an existing file, which is safer than checking `exists()` first (that check could race)."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why does the journal always pass `encoding=\"utf-8\"` to `open()`? What can go wrong on Windows if you rely on the default encoding?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a test that simulates a crash during `atomic_write` (for example by making the write raise) and asserts the original file content is unchanged and no temp file is left behind."
+    }
+  ]
+}

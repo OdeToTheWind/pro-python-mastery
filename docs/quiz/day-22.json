@@ -1,0 +1,37 @@
+{
+  "day": 22,
+  "mcq": [
+    {
+      "question": "What is the key runtime difference between a docstring and a comment?",
+      "options": {
+        "A": "Comments are faster to execute",
+        "B": "A docstring is stored on the object (`func.__doc__`) and used by `help()`; comments are discarded by the parser",
+        "C": "Docstrings are ignored by Python",
+        "D": "Comments can contain code, docstrings cannot"
+      },
+      "answer": "B",
+      "explanation": "The tokenizer drops comments entirely. A docstring is the first statement of a module, class or function and is kept as `__doc__`."
+    },
+    {
+      "question": "According to PEP 257 (as checked by `audit_docstring`), the summary line of a docstring should…",
+      "options": {
+        "A": "be written in the passive voice",
+        "B": "repeat the function name",
+        "C": "list every parameter",
+        "D": "be one line that ends with a period"
+      },
+      "answer": "D",
+      "explanation": "PEP 257: a one-line summary in the imperative mood that ends with a period, then a blank line and details such as Args or Returns."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When does a comment add value that a docstring or a better name cannot? Give an example of a useful *why* comment and a useless *what* comment."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a new conversion function with a deliberately incomplete docstring, run `audit_docstring` on it in a test, and fix the docstring until the audit returns no problems."
+    }
+  ]
+}

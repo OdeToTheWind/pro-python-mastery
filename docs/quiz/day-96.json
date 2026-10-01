@@ -1,0 +1,37 @@
+{
+  "day": 96,
+  "mcq": [
+    {
+      "question": "What does PyPI's *trusted publishing* (`id-token: write`) replace?",
+      "options": {
+        "A": "A long-lived API token stored as a repository secret",
+        "B": "The `pyproject.toml` file",
+        "C": "The build step",
+        "D": "Version numbers"
+      },
+      "answer": "A",
+      "explanation": "GitHub proves the workflow's identity to PyPI with a short-lived OIDC token, so there is no secret to leak."
+    },
+    {
+      "question": "Bumping `1.4.9` with `bump_version(..., 'minor')` gives what?",
+      "options": {
+        "A": "`1.4.10`",
+        "B": "`1.5.0`",
+        "C": "`2.0.0`",
+        "D": "`1.5.9`"
+      },
+      "answer": "B",
+      "explanation": "A minor bump increments the middle number and resets the patch number to 0. A patch bump would give `1.4.10`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why generate the usage docs from the real `argparse` parser instead of writing them by hand? What else in a project could be generated this way?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add an `--undo` option test-first: `tidyfiles` records its moves in a log file, and `tidyfiles --undo` moves everything back safely."
+    }
+  ]
+}
