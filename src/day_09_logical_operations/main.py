@@ -1,120 +1,117 @@
-# src/day_09_logical_operations/main.py
+"""Day 09 – Logical Operations.
+
+Scenario: an *office building access controller* deciding who may open which
+door, and a tracer that proves when Python stops evaluating.
+
+Deliverables (syllabus):
+* ``and``, ``or``, ``not``
+* Short-circuit evaluation
+* Combining comparisons
+* Access control
 """
-Day 9: Logical Operations – and, or, not
-Interactive explorer with truth table, short-circuit demo, and real-world decisions.
-"""
 
-def get_yes_no(prompt: str) -> bool | None:
-    """Get yes/no answer with quit support"""
-    while True:
-        ans = input(prompt).strip().lower()
-        if ans in ('quit', 'q', 'exit'):
-            return None
-        if ans in ('y', 'yes', '1', 'true'):
-            return True
-        if ans in ('n', 'no', '0', 'false'):
-            return False
-        print("Please answer yes/y or no/n")
+from __future__ import annotations
 
+from collections.abc import Callable
+from dataclasses import dataclass, field
+from itertools import product
 
-def get_number(prompt: str, allow_float: bool = False) -> float | int | None:
-    """Get number (int or float) with quit support"""
-    while True:
-        val = input(prompt).strip()
-        if val.lower() in ('quit', 'q', 'exit'):
-            return None
-        try:
-            if allow_float:
-                return float(val)
-            return int(val)
-        except ValueError:
-            print("Please enter a valid number.")
+DELIVERABLES: dict[str, str] = {
+    "and / or / not truth table": "truth_table",
+    "short-circuit evaluation": "ShortCircuitTracer",
+    "or/and return operands (not just bools)": "display_name",
+    "combining comparisons": "within_hours",
+    "access control": "can_open",
+}
+
+OFFICE_HOURS = (8, 19)
 
 
-def print_truth_table():
-    print("\n" + "═" * 70)
-    print("Python Logical Operators – Truth Table")
-    print("═" * 70)
-    print("   A      B     A and B    A or B     not A     not B")
-    print("───┼──────┼─────────┼──────────┼───────────┼──────────")
-    values = [False, True]
-    for a in values:
-        for b in values:
-            print(f" {str(a):<5} {str(b):<5} {str(a and b):<9} {str(a or b):<9} {str(not a):<9} {str(not b)}")
-    print("\nKey points:")
-    print("• and → True only if BOTH are True")
-    print("• or  → True if AT LEAST ONE is True")
-    print("• not → reverses the value")
-    print("• Short-circuit: and stops on first False, or stops on first True")
-    print("• Truthy: non-zero, non-empty, True")
-    print("• Falsy: 0, 0.0, '', [], {}, None, False")
-    print("═" * 70)
+def truth_table() -> list[tuple[bool, bool, bool, bool, bool]]:
+    """Rows of (A, B, A and B, A or B, not A)."""
+    return [(a, b, a and b, a or b, not a) for a, b in product((False, True), repeat=2)]
 
 
-def check_access(age: int, has_ticket: bool, is_vip: bool, has_coupon: bool) -> str:
-    """Example of combining logical operators in real decision"""
-    if age >= 18 and has_ticket:
-        if is_vip or has_coupon:
-            return "VIP / Discount Entry → Welcome to premium area!"
-        else:
-            return "Regular Adult Entry → Enjoy the event!"
-    elif age >= 13 and has_ticket:
-        return "Student/Teen Entry → Limited access area"
-    elif age < 13 and has_ticket and has_coupon:
-        return "Child with coupon → Special family entry"
-    else:
-        return "Access Denied – check age, ticket, or coupon requirements"
+def within_hours(hour: int, start: int = OFFICE_HOURS[0], end: int = OFFICE_HOURS[1]) -> bool:
+    """Combine comparisons: ``0 <= hour <= 23 and start <= hour < end``."""
+    return 0 <= hour <= 23 and start <= hour < end
 
 
-def main():
-    print("Welcome to Day 9 – Logical Operators (and / or / not)")
-    print("We'll explore truth tables, short-circuiting, and combined decisions.\n")
+def can_open(door: str, *, role: str, has_badge: bool, hour: int, escorted: bool = False) -> bool:
+    """Decide door access by combining ``and``/``or``/``not``.
 
-    print_truth_table()
+    * lobby: anyone during office hours, staff with a badge at any time
+    * lab: staff with a badge, or a visitor who is escorted during office hours
+    * server room: admins with a badge only, never visitors
+    """
+    is_staff = role in {"staff", "admin"}
+    if is_staff and not has_badge and door != "lobby":
+        return False  # `not`: a staff member without a badge is treated like a stranger
+    if door == "lobby":
+        return within_hours(hour) or (is_staff and has_badge)
+    if door == "lab":
+        return (is_staff and has_badge) or (role == "visitor" and escorted and within_hours(hour))
+    if door == "server_room":
+        return role == "admin" and has_badge
+    raise ValueError(f"unknown door {door!r}")
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Scenario: Concert / Event Access Checker")
-        print("Answer the questions below (type 'quit' to exit)")
-        print("─" * 60)
 
-        age = get_number("Your age: ")
-        if age is None:
-            break
+@dataclass
+class ShortCircuitTracer:
+    """Records which operands were evaluated, proving short-circuiting."""
 
-        has_ticket = get_yes_no("Do you have a valid ticket? (y/n): ")
-        if has_ticket is None:
-            break
+    calls: list[str] = field(default_factory=list)
 
-        is_vip = get_yes_no("Are you a VIP member? (y/n): ")
-        if is_vip is None:
-            break
+    def check(self, name: str, result: bool) -> Callable[[], bool]:
+        def operand() -> bool:
+            self.calls.append(name)
+            return result
 
-        has_coupon = get_yes_no("Do you have a discount coupon? (y/n): ")
-        if has_coupon is None:
-            break
+        return operand
 
-        decision = check_access(int(age), has_ticket, is_vip, has_coupon)
-        print(f"\n→ Final decision: {decision}")
+    def evaluate_and(self, left: bool, right: bool) -> bool:
+        self.calls.clear()
+        return self.check("left", left)() and self.check("right", right)()
 
-        # Short-circuit behavior demonstration
-        print("\nShort-circuit examples (observe what gets printed):")
-        print("  First example: age >= 18 and print('Checking ticket...')")
-        if age >= 18 and print("  → Checking ticket..."):
-            print("  → Ticket check passed (this line only runs if age >= 18)")
-        else:
-            print("  → Age condition failed → ticket check skipped")
+    def evaluate_or(self, left: bool, right: bool) -> bool:
+        self.calls.clear()
+        return self.check("left", left)() or self.check("right", right)()
 
-        print("\n  Second example: has_ticket or print('No ticket → asking for coupon')")
-        if has_ticket or print("  → No ticket → asking for coupon"):
-            print("  → Access possible (short-circuited if has_ticket is True)")
-        else:
-            print("  → No ticket and no coupon path taken")
 
-        print("\nTry different combinations to see how 'and' and 'or' behave!")
+def display_name(nickname: str | None, full_name: str | None) -> str:
+    """``or`` returns the first truthy *operand* – handy for defaults."""
+    return nickname or full_name or "Guest"
 
-    print("\nGreat session! You now understand logical operators and short-circuit evaluation.")
-    print("Next topic preview: while and for loops.\n")
+
+def safe_ratio(granted: int, attempts: int) -> float:
+    """``and`` guards the division: if attempts is 0 the right side never runs."""
+    return attempts != 0 and granted / attempts or 0.0
+
+
+def main() -> None:
+    print("Day 09 – Logical operations\n")
+    print(" A      B      and    or     not A")
+    for row in truth_table():
+        print(" ".join(f"{value!s:<6}" for value in row))
+
+    tracer = ShortCircuitTracer()
+    tracer.evaluate_and(False, True)
+    print(f"\nFalse and ... evaluated: {tracer.calls}")
+    tracer.evaluate_or(True, False)
+    print(f"True or ... evaluated:   {tracer.calls}")
+
+    print("\nAccess decisions:")
+    scenarios = [
+        ("lobby", "visitor", False, 22, False),
+        ("lobby", "staff", True, 22, False),
+        ("lab", "visitor", False, 10, True),
+        ("server_room", "staff", True, 10, False),
+        ("server_room", "admin", True, 3, False),
+    ]
+    for door, role, badge, hour, escorted in scenarios:
+        allowed = can_open(door, role=role, has_badge=badge, hour=hour, escorted=escorted)
+        print(f"  {role:<8} → {door:<12} at {hour:02d}:00 : {'OPEN' if allowed else 'DENIED'}")
+    print(f"\nWelcome, {display_name('', None)}! Success ratio: {safe_ratio(0, 0)}")
 
 
 if __name__ == "__main__":

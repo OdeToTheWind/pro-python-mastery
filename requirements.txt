@@ -1,14 +1,10 @@
-pytest
-pytest
-requests
-# Intermediate Projects (Days 57–63)
-requests>=2.31.0
-python-dotenv>=1.0.0
-beautifulsoup4>=4.12.0
-lxml>=5.0.0          # faster parser for BeautifulSoup (optional but recommended)
-selenium>=4.15.0     # Day 63 – browser automation
+# Runtime libraries used by the daily lessons
+pandas>=2.2,<4          # Day 44 – DataFrames
+requests>=2.31,<3       # Days 57–60, 62 – HTTP clients
+python-dotenv>=1.0,<2   # Days 60–61 – loading secrets from .env
+beautifulsoup4>=4.12,<5 # Day 62 – HTML parsing
+selenium>=4.15,<5       # Day 63 – browser automation
+tzdata>=2024.1          # Day 55 – IANA time zones on Windows
 
-# Testing
-pytest>=8.0.0
-pytest-mock>=3.12.0
-
+# Optional: install only if you want to send real SMS on Day 61
+# twilio>=9.0,<10

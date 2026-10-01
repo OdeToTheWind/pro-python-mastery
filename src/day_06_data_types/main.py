@@ -1,115 +1,135 @@
-# src/day_06_data_types/main.py
+"""Day 06 – Built-in Data Types.
+
+Scenario: a *value inspector* – paste any Python literal and get a report on its
+type, category, mutability, hashability and size.
+
+Deliverables (syllabus):
+* int, float, bool, str, list, tuple, dict, set
+* Mutability (and aliasing consequences)
+* Type checks with ``type()`` vs ``isinstance()``
 """
-Day 6: Python Built-in Data Types – Interactive Explorer
-Discover types, mutability, conversions, and basic behaviors with your own inputs.
-"""
 
-import ast  # for safe literal evaluation (advanced input)
+from __future__ import annotations
+
+import ast
+from dataclasses import dataclass
+from typing import Any
+
+DELIVERABLES: dict[str, str] = {
+    "core built-in types": "describe",
+    "mutability": "describe",
+    "aliasing consequences of mutability": "aliasing_demo",
+    "type() vs isinstance()": "type_check_demo",
+    "safe parsing of literals": "parse_literal",
+}
+
+CATEGORIES: dict[type, str] = {
+    bool: "boolean",  # must come before int: bool is a subclass of int
+    int: "numeric",
+    float: "numeric",
+    complex: "numeric",
+    str: "text",
+    bytes: "binary",
+    list: "sequence",
+    tuple: "sequence",
+    range: "sequence",
+    dict: "mapping",
+    set: "set",
+    frozenset: "set",
+    type(None): "none",
+}
+MUTABLE_TYPES = (list, dict, set, bytearray)
 
 
-def get_user_value(prompt: str) -> tuple[any, str]:
-    """Get input and try to evaluate it as literal (int, float, list, etc.) or keep as str"""
-    raw = input(prompt).strip()
-    if raw.lower() in ('quit', 'q', 'exit'):
-        return None, raw
+@dataclass(frozen=True, slots=True)
+class TypeReport:
+    type_name: str
+    category: str
+    mutable: bool
+    hashable: bool
+    length: int | None
 
+
+def is_hashable(value: object) -> bool:
+    """A value is hashable only if ``hash()`` succeeds – ``([1],)`` is a tuple but not hashable."""
     try:
-        # Safely evaluate simple literals: 42, 3.14, True, [1,2,3], {"a":1}, etc.
-        value = ast.literal_eval(raw)
-    except (ValueError, SyntaxError):
-        # Fallback to string if not a literal
-        value = raw
-
-    return value, raw
+        hash(value)
+    except TypeError:
+        return False
+    return True
 
 
-def show_type_info(value: any, original_input: str):
-    """Display detailed info about the value"""
-    t = type(value).__name__
-    print(f"\n┌── You entered: {original_input!r}")
-    print(f"│   Interpreted as: {value!r}")
-    print(f"│   Type:          {t} ({type(value)})")
-    print(f"│   ID:            {id(value):x}")
-    print(f"│   Mutable?       {'Yes' if hasattr(value, '__setitem__') or isinstance(value, (set, dict)) else 'No'}")
-    print(f"│   Hashable?      {'Yes' if isinstance(value, (int, float, bool, str, tuple, frozenset)) else 'No (unhashable)'}")
-
-    # Length / count for sequences & collections
-    if hasattr(value, '__len__'):
-        print(f"│   Length:        {len(value)}")
-
-    # Some type-specific extras
-    if isinstance(value, (int, float)):
-        print(f"│   As int:        {int(value) if isinstance(value, float) else value}")
-        print(f"│   As float:      {float(value)}")
-    elif isinstance(value, bool):
-        print(f"│   Truthy?        {bool(value)}")
-    elif isinstance(value, str):
-        print(f"│   Upper:         {value.upper()}")
-        print(f"│   Length:        {len(value)} chars")
-        print(f"│   As list:       {list(value)}")
-    elif isinstance(value, (list, tuple)):
-        print(f"│   First item:    {value[0] if value else 'empty'}")
-    elif isinstance(value, dict):
-        print(f"│   Keys:          {list(value.keys())}")
-    elif isinstance(value, set):
-        print(f"│   Elements:      {sorted(value) if all(isinstance(x, (int,str)) for x in value) else 'mixed types'}")
-    elif value is None:
-        print("│   → The famous None (absence of value)")
-
-    print("└" + "─" * 60)
+def describe(value: object) -> TypeReport:
+    category = next((name for kind, name in CATEGORIES.items() if type(value) is kind), "other")
+    try:
+        length: int | None = len(value)  # type: ignore[arg-type]
+    except TypeError:
+        length = None
+    return TypeReport(
+        type_name=type(value).__name__,
+        category=category,
+        mutable=isinstance(value, MUTABLE_TYPES),
+        hashable=is_hashable(value),
+        length=length,
+    )
 
 
-def explain_data_types_overview():
-    print("\n" + "═" * 70)
-    print("Python Built-in Data Types Overview (Python 3.14 era)")
-    print("═" * 70)
-    print("Category       | Types                          | Mutable? | Ordered? | Hashable?")
-    print("───────────────┼────────────────────────────────┼──────────┼──────────┼───────────")
-    print("Numeric        | int, float, bool, complex      | No       | —        | Yes       ")
-    print("Text/Sequence  | str                            | No       | Yes      | Yes       ")
-    print("Sequences      | list, tuple, range             | list:Yes | Yes      | tuple+range:Yes ")
-    print("Mappings       | dict                           | Yes      | Yes (3.7+) | No      ")
-    print("Sets           | set, frozenset                 | set:Yes  | No       | frozenset:Yes ")
-    print("Binary         | bytes, bytearray, memoryview   | bytearray:Yes | Yes | bytes+memoryview:Yes ")
-    print("None           | NoneType                       | No       | —        | Yes       ")
-    print("═" * 70)
-    print("• Mutable = can change after creation (list.append(), dict['key']=val)")
-    print("• Hashable = can be used as dict key or set element")
-    print("• Use type(value), isinstance(value, list), etc. to check types")
-    print("═" * 70)
+def parse_literal(text: str) -> Any:
+    """Parse a literal safely; anything that is not a literal stays a string.
+
+    ``ast.literal_eval`` never executes code, unlike ``eval``.
+    """
+    try:
+        return ast.literal_eval(text.strip())
+    except (ValueError, SyntaxError, MemoryError, RecursionError):
+        return text
 
 
-def main():
-    print("Welcome to Day 6 – Python Built-in Data Types Explorer!")
-    print("Enter almost any Python literal or text — see what type it becomes!\n")
+def aliasing_demo() -> dict[str, object]:
+    """Two names, one list: mutating through one name is visible through the other."""
+    original = [1, 2]
+    alias = original
+    copy = original.copy()
+    alias.append(3)
+    frozen = (1, 2)
+    try:
+        frozen[0] = 99  # type: ignore[index]
+        tuple_mutated = True
+    except TypeError:
+        tuple_mutated = False
+    return {
+        "original": original,
+        "copy": copy,
+        "same object": alias is original,
+        "tuple_mutated": tuple_mutated,
+    }
 
-    explain_data_types_overview()
 
-    print("\nExamples you can try:")
-    print("  42               → int")
-    print("  3.14             → float")
-    print("  True             → bool")
-    print("  'hello'          → str")
-    print("  [1, 2, 'a']      → list")
-    print("  (10, 20)         → tuple")
-    print("  {'name': 'Alex', 'age': 30}  → dict")
-    print("  {1, 2, 3}        → set")
-    print("  None             → NoneType")
-    print("  anything else    → treated as str\n")
+def type_check_demo(value: object) -> dict[str, bool]:
+    """``type(x) is int`` is exact; ``isinstance`` respects inheritance (``True`` is an int)."""
+    return {
+        "type is int": type(value) is int,
+        "isinstance int": isinstance(value, int),
+        "is real number": isinstance(value, int | float) and not isinstance(value, bool),
+    }
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Enter a value (or 'quit' to exit)")
-        print("─" * 60)
 
-        value, original = get_user_value("Your input → ")
-        if value is None:
-            break
+def format_report(text: str) -> str:
+    value = parse_literal(text)
+    r = describe(value)
+    return (
+        f"{text!r:<22} → {r.type_name:<9} category={r.category:<8} "
+        f"mutable={r.mutable!s:<5} hashable={r.hashable!s:<5} len={r.length}"
+    )
 
-        show_type_info(value, original)
 
-    print("\nGreat exploration! You now understand Python's core data types.")
-    print("Remember: type() tells you what it is, isinstance() checks safely.\n")
+def main() -> None:
+    print("Day 06 – Built-in Data Types\n")
+    for sample in ["42", "3.14", "True", "'hi'", "[1, 2]", "(1, [2])", "{'a': 1}", "{1, 2}",
+                   "None", "hello world"]:
+        print(format_report(sample))
+    print("\nAliasing:", aliasing_demo())
+    print("type() vs isinstance() for True:", type_check_demo(True))
 
 
 if __name__ == "__main__":

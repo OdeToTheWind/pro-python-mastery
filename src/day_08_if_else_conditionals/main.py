@@ -1,159 +1,105 @@
-# src/day_08_if_else_conditionals/main.py
+"""Day 08 – If / Elif / Else Conditionals.
+
+Scenario: a *hiking-trip weather advisor* that decides what to pack and
+whether the hike is safe.
+
+Deliverables (syllabus):
+* Comparison operators (``== != < <= > >=``)
+* Nested logic
+* Truthy / falsy values
+* Chained conditionals (``elif`` ladders and chained comparisons ``a <= x < b``)
 """
-Day 8: If / Elif / Else Conditionals – Interactive Decision Maker
-Ask user questions → make decisions → give personalized output
-"""
 
-def safe_int_input(prompt: str, min_val: int | None = None, max_val: int | None = None) -> int | None:
-    """Get integer with validation + quit support"""
-    while True:
-        value = input(prompt).strip()
-        if value.lower() in ('quit', 'q', 'exit'):
-            return None
-        try:
-            num = int(value)
-            if min_val is not None and num < min_val:
-                print(f"❌ Must be at least {min_val}")
-                continue
-            if max_val is not None and num > max_val:
-                print(f"❌ Must be at most {max_val}")
-                continue
-            return num
-        except ValueError:
-            print("❌ Please enter a valid integer.")
+from __future__ import annotations
+
+import math
+
+DELIVERABLES: dict[str, str] = {
+    "comparison operators": "compare",
+    "chained comparisons and elif ladder": "classify_temperature",
+    "nested logic": "hike_decision",
+    "truthy/falsy values": "truthiness",
+    "guarding invalid input (NaN, out of range)": "is_plausible_reading",
+}
+
+FALSY_EXAMPLES: tuple[object, ...] = (0, 0.0, "", [], {}, set(), None, False)
 
 
-def safe_float_input(prompt: str) -> float | None:
-    while True:
-        value = input(prompt).strip()
-        if value.lower() in ('quit', 'q', 'exit'):
-            return None
-        try:
-            return float(value)
-        except ValueError:
-            print("❌ Please enter a valid number.")
+def compare(a: float, b: float) -> dict[str, bool]:
+    """Every comparison operator applied to the same pair of numbers."""
+    return {"==": a == b, "!=": a != b, "<": a < b, "<=": a <= b, ">": a > b, ">=": a >= b}
 
 
-def get_yes_no(prompt: str) -> bool | None:
-    while True:
-        ans = input(prompt).strip().lower()
-        if ans in ('quit', 'q', 'exit'):
-            return None
-        if ans in ('y', 'yes'):
-            return True
-        if ans in ('n', 'no'):
-            return False
-        print("Please answer Y/yes or N/no.")
+def is_plausible_reading(celsius: float) -> bool:
+    """Reject NaN and physically implausible air temperatures.
+
+    ``nan`` compares False with everything, so ``nan < 0`` and ``nan > 60`` are
+    both False – without this guard it would silently slip through a ladder.
+    """
+    return not math.isnan(celsius) and -60 <= celsius <= 60
 
 
-def explain_conditionals():
-    print("\n" + "═" * 70)
-    print("Python Conditional Statements Quick Guide (Day 8)")
-    print("═" * 70)
-    print("if condition:          → execute if True")
-    print("elif other_condition:  → check only if previous was False")
-    print("else:                  → run if all above were False")
-    print("")
-    print("Comparisons: == != > < >= <=")
-    print("Logical: and or not")
-    print("Truthy values: non-zero numbers, non-empty strings/lists, True")
-    print("Falsy: 0, 0.0, '', [], {}, None, False")
-    print("═" * 70)
+def classify_temperature(celsius: float) -> str:
+    """Bucket a temperature using chained comparisons in an ``elif`` ladder."""
+    if not is_plausible_reading(celsius):
+        raise ValueError(f"implausible temperature: {celsius}")
+    if celsius < 0:
+        return "freezing"
+    elif 0 <= celsius < 10:
+        return "cold"
+    elif 10 <= celsius < 20:
+        return "mild"
+    elif 20 <= celsius < 30:
+        return "warm"
+    else:
+        return "hot"
 
 
-def main():
-    print("Welcome to Day 8 – If / Elif / Else Conditionals Explorer!")
-    print("Answer a few questions — I'll make decisions for you.\n")
+def hike_decision(celsius: float, rain_mm: float, wind_kmh: float, has_guide: bool) -> tuple[bool, list[str]]:
+    """Return (go?, packing list) using nested conditions."""
+    band = classify_temperature(celsius)
+    packing: list[str] = ["water"]
+    if band in {"freezing", "cold"}:
+        packing.append("insulated jacket")
+        if band == "freezing":
+            packing.append("crampons")
+    elif band == "hot":
+        packing.extend(["sun hat", "extra water"])
 
-    explain_conditionals()
+    if rain_mm > 0:
+        packing.append("rain shell")
 
-    while True:
-        print("\n" + "─" * 60)
-        print("Let's start! (type 'quit' at any prompt to exit)")
-        print("─" * 60)
+    if wind_kmh >= 60:
+        go = False  # too dangerous for anyone
+    elif wind_kmh >= 40 or rain_mm >= 20:
+        go = has_guide  # risky: only with a guide
+    else:
+        go = band != "freezing" or has_guide
+    return go, packing
 
-        age = safe_int_input("Your age: ", min_val=0, max_val=120)
-        if age is None:
-            break
 
-        # Nested + chained example
-        if age < 0:
-            print("✗ You haven't been born yet?")
-            continue
-        elif age < 13:
-            stage = "Child"
-        elif age < 18:
-            stage = "Teen"
-        elif age < 65:
-            stage = "Adult"
-        else:
-            stage = "Senior"
+def truthiness(value: object) -> str:
+    """Describe how ``if value:`` would treat *value*."""
+    return "truthy" if value else "falsy"
 
-        print(f"→ You are classified as: {stage}")
 
-        # Score / grade example
-        score = safe_float_input("Your latest test score (0–100): ")
-        if score is None:
-            break
+def summarize_notes(notes: str) -> str:
+    """Truthy/falsy in practice: an empty string means 'no notes'."""
+    return notes.strip() or "(no notes)"
 
-        if score < 0 or score > 100:
-            print("❌ Score must be between 0 and 100. Skipping grade.")
-            grade = "Invalid"
-        elif score >= 90:
-            grade = "A+ / Excellent"
-        elif score >= 80:
-            grade = "A / Very Good"
-        elif score >= 70:
-            grade = "B / Good"
-        elif score >= 60:
-            grade = "C / Average"
-        elif score >= 50:
-            grade = "D / Pass"
-        else:
-            grade = "F / Needs improvement"
 
-        print(f"→ Your grade: {grade}")
-
-        # Combined conditions example
-        has_money = get_yes_no("Do you have money to spend today? (Y/N): ")
-        if has_money is None:
-            break
-
-        likes_outdoor = get_yes_no("Do you like outdoor activities? (Y/N): ")
-        if likes_outdoor is None:
-            break
-
-        if has_money and likes_outdoor:
-            suggestion = "Go to a park / adventure activity / cafe with friends!"
-        elif has_money and not likes_outdoor:
-            suggestion = "Movie, shopping, or restaurant — indoor fun!"
-        elif not has_money and likes_outdoor:
-            suggestion = "Free walk in park, cycling, or people-watching."
-        else:
-            suggestion = "Netflix / reading / rest at home — recharge day!"
-
-        print(f"→ Today's best activity suggestion: {suggestion}")
-
-        # Bonus truthy/falsy demo
-        name = input("Your name (just press Enter to skip): ").strip()
-                # Personalized summary + feedback on empty name
-        if name:
-            print(f"\n→ Hello {name}! You are {age} years old ({stage}), "
-                  f"scored {score} ({grade}), "
-                  f"and today I suggest: {suggestion}")
-            print("  Have a nice day!\n")
-        else:
-            print("\n→ You didn't enter a name.")
-            print("  You can press Enter to skip, or type 'quit' to exit the program.")
-            print(f"\n→ Hello anonymous explorer ! You are {age} years old ({stage}), "
-                  f"scored {score} ({grade}), "
-                  f"and today I suggest: {suggestion}")
-            print("  Have a nice day anyway!\n")
-
-        print("\nTry different answers to see how conditions change the outcome!")
-
-    print("\nGreat session! You now understand how programs make decisions.")
-    print("Remember: conditions → indentation matters → test edge cases.\n")
+def main() -> None:
+    print("Day 08 – Hiking weather advisor\n")
+    print("compare(3, 5):", compare(3, 5))
+    for temp, rain, wind, guide in [(-5, 0, 10, False), (-5, 0, 10, True), (24, 25, 15, False),
+                                    (33, 0, 65, True), (12, 2, 20, False)]:
+        go, packing = hike_decision(temp, rain, wind, guide)
+        verdict = "GO" if go else "STAY"
+        print(f"{temp:>4}°C rain={rain:>2} wind={wind:>2} guide={guide!s:<5} → {verdict:<4} "
+              f"pack: {', '.join(packing)}")
+    print("\nFalsy values:", ", ".join(repr(v) for v in FALSY_EXAMPLES))
+    print("Notes:", summarize_notes("   "))
+    print("NaN accepted?", is_plausible_reading(float("nan")))
 
 
 if __name__ == "__main__":

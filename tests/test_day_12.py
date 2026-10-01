@@ -1,40 +1,69 @@
-# tests/test_day_12.py
+"""Tests for Day 12 – Functions."""
+
+import inspect
+from decimal import Decimal
+
 import pytest
+
 from src.day_12_functions.main import (
-    greet_user,
-    calculate_bmi,
-    calculate_grade,
-    add_numbers,
-    create_profile
+    Drink,
+    customize,
+    main,
+    order_total,
+    price_drink,
+    receipt_line,
 )
 
 
-def test_greet_user():
-    assert greet_user("Alice") == "Hello friend Alice!"
-    assert greet_user("Bob", "Dr.") == "Hello Dr. Bob!"
+@pytest.mark.parametrize(
+    ("name", "size", "expected"),
+    [("latte", "medium", "3.40"), ("latte", "large", "4.42"), ("espresso", "small", "1.76")],
+)
+def test_price_drink(name, size, expected):
+    assert price_drink(name, size) == Decimal(expected)
 
 
-def test_calculate_bmi():
-    assert calculate_bmi(70, 1.75) == 22.86
+def test_default_size_is_medium():
+    assert price_drink("tea") == price_drink("tea", "medium")
+    assert inspect.signature(price_drink).parameters["size"].default == "medium"
+
+
+def test_unknown_menu_item():
+    with pytest.raises(KeyError):
+        price_drink("mocha")
+
+
+def test_customize_collects_kwargs():
+    drink = customize("latte", oat_milk=1, extra_shot=2)
+    assert drink.extras == {"oat_milk": 1, "extra_shot": 2}
+    assert drink.price == Decimal("3.40") + Decimal("0.40") + Decimal("1.20")
+
+
+@pytest.mark.parametrize("extras", [{"whipped_cream": 1}, {"syrup": -1}])
+def test_customize_rejects_bad_extras(extras):
     with pytest.raises(ValueError):
-        calculate_bmi(70, 0)
+        customize("tea", **extras)
 
 
-def test_calculate_grade():
-    assert calculate_grade(95) == "A+"
-    assert calculate_grade(82) == "A"
-    assert calculate_grade(65) == "C"
-    assert calculate_grade(45) == "F"
+def test_order_total_varargs_and_tip():
+    a, b = customize("tea"), customize("espresso")
+    assert order_total() == Decimal("0.00")
+    assert order_total(a, b) == Decimal("4.10")
+    assert order_total(a, b, tip_percent=10) == Decimal("4.51")
 
 
-def test_add_numbers():
-    assert add_numbers(1, 2, 3) == 6
-    assert add_numbers(10, 20) == 30
-    assert add_numbers() == 0  # no arguments
+def test_docstrings_and_type_hints_present():
+    assert "Args:" in price_drink.__doc__ and "Returns:" in price_drink.__doc__
+    hints = inspect.get_annotations(customize, eval_str=True)
+    assert hints["return"] is Drink
 
 
-def test_create_profile():
-    profile = create_profile(name="Priya", age=27, city="Bengaluru", is_student=True)
-    assert profile["name"] == "Priya"
-    assert profile["age"] == 27
-    assert profile["is_student"] is True
+def test_receipt_line_alignment():
+    line = receipt_line(customize("latte", syrup=1))
+    assert line.startswith("medium latte (syrup×1)")
+    assert line.endswith("€  3.75")
+
+
+def test_main(capsys):
+    main()
+    assert "Total incl. 10% tip" in capsys.readouterr().out

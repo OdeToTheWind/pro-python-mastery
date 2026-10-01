@@ -1,11 +1,27 @@
-# .gitignore
+# Python bytecode & tooling caches
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
 htmlcov/
+
+# Virtual environments
 .venv/
+venv/
+
+# Secrets – NEVER commit these (see .env.example)
+.env
+.env.*
+!.env.example
+
+# Files the daily demos create when you run them
+.data/
+*.corrupt
+
+# Editors
 .vscode/settings.json
 .vscode/cspell.json
+.idea/

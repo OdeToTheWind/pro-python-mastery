@@ -1,140 +1,120 @@
-# src/day_10_randomisation/main.py
+"""Day 10 – Randomisation.
+
+Scenario: a *board-game night toolkit* – dice, a card deck, a raffle and a
+password generator for the Wi-Fi.
+
+Deliverables (syllabus):
+* The ``random`` module: ``randint()``, ``choice()``, ``shuffle()`` (and seeding)
+* Password generation (with ``secrets`` – ``random`` is not cryptographically safe)
+* Games
 """
-Day 10: Randomisation in Python – Interactive Playground
-Explore random module functions with user-driven mini-games and tools.
-"""
+
+from __future__ import annotations
 
 import random
+import secrets
+import string
+from collections.abc import Callable
+
+DELIVERABLES: dict[str, str] = {
+    "randint()": "roll_dice",
+    "shuffle()": "deal_cards",
+    "choice()": "pick_raffle_winner",
+    "seeding for reproducibility": "roll_dice",
+    "secure password generation": "generate_password",
+    "game": "rock_paper_scissors",
+}
+
+SUITS = "♠♥♦♣"
+RANKS = ["A", *map(str, range(2, 11)), "J", "Q", "K"]
+BEATS = {"rock": "scissors", "paper": "rock", "scissors": "paper"}
+SYMBOLS = "!@#$%^&*-_=+?"
 
 
-def print_random_cheat_sheet():
-    print("\n" + "═" * 70)
-    print("Python random Module – Quick Reference (Day 10)")
-    print("═" * 70)
-    print("Function              | Purpose                              | Returns                  | Example")
-    print("──────────────────────┼──────────────────────────────────────┼──────────────────────────┼──────────────────────────────")
-    print("random.random()       | Float between 0.0 and 1.0 (inclusive) | float [0.0, 1.0)        | random.random() → 0.374448")
-    print("random.randint(a, b)  | Integer from a to b (both inclusive)  | int                     | random.randint(1, 6) → 4")
-    print("random.randrange(start, stop[, step]) | Integer from start to stop-1 | int               | random.randrange(0, 10, 2) → 6")
-    print("random.choice(seq)    | Single random element from sequence   | element                 | random.choice(['rock', 'paper', 'scissors'])")
-    print("random.choices(seq, k=n) | n random elements with replacement | list                | random.choices(['A','B','C'], k=5)")
-    print("random.shuffle(seq)   | Shuffle list in place                 | None (modifies seq)     | random.shuffle(deck)")
-    print("random.seed(a)        | Set seed for reproducibility          | None                    | random.seed(42) – same results every time")
-    print("═" * 70)
-    print("Tip: Never use random for cryptography (use secrets module instead)")
-    print("═" * 70)
+def roll_dice(count: int = 2, sides: int = 6, rng: random.Random | None = None) -> list[int]:
+    """Roll *count* dice with ``randint`` (both ends inclusive)."""
+    if count < 1 or sides < 2:
+        raise ValueError("need at least one die with at least two sides")
+    rng = rng or random.Random()
+    return [rng.randint(1, sides) for _ in range(count)]
 
 
-def coin_flip() -> str:
-    return random.choice(["Heads", "Tails"])
+def new_deck() -> list[str]:
+    return [f"{rank}{suit}" for suit in SUITS for rank in RANKS]
 
 
-def roll_dice(sides: int = 6) -> int:
-    return random.randint(1, sides)
+def deal_cards(players: int, cards_each: int, rng: random.Random | None = None) -> list[list[str]]:
+    """Shuffle a fresh deck in place and deal round-robin."""
+    deck = new_deck()
+    if players * cards_each > len(deck):
+        raise ValueError("not enough cards in one deck")
+    (rng or random.Random()).shuffle(deck)
+    return [deck[i : players * cards_each : players] for i in range(players)]
 
 
-def rock_paper_scissors(player_choice: str) -> str:
-    choices = ["rock", "paper", "scissors"]
-    computer = random.choice(choices)
-    
-    if player_choice.lower() not in choices:
-        return "Invalid choice! Pick rock, paper, or scissors."
-    
-    if player_choice.lower() == computer:
-        return f"Computer chose {computer}. It's a tie!"
-    elif (player_choice.lower() == "rock" and computer == "scissors") or \
-         (player_choice.lower() == "paper" and computer == "rock") or \
-         (player_choice.lower() == "scissors" and computer == "paper"):
-        return f"Computer chose {computer}. You win!"
-    else:
-        return f"Computer chose {computer}. You lose!"
+def pick_raffle_winner(tickets: dict[str, int], rng: random.Random | None = None) -> str:
+    """Pick a winner with ``choice``; more tickets means better odds."""
+    pool = [name for name, count in tickets.items() for _ in range(count)]
+    if not pool:
+        raise ValueError("nobody bought a ticket")
+    return (rng or random.Random()).choice(pool)
 
 
-def generate_password(length: int = 12) -> str:
-    """Generate a strong random password that always contains uppercase, lowercase, and digit."""
-    if length < 8:
-        length = 8  # enforce minimum reasonable length
-
-    # Guaranteed characters
-    uppercase = random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    lowercase = random.choice("abcdefghijklmnopqrstuvwxyz")
-    digit = random.choice("0123456789")
-    
-    # Remaining characters from a broad pool
-    remaining_length = length - 3
-    pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-="
-    remaining = ''.join(random.choices(pool, k=remaining_length))
-    
-    # Combine and shuffle to avoid predictable pattern
-    password = uppercase + lowercase + digit + remaining
-    password_list = list(password)
-    random.shuffle(password_list)
-    
-    return ''.join(password_list)
+def rock_paper_scissors(player: str, computer: str) -> str:
+    """Pure game rule: return 'win', 'lose' or 'draw' for *player*."""
+    player, computer = player.lower(), computer.lower()
+    if player not in BEATS or computer not in BEATS:
+        raise ValueError("choose rock, paper or scissors")
+    if player == computer:
+        return "draw"
+    return "win" if BEATS[player] == computer else "lose"
 
 
-def main():
-    print("Welcome to Day 10 – Randomisation Playground!")
-    print("Play games, generate passwords, roll dice — all powered by randomness.\n")
+def play_round(player: str, rng: random.Random | None = None) -> tuple[str, str]:
+    computer = (rng or random.Random()).choice(list(BEATS))
+    return computer, rock_paper_scissors(player, computer)
 
-    print_random_cheat_sheet()
 
+def generate_password(length: int = 16, *, symbols: bool = True) -> str:
+    """Generate a password with the ``secrets`` CSPRNG.
+
+    Guarantees at least one lowercase, uppercase, digit (and symbol), then
+    shuffles with ``secrets.SystemRandom`` so their positions are not predictable.
+    """
+    classes = [string.ascii_lowercase, string.ascii_uppercase, string.digits]
+    if symbols:
+        classes.append(SYMBOLS)
+    if length < max(12, len(classes)):
+        raise ValueError("passwords must be at least 12 characters")
+    alphabet = "".join(classes)
+    chars = [secrets.choice(group) for group in classes]
+    chars += [secrets.choice(alphabet) for _ in range(length - len(chars))]
+    secrets.SystemRandom().shuffle(chars)
+    return "".join(chars)
+
+
+def main(ask: Callable[[str], str] | None = None) -> None:
+    ask = ask or input
+    seeded = random.Random(2026)
+    print("Day 10 – Board-game night toolkit\n")
+    print("Dice (seed 2026):", roll_dice(3, rng=seeded))
+    print("Hands:", deal_cards(2, 5, rng=seeded))
+    print("Raffle winner:", pick_raffle_winner({"Ada": 3, "Grace": 1}, rng=seeded))
+    print("Wi-Fi password:", generate_password(16))
+    print("\nRock-paper-scissors (blank to stop):")
     while True:
-        print("\n" + "─" * 60)
-        print("Choose an activity (or 'quit' to exit):")
-        print("  1) Coin flip")
-        print("  2) Roll dice")
-        print("  3) Rock-Paper-Scissors vs computer")
-        print("  4) Generate random password")
-        print("  5) Random choice from your list")
-        print("  6) Show seed demo (reproducibility)")
-        print("─" * 60)
-
-        choice = input("→ ").strip().lower()
-
-        if choice in ('quit', 'q', 'exit'):
+        try:
+            move = ask("your move → ").strip()
+        except EOFError:
             break
-
-        if choice == '1':
-            print(f"\n→ Coin flip result: {coin_flip()}")
-        
-        elif choice == '2':
-            sides = input("How many sides? (default 6): ").strip()
-            sides = int(sides) if sides.isdigit() else 6
-            print(f"\n→ You rolled a {sides}-sided die: {roll_dice(sides)}")
-        
-        elif choice == '3':
-            player = input("Choose rock, paper, or scissors: ").strip()
-            print("\n" + rock_paper_scissors(player))
-        
-        elif choice == '4':
-            length_str = input("Password length (default 12): ").strip()
-            length = int(length_str) if length_str.isdigit() else 12
-            pwd = generate_password(length)
-            print(f"\n→ Generated password: {pwd}")
-        
-        elif choice == '5':
-            items = input("Enter items separated by comma: ").strip()
-            if not items:
-                print("No items entered.")
-                continue
-            item_list = [x.strip() for x in items.split(',')]
-            winner = random.choice(item_list)
-            print(f"\n→ From your list: {winner!r} was chosen!")
-        
-        elif choice == '6':
-            seed_val = input("Enter seed number (e.g. 42): ").strip()
-            if seed_val.isdigit():
-                random.seed(int(seed_val))
-                print(f"\nWith seed {seed_val}:")
-                print(f"  random.randint(1,100) → {random.randint(1,100)}")
-                print(f"  random.random()       → {random.random():.6f}")
-                print("Run again with same seed → same numbers!")
-            else:
-                print("Invalid seed – skipping demo.")
-
-    print("\nThanks for playing! Randomness is fun — and powerful.")
-    print("Remember: random is pseudo-random → use secrets module for security.\n")
+        if not move:
+            break
+        try:
+            computer, outcome = play_round(move)
+        except ValueError as exc:
+            print(f"  ✗ {exc}")
+            continue
+        print(f"  computer chose {computer}: you {outcome}")
 
 
 if __name__ == "__main__":

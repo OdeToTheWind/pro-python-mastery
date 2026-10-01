@@ -1,106 +1,126 @@
-# src/day_04_variable_name_rules/main.py
+"""Day 04 – Variable Naming Rules.
+
+Scenario: a *code-review bot* that inspects proposed variable names and gives
+the author syntax errors (must fix) and PEP 8 style warnings (should fix).
+
+Deliverables (syllabus):
+* PEP 8 naming conventions (snake_case, CONSTANT_CASE, CapWords)
+* Reserved keywords (hard and soft)
+* Descriptive names and constants
 """
-Day 4: Variable Naming Rules – Interactive Lesson
-Focus: Rules + PEP 8 style + Descriptive names
-"""
 
-def is_valid_variable_name(name: str) -> tuple[bool, str]:
-    """Return (is_valid, reason)"""
-    if not name:
-        return False, "Name cannot be empty"
+from __future__ import annotations
 
-    if name[0].isdigit():
-        return False, "Cannot start with a digit"
+import builtins
+import keyword
+import re
+from collections.abc import Callable
+from dataclasses import dataclass, field
 
-    if not (name[0].isalpha() or name[0] == "_"):
-        return False, "Must start with letter or underscore"
+DELIVERABLES: dict[str, str] = {
+    "identifier syntax rules": "review_name",
+    "reserved (hard) keywords": "review_name",
+    "soft keywords (match, case, type, _)": "review_name",
+    "PEP 8 style classification": "classify_style",
+    "descriptive names": "review_name",
+    "constants": "MAX_LOGIN_ATTEMPTS",
+    "camelCase → snake_case refactor": "to_snake_case",
+}
 
-    for char in name[1:]:
-        if not (char.isalnum() or char == "_"):
-            return False, "Only letters, digits, underscores allowed"
+# Constants: module-level, ALL_CAPS, never reassigned by convention.
+MAX_LOGIN_ATTEMPTS = 3
+AMBIGUOUS_NAMES = frozenset({"l", "O", "I"})
+MIN_DESCRIPTIVE_LENGTH = 3
+ALLOWED_SHORT_NAMES = frozenset({"i", "j", "k", "x", "y", "z", "n", "_"})
 
-    import keyword
+_SNAKE = re.compile(r"_?[a-z][a-z0-9]*(?:_[a-z0-9]+)*_?")
+_CONSTANT = re.compile(r"_?[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*")
+_CAPWORDS = re.compile(r"_?(?:[A-Z][a-z0-9]+)+")
+
+
+@dataclass(slots=True)
+class NameReview:
+    name: str
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+
+    @property
+    def is_valid(self) -> bool:
+        return not self.errors
+
+
+def classify_style(name: str) -> str:
+    """Return ``snake_case``, ``CONSTANT_CASE``, ``CapWords`` or ``mixed``."""
+    if _SNAKE.fullmatch(name):
+        return "snake_case"
+    if _CONSTANT.fullmatch(name):
+        return "CONSTANT_CASE"
+    if _CAPWORDS.fullmatch(name):
+        return "CapWords"
+    return "mixed"
+
+
+def to_snake_case(name: str) -> str:
+    """Convert ``camelCase``/``CapWords``/``kebab-case`` to ``snake_case``."""
+    name = name.replace("-", "_").replace(" ", "_")
+    name = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", name)
+    name = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", "_", name)
+    return re.sub(r"_+", "_", name).lower()
+
+
+def review_name(name: str, *, kind: str = "variable") -> NameReview:
+    """Review *name* used as a ``variable``, ``constant`` or ``class``."""
+    review = NameReview(name)
+    if not name.isidentifier():
+        # isidentifier() implements the real lexer rules, including Unicode:
+        # "x²" fails because "²" is a digit-like symbol, not a letter.
+        review.errors.append("not a valid Python identifier")
+        return review
     if keyword.iskeyword(name):
-        return False, f"'{name}' is a Python keyword"
+        review.errors.append("reserved keyword – cannot be assigned")
+        return review
 
-    return True, "Valid syntax"
+    if keyword.issoftkeyword(name):
+        review.warnings.append("soft keyword – legal, but confusing in match/type statements")
+    if name in dir(builtins):
+        review.warnings.append(f"shadows the built-in {name}()")
+    if name in AMBIGUOUS_NAMES:
+        review.warnings.append("looks like the digits 1 or 0 (PEP 8 forbids l, O, I)")
+    elif len(name.strip("_")) < MIN_DESCRIPTIVE_LENGTH and name not in ALLOWED_SHORT_NAMES:
+        review.warnings.append("too short to be descriptive")
+
+    expected = {"variable": "snake_case", "constant": "CONSTANT_CASE", "class": "CapWords"}[kind]
+    style = classify_style(name)
+    if style != expected and name not in AMBIGUOUS_NAMES:
+        hint = f" (try {to_snake_case(name)!r})" if expected == "snake_case" else ""
+        review.warnings.append(f"PEP 8 expects {expected} for a {kind}, got {style}{hint}")
+    return review
 
 
-def print_naming_tips():
-    print("\n" + "═" * 60)
-    print("PEP 8 – Variable Naming Style Recommendations (Professional Python)")
-    print("═" * 60)
-    print("• Use snake_case → lowercase_with_underscores")
-    print("• Make names descriptive: user_age → better than x or a")
-    print("• Avoid single-letter names (except in very short loops: i, j, k)")
-    print("• Don't use: l, O, I  (look like 1 and 0)")
-    print("• Constants: ALL_CAPS_WITH_UNDERSCORES")
-    print("• Never override built-ins: list, str, dict, max, min, sum, ...")
-    print("• Private-ish variables: _single_leading_underscore (convention)")
-    print("═" * 60)
+def format_review(review: NameReview) -> str:
+    mark = "✅" if review.is_valid and not review.warnings else ("⚠️ " if review.is_valid else "❌")
+    notes = "; ".join(review.errors + review.warnings) or "looks great"
+    return f"{mark} {review.name:<16} {notes}"
 
 
-def main():
-    print("Welcome to Day 4 – Variable Naming Rules (Interactive!)")
-    print("We'll check syntax rules + discuss good style.\n")
-
-    print_naming_tips()
-
-    examples = [
-        "age",
-        "user_name",
-        "totalPrice",
-        "2fast",
-        "my-name",
-        "class",
-        "PI_VALUE",
-        "_hidden",
-        "for",
-        "very_long_and_clear_variable_name_2025",
-        "l",           # bad – looks like 1
-        "O",           # bad – looks like 0
-        "max",         # shadows built-in
-    ]
-
-    print("\nQuick syntax check on some names:")
-    for name in examples:
-        valid, reason = is_valid_variable_name(name)
-        mark = "✅" if valid else "❌"
-        print(f"{mark}  {name:28} → {reason}")
-
-    # ── Interactive part ───────────────────────────────────────────────
-    print("\n" + "─" * 50)
-    print("Now YOU try! Enter variable names (or type 'quit' to finish)")
-    print("─" * 50)
-
+def main(ask: Callable[[str], str] | None = None) -> None:
+    ask = ask or input  # resolved at call time so tests can patch input()
+    print("Day 04 – Variable naming review bot\n")
+    samples = ["user_age", "totalPrice", "2fast", "class", "match", "max", "l", "x²", "_cache", "id"]
+    for sample in samples:
+        print(format_review(review_name(sample)))
+    print(format_review(review_name("MAX_LOGIN_ATTEMPTS", kind="constant")))
+    print(format_review(review_name("HttpClient", kind="class")))
+    print(f"\nConstant in use: MAX_LOGIN_ATTEMPTS = {MAX_LOGIN_ATTEMPTS}")
+    print("\nTry your own names (blank line or Ctrl-D to finish):")
     while True:
-        user_input = input("\nYour variable name → ").strip()
-
-        if user_input.lower() in ("quit", "exit", "q"):
+        try:
+            name = ask("name → ").strip()
+        except EOFError:
             break
-
-        valid, reason = is_valid_variable_name(user_input)
-
-        if valid:
-            print("✓ Valid syntax!")
-            if "_" not in user_input and len(user_input) > 8:
-                print("  (Tip: consider snake_case for multi-word names)")
-            if user_input.isupper():
-                print("  (Looks like a constant — good if it really is!)")
-            if user_input.startswith("_"):
-                print("  (Leading underscore → usually means private / internal)")
-        else:
-            print(f"✗ Invalid: {reason}")
-
-        # Mini style suggestion
-        if valid and " " not in user_input:
-            suggested = user_input.replace(" ", "_").lower()
-            if suggested != user_input:
-                print(f"  Style tip: maybe → {suggested}")
-
-    print("\nGreat work! Day 4 complete.")
-    print("Remember: syntax = what Python allows")
-    print("          style   = what humans read easily → follow PEP 8\n")
+        if not name:
+            break
+        print(format_review(review_name(name)))
 
 
 if __name__ == "__main__":

@@ -1,132 +1,127 @@
-# src/day_11_error_handling/main.py
+"""Day 11 – Error Handling.
+
+Scenario: a *greenhouse sensor log reader* – log files are messy, devices
+disappear and humans type bad values. The program must keep going.
+
+Deliverables (syllabus):
+* ``try / except / else / finally``
+* Common built-in exceptions
+* Robust user-input handling
 """
-Day 11: Error Handling in Python – Interactive Explorer
-Learn try/except, else, finally, common exceptions, and graceful error recovery.
-"""
 
-def safe_input(prompt: str, expected_type=str):
-    """Helper to get input with basic validation"""
-    while True:
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import dataclass, field
+from pathlib import Path
+
+DELIVERABLES: dict[str, str] = {
+    "try/except/else/finally": "load_readings",
+    "common exceptions": "provoke",
+    "robust user input": "ask_float",
+    "graceful recovery from bad data": "parse_line",
+}
+
+
+@dataclass
+class LoadReport:
+    readings: dict[str, float] = field(default_factory=dict)
+    skipped: list[str] = field(default_factory=list)
+    events: list[str] = field(default_factory=list)
+
+
+def parse_line(line: str) -> tuple[str, float]:
+    """Parse ``"sensor_id,temperature"``. Raises ``ValueError`` on bad lines."""
+    sensor, value = line.split(",")  # ValueError if not exactly two fields
+    temperature = float(value)  # ValueError if not numeric
+    if not sensor.strip():
+        raise ValueError("missing sensor id")
+    return sensor.strip(), temperature
+
+
+def load_readings(path: Path) -> LoadReport:
+    """Read a sensor log showing every part of ``try/except/else/finally``."""
+    report = LoadReport()
+    try:
+        handle = path.open(encoding="utf-8")
+    except FileNotFoundError:
+        report.events.append("except: file missing")
+        return report
+    else:
+        report.events.append("else: file opened")
         try:
-            value = input(prompt).strip()
-            if value.lower() in ('quit', 'q', 'exit'):
-                return None
-            return expected_type(value)
-        except ValueError:
-            print(f"❌ Invalid input! Expected {expected_type.__name__}. Try again.")
-
-
-def demonstrate_error_handling():
-    print("\n" + "═" * 70)
-    print("Common Exceptions & How to Handle Them")
-    print("═" * 70)
-    print("Exception              | When it happens                              | Typical Fix")
-    print("───────────────────────┼──────────────────────────────────────────────┼────────────────────────────")
-    print("ValueError             | Wrong value for conversion (int('abc'))      | try/except around conversion")
-    print("TypeError              | Wrong type for operation (len(42))           | Check type or convert first")
-    print("ZeroDivisionError      | Division by zero                             | Guard with if or except")
-    print("IndexError             | List index out of range                      | Check length or use .get()")
-    print("KeyError               | Dict key doesn't exist                       | Use .get() or try/except")
-    print("FileNotFoundError      | Opening non-existent file                    | Check path or use try/except")
-    print("═" * 70)
-
-
-def main():
-    print("Welcome to Day 11 – Error Handling in Python")
-    print("We'll deliberately cause errors and learn how to handle them gracefully.\n")
-
-    demonstrate_error_handling()
-
-    while True:
-        print("\n" + "─" * 60)
-        print("Choose what to try (or 'quit' to exit):")
-        print("  1) Number conversion (ValueError)")
-        print("  2) Division calculator (ZeroDivisionError)")
-        print("  3) List index access (IndexError)")
-        print("  4) Dictionary lookup (KeyError)")
-        print("  5) Password strength checker (multiple errors)")
-        print("  6) Safe file reader simulation")
-        print("─" * 60)
-
-        choice = input("→ ").strip()
-
-        if choice.lower() in ('quit', 'q', 'exit'):
-            break
-
-        try:
-            if choice == "1":
-                text = input("Enter something to convert to integer: ")
-                number = int(text)
-                print(f"✓ Success! {text} as integer is {number}")
-
-            elif choice == "2":
-                a = safe_input("Enter first number: ", float)
-                if a is None: continue
-                b = safe_input("Enter second number: ", float)
-                if b is None: continue
-
-                result = a / b
-                print(f"✓ {a} / {b} = {result}")
-
-            elif choice == "3":
-                items = input("Enter comma-separated items: ").strip()
-                if not items:
-                    items = "apple,banana,cherry"
-                lst = [x.strip() for x in items.split(',')]
-                idx = safe_input(f"Enter index (0 to {len(lst)-1}): ", int)
-                if idx is None: continue
-                print(f"✓ Item at index {idx}: {lst[idx]}")
-
-            elif choice == "4":
-                data = {"name": "Alice", "age": 25, "city": "Bengaluru"}
-                key = input("Enter key to lookup (name/age/city): ").strip().lower()
-                print(f"✓ {key} = {data[key]}")
-
-            elif choice == "5":
-                pwd = input("Enter a password to check strength: ").strip()
-                if len(pwd) < 8:
-                    raise ValueError("Password must be at least 8 characters long")
-                if not any(c.isdigit() for c in pwd):
-                    raise ValueError("Password must contain at least one number")
-                if not any(c.isupper() for c in pwd):
-                    raise ValueError("Password must contain at least one uppercase letter")
-                print("✓ Strong password! Well done.")
-
-            elif choice == "6":
-                filename = input("Enter filename to 'read' (e.g. notes.txt): ").strip() or "secret.txt"
-                # Simulate file reading
-                if "secret" in filename.lower():
-                    raise FileNotFoundError(f"File '{filename}' not found (access restricted)")
-                print(f"✓ Successfully read file: {filename}")
-                print("   Content: This is a simulated file content...")
-
-            else:
-                print("Invalid option. Please choose 1-6.")
-
-        except ValueError as e:
-            print(f"✗ ValueError: {e}")
-            print("   → This happens when the value is correct type but wrong content.")
-        except ZeroDivisionError:
-            print("✗ ZeroDivisionError: You cannot divide by zero!")
-            print("   → Always check divisor != 0 or use try/except")
-        except IndexError:
-            print("✗ IndexError: List index out of range!")
-            print("   → Always check length before accessing by index")
-        except KeyError as e:
-            print(f"✗ KeyError: '{e}' does not exist in the dictionary")
-            print("   → Use .get(key, default) or check with 'in' before access")
-        except FileNotFoundError as e:
-            print(f"✗ FileNotFoundError: {e}")
-            print("   → Common when working with files or paths")
-        except Exception as e:   # Catch-all (not recommended in production)
-            print(f"✗ Unexpected error: {type(e).__name__} - {e}")
-        else:
-            print("✓ No exception occurred — else block executed!")
+            for number, line in enumerate(handle, start=1):
+                if not line.strip():
+                    continue
+                try:
+                    sensor, temperature = parse_line(line.strip())
+                except ValueError as exc:
+                    report.skipped.append(f"line {number}: {exc}")
+                else:
+                    report.readings[sensor] = temperature
         finally:
-            print("→ finally block always runs (cleanup would go here)\n")
+            handle.close()
+            report.events.append("finally: file closed")
+    return report
 
-    print("\nExcellent work! You now know how to handle errors gracefully.")
-    print("Key takeaway: Fail loudly during development, fail gracefully in production.\n")
+
+def average(readings: dict[str, float]) -> float | None:
+    try:
+        return sum(readings.values()) / len(readings)
+    except ZeroDivisionError:
+        return None
+
+
+def provoke(kind: str) -> str:
+    """Trigger a common exception on purpose and return its class name."""
+    actions: dict[str, Callable[[], object]] = {
+        "ValueError": lambda: int("twelve"),
+        "TypeError": lambda: "5" + 5,  # type: ignore[operator]
+        "ZeroDivisionError": lambda: 1 / 0,
+        "IndexError": lambda: [][0],
+        "KeyError": lambda: dict[str, int]()["missing"],
+        "AttributeError": lambda: None.upper(),  # type: ignore[attr-defined]
+        "FileNotFoundError": lambda: Path("no/such/file.log").read_text(),
+    }
+    action = actions.get(kind)
+    if action is None:
+        raise ValueError(f"no demo for {kind!r}")
+    try:
+        action()
+    except Exception as exc:  # noqa: BLE001 – the demo reports any class
+        return type(exc).__name__
+    return "no error"
+
+
+def ask_float(prompt: str, ask: Callable[[str], str], attempts: int = 3) -> float | None:
+    """Ask until a number is typed; ``None`` after too many tries or on EOF."""
+    for _ in range(attempts):
+        try:
+            return float(ask(prompt))
+        except ValueError:
+            print("  ✗ please type a number such as 21.5")
+        except EOFError:
+            return None
+    return None
+
+
+def main(ask: Callable[[str], str] | None = None) -> None:
+    import tempfile
+
+    ask = ask or input
+    print("Day 11 – Greenhouse sensor log reader\n")
+    with tempfile.TemporaryDirectory() as tmp:
+        log = Path(tmp) / "sensors.log"
+        log.write_text("north,21.5\nsouth,abc\n\neast,19\nbroken line\n", encoding="utf-8")
+        report = load_readings(log)
+        print("events:", report.events)
+        print("readings:", report.readings, "average:", average(report.readings))
+        print("skipped:", report.skipped)
+        print("missing file:", load_readings(Path(tmp) / "nope.log").events)
+    for kind in ["ValueError", "TypeError", "IndexError", "KeyError", "ZeroDivisionError"]:
+        print(f"  provoke({kind!r}) → {provoke(kind)}")
+    value = ask_float("Manual reading for 'west': ", ask)
+    print("west =", value if value is not None else "not recorded")
 
 
 if __name__ == "__main__":
