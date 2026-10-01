@@ -1,84 +1,157 @@
-# src/day_37_python_turtle/main.py
+"""Day 37 – Python Turtle.
+
+Scenario: a *greeting-card artist* – draws shapes, a star burst, a spiral and
+an animated orbit with ``turtle``.
+
+The drawing functions accept any object with turtle-like methods (a
+``Protocol``), so the geometry is unit-tested with a recording fake pen and the
+real window is only opened by ``main()``.
+
+Deliverables (syllabus):
+* Graphics with Turtle (screen, pen, colours)
+* Shapes (regular polygons, stars)
+* Drawing logic (angles, loops, spirals)
+* Animations (``tracer``/``update`` + ``ontimer`` frame loop)
 """
-Day 37: Python Turtle – Interactive Graphics Explorer
-With graceful fallback if Tkinter is not available.
-"""
 
-import sys
+from __future__ import annotations
 
-def main():
-    print("Welcome to Day 37 – Python Turtle Graphics")
-    print("Let's draw shapes using Python's Turtle module.\n")
+import contextlib
+import math
+from collections.abc import Callable
+from typing import Protocol
 
+DELIVERABLES: dict[str, str] = {
+    "graphics setup": "main",
+    "shapes: regular polygons": "draw_polygon",
+    "shapes: stars": "draw_star",
+    "drawing logic: angles": "exterior_angle",
+    "drawing logic: spiral": "draw_spiral",
+    "animation frames": "orbit_positions",
+    "animation loop with ontimer": "animate_orbit",
+}
+
+
+class Pen(Protocol):
+    def forward(self, distance: float) -> object: ...
+    def right(self, angle: float) -> object: ...
+    def penup(self) -> object: ...
+    def pendown(self) -> object: ...
+    def goto(self, x: float, y: float) -> object: ...
+
+
+def move_to(pen: Pen, x: float, y: float) -> None:
+    """Jump to (x, y) without drawing a line."""
+    pen.penup()
+    pen.goto(x, y)
+    pen.pendown()
+
+
+def exterior_angle(sides: int) -> float:
+    """Turning angle for a regular polygon: the turns must add up to 360°."""
+    if sides < 3:
+        raise ValueError("a polygon needs at least three sides")
+    return 360 / sides
+
+
+def star_angle(points: int) -> float:
+    """Turning angle for a single-stroke star (5 points → 144°)."""
+    if points < 5 or points % 2 == 0:
+        raise ValueError("single-stroke stars need an odd number of points ≥ 5")
+    return 180 - 180 / points
+
+
+def draw_polygon(pen: Pen, sides: int, length: float) -> float:
+    """Draw a regular polygon and return the total angle turned (always 360)."""
+    angle = exterior_angle(sides)
+    for _ in range(sides):
+        pen.forward(length)
+        pen.right(angle)
+    return angle * sides
+
+
+def draw_star(pen: Pen, points: int, size: float) -> None:
+    angle = star_angle(points)
+    for _ in range(points):
+        pen.forward(size)
+        pen.right(angle)
+
+
+def draw_spiral(pen: Pen, steps: int, growth: float = 4, turn: float = 59) -> float:
+    """Each segment is longer than the last – returns the total distance drawn."""
+    total = 0.0
+    for step in range(1, steps + 1):
+        pen.forward(step * growth)
+        pen.right(turn)
+        total += step * growth
+    return total
+
+
+def orbit_positions(frames: int, radius: float) -> list[tuple[float, float]]:
+    """Pre-compute animation frames: points on a circle."""
+    return [
+        (round(radius * math.cos(2 * math.pi * f / frames), 2),
+         round(radius * math.sin(2 * math.pi * f / frames), 2))
+        for f in range(frames)
+    ]
+
+
+def animate_orbit(
+    pen: Pen,
+    frames: list[tuple[float, float]],
+    schedule: Callable[[Callable[[], None], int], object],
+    redraw: Callable[[], object],
+    delay_ms: int = 40,
+) -> None:
+    """Move the pen to one frame per tick. ``schedule`` is ``screen.ontimer``."""
+    remaining = list(frames)
+
+    def tick() -> None:
+        if not remaining:
+            return
+        x, y = remaining.pop(0)
+        pen.goto(x, y)
+        redraw()
+        schedule(tick, delay_ms)
+
+    pen.penup()
+    tick()
+
+
+def main() -> None:  # pragma: no cover – opens a window
     try:
         import turtle
-        print("✅ Turtle module loaded successfully!\n")
-        
-        # Create screen and turtle
+    except ImportError:
+        print("Turtle needs Tkinter. Install python3-tk (Linux) or the full Python installer.")
+        return
+    try:
         screen = turtle.Screen()
-        screen.title("Python Turtle Explorer - Day 37")
-        screen.bgcolor("lightblue")
-
-        t = turtle.Turtle()
-        t.speed(6)
-        t.pensize(3)
-        t.pencolor("darkblue")
-
-        while True:
-            print("\n" + "─" * 50)
-            print("Choose shape to draw:")
-            print("  1) Square")
-            print("  2) Circle")
-            print("  3) Star")
-            print("  4) Spiral")
-            print("  5) Clear Screen")
-            print("  6) Exit Turtle")
-            print("─" * 50)
-
-            choice = input("→ ").strip()
-
-            if choice == "6":
-                print("Closing Turtle Graphics...")
-                break
-            elif choice == "1":
-                size = int(input("Square side length (default 100): ") or 100)
-                for _ in range(4):
-                    t.forward(size)
-                    t.right(90)
-            elif choice == "2":
-                radius = int(input("Circle radius (default 80): ") or 80)
-                t.circle(radius)
-            elif choice == "3":
-                size = int(input("Star size (default 100): ") or 100)
-                for _ in range(5):
-                    t.forward(size)
-                    t.right(144)
-            elif choice == "4":
-                print("Drawing spiral...")
-                for i in range(36):
-                    t.forward(i * 6)
-                    t.right(25)
-            elif choice == "5":
-                t.clear()
-                print("Screen cleared.")
-            else:
-                print("Invalid choice. Please select 1-6.")
-
-        screen.bye()
-
-    except (ImportError, ModuleNotFoundError):
-        print("❌ Turtle graphics not available (Tkinter/_tkinter missing)")
-        print("This is common in some servers, WSL, or minimal Python installs.")
-        print("To enable Turtle:")
-        print("   sudo apt install python3-tk    # On Ubuntu/Debian")
-        print("   or install full Python with Tk support")
-        
-    except Exception as e:
-        print(f"❌ Turtle error: {e}")
-
-    print("\nTurtle Graphics session ended.")
-    print("You learned how to use Python's built-in graphics module!")
-    print("Next: Game Development with Python and OOP (Day 38)\n")
+    except turtle.Terminator:
+        return
+    except Exception as exc:  # TclError when no display is available
+        print(f"Cannot open a window here: {exc}")
+        return
+    try:
+        screen.title("Day 37 – Greeting card")
+        screen.bgcolor("midnight blue")
+        pen = turtle.Turtle()
+        pen.speed(0)
+        pen.color("gold")
+        draw_star(pen, 5, 150)
+        move_to(pen, -200, -150)
+        pen.color("light sky blue")
+        draw_polygon(pen, 6, 60)
+        move_to(pen, 180, -120)
+        pen.color("plum")
+        draw_spiral(pen, 30, growth=3)
+        moon = turtle.Turtle(shape="circle")
+        moon.color("white")
+        screen.tracer(0)
+        animate_orbit(moon, orbit_positions(120, 220), screen.ontimer, screen.update)
+        screen.exitonclick()
+    finally:
+        with contextlib.suppress(turtle.Terminator):
+            turtle.bye()
 
 
 if __name__ == "__main__":

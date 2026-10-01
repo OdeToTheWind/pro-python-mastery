@@ -5,6 +5,7 @@ python-dotenv>=1.0,<2   # Days 60–61 – loading secrets from .env
 beautifulsoup4>=4.12,<5 # Day 62 – HTML parsing
 selenium>=4.15,<5       # Day 63 – browser automation
 tzdata>=2024.1          # Day 55 – IANA time zones on Windows
+packaging>=24.0         # Day 29 – parsing requirement specifiers
 
 # Optional: install only if you want to send real SMS on Day 61
 # twilio>=9.0,<10

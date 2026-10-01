@@ -1,85 +1,108 @@
-# src/day_31_python_methods/main.py
+"""Day 31 – Python Methods.
+
+Scenario: a *pizzeria ordering system* where each kind of method has a clear
+job: instance methods change one pizza, class methods build pizzas or change
+shop-wide settings, static methods are utilities that need neither.
+
+Deliverables (syllabus):
+* Instance methods (``self``)
+* Class methods (``cls``) – incl. alternative constructors
+* Static methods
 """
-Day 31: Python Methods – Interactive Explorer
-Instance methods, class methods, and static methods.
-"""
 
-class BankAccount:
-    interest_rate = 0.05  # class attribute
+from __future__ import annotations
 
-    def __init__(self, owner, balance=0):
-        self.owner = owner
-        self.balance = balance
+from collections.abc import Iterator
+from contextlib import contextmanager
+from decimal import Decimal
+from typing import Any, Self
 
-    # Instance method
-    def deposit(self, amount):
-        self.balance += amount
-        return f"Deposited ₹{amount}. New balance: ₹{self.balance}"
+DELIVERABLES: dict[str, str] = {
+    "instance methods": "Pizza.add_topping",
+    "class methods: alternative constructors": "Pizza.margherita",
+    "class methods: shared class state": "Pizza.set_base_price",
+    "static methods": "Pizza.valid_size",
+}
 
-    # Instance method
-    def withdraw(self, amount):
-        if amount > self.balance:
-            return "Insufficient funds!"
-        self.balance -= amount
-        return f"Withdrew ₹{amount}. New balance: ₹{self.balance}"
 
-    # Class method
+class Pizza:
+    base_price = Decimal("8.00")  # shared by all pizzas
+    size_factor = {"small": Decimal("0.8"), "medium": Decimal("1"), "large": Decimal("1.25")}
+    topping_price = Decimal("1.20")
+
+    def __init__(self, size: str = "medium", toppings: list[str] | None = None) -> None:
+        if not self.valid_size(size):
+            raise ValueError(f"unknown size {size!r}")
+        self.size = size
+        self.toppings: list[str] = list(toppings or [])
+
+    # ----- instance methods: operate on *this* pizza ----------------------
+    def add_topping(self, topping: str) -> Self:
+        topping = topping.strip().lower()
+        if not topping:
+            raise ValueError("topping name required")
+        if topping in self.toppings:
+            raise ValueError(f"{topping} already added")
+        self.toppings.append(topping)
+        return self  # enables chaining: pizza.add_topping("a").add_topping("b")
+
+    def price(self) -> Decimal:
+        base = type(self).base_price * self.size_factor[self.size]
+        return (base + self.topping_price * len(self.toppings)).quantize(Decimal("0.01"))
+
+    # ----- class methods: receive the class, not an instance --------------
     @classmethod
-    def set_interest_rate(cls, rate):
-        cls.interest_rate = rate
-        return f"Interest rate updated to {rate*100}%"
+    def margherita(cls, size: str = "medium") -> Self:
+        """Alternative constructor – returns ``cls(...)`` so subclasses get subclasses."""
+        return cls(size, ["tomato", "mozzarella", "basil"])
 
-    # Static method
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> Self:
+        return cls(data.get("size", "medium"), list(data.get("toppings", [])))
+
+    @classmethod
+    def set_base_price(cls, price: Decimal) -> None:
+        if price <= 0:
+            raise ValueError("base price must be positive")
+        cls.base_price = price
+
+    # ----- static methods: no self, no cls --------------------------------
     @staticmethod
-    def is_valid_amount(amount):
-        return amount > 0
+    def valid_size(size: str) -> bool:
+        return size in Pizza.size_factor
+
+    @staticmethod
+    def format_price(amount: Decimal) -> str:
+        return f"€{amount:.2f}"
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self.size!r}, {self.toppings!r})"
 
 
-def main():
-    print("Welcome to Day 31 – Python Methods\n")
+class GlutenFreePizza(Pizza):
+    base_price = Decimal("9.50")
 
-    account = BankAccount("Alice", 1000)
 
-    while True:
-        print("\n" + "─" * 50)
-        print("Choose action:")
-        print("  1) Deposit")
-        print("  2) Withdraw")
-        print("  3) Show Balance")
-        print("  4) Update Interest Rate (Class Method)")
-        print("  5) Check Valid Amount (Static Method)")
-        print("  6) Exit")
-        print("─" * 50)
+@contextmanager
+def temporary_base_price(price: Decimal) -> Iterator[None]:
+    """Change class-wide state and always restore it (useful in tests and promos)."""
+    original = Pizza.base_price
+    Pizza.set_base_price(price)
+    try:
+        yield
+    finally:
+        Pizza.base_price = original
 
-        choice = input("→ ").strip()
 
-        if choice == "6":
-            break
-
-        if choice == "1":
-            amt = float(input("Enter deposit amount: "))
-            if BankAccount.is_valid_amount(amt):
-                print(account.deposit(amt))
-            else:
-                print("Invalid amount!")
-
-        elif choice == "2":
-            amt = float(input("Enter withdraw amount: "))
-            print(account.withdraw(amt))
-
-        elif choice == "3":
-            print(f"Current balance: ₹{account.balance}")
-
-        elif choice == "4":
-            rate = float(input("Enter new interest rate (e.g. 0.06 for 6%): "))
-            print(BankAccount.set_interest_rate(rate))
-
-        elif choice == "5":
-            amt = float(input("Enter amount to validate: "))
-            print("Valid amount" if BankAccount.is_valid_amount(amt) else "Invalid amount")
-
-    print("\nYou now understand instance, class, and static methods!")
-    print("Next: Class Initialisers (Day 32)\n")
+def main() -> None:
+    print("Day 31 – Pizzeria methods\n")
+    order = [Pizza.margherita("large"), Pizza("small").add_topping("olives").add_topping("ham"),
+             GlutenFreePizza.margherita(), Pizza.from_dict({"size": "medium", "toppings": ["corn"]})]
+    for pizza in order:
+        print(f"{pizza!r:<64} {Pizza.format_price(pizza.price())}")
+    with temporary_base_price(Decimal("6.00")):
+        print("Happy hour medium margherita:", Pizza.format_price(Pizza.margherita().price()))
+    print("Valid size 'huge'?", Pizza.valid_size("huge"))
 
 
 if __name__ == "__main__":
